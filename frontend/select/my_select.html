@@ -1,0 +1,33 @@
+<form action="." method="POST">
+{%csrf_token%}
+<div> <input type="button" value="打包勾选中的附件" class="but1 select_download"/><div>
+<table>
+    <tbody>
+        <tr>
+            <th><input type="checkbox" name="allitem" id="CheckedAll" />全选</th>
+        </tr>
+        {% for ITEM in all %}
+        <tr>
+            <td><input type="checkbox" name="selected_items[]" value="{{ITEM.pk}}" /></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div> <input type="submit" value="打包勾选中的附件" /> <div>
+</form>
+
+
+<script type="text/javascript">
+$("#CheckedAll").click(function(){
+    var ifck = $("#CheckedAll").attr("checked");
+    if (ifck == undefined) ifck = false;
+   $("input[name='selected_items[]']").each(function() { 
+        $(this).attr("checked", ifck);
+   });
+});
+
+$("input[name='selected_items[]']").click(function() { 
+    $("#CheckedAll").attr("checked", false);
+});
+</script>
+
