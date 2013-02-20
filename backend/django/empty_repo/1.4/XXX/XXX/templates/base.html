@@ -1,0 +1,21 @@
+<!DOCTYPE html> 
+<html lang="zh-CN">
+    <head>
+        <title>这是一个不错的网站</title>
+		<meta charset="UTF-8" />
+        <meta name="description" content="" />
+        <meta name="keywords" content="" />
+		<meta name="author" content="" />
+        <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/style.css" />
+        <script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.8.3.min.js"></script>
+        {% block extra_header %}
+        {% endblock %}
+    </head>
+    <body>
+        {%block content%}
+        {%endblock%}
+    </body>
+    {% block extra_script %}
+    {% endblock %}
+</html>
+

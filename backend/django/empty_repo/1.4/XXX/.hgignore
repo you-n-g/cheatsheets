@@ -1,0 +1,5 @@
+\.orig$
+.*\.pyc$
+.*\.swp$
+^XXX/XXX/local_settings\.py$
+^XXX/media/

@@ -6,6 +6,6 @@ from django.contrib import messages
 
 @require_POST
 def post_XXX(request):
-    redirect_url = request.META.get('HTTP_REFERER', reverse('XXX', kwargs = {}))
+    redirect_url = request.META.get('HTTP_REFERER', reverse('XXX', kwargs = {XXX}))
     messages.info(request, u'XXX')
     return HttpResponseRedirect(redirect_url)

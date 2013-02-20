@@ -1,0 +1,16 @@
+<uwsgi>                                                                                                                 
+    <socket>XXX_IP:XXX_PORT</socket>                                                                                    
+    <chdir>XXX_SETTINGS_PATH</chdir>                                                   
+    <touch-reload>XXX_VERSION_PATH/VERSION</touch-reload>                                                
+    <pythonpath>..</pythonpath>                                                                                         
+    <home>XXX_VIRTUAL_DIR(bin/ include/ lib/ local/)</home>                                                                            
+    <module>wsgi</module>                                                                                               
+    <plugins>python</plugins>                                                                                           
+    <master/>                                                                                                           
+    <processes>3</processes>                                                                                            
+    <pidfile>/var/run/uwsgi.pids/XXX.pid</pidfile>                                                       
+    <daemonize>/var/log/uwsgi/django_apps/XXX.log</daemonize>                                            
+    <max-requests>100</max-requests>                                                                                    
+    <limit-as>1000</limit-as>                                                                                           
+    <buffer-size>40960</buffer-size>                                                                                   
+</uwsgi>
