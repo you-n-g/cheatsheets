@@ -117,6 +117,12 @@ TEMPLATE_DIRS = (
     os.path.join(DIRNAME, 'templates'),
 )
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'XXX.authentication_backends.SettingsBackends',
+    'XXX.authentication_backends.EmailModelBackend',
+)
+
 INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
