@@ -1,12 +1,20 @@
 #!/bin/bash
-用下面的脚本来命名新的repo
 
-#BEGIN
+
+#BEGIN 用下面的脚本来命名新的repo
 NEW_NAME=NEWNAME
 mv XXX $NEWNAME
 mv $NEWNAME/XXX/ $NEWNAME
 find $NEW_NAME -exec sed -i s/XXX/$NEW_NAME/g  {} \;
-
 #TODO 然后删除 .gitignore .hgignore 之一
+#END   用下面的脚本来命名新的repo
 
-#END
+
+
+#BEGIN 使用VIRTUAL_ENV一般需要安装的东西
+# 一般先更新 distribute 可能比较好 easy_install -U distribute
+pip install MySQL-python django PIL South python-memcached
+# 其他常用的 django-mptt
+# pip freeze > requirements.txt
+#END   使用VIRTUAL_ENV一般需要安装的东西
+
