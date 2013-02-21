@@ -1,4 +1,8 @@
 #!/usr/bin/env python
+#-*- coding:utf8 -*-
+
+
+
 
 from django.http import HttpResponseRedirect
 from django.views.decorators.http import require_POST
