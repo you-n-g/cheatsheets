@@ -16,3 +16,6 @@ XXX = models.ForeignKey("XXX", verbose_name = u"XXX", blank = True, null = True,
 XXX = models.IntegerField(u"XXX", default = 0)
 XXX = models.ManyToManyField(XXX, verbose_name = u"XXX", blank = True, null = True, through = XXX)
 XXX = models.BooleanField(u"XXX", default = False)
+XXX = models.TextField(u"XXX", blank=True, help_text=u"内容")
+create_time = models.DateTimeField(u"创建时间", auto_now_add=True)
+publish_time= models.DateTimeField(u"最后一次修改时间", auto_now = True)
