@@ -1,0 +1,18 @@
+<!--jQuery Ajax Submit-->
+<script type="text/javascript">
+$.ajax({  
+    url:'XXX_URL',// 跳转到 action  
+    data:{  
+             key : value
+    },   // data:"%(key)s=%(value)s",   
+    type:'post',  
+    cache:false,  
+    //async : false, //默认为true 异步   
+    dataType:'json',  
+    success:function(data) {  
+    },  
+    error : function() {  
+         //alert("异常！");  
+    }  
+});
+</script>

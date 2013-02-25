@@ -1,0 +1,30 @@
+<!-- 源自 http://malsup.com/jquery/form/ -->
+<!-- 需要有 <script type="text/javascript" src="{{ STATIC_URL }}plugins/ajaxform/jquery.form.js"></script> -->
+
+{% if form.is_valid %}
+    保存成功！
+    <script type="text/javascript">
+    $(function(){
+        setTimeout('window.location.reload()', 1000);
+    });
+    </script>
+{% else %}
+    <div class="ajax_form_target">
+    XXXX
+    <form action="XXX" class="ajax_form" method="POST" >
+        {% csrf_token %}
+        {{XXX_FORM}}
+        <input type="submit" value="XXX">
+    </form>
+    </div>
+
+    <script type="text/javascript">
+    $('.ajax_form').ajaxForm({
+        target: '.ajax_form_target',
+        beforeSubmit: function() {
+            $(".ajax_form input[type=submit]").attr('disabled', 'disabled');
+            $(".ajax_form input[type=submit]").attr('value', '正在提交...');
+        },
+    }); 
+    </script>
+{% endif %}

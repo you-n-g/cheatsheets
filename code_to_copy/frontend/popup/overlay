@@ -1,5 +1,33 @@
 jquery.tools.overlay.min.js
 
+<script type="text/javascript" src="{{STATIC_URL}}plugins/overlay/js/jquery.tools.overlay.min.js"></script>
+<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}plugins/overlay/css/overlay.css" />
+<!-- 以上具体内容可以去 bj_club里找 -->
+<!-- jquery版本要对!!!!!! 以前我用 1.8.3的jquery效果会不正常!!!  去 http://jquerytools.org/download/ 下载 -->
+<!-- 方法来自  http://jquerytools.org/demos/overlay/apple.html -->
+<!-- css 内容如下
+.apple_overlay {
+    display:none;
+    background-image:url(../images/white.png);
+    width:640px;
+    padding:35px;
+    font-size:11px;
+    _background-image:url(../images/overlay_IE6.gif);
+    _color:#fff;
+}
+.apple_overlay .close {
+    background-image:url(../images/close.png);
+    _background-image:url(../images/overlay_close_IE6.gif);
+    position:absolute; right:5px; top:5px;
+    cursor:pointer;
+    height:35px;
+    width:35px;
+}
+-->
+
+<div class="apple_overlay font-f-yh" id="overlay">
+  <div class="contentWrap pdB"></div>
+</div>
 $("a[rel=#overlay]").overlay({
       mask: 'darkred',
       effect: 'apple',

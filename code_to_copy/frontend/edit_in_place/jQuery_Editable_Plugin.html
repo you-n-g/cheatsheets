@@ -1,0 +1,35 @@
+<!-- edit in place -->
+<!-- 从这里下载 http://www.arashkarimzadeh.com/jquery/7-editable-jquery-plugin.html -->
+<!-- TODO 测试IE6有效性 -->
+<script type="text/javascript" src="{{ STATIC_URL }}plugins/editable/jquery.editable-1.3.3.min.js"></script>
+
+<div class="editable">XXX</div>
+<!-- <img src="{{STATIC_URL}}images/b_edit.png" class="editable_icon" /> -->
+
+<script type="text/javascript">
+    $('div.editable').editable({
+        'submit' : "保存",
+        'cancel' : "取消",
+        'onSubmit' : function(content) {
+            //alert(content.current+':'+content.previous);
+            // 模仿出错了还得继续修改的状态
+            var this_editable = $(this);
+            $(this).html(content.previous);
+            $(this).click();
+            $(this).find('input').val(content.current);
+        }
+    });
+    /*
+    $(".editable_icon").click(function(){
+        $(this).prev(".editable").click();
+    });
+   */
+</script>
+
+<!--
+<style type="text/css">
+div.editable {
+    display:inline-block;
+}
+</style>
+-->
