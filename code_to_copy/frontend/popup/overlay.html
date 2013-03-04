@@ -5,7 +5,9 @@ jquery.tools.overlay.min.js
 <!-- 以上具体内容可以去 bj_club里找 -->
 <!-- jquery版本要对!!!!!! 以前我用 1.8.3的jquery效果会不正常!!!  去 http://jquerytools.org/download/ 下载 -->
 <!-- 方法来自  http://jquerytools.org/demos/overlay/apple.html -->
-<!-- css 内容如下
+<!--文档 http://jquerytools.org/documentation/overlay/index.html-->
+<!-- css 内容如下 -->
+<style type="text/css">
 .apple_overlay {
     display:none;
     background-image:url(../images/white.png);
@@ -23,11 +25,12 @@ jquery.tools.overlay.min.js
     height:35px;
     width:35px;
 }
--->
+</style>
 
 <div class="apple_overlay font-f-yh" id="overlay">
   <div class="contentWrap pdB"></div>
 </div>
+<script type="text/javascript">
 $("a[rel=#overlay]").overlay({
       mask: 'darkred',
       effect: 'apple',
@@ -38,5 +41,7 @@ $("a[rel=#overlay]").overlay({
           wrap.load(this.getTrigger().attr("href"));
       }
 });
+// TRIGGER.overlay() 即可获得 overlay 对象, 然后根据文档里操作就行
+</script>
 
 <a href="URL" rel="#overlay">

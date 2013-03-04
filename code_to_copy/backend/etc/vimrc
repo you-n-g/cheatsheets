@@ -1,0 +1,179 @@
+" color evening
+" colo else
+" colo torte
+" set fencs=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+" set fileencodings=ucs-bom,utf-8,chinese
+
+"make the coding ok
+set encoding=utf-8
+" set fenc=utf-8
+set fencs=ucs-bom,utf-8,euc-cn,cp936,gb18030,latin1
+" set fileencodings=cp936,ucs-bom,utf-8
+ source $VIMRUNTIME/delmenu.vim
+" source $VIMRUNTIME/menu.vim
+" language messages zh_CN.utf-8
+" set nocp " 更远离vi,接近人类...
+set wildmenu  " tab的时候会显示哪些可选项
+
+call pathogen#infect() 
+
+" BEGIN color
+" colo koehler
+" let g:solarized_termcolors=256
+let g:solarized_termtrans=1
+let g:solarized_visibility="low"
+syntax enable        
+set background=dark  
+colorscheme solarized
+" END color
+
+set hlsearch
+set lbr " set linebreak
+set laststatus=2
+set statusline=%<%f\%h%m%r%=%-20.(line=%l\ \ col=%c%V\ \ totlin=%L%)\ \ \%h%m%r%=%-40(bytval=0x%B,%n%Y%)\%P
+
+" set fdm=marker
+" set fdm=syntax
+
+
+set ai "auto indent
+" set cindent
+" set list "show the control charactor
+set sm "show match
+set expandtab 
+set tabstop=4
+set shiftwidth=4
+set number
+set ignorecase
+set smartcase
+" set ignorecase
+"map th :tabpre<cr>  "gT
+"map tl :tabnext<cr> "gt
+"map tc :tabclose<cr>
+map tn :tabnew<cr>
+map tm :tabmove 
+" vim7.3 only
+set cc=120
+" hi ColorColumn ctermbg=Cyan guibg=Cyan
+highlight ColorColumn ctermbg=Cyan
+" set undofile
+" set undodir=~/.undofiles
+
+
+" map tb :VimwikiTable 
+"map tt :FufFile<cr>
+map t<space> <Plug>VimwikiToggleListItem
+" nnoremap <silent> <F8> :TlistToggle<CR>
+nnoremap <silent> <F8> :TagbarToggle<CR>
+nnoremap <silent> <F7> :NERDTreeToggle<CR>
+let NERDTreeIgnore=['\.pyc$', '\.orig$']
+map <silent> <leader><leader>l :SessionList<CR>
+map <silent> <leader><leader>s :SessionSave<CR>
+map <silent> <leader><leader>c :SessionClose<CR>
+map <C-p> "0p
+
+" buffers
+map <C-j> :bnext<CR>
+map <C-k> :bNext<CR>
+map gb :buffers<CR>
+
+" let g:neocomplcache_enable_at_startup = 1
+syntax on
+set nocompatible
+filetype plugin on 
+let g:vimwiki_hl_headers = 1
+" let g:vimwiki_conceallevel = 0
+
+" for tag list
+let Tlist_Show_One_File=1
+
+" 十六进制编辑功能 :call Hexedit()
+func! Hexedit()
+    exec ":% !xxd"
+endfunc
+func! HexeditRevert()
+    exec ":% !xxd -r"
+endfunc
+
+
+
+map <F9>p :call CompilePython()<cr>
+func! CompilePython()
+    exec "w"
+    exec "!echo -e '\033[1;34m-----------here\ is\ the\ ans\ of\ %----------\033[0m';python %"
+endfunc
+
+map <F9>s :call RunShell()<cr>
+func! RunShell()
+    exec "w"
+    exec "!echo -e '\033[1;34m-----------here\ is\ the\ ans\ of\ %----------\033[0m';bash %"
+endfunc
+
+map <F9>c :call CompileRunGpp()<CR>
+func! CompileRunGpp()
+    exec "w"
+    exec "!echo -e '\033[1;32mcompiling.....\033[0m';gcc % -o %:r.exe;echo -e '\033[1;34m-----------here_is_the_ans_of_%----------\033[0m';./%:r.exe;echo -e '\033[1;33mend...\033[0m';rm %:r.exe"
+    "exec "!./%:r.exe"
+endfunc
+
+" bundle 里的这些插件
+" 源于 http://python.42qu.com/11180003
+" 译于 http://sontek.net/blog/detail/turning-vim-into-a-modern-python-ide
+" 代码折叠
+set foldmethod=indent
+set foldlevel=99
+" snipmate 可以在 ~/.vim/snippets/python.snippets 模仿 bundle/snipmate/snippets/ 定义一些快捷方式
+" tasklist 查看任务列表
+map <leader>td <Plug>TaskList
+
+" Gundo 可以查看每次编辑的差别，并快速回滚..
+map <leader>g :GundoToggle<CR>
+
+" pyflakes
+" 语法高亮
+syntax on                           " syntax highlighing
+filetype on                          " try to detect filetypes
+filetype plugin indent on    " enable loading indent file for filetype
+let g:pyflakes_use_quickfix = 0
+
+" PEP8   pep8还需要install
+let g:pep8_map='<leader>8'
+
+" SuperTab ，代码补全， 设置其为上下文相关,  在模块上<leader>pw 就可以打开该模块的文档
+" 因为 . 后的属性无法自动不全，所以我先不用了。
+" au FileType python set omnifunc=pythoncomplete#Complete
+" let g:SuperTabDefaultCompletionType = "context"
+" set completeopt=menuone,longest,preview " 有自动文档预览
+
+" minibufexpl 可以让内置缓冲更便捷
+" :bX 可以到指定缓冲
+map <leader>f :CommandTFlush<CR>
+
+" command-t : 文件名称模糊搜索
+" 安装: 得到  ~/.vim/bundle/command-t 中运行 rake make
+" <leader>t 可以查找项目中的任何文件 ， <leader>b 可以搜索所有打开的缓冲区
+set wildignore+=*.o,*.obj,.git,*.pyc,*/migrations/*,django,*static/plugins/*
+
+
+" Ropevim 重构工具， 支持自动跳转 我还不知道怎么用。。
+" map <leader>j :RopeGotoDefinition<CR>
+" map <leader>r :RopeRename<CR>
+
+" Ack : 类似与grep 的搜索插件
+" nmap <leader>a <Esc>:Ack!
+" 错误  /bin/bash: ack: command not found
+
+" virtualenv， 让vim 意识到自己在虚拟环境中
+py << EOF
+import os.path
+import sys
+import vim
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    sys.path.insert(0, project_base_dir)
+    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    execfile(activate_this, dict(__file__=activate_this))
+EOF
+
+" 让django也支持代码补全应该在bash中拥有如下环境变量
+" export DJANGO_SETTINGS_MODULE=project.settings
