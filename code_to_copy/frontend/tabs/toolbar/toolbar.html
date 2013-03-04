@@ -1,0 +1,37 @@
+<div class="toolbar">
+        <ul>
+            <li><a href="{% url notice_list_with_type %}" {% if XXXX %}class="selected"{% endif %}><span>XXX</span></a></li>
+        </ul>
+ </div>
+
+<style type="text/css">
+.toolbar{
+    line-height: 21px;
+    color: #666;
+    padding: 5px 10px;
+}
+.toolbar ul{
+    display: inline-block;
+    *display:inline;
+}
+.toolbar li a.selected {
+    padding-right: 0;
+    background: url(../images/filter.png) no-repeat 0 -22px;
+    color: #333;
+}
+.toolbar li a {
+    height: 21px;
+    outline: 0 none;
+    padding: 0 12px;
+}
+.toolbar, .toolbar li, .toolbar li a, .toolbar li a span {
+    display: inline-block;
+    height: 21px;
+    line-height: 21px;
+    *display:inline;
+}
+.toolbar li a.selected span {
+padding-right: 12px;
+background: url(/static/images/filter.png) no-repeat right top;
+}
+</style>

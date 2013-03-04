@@ -1,10 +1,9 @@
-<form action="." method="POST">
-{%csrf_token%}
-<div> <input type="button" value="打包勾选中的附件" class="but1 select_download"/><div>
+<div id="checkbox_form">
+<div> <input type="button" value="打包勾选中的附件" class="checkbox_form_submit" /></div>
 <table>
     <tbody>
         <tr>
-            <th><input type="checkbox" name="allitem" id="CheckedAll" />全选</th>
+            <th><input type="checkbox" name="allitem" class="CheckedAll" />全选</th>
         </tr>
         {% for ITEM in all %}
         <tr>
@@ -13,21 +12,46 @@
         {% endfor %}
     </tbody>
 </table>
-<div> <input type="submit" value="打包勾选中的附件" /> <div>
+<div> <input type="submit" value="打包勾选中的附件" class="checkbox_form_submit" /> </div>
+</div>
+
+<form id="hidden_form" method="POST" style="display:none;">
+    {% csrf_token %}
 </form>
 
 
 <script type="text/javascript">
-$("#CheckedAll").click(function(){
-    var ifck = $("#CheckedAll").attr("checked");
-    if (ifck == undefined) ifck = false;
-   $("input[name='selected_items[]']").each(function() { 
-        $(this).attr("checked", ifck);
-   });
-});
+$(function(){
+    $("#checkbox_form .CheckedAll").click(function(){
+        var ifck = $("#checkbox_form .CheckedAll").attr("checked");
+        if (ifck == undefined) ifck = false;
+        $("#checkbox_form input[type='checkbox'][name='selected_items[]']").each(function() { 
+             $(this).attr("checked", ifck);
+        });
+    });
 
-$("input[name='selected_items[]']").click(function() { 
-    $("#CheckedAll").attr("checked", false);
+    $("#checkbox_form input[type='checkbox'][name='selected_items[]']").click(function() { 
+        $("#checkbox_form .CheckedAll").attr("checked", false);
+    });
+
+    function bind_checkbox_form_click(submit_obj, submit_url, hidden_form) {
+        submit_obj.click(function(){
+            /* 针对需要提示的操作 弹出提示。
+            var me = $(this);
+            if (me.attr('title'))
+                if (!confirm(me.attr("title")))
+                    return 1;
+            */
+            hidden_form.attr("action", submit_url)
+            $("#checkbox_form input[type='checkbox'][name='selected_items[]']").each(function(){
+                var me = $(this);
+                if (me.attr("checked") == "checked")
+                    hidden_form.append(me.clone());
+            });
+            hidden_form.submit();
+        });
+    }
+    bind_checkbox_form_click($(".checkbox_form_submit"), url, $("#hidden_form"));
 });
 </script>
 

@@ -1,0 +1,30 @@
+<!-- display form errors -->
+{%for field in form%}
+    {% if field.errors %}
+       {{field.errors.as_text}}
+    {% endif %}
+{% endfor %}
+
+{%for field in form%}
+    {% for e in field.errors %}
+    <span> * {{field.label}}: {{e}} </span>
+    {% endfor %}
+{% endfor %}
+
+{% if form.non_field_errors %}
+    {% for error in form.non_field_errors%}
+        <span>* {{ error }}</span>
+    {% endfor %}
+{% endif %}
+<!-- display form errors -->
+
+<!--display form without errors -->
+{{form.media}}
+
+{%for field in form%}
+	  {{field.label}}{%if field.field.required%}*{%endif%}
+	  	{{field}}
+	    {%if field.errors%}DISPLAY_ERRORS{%else%}{{field.help_text}}{%endif%}
+{%endfor%}
+<!--display form without errors -->
+

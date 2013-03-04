@@ -1,0 +1,17 @@
+<script type="text/javascript">
+// BEGIN 标记侧边栏
+$(function(){
+    var current_path = document.location.pathname;
+    $(".XXX a").each(function(){
+        var me = $(this);
+        var href = me.attr("href");
+        if (current_path.indexOf(href) == 0) me.addClass("on");
+    });
+});
+// END   标记侧边栏
+
+// end   处理表单
+$("选中一些元素，然后这会把里面的input给序列化").serialize()
+// BEGIN 处理表单
+</script>
+

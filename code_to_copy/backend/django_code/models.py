@@ -19,3 +19,12 @@ XXX = models.BooleanField(u"XXX", default = False)
 XXX = models.TextField(u"XXX", blank=True, help_text=u"内容")
 create_time = models.DateTimeField(u"创建时间", auto_now_add=True)
 publish_time= models.DateTimeField(u"最后一次修改时间", auto_now = True)
+
+
+
+
+#-------------------- 某些app的用法 --------------------
+
+# BEGIN 
+org.is_descendant_of(self, include_self = include_self)
+org.is_leaf_node()

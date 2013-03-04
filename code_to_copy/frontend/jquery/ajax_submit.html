@@ -4,6 +4,7 @@ $.ajax({
     url:'XXX_URL',// 跳转到 action  
     data:{  
              key : value
+             csrfmiddlewaretoken : "{{csrf_token}}",
     },   // data:"%(key)s=%(value)s",   
     type:'post',  
     cache:false,  
