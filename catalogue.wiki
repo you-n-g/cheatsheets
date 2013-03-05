@@ -8,6 +8,7 @@
         * edit_in_place -- 就地编辑插件
         * form -- 处理表单的插件
             * ajaxform.html --  以ajax方式提交表单的插件
+        * fuck_browsers -- 浏览器兼容性问题
         * jquery -- jquery 相关的代码片段
         * popup -- popup 插件
         * select -- 多选功能的代码片段
