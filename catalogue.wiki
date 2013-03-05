@@ -3,7 +3,7 @@
 * code_to_copy -- 一些常用的变化不大的代码片段， 主要功能是加速平时写垃圾代码的速度
     * backend -- 后台代码片段
         * django_code -- django的代码片段， 对应的片段在对于的文件里， 如views.py
-        * etc/ -- 一些系统文件的判断
+        * etc/ -- 一些系统文件的配置
     * frontend -- 后台代码片段
         * edit_in_place -- 就地编辑插件
         * form -- 处理表单的插件
@@ -17,6 +17,7 @@
             * toolbar -- 一组模仿豆瓣的 jquery 插件样式
 * python_apps_to_copy -- 一些较大的完整的 python_app
     * django_code -- django app
+        * ckeditor -- 配置ckeditor
         * empty_repo -- 如何快速地创建一个django project
         * messages --  快速集成 message (源自官网)
         * pagination -- 快速集成一个 有样式的 分页功能 (样式源自官网)

@@ -15,8 +15,3 @@ class XXXForm(forms.ModelForm):
     class Meta:
         model = XXX
         fields = ('XXX',)
-
-#BEGIN CKEDITOR
-from ckeditor.widgets import CKEditorWidget
-self.fields["XXX"].widget = CKEditorWidget()
-#END   CKEDITOR
