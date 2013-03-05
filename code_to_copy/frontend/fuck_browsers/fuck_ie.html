@@ -1,0 +1,26 @@
+<!--   ***********本篇文章讲如何非常地爽地fuck IE************ -->
+
+<!--BEGIN IE猥琐通解-->
+<style type="text/css">
+margin-bottom:140px\9; /* IE6/7/8的属性 */
+color:red\0; /* IE8支持 */
+*margin-bottom:450px; /*IE6/7的属性*/
+_background:#000; /* 只对ie6有效 */
+</style>
+<!--BEGIN IE猥琐通解-->
+
+
+<!--BEGIN  IE 6、7 inline-block 失效-->
+<!--源自 http://www.roydukkey.com/display-inline-block-zoom/-->
+<style type="text/css">
+.block2 {
+    display: inline-block;
+    *display: inline;
+    *vertical-align: middle;
+    zoom: 1;
+}
+</style>
+<!--END    IE 6、7 inline-block 失效-->
+
+
+<!-- IE6 不支持 IE6 不支持 min-height, 可以使用height代替, IE6 的 height 和 min-height 效果相似 -->
