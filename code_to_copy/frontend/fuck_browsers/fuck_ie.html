@@ -7,6 +7,8 @@ color:red\0; /* IE8支持 */
 *margin-bottom:450px; /*IE6/7的属性*/
 _background:#000; /* 只对ie6有效 */
 </style>
+
+<!--[if IE 6]> 针对IE 6 的代码 <![endif]-->
 <!--BEGIN IE猥琐通解-->
 
 
@@ -24,3 +26,23 @@ _background:#000; /* 只对ie6有效 */
 
 
 <!-- IE6 不支持 IE6 不支持 min-height, 可以使用height代替, IE6 的 height 和 min-height 效果相似 -->
+
+
+<!--当IE提示 缺少标识符、字符串或数字， 很可能是因为js的逗号问题 -->
+
+
+<!-- IE6下 jquery submit 不刷新页面 -->
+<script type="text/javascript">
+    function form_submit(jq_form_obj){
+        setTimeout(function(){
+            jq_form_obj.submit();
+        },0);
+    }
+</script>
+<!---->
+
+
+<!-- IE XX? 下 会缓存 ajax 的内容， 导致每次ajax 内容一样。。。 需要设置一下让 jquery 不缓存 -->
+$.ajaxSetup({ cache: false });
+
+<!--把javascript 代码写在 a 标签的href属性里在 IE6 下是无法正常运行的， 应该改成绑定 a 标签的 click 方法 -->
