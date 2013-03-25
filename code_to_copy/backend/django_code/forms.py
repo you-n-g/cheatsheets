@@ -6,7 +6,7 @@ from models import XXX
 
 class XXXForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(NoticeForm, self).__init__(*args, **kwargs)
+        super(XXXForm, self).__init__(*args, **kwargs)
         #self.fields["XXX"].XXX = XXX
         self.fields["XXX"] = forms.ModelChoiceField(
                 queryset = XXX,

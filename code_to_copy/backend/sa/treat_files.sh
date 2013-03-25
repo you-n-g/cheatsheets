@@ -20,3 +20,8 @@ def get_ok_name(unicode_name):
         unicode_name = unicode_name.replace(ch, "_")
     return unicode_name
 EOF
+
+
+
+# 下载整站
+wget -r -p -np -k http://xxx.com/abc/

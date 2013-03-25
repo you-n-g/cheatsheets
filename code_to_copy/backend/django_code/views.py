@@ -3,6 +3,7 @@
 
 #BEGIN 常用的
 from django.http import HttpResponseForbidden
+from django.contrib.auth.decorators import user_passes_test
 #END   常用的
 
 
@@ -35,7 +36,7 @@ return HttpResponse(json.dumps({
 # END post process single or multi object
 def _process_xxx(request, success_msg, fail_msg, process_func):
     redirect_url = request.META.get('HTTP_REFERER', reverse('XXX'))
-    pk_list = request.POST.getlist('orgs', [])
+    pk_list = request.POST.getlist('XXX', [])
     if len(pk_list) != 0:
         for pk in pk_list:
             xxx = get_object_or_404(XXX, pk = pk)

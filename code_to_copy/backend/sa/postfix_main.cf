@@ -1,0 +1,7 @@
+# 这个可以把邮件发送到指定用户的maildir
+home_mailbox = Maildir/
+
+# 做用户转向 - alias
+# IN /etc/aliases
+FROM_USER: TO_USER
+# 改完之后 sudo newaliases , 重启postfix
