@@ -18,7 +18,7 @@ XXX = models.ManyToManyField(XXX, verbose_name = u"XXX", blank = True, null = Tr
 XXX = models.BooleanField(u"XXX", default = False)
 XXX = models.TextField(u"XXX", blank=True, help_text=u"内容")
 create_time = models.DateTimeField(u"创建时间", auto_now_add=True)
-publish_time= models.DateTimeField(u"最后一次修改时间", auto_now = True)
+publish_time = models.DateTimeField(u"最后一次修改时间", auto_now=True)
 
 
 #BEGIN content_type --------------------

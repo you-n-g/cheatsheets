@@ -1,18 +1,18 @@
 <div id="checkbox_form">
-<div> <input type="button" value="打包勾选中的附件" class="checkbox_form_submit" /></div>
+<div> <input type="button" value="XXX选中的XXX" class="checkbox_form_submit" /></div>
 <table>
     <tbody>
         <tr>
             <th><input type="checkbox" name="allitem" class="CheckedAll" />全选</th>
         </tr>
-        {% for ITEM in all %}
+        {% for XXX_ITEM in XXX_all %}
         <tr>
-            <td><input type="checkbox" name="selected_items[]" value="{{ITEM.pk}}" /></td>
+            <td><input type="checkbox" name="selected_items[]" value="{{XXX_ITEM.pk}}" /></td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-<div> <input type="submit" value="打包勾选中的附件" class="checkbox_form_submit" /> </div>
+<div> <input type="submit" value="XXX勾选中的XXX" class="checkbox_form_submit" /> </div>
 </div>
 
 <form id="hidden_form" method="POST" style="display:none;">
@@ -51,7 +51,7 @@ $(function(){
             hidden_form.submit();
         });
     }
-    bind_checkbox_form_click($(".checkbox_form_submit"), url, $("#hidden_form"));
+    bind_checkbox_form_click($(".checkbox_form_submit"), XXX_url, $("#hidden_form"));
 });
 </script>
 
