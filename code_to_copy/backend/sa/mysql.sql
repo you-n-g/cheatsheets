@@ -1,3 +1,12 @@
+-- BEGIN 参数配置
+-- 编码问题
+collation-server = utf8_general_ci
+character-set-server = utf8
+default_storage_engine = MyISAM
+-- END   参数配置
+
+
+
 -- 忘记用户名密码
 -- 1) 让mysql以 不验证权限的方式启动 
 --    /usr/local/mysql/bin/mysqld_safe --datadir=/data/mysql --pid-file=/data/mysql/localhost.localdomain.pid

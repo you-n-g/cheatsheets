@@ -22,6 +22,9 @@ def get_ok_name(unicode_name):
 EOF
 
 
-
 # 下载整站
 wget -r -p -np -k http://xxx.com/abc/
+
+
+# 从一台服务器rsync到另外一台服务器上 "注意 / 不能错!!!" 
+rsync  -avz -e ssh /home/deploy/livesites/XXX_SITE  XXX_IP:/home/deploy/livesites/

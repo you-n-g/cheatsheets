@@ -102,5 +102,5 @@ datafile = StringIO.StringIO()
 wb.save(datafile)
 datafile.seek(0)
 response = HttpResponse(datafile.read(), mimetype='application/vnd.ms-excel')
-response['Content-Disposition'] = 'attachment; filename=XXX.xls'
+response['Content-Disposition'] = 'attachment; filename=%s' % urllib.quote_plus((u"%sXXX统计.xls" % XXX).encode('utf8')
 return response

@@ -21,6 +21,14 @@ create_time = models.DateTimeField(u"创建时间", auto_now_add=True)
 publish_time = models.DateTimeField(u"最后一次修改时间", auto_now=True)
 
 
+# 从已有文件读取并保存
+from django.core.files.base import File
+with open(XXX_PATH) as f:
+    XXX.fsfile.save(os.path.basename(XXX_PATH), File(f))
+# 尝试一下读取 ImageFile 
+# from django.core.files.images import ImageFile
+
+
 #BEGIN content_type --------------------
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
