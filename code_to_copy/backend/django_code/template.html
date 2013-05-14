@@ -28,6 +28,8 @@
 {%endfor%}
 <!--display form without errors -->
 
-<!--BEGIN 常用tags-->
+<!--BEGIN 常用tags或者语句-->
 {{ value|striptags }}
+{{datetime|date:"Y-m-d"}}
+{% if form.is_multipart %}enctype="multipart/form-data"{% endif %}
 <!--ENd   常用tags-->

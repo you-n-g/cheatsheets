@@ -7,7 +7,7 @@
         </tr>
         {% for XXX_ITEM in XXX_all %}
         <tr>
-            <td><input type="checkbox" name="selected_items[]" value="{{XXX_ITEM.pk}}" /></td>
+            <td><input type="checkbox" name="XXX_NAME" value="{{XXX_ITEM.pk}}" /></td>
         </tr>
         {% endfor %}
     </tbody>
@@ -25,25 +25,25 @@ $(function(){
     $("#checkbox_form .CheckedAll").click(function(){
         var ifck = $("#checkbox_form .CheckedAll").attr("checked");
         if (ifck == undefined) ifck = false;
-        $("#checkbox_form input[type='checkbox'][name='selected_items[]']").each(function() { 
+        $("#checkbox_form input[type='checkbox'][name='XXX_NAME']").each(function() { 
              $(this).attr("checked", ifck);
         });
     });
 
-    $("#checkbox_form input[type='checkbox'][name='selected_items[]']").click(function() { 
+    $("#checkbox_form input[type='checkbox'][name='XXX_NAME']").click(function() { 
         $("#checkbox_form .CheckedAll").attr("checked", false);
     });
 
     function bind_checkbox_form_click(submit_obj, submit_url, hidden_form) {
         submit_obj.click(function(){
-            /* 针对需要提示的操作 弹出提示。
+            /* 针对需要提示的操作 弹出提示。*/
             var me = $(this);
             if (me.attr('title'))
                 if (!confirm(me.attr("title")))
-                    return 1;
-            */
+                    return true;
+
             hidden_form.attr("action", submit_url)
-            $("#checkbox_form input[type='checkbox'][name='selected_items[]']").each(function(){
+            $("#checkbox_form input[type='checkbox'][name='XXX_NAME']").each(function(){
                 var me = $(this);
                 if (me.attr("checked") == "checked")
                     hidden_form.append(me.clone());

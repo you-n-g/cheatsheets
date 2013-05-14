@@ -2,6 +2,7 @@
 -- 编码问题
 collation-server = utf8_general_ci
 character-set-server = utf8
+-- 设置引擎
 default_storage_engine = MyISAM
 -- END   参数配置
 
@@ -26,3 +27,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 -- 不用缓存
 select SQL_NO_CACHE ....
+
+
+-- 新建数据库(包含编码)
+CREATE DATABASE  `XXXX` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;

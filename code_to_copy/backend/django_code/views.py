@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.views.decorators.http import require_POST
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 #--------- 以上几乎是 you_N_G 必用的 
 
 
@@ -87,6 +87,8 @@ def process_xxx(request):
 
 
 # BEGIN pyEx
+
+#导出
 from pyExcelerator import Workbook
 import StringIO
 
@@ -102,5 +104,13 @@ datafile = StringIO.StringIO()
 wb.save(datafile)
 datafile.seek(0)
 response = HttpResponse(datafile.read(), mimetype='application/vnd.ms-excel')
-response['Content-Disposition'] = 'attachment; filename=%s' % urllib.quote_plus((u"%sXXX统计.xls" % XXX).encode('utf8')
+response['Content-Disposition'] = 'attachment; filename=%s.xls' % urllib.quote_plus((u"%sXXX统计" % XXX).encode('utf8'))
 return response
+
+#解析
+from pyExcelerator import parse_xls
+sheets = parse_xls(upload_file)
+sheet_name, sheet_data = sheets[0]
+data = sheet_data[(row, col)]
+
+# END pyEx
