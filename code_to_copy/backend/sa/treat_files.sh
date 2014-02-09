@@ -24,6 +24,11 @@ EOF
 
 # 下载整站
 wget -r -p -np -k http://xxx.com/abc/
+# The default maximum depth is 5 
+# -l depth
+# -r 表示递归下载， 但是一般得配上 -np表示只递归下载本站链接
+# -k 表示将连接改为本地链接
+# -p 表示获得网页显示所需要的元素
 
 
 # 从一台服务器rsync到另外一台服务器上 "注意 / 不能错!!!" 

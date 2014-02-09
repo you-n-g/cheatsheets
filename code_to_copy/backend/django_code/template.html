@@ -20,7 +20,7 @@
 
 <!--display form without errors -->
 {{form.media}}
-
+DISPLAY_NONE_FILED_ERRORS
 {%for field in form%}
 	  {{field.label}}{%if field.field.required%}*{%endif%}
 	  	{{field}}
