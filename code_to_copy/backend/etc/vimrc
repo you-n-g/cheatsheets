@@ -15,7 +15,7 @@ set fencs=ucs-bom,utf-8,euc-cn,cp936,gb18030,latin1
 " set nocp " 更远离vi,接近人类...
 set wildmenu  " tab的时候会显示哪些可选项
 
-# XXX 需要安装插件
+" XXX 需要安装插件
 call pathogen#infect() 
 
 " BEGIN color  XXX 需要安装插件
@@ -178,3 +178,26 @@ EOF
 
 " 让django也支持代码补全应该在bash中拥有如下环境变量
 " export DJANGO_SETTINGS_MODULE=project.settings
+
+
+
+
+"
+"  
+"
+"
+" The plugins I always need
+"
+" Pathogen http://www.vim.org/scripts/script.php?script_id=2332
+"   mkdir ~/.vim/bundle
+"
+" command-T http://www.vim.org/scripts/script.php?script_id=3025
+"   :ruby 1  or  +ruby
+"   sudo apt-get install ruby ruby-mkrf ruby-dev
+"   Do what the page tell you !!!!
+"
+" vimwiki http://www.vim.org/scripts/script.php?script_id=2226
+"
+" Nerdtree http://www.vim.org/scripts/script.php?script_id=1658
+"
+"
