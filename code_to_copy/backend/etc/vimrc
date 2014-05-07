@@ -53,7 +53,7 @@ set smartcase
 "map tc :tabclose<cr>
 map tn :tabnew<cr>
 map tm :tabmove 
-" vim7.3 only
+" XXX vim7.3 only
 set cc=120
 " hi ColorColumn ctermbg=Cyan guibg=Cyan
 highlight ColorColumn ctermbg=Cyan
@@ -189,7 +189,7 @@ EOF
 " The plugins I always need
 "
 " Pathogen http://www.vim.org/scripts/script.php?script_id=2332
-"   mkdir ~/.vim/bundle
+"   mkdir -p ~/.vim/bundle
 "
 " command-T http://www.vim.org/scripts/script.php?script_id=3025
 "   :ruby 1  or  +ruby
@@ -200,4 +200,5 @@ EOF
 "
 " Nerdtree http://www.vim.org/scripts/script.php?script_id=1658
 "
+" Tagbar http://www.vim.org/scripts/script.php?script_id=3465
 "

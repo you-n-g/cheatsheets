@@ -16,3 +16,8 @@ auto eth1
 iface eth1 inet static
 	address 121.194.75.140
 	netmask 255.255.255.128
+
+
+#DHCP
+auto eth0
+iface eth0 inet dhcp
