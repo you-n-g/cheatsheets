@@ -67,7 +67,7 @@ map t<space> <Plug>VimwikiToggleListItem
 " nnoremap <silent> <F8> :TlistToggle<CR>
 nnoremap <silent> <F8> :TagbarToggle<CR>
 nnoremap <silent> <F7> :NERDTreeToggle<CR>
-let NERDTreeIgnore=['\.pyc$', '\.orig$']
+let NERDTreeIgnore=['\.pyc$', '\.orig$', '\.pyo$']
 map <silent> <leader><leader>l :SessionList<CR>
 map <silent> <leader><leader>s :SessionSave<CR>
 map <silent> <leader><leader>c :SessionClose<CR>

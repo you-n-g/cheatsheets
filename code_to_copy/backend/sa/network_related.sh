@@ -12,6 +12,11 @@ route del/add -host IP gw 192.168.1.1
 route del/add default gw 192.168.1.1
 
 ifup eth0 # ifup is a script,  include check config and using DHCP 
+dhclient eth0 # 如果上面有问题，则用这个获取ip地址
+
+# 给网络起别名
+sudo ifconfig eth1:1 192.168.110.123 broadcast 192.168.111.255 netmask 255.255.240.0 up
+ip addr add/del <CIDR> [scope link] dev <DEV> # 不加label的话，用 ip addr list 查看
 # =======END   config network 
 
 
