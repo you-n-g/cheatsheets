@@ -23,3 +23,26 @@ sudo apt-get install bash-completion dialog memcached python-memcache mercurial 
 # 配置vimrc
 # 4)
 # 配置phpmyadmin, 配置一下mysql的编码问题
+
+
+
+
+
+
+
+
+# ====================== for desktop install ============================
+
+# BEGIN xubuntu
+
+# 一般会装好 vim-gnome、vim插件、workspace 数量，透明度
+
+# 补上窗口在workspace移动的快捷键
+Settings - Settings Manager - Window Manager - Keyboard Tab
+
+# 安装Ibus的时候用这个选择默认语言
+sudo apt-get install language-selector-gnome
+
+# virtualbox 共享文件夹
+sudo mount -t vboxsf virtualbox_shared /shared/
+# END   xubuntu
