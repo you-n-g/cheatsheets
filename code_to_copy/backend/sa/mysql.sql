@@ -8,7 +8,7 @@ default_storage_engine = MyISAM
 
 
 
--- 忘记用户名密码
+-- BEGIN 忘记用户名密码
 -- 1) 让mysql以 不验证权限的方式启动 
 --    /usr/local/mysql/bin/mysqld_safe --datadir=/data/mysql --pid-file=/data/mysql/localhost.localdomain.pid
 ./bin/mysqld_safe --skip-grant-tables --datadir=/data/mysql --pid-file=/data/mysql/localhost.localdomain.pid
@@ -17,6 +17,8 @@ default_storage_engine = MyISAM
 USE mysql
 update user set password=password("XXX") where user="root";
 flush privileges;
+-- END   忘记用户名密码
+
 
 
 -- 暂时解除外键 约束
@@ -25,9 +27,23 @@ SET FOREIGN_KEY_CHECKS = 0;
 SET FOREIGN_KEY_CHECKS = 1;
 
 
+
 -- 不用缓存
 select SQL_NO_CACHE ....
 
 
+
 -- 新建数据库(包含编码)
 CREATE DATABASE  `XXXX` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+
+
+-- BEGIN 给特定主机授权
+CREATE USER 'root_XXX'@'XXX_host' IDENTIFIED BY 'XXX_password';
+GRANT ALL ON *.* TO 'root_XXX'@'XXX_host';
+
+-- 如果不小心先运行了上面的grant， 则会自动创建用户，则需要设置密码
+SET PASSWORD FOR 'root'@'10.1.241.53' = PASSWORD('20131021');
+
+flush privileges;
+-- END 给特定主机授权
