@@ -1,7 +1,18 @@
 
 
+
+# BEGIN 常用基本操作
+
+#patch的导入导出
 git format-patch master # 将patch都导出来
 git apply <filename> # 之后再导入
+
+# 看分支图
+git log --graph --oneline --decorate --all
+
+# 基本操作主要参考  http://rogerdudler.github.io/git-guide/
+# END   常用基本操作
+
 
 
 
