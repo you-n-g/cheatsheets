@@ -28,7 +28,6 @@ iotop
 lsof: 方向选中相关进程，l
 iotop
 
-
 # END   计算机性能状况
 
 
