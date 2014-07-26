@@ -17,6 +17,12 @@ dhclient eth0 # 如果上面有问题，则用这个获取ip地址
 # 给网络起别名
 sudo ifconfig eth1:1 192.168.110.123 broadcast 192.168.111.255 netmask 255.255.240.0 up
 ip addr add/del <CIDR> [scope link] dev <DEV> # 不加label的话，用 ip addr list 查看
+
+
+# 设置无线网
+# 1) 确认能搜索到网络 && 驱动加载了
+iwlist scan 
+
 # =======END   config network 
 
 

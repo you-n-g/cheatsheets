@@ -12,17 +12,29 @@ git config --global color.ui auto # 配置自动颜色
 git format-patch master # 将patch都导出来
 git apply <filename> # 之后再导入
 
-# 查看区别&&看分支图
-git log --graph --oneline --decorate --all # 查看分支图
+# 看分支图
+git log --graph --oneline --decorate --all
 git diff '@{2}' # 查看最近两次改变的合集
+
 
 # 恢复
 git checkout -- .  # 仅仅作用于working directory, 不包括staged
+git checkout filename # 恢复某文件到 head 版本
 git reset --hard  # working directory, staged通杀; reset 不会删除commit， 但是会改变分支和head指针。
 
 # 合并
 git reset --merge # cherry-pick 失败
 git cherry-pick --abort # merge 失败
+
+
+
+
+# 管理submodule
+#查看
+git submodule 能查看有哪些子模块。
+#初始化
+git submodule init # 初始化的时候只是得到子模块的指针
+git submodule update # 可以更新子模块
 
 
 # END   常用基本操作
@@ -40,8 +52,6 @@ git cherry-pick --abort # merge 失败
 
 # 修改过的文件用 pep8 看看
 pep8 <filename>
-
-
 # 每个review对应一个change， 对同一个review应该使用同一个 change, 在gerrit中能看到
 # http://sinojelly.sinaapp.com/2011/08/git-changes-submitted-by-the-previous-method-pay-special-attention-to-change-id-unchanged/
 
@@ -66,7 +76,7 @@ git reset HEAD^
 		* git remote rename origin_name local_name : 可以修改某个远程仓库在本地的命名。
 		* git remote rm repo_name :  在本地删除远程仓库。
 
-	* git fetch [REMOTE REPO] [remote_brachname:local_branchname]：更新远程仓库，后面的参数会从远程仓库更新到本地仓库????
+	* git fetch [REMOTE REPO] [remote_brachname:local_branchname]：从远程仓库更新到本地仓库。
 	* git init:: 初始化一个git版本
 	* git pull [remote-name] [branch-name] other.computer:/path/to/files ::  等价于 git fetch  + git  merge FETCH_HEAD
 	* push
@@ -124,10 +134,6 @@ git branch [branch name] :: 可以查看branch或者新建分支指针, 不加�
 		* git rebase [主分支] [某分支] :  把某分支 rebase 到主分支上去。  如果没有某分支则是表示当前分支。
 		* git rebase --onto master server client  :   取出 client 分支，找出 client 分支和 server 分支的共同祖先之后的变化，然后把它们在 master 上重演一遍
 
-	* submodule
-
-		* git submodule 能查看有哪些子模块。
-		* git submodule update  初始化的时候只是得到子模块的指针，可以更新子模块
 
 	* git log :   --graph 能显示分支走向。
 	* git stash： 

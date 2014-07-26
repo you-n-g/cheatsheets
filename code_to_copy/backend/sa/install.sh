@@ -35,7 +35,10 @@ sudo apt-get install bash-completion dialog memcached python-memcache mercurial 
 
 # BEGIN xubuntu
 
-# 一般会装好 vim-gnome、vim插件、workspace 数量，透明度
+# 安装常用软件
+sudo apt-get install vim-gnome chromium-browser flashplugin-installer
+
+# 一般会装好 vim插件、workspace 数量，透明度
 
 # 补上窗口在workspace移动的快捷键
 Settings - Settings Manager - Window Manager - Keyboard Tab
@@ -45,4 +48,8 @@ sudo apt-get install language-selector-gnome
 
 # virtualbox 共享文件夹
 sudo mount -t vboxsf virtualbox_shared /shared/
+
+# 为了能正常访问google的服务
+# addd smartladder.googlecode.com/svn/hosts/pc/hosts to hosts
+
 # END   xubuntu
