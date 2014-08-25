@@ -105,6 +105,11 @@ func! CompileRunGpp()
     "exec "!./%:r.exe"
 endfunc
 
+map <F9>j :call CompileRunGpp()<CR>
+func! CompileRunGpp()
+    exec "w"
+    exec "!echo -e '\033[1;32mcompiling.....\033[0m';javac %;echo -e '\033[1;34m-----------here_is_the_ans_of_%----------\033[0m';java %:r;echo -e '\033[1;33mend...\033[0m';rm %:r.class"
+endfunc
 
 " bundle 里的这些插件
 " 源于 http://python.42qu.com/11180003
