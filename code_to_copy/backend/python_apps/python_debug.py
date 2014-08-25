@@ -113,3 +113,11 @@ def lock_program(LOG, lock_name):
 
 
 
+
+
+
+#========================================= normal debug ===================
+
+# 看一文件夹下的所有log输出
+tail -f *.log
+
