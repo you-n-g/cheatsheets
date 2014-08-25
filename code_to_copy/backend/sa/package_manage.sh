@@ -44,6 +44,22 @@ rpmbuild -bb ../SPECS/xapi.spec
 
 
 
+
+# Debian 系列
+
+echo vsftpd hold | sudo dpkg --set-selections # 设置某个包不参与自动升级, dpkg --get-selections可以看看目前的情况
+
+
+
+
+
+
+
+
+
+
+
+
 #==================XXX.spec样式=========================================
 
 Name:          qiyi-xapi

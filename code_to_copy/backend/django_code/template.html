@@ -1,3 +1,8 @@
+{% extends 'base.html' %}
+{%block content %}
+{{ block.super }}
+{% endblock %}
+
 <!-- display form errors -->
 {%for field in form%}
     {% if field.errors %}
@@ -12,11 +17,17 @@
 {% endfor %}
 
 {% if form.non_field_errors %}
+    {% form.non_field_errors.as_text%}
+{% endif %}
+
+{% if form.non_field_errors %}
     {% for error in form.non_field_errors%}
         <span>* {{ error }}</span>
     {% endfor %}
 {% endif %}
+
 <!-- display form errors -->
+
 
 <!--display form without errors -->
 {{form.media}}
@@ -28,8 +39,11 @@ DISPLAY_NONE_FILED_ERRORS
 {%endfor%}
 <!--display form without errors -->
 
+
 <!--BEGIN 常用tags或者语句-->
 {{ value|striptags }}
 {{datetime|date:"Y-m-d"}}
+{{object|default:""}}
+{{object|default_if_none:""}}
 {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}
 <!--ENd   常用tags-->

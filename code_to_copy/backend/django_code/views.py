@@ -18,17 +18,42 @@ from django.contrib.auth.decorators import login_required
 
 
 
-# redirect
+# post and redirect
 @require_POST
 def post_XXX(request):
     redirect_url = request.META.get('HTTP_REFERER', reverse('XXX', kwargs={XXX}))
     messages.info(request, u'XXX')
     return HttpResponseRedirect(redirect_url)
+"""html
+<form action="{% url delete_XXX %}" method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="XXXid" value="{{XXX.pk}}">
+    <input type="submit" value="删除XXX">
+</form>
+"""
+
+
+# 基本的增删改查参考 lab_manage_system
+
+
+# add or edit object
+def add_or_edit_lab(request, XXXid=None):
+    instance = XXXid and get_object_or_404(XXX, pk=XXXid)
+    form = XXXForm(request.POST or None, instance=instance)
+    if form.is_valid():
+        new_instance = form.save(commit=False)
+        # do XXX to new_instance
+        new_instance.save()
+        messages.success(request, u"%sXXX信息成功" % (u"修改" if instance else u"添加"))
+        return HttpResponseRedirect(reverse('XXX_list'))
+    return render(request, "XXX/add_or_edit_XXX.html", locals())
+
 
 
 # set password
 from django.contrib.auth.forms import SetPasswordForm
 form = SetPasswordForm(data=request.POST or None, user=request.user)
+
 
 
 # json response
@@ -38,6 +63,7 @@ return HttpResponse(json.dumps({
     }),
     mimetype="application/json"
 )
+
 
 
 # BEGIN post process single or multi object
@@ -77,7 +103,7 @@ def process_xxx(request):
 
 ''' html
 <form action="{% url process_XXX %}" method="POST" style="display:none;">
-    {% csrf_token%}
+    {% csrf_token %}
     <input type="hidden" name="XXXids" value="{{XXX.pk}}" />
     <input type="hidden" name="action" value="XXXX" />
     <input type="submit" value="XXX" />

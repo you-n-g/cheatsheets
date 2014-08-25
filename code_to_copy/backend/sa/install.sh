@@ -52,4 +52,6 @@ sudo mount -t vboxsf virtualbox_shared /shared/
 # 为了能正常访问google的服务
 # addd smartladder.googlecode.com/svn/hosts/pc/hosts to hosts
 
+# TODO  14.04 的sunpinyin输入法有问题
+
 # END   xubuntu

@@ -1,31 +1,52 @@
 
 
 
-# BEGIN 常用基本操作
+# BEGIN 常用基本操作 VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
 
 # 基本操作主要参考  http://rogerdudler.github.io/git-guide/
 
+
 # 配置
 git config --global color.ui auto # 配置自动颜色
+
 
 #patch的导入导出
 git format-patch master # 将patch都导出来
 git apply <filename> # 之后再导入
 
+
 # 看分支图
-git log --graph --oneline --decorate --all
-git diff '@{2}' # 查看最近两次改变的合集
+git log --graph --oneline --decorate --all  # all 代表显示所有分支， 本来只会显示head所在的分支
+git diff '@{2}' # 查看最近两次改变的合集 # diff 默认是 working dir和index比较， diff HEAD才是 working dir 和 repo比较
 
 
 # 恢复
-git checkout -- .  # 仅仅作用于working directory, 不包括staged
-git checkout filename # 恢复某文件到 head 版本
-git reset --hard  # working directory, staged通杀; reset 不会删除commit， 但是会改变分支和head指针。
+
+# 操作working directory
+git checkout .  # 恢复到head版本 仅仅作用于working directory, 不包括staged
+git checkout -- filename # 恢复某文件到 head 版本， --为了以防在 有和filename同名的branch时没有歧义
+
+# 操作分支指针
+git reset --hard COMMIT_NAME # 如果加了 --hard， working directory, staged通杀; 默认是--mixed 清除index，保留working directory; reset 不会删除commit， 但是会改变head指向的分支指针;
+
+# 操作 cached/staged/index # 可以 git ls-files 看index里有什么
+git rm --cached filename  # 从 Index 删除文件， 其他都不管； 如果以前就有，新的commit中就不会有这个文件， 有点像hg forget； 如果这个文件是最新commit之后加上的，则直接在index删除
+# 据说 git reset filename 也有一样的效果， 区别仅仅在于这里需要 filename 有一个 previous 版本 在 HEAD中
+
+
 
 # 合并
 git reset --merge # cherry-pick 失败
 git cherry-pick --abort # merge 失败
 
+
+
+# 提交
+git push [<repository> [<refspec>...]]
+    # 相当于向repository 提交， 对应规则是 refspec; repository 省略相当于 orign
+    # refspec 格式为 <src>:<dst>
+        # 省略<src> 相当于删除dst , 即  git push origin :branchname
+        # 省略:<dst>相当于将同名branch同步到orign中
 
 
 
@@ -37,7 +58,7 @@ git submodule init # 初始化的时候只是得到子模块的指针
 git submodule update # 可以更新子模块
 
 
-# END   常用基本操作
+# END   常用基本操作 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 
@@ -79,10 +100,6 @@ git reset HEAD^
 	* git fetch [REMOTE REPO] [remote_brachname:local_branchname]：从远程仓库更新到本地仓库。
 	* git init:: 初始化一个git版本
 	* git pull [remote-name] [branch-name] other.computer:/path/to/files ::  等价于 git fetch  + git  merge FETCH_HEAD
-	* push
-
-		* git push [origin branchname] :: 可以把指定的branch push上去，并用相同的名字， 默认的git push 相当于git push origin。 如果都不加， 就把当前的跟踪分支的修改提交到远程分支上去。
-		* git push origin :branchname :: 这样可以把远程的branch删除 ????
 
 	* git add :  把文件放入暂存状态， 如果 untracked 就track并  放入暂存状态。
 	* git rm (path|file|pattern) :  把这个删除操作放到暂存区里。 rm的时候加 --cached 相当于forget.
@@ -153,6 +170,20 @@ github使用篇
 	* key能放在个人面版里或者repo的admin页面里
 	* 设置git的默认branch在repo的admin页面里!!
 
+# VVVVVVVVVVVVVVVVVVV mercurial VVVVVVVVVVVVVVVVVVVVV
+
+# VV .hg/hgrc VV
+[ui]
+username = Young Yang
+merge = vimdiff
+
+[paths]                                                  
+default = ssh://hg@bitbucket.org/XXX
+
+[extensions]
+churn =
+
+# ^^ .hg/hgrc ^^
 
  
 mercurial

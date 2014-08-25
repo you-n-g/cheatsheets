@@ -10,6 +10,6 @@ urlpatterns = patterns('XXX.views',
     url(r"^XXX/$", u"django.contrib.auth.views.login", {
                                 'template_name': 'registration/login.html',
                                 #'authentication_form': XXX_AUTH_FORM,
-                           }),
+        }),
     ('^XXX/$', direct_to_template, {'template': 'XXX.html'})
 )

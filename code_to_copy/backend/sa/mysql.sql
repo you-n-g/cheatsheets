@@ -39,8 +39,8 @@ CREATE DATABASE  `XXXX` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 -- BEGIN 给特定主机授权
-CREATE USER 'root_XXX'@'XXX_host' IDENTIFIED BY 'XXX_password';
-GRANT ALL ON *.* TO 'root_XXX'@'XXX_host';
+CREATE USER 'root_XXX'@'XXX_host_like_192.168.%.%' IDENTIFIED BY 'XXX_password';
+GRANT ALL ON *.* TO 'root_XXX'@'XXX_host_like_192.168.%.%';
 
 -- 如果不小心先运行了上面的grant， 则会自动创建用户，则需要设置密码
 SET PASSWORD FOR 'root'@'10.1.241.53' = PASSWORD('20131021');

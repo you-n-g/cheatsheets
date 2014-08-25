@@ -31,3 +31,30 @@ set -x # 设置允许的时候会把命令写出来， 而且会在命令前面�
 PROJECT_PATH=`dirname "$0"`
 PROJECT_PATH=`cd "$PROJECT_PATH"; pwd`
 
+
+
+
+# .bashrc
+export EDITOR=`which vim`
+
+
+# bash 的一些工具
+# 多线程
+for i in {1..5} do
+{
+    #commands
+    sleep 1
+    echo done
+}&
+done
+wait
+echo "all done"
+
+
+# 同时打开多个窗口
+xfce4-terminal/gnome-terminal --working-directory="/home/young/" \
+    --tab --title CB02  -e 'bash -c "ls / ; exec bash"' \
+    --tab --title CB02  -e 'bash -c "ls ~ ;" '
+
+
+

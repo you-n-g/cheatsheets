@@ -5,6 +5,7 @@
 
 # BEGIN PDB
 # https://docs.python.org/2/library/pdb.html
+# !!!!  调试 django 时超赞的！！！
 import pdb
 
 pdb.set_trace()

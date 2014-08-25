@@ -1,0 +1,13 @@
+<!--
+lab_manage_system中的代码最有参考价值
+直接cp static/plugins/highslide/ 和  widget_templates/highslide.html， 再加上下面的代码就有效
+-->
+
+{% block extra_header %}
+{{block.super}}
+{% include "widget_templates/highslide.html"%}
+{% endblock %}
+
+<a href="{{XXX_IMAGE.get_display_url}}" class="highslide" onclick="return hs.expand(this)">
+        <img src="{{XXX_IMAGE.get_thumbnail_url}}" alt="" title="Click to enlarge" />
+</a>

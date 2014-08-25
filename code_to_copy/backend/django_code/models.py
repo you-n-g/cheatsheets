@@ -12,13 +12,13 @@ Q = models.Q
 F = models.F
 
 XXX = models.CharField(u"XXX", max_length=100)
-XXX = models.ForeignKey("XXX", verbose_name = u"XXX", blank = True, null = True, related_name = u'XXX')
-XXX = models.IntegerField(u"XXX", default = 0)
-XXX = models.ManyToManyField(XXX, verbose_name = u"XXX", blank = True, null = True, through = XXX)
-XXX = models.BooleanField(u"XXX", default = False)
+XXX = models.ForeignKey("XXX", verbose_name=u"XXX", blank=True, null=True, related_name=u'XXX')
+XXX = models.IntegerField(u"XXX", default=0)
+XXX = models.ManyToManyField(XXX, verbose_name=u"XXX", blank=True, null=True, through=XXX)
+XXX = models.BooleanField(u"XXX", default=False)
 XXX = models.TextField(u"XXX", blank=True, help_text=u"内容")
 create_time = models.DateTimeField(u"创建时间", auto_now_add=True)
-publish_time = models.DateTimeField(u"最后一次修改时间", auto_now=True)
+update_time = models.DateTimeField(u"最后一次修改时间", auto_now=True)
 
 
 # 从已有文件读取并保存
@@ -50,7 +50,7 @@ XXX_content_type_object.get_object_for_this_type(XXX)
 #-------------------- 某些app的用法 --------------------
 
 # BEGIN mptt
-org.is_descendant_of(self, include_self = include_self)
+org.is_descendant_of(self, include_self=include_self)
 org.is_leaf_node()
 org.get_children() #得到直属的children
 org.get_descendants() #得所有的后代
