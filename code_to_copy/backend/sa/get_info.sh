@@ -26,7 +26,7 @@ iotop
 
 # htop: iotop top lsof的合体，  用户体验也非常好
 lsof: 方向选中相关进程，l
-iotop
+iotop: TODO 看IO怎么实现
 
 # END   计算机性能状况
 

@@ -77,3 +77,29 @@ listen XXX
 #TODO log
 # =======END   HAproxy TCP负载均衡
 
+
+
+
+
+
+# BEGIN polipo VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+sudo apt-get install polipo
+
+# conifg 这里是要将http proxy套在socket proxy上，因为有的应用无法直接使用socket代理
+proxyAddress = "127.0.0.1"
+proxyPort = 6489
+socksParentProxy = "127.0.0.1:8964"
+socksProxyType = socks5
+
+# when you want to use
+export http_proxy=127.0.0.1:6489  # when you want to use
+export https_proxy=127.0.0.1:6489  # when you want to use
+# after you use
+unset https_proxy  http_proxy
+# BEGIN polipo ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+# ssh 妙用
+ssh -L LOCAL_ADDRESS:LOCAL_PORT:REMOTE_ADDRESS:REMOTE_PORT XXX_USER@XXX_HOST
+# 所以配合polipo也可以在远方开一个http_proxy, 然后再ssh -L 转到本地来
+

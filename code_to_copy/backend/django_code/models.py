@@ -10,6 +10,8 @@ class XXX(models.Model):
 
 Q = models.Q
 F = models.F
+Sum = models.Sum
+objects.all().aggregate(Sum('XXX_field'))  # 返回 {"XXX_field__sum": MAX_VALUE}
 
 XXX = models.CharField(u"XXX", max_length=100)
 XXX = models.ForeignKey("XXX", verbose_name=u"XXX", blank=True, null=True, related_name=u'XXX')
@@ -45,6 +47,15 @@ XXX_content_type_object.get_object_for_this_type(XXX)
 
 #END   content_type --------------------
 
+
+# 查看related_objects
+def has_related_objects(obj):
+    # 经测试， 我是不会考虑many to many 的(起码是被关联的时候)
+    links = [rel.get_accessor_name() for rel in obj._meta.get_all_related_objects()]
+    for link in links:
+        if getattr(obj, link).all().exists():
+            return True
+    return False
 
 
 #-------------------- 某些app的用法 --------------------

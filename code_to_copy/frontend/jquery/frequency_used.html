@@ -11,6 +11,14 @@ $(function(){
 // END   标记侧边栏
 
 // END   处理表单
+$("#XXX_FORM").bind("keyup keypress", function(e) { // 让回车不会自动提交表单
+  var code = e.keyCode || e.which; 
+  if (code  == 13) {               
+    e.preventDefault();
+    return false;
+  }
+});
+
 $("选中一些元素，然后这会把里面的input给序列化").serialize()
 // BEGIN 处理表单
 </script>

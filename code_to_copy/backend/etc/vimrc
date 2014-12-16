@@ -48,7 +48,6 @@ set shiftwidth=4
 set number
 set ignorecase
 set smartcase
-" set ignorecase
 "map th :tabpre<cr>  "gT
 "map tl :tabnext<cr> "gt
 "map tc :tabclose<cr>
@@ -182,3 +181,20 @@ let g:flake8_ignore="F401,E128"
 "
 " matchit http://www.vim.org/scripts/script.php?script_id=39
 "
+
+
+"
+" YouCompleteMe
+" http://valloric.github.io/YouCompleteMe/
+" 精简文档：http://www.alexeyshmalko.com/2014/youcompleteme-ultimate-autocomplete-plugin-for-vim/
+"
+" 亮点：  可以兼容UltiSnips了  python 和 C的补全都很棒, 补全是字串补全, GoTo 这些子命令
+"
+" * INSTALL * 
+" cd ~/.vim/bundle
+" git clone https://github.com/Valloric/YouCompleteMe.git
+" cd YouCompleteMe
+" git submodule update --init --recursive
+" ./install.sh --clang-completer
+"
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py" " this file come from https://github.com/rasendubi/dotfiles

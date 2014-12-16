@@ -48,6 +48,7 @@ sudo apt-get install language-selector-gnome
 
 # virtualbox 共享文件夹
 sudo mount -t vboxsf virtualbox_shared /shared/
+sudo adduser XXXX vboxsf  # 让普通用户成为vboxsf组里的东西，然后用户就可以有权限访问了， 不过这个功能需要用户登出再登录
 
 # 为了能正常访问google的服务
 # addd smartladder.googlecode.com/svn/hosts/pc/hosts to hosts

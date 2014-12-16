@@ -17,7 +17,7 @@
 {% endfor %}
 
 {% if form.non_field_errors %}
-    {% form.non_field_errors.as_text%}
+    {{ form.non_field_errors.as_text}}
 {% endif %}
 
 {% if form.non_field_errors %}
@@ -45,5 +45,6 @@ DISPLAY_NONE_FILED_ERRORS
 {{datetime|date:"Y-m-d"}}
 {{object|default:""}}
 {{object|default_if_none:""}}
+{% if XXXXX|yesno:"yeah,no,maybe" == "maybe" %}
 {% if form.is_multipart %}enctype="multipart/form-data"{% endif %}
 <!--ENd   常用tags-->

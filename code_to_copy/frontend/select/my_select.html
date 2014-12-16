@@ -42,7 +42,7 @@ $(function(){
                 if (!confirm(me.attr("title")))
                     return true;
 
-            hidden_form.attr("action", submit_url)
+            hidden_form.attr("action", submit_url);
             $("#checkbox_form input[type='checkbox'][name='XXX_NAME']").each(function(){
                 var me = $(this);
                 if (me.attr("checked") == "checked")
