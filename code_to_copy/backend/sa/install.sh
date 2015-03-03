@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # pip
 python setup.py build -f #的输出结果最后 的 PIL 1.1.7 SETUP SUMMARY 注意看看依赖是否都满足
 

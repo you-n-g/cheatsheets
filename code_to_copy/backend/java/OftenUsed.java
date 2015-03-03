@@ -49,6 +49,7 @@ public class JavaDebug {
 
 
     // LOG
+    // TODO 用哪个Logger????
     private static final Logger log = Logger.getLogger( CorpusIndexMaker.class.getName() );
     log.info("Begin Loading listFilesForFolder....");
 

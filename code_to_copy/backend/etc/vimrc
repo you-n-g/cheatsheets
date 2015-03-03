@@ -72,7 +72,8 @@ syntax on
 set nocompatible
 filetype plugin on 
 
-
+" make markdown highlight works
+autocmd BufRead,BufNew *.md,*.markdown set filetype=markdown
 
 
 " 十六进制编辑功能 :call Hexedit()

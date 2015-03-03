@@ -7,6 +7,7 @@
 
 
 # 配置
+# man git config 可以看看这些配置项是干嘛的
 git config --global color.ui auto # 配置自动颜色
 # 配置merge
 git config --global merge.tool vimdiff
@@ -15,7 +16,7 @@ git config --global mergetool.prompt false
 
 #patch的导入导出
 git format-patch master # 将patch都导出来
-git apply <filename> # 之后再导入
+git apply <filename> # 之后再导入, 默认不加参数时是不会出现在index里的，更不会commit
 
 
 # 看分支图
@@ -61,6 +62,7 @@ git push [<repository> [<refspec>...]]
     # refspec 格式为 <src>:<dst>
         # 省略<src> 相当于删除dst , 即  git push origin :branchname
         # 省略:<dst>相当于将同名branch同步到orign中
+git push -f origin HEAD^:master  # 案例: 想反悔一个commit时， 将本地HEAD的上一个commit强行提交到master分支，这样本地不变，repo恢复一个
 
 
 
@@ -73,6 +75,14 @@ git submodule update # 可以更新子模块
 
 git submodule update --init --recursive # 其实千言万语可以汇成一句话……
 
+
+# fork后，用项目repo的内容 更新本地repo
+# TODO 等待消化， 取自 docker-从入门到实践 http://yeasy.gitbooks.io/docker_practice/
+git	remote	add	upstream	https://github.com/yeasy/docker_practice
+git	fetch	upstream 
+git	checkout	master 
+git	rebase	upstream/master 
+git	push	-f	origin	master
 
 
 
