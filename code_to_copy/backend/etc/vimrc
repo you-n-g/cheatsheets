@@ -19,13 +19,8 @@ call pathogen#infect()
 
 
 " BEGIN color  XXX 需要安装插件
-" colo koehler
+colo koehler
 syntax enable        
-" let g:solarized_termcolors=256
-let g:solarized_termtrans=1
-let g:solarized_visibility="low"
-set background=dark  
-colorscheme solarized
 " END color
 
 

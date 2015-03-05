@@ -69,6 +69,10 @@ git push -f origin HEAD^:master  # 案例: 想反悔一个commit时， 将本地
 # 管理submodule
 #查看
 git submodule 能查看有哪些子模块。
+
+#添加
+git submodule add GIT_URL [PATH] # 加完后会在 .gitmodules 中加东西
+
 #初始化
 git submodule init # 初始化的时候只是得到子模块的指针
 git submodule update # 可以更新子模块
