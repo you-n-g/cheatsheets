@@ -26,6 +26,10 @@ sudo apt-get install bash-completion dialog memcached python-memcache mercurial 
 # 配置phpmyadmin, 配置一下mysql的编码问题
 
 
+# 快速部署一台centOS服务器
+sudo yum groupinstall 'Development Tools' # 相当于安装build-essential
+
+
 
 
 

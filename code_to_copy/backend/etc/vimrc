@@ -5,7 +5,7 @@
 "make the coding ok
 set encoding=utf-8
 set fencs=ucs-bom,utf-8,euc-cn,cp936,gb18030,latin1 " fileencodings
- source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/delmenu.vim
 
 " source $VIMRUNTIME/menu.vim
 " language messages zh_CN.utf-8
@@ -19,7 +19,7 @@ call pathogen#infect()
 
 
 " BEGIN color  XXX 需要安装插件
-colo koehler
+" colo koehler
 syntax enable        
 " END color
 
@@ -93,15 +93,15 @@ func! RunShell()
     exec "!echo -e '\033[1;34m-----------here\ is\ the\ ans\ of\ %----------\033[0m';bash %"
 endfunc
 
-map <F9>c :call CompileRunGpp()<CR>
-func! CompileRunGpp()
+map <F9>c :call CompileRunCpp()<CR>
+func! CompileRunCpp()
     exec "w"
     exec "!echo -e '\033[1;32mcompiling.....\033[0m';gcc % -o %:r.exe;echo -e '\033[1;34m-----------here_is_the_ans_of_%----------\033[0m';./%:r.exe;echo -e '\033[1;33mend...\033[0m';rm %:r.exe"
     "exec "!./%:r.exe"
 endfunc
 
-map <F9>j :call CompileRunGpp()<CR>
-func! CompileRunGpp()
+map <F9>j :call CompileRunJava()<CR>
+func! CompileRunJava()
     exec "w"
     exec "!echo -e '\033[1;32mcompiling.....\033[0m';javac %;echo -e '\033[1;34m-----------here_is_the_ans_of_%----------\033[0m';java %:r;echo -e '\033[1;33mend...\033[0m';rm %:r.class"
 endfunc
