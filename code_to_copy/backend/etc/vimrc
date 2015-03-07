@@ -1,7 +1,3 @@
-" color evening
-" colo else
-" colo torte
-
 "make the coding ok
 set encoding=utf-8
 set fencs=ucs-bom,utf-8,euc-cn,cp936,gb18030,latin1 " fileencodings
@@ -19,7 +15,10 @@ call pathogen#infect()
 
 
 " BEGIN color  XXX 需要安装插件
-" colo koehler
+let g:solarized_termtrans=1
+let g:solarized_visibility="low"
+set background=dark  
+colorscheme solarized
 syntax enable        
 " END color
 
