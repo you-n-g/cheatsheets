@@ -57,11 +57,12 @@ git stash apply  # 应用 储存， 目录不一定要干净， 不一定要和�
 
 
 # 提交
-git push [<repository> [<refspec>...]]
+git push  [-u] [<repository> [<refspec>...]]
     # 相当于向repository 提交， 对应规则是 refspec; repository 省略相当于 orign
     # refspec 格式为 <src>:<dst>
         # 省略<src> 相当于删除dst , 即  git push origin :branchname
         # 省略:<dst>相当于将同名branch同步到orign中
+    # -u 表示上传成功后自动设置本地branch track 相应的 remote branch
 git push -f origin HEAD^:master  # 案例: 想反悔一个commit时， 将本地HEAD的上一个commit强行提交到master分支，这样本地不变，repo恢复一个
 
 
@@ -86,7 +87,15 @@ git	remote	add	upstream	https://github.com/yeasy/docker_practice
 git	fetch	upstream 
 git	checkout	master 
 git	rebase	upstream/master 
-git	push	-f	origin	master
+<<EOF * rebase (分支衍合)
+git rebase [主分支] [某分支] :  把某分支 rebase 到主分支上去，相当于把某分支从主分支的接连处剪下来，然后接到主分支的尾巴上去
+- 如果没指定 某分支 则是 用当前分支当某分支
+- 如果没指定 主分支 则用 branch.<某分支>.remote 和 branch.<某分支>.merge 来当主分支
+git rebase --onto master server client  :   取出 client 分支，找出 client 分支和 server 分支的共同祖先之后的变化，然后把它们在 master 上重演一遍
+如果 apply 失败则 会产生 .git/rebase-apply 这个文件
+rebase 的好处在于少了个merge，branch会cleaner
+EOF
+git	push	-f	origin	master  # 需要force push的原因是rebase后整个branch和 origin的 branch分叉了
 
 
 
@@ -178,10 +187,6 @@ git branch [branch name] :: 可以查看branch或者新建分支指针, 不加�
 		* git push <reponame> <tagname> 可以提交指定tag
 		* git  push <reponame> --tags  可以把所有tags 提交上去。
 
-	* rebase (分支衍合)
-
-		* git rebase [主分支] [某分支] :  把某分支 rebase 到主分支上去。  如果没有某分支则是表示当前分支。
-		* git rebase --onto master server client  :   取出 client 分支，找出 client 分支和 server 分支的共同祖先之后的变化，然后把它们在 master 上重演一遍
 
 
 	* git log :   --graph 能显示分支走向。

@@ -57,4 +57,3 @@ xfce4-terminal/gnome-terminal --working-directory="/home/young/" \
     --tab --title CB02  -e 'bash -c "ls ~ ;" '
 
 
-

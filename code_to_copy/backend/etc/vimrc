@@ -167,7 +167,7 @@ nnoremap <silent> <F8> :TagbarToggle<CR>
 "   git clone https://github.com/nvie/vim-flake8 ~/.vim/bundle/
 "   sudo apt-get install python-flake8
 let g:no_flake8_maps=1
-autocmd BufWritePost *.py call Flake8() " XXX 这个功能需要安装插件
+" autocmd BufWritePost *.py call Flake8() " XXX 这个功能需要安装插件
 let g:flake8_max_line_length=120
 " 针对项目随时修改
 let g:flake8_ignore="F401,E128"
@@ -183,9 +183,10 @@ let g:flake8_ignore="F401,E128"
 " http://valloric.github.io/YouCompleteMe/
 " 精简文档：http://www.alexeyshmalko.com/2014/youcompleteme-ultimate-autocomplete-plugin-for-vim/
 "
-" 亮点：  可以兼容UltiSnips了  python 和 C的补全都很棒, 补全是字串补全, GoTo 这些子命令
+" 亮点：  可以兼容UltiSnips了  python 和 C的补全都很棒, 补全是字串补全, GoTo 这些子命令, 可以和go-vim兼容
 "
 " * INSTALL * 
+" apt-get install python-dev
 " cd ~/.vim/bundle
 " git clone https://github.com/Valloric/YouCompleteMe.git
 " cd YouCompleteMe
@@ -193,3 +194,10 @@ let g:flake8_ignore="F401,E128"
 " ./install.sh --clang-completer
 "
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py" " this file come from https://github.com/rasendubi/dotfiles
+
+"
+" vim-go
+" https://github.com/fatih/vim-go
+" 集成了绝大部分go的开发环境
+" 依赖 GOPATH, GOROOT
+" 我仅仅会用 gd， 还有更多的方法等你去尝试
