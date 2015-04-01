@@ -92,10 +92,11 @@ socksParentProxy = "127.0.0.1:8964"
 socksProxyType = socks5
 
 # when you want to use
-export http_proxy=127.0.0.1:6489  # when you want to use
-export https_proxy=127.0.0.1:6489  # when you want to use
+export http_proxy=127.0.0.1:6489  # don't capitalize it !!!!
+export https_proxy=127.0.0.1:6489  # don't capitalize it !!!!
+export SOCKS_SERVER=127.0.0.1:8964
 # after you use
-unset https_proxy  http_proxy
+unset https_proxy  http_proxy SOCKS_SERVER
 # BEGIN polipo ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 

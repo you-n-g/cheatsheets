@@ -18,6 +18,7 @@ pdb.set_trace()
 import traceback
 for line in traceback.format_stack():
     print line
+# 可以配合 os.getpid() 来得到当前进程的pid 看看在哪里运行
 # END   traceback
 
 

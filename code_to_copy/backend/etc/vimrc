@@ -213,6 +213,12 @@ au FileType c,cpp,objc,objcpp,python,cs nmap gD :YcmCompleter GoToDeclaration<cr
 " 依赖 GOPATH, GOROOT
 " 查文档时不会在项目里查，因为不知道项目在哪里呀！
 " 所以回去系统默认的函数库中(依赖GOROOT??) 和 GOPATH/src下查询，所以设置好gopath非常重要呀
+"
+" 有用的命令
+" :GoImplements 找到interface的实现， 和 GoCallers 那几个命令都是依赖于
+" oracle的， 但是还不知道怎么用 g:go_oracle_scope 这个参数, 用 下面这个成功过
+" let g:go_oracle_scope = 'github.com/GoogleCloudPlatform/kubernetes/cmd/kubectl'
+" 但是非常的慢
 au FileType go nmap <Leader>gd <Plug>(go-doc)
 
 
