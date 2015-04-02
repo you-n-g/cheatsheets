@@ -203,7 +203,7 @@ let g:flake8_ignore="F401,E128"
 " <leader>d 是默认用于Diagnostic display的, 而且是用于C-family
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py" " this file come from https://github.com/rasendubi/dotfiles
 au FileType c,cpp,objc,objcpp,python,cs nmap gd :YcmCompleter GoTo<cr>
-au FileType c,cpp,objc,objcpp,python,cs nmap gc :YcmCompleter GoToDeclaration<cr>
+au FileType c,cpp,objc,objcpp,python,cs nmap gD :YcmCompleter GoToDeclaration<cr>
 
 
 "
@@ -214,3 +214,10 @@ au FileType c,cpp,objc,objcpp,python,cs nmap gc :YcmCompleter GoToDeclaration<cr
 " 查文档时不会在项目里查，因为不知道项目在哪里呀！
 " 所以回去系统默认的函数库中(依赖GOROOT??) 和 GOPATH/src下查询，所以设置好gopath非常重要呀
 au FileType go nmap <Leader>gd <Plug>(go-doc)
+
+
+
+" 
+" TComment
+" https://github.com/tomtom/tcomment_vim
+" gc 确定一切
