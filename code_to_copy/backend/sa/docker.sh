@@ -26,3 +26,7 @@ docker run -d XXX_Repo:XXX_tag /bin/bash
 # 指定container来运行命令
 docker exec [OPTIONS] CONTAINER COMMAND
 docker exec -t -i CONTAINER bash # 这个是不是就可以代替 nsenter 访问容器了？？
+
+
+# 查看log
+docker logs --tail=20 -f XXX_CONTAINER # 查看container的log
