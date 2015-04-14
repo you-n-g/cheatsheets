@@ -8,3 +8,6 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
 # 或者直接这样也行 ：  export PYTHONIOENCODING=UTF-8
+
+# 模仿这个就能得到相对当前脚本的一个绝对路径
+DIRNAME = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))

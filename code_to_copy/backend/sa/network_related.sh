@@ -23,6 +23,13 @@ ip addr add/del <CIDR> [scope link] dev <DEV> # 不加label的话，用 ip addr 
 # 1) 确认能搜索到网络 && 驱动加载了
 iwlist scan 
 
+
+# SELinux
+# selinux默认是关闭外部各种端口连接的，需要自己去开
+firewall-cmd --permanent --add-port=XXX_PORT/tcp
+firewall-cmd --reload
+setsebool -P nis_enabled 1
+
 # =======END   config network 
 
 

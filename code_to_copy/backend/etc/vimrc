@@ -143,7 +143,7 @@ endfunc
 "   sudo apt-get install ruby ruby-mkrf ruby-dev
 "   Do what the page tell you !!!!
 "
-let g:CommandTWildIgnore=&wildignore . ",*.o,*.obj,.git,*.pyc,*/migrations/*,django,*static/plugins/*"
+let g:CommandTWildIgnore=&wildignore . ",*.o,*.obj,.git,*.pyc,*/migrations/*,django,*static/plugins/*,*Godeps/_workspace/*"
 map <leader>f :CommandTFlush<CR>
 
 
@@ -177,9 +177,7 @@ nnoremap <silent> <F8> :TagbarToggle<CR>
 "   sudo apt-get install python-flake8
 let g:no_flake8_maps=1
 " autocmd BufWritePost *.py call Flake8() " XXX 这个功能需要安装插件
-let g:flake8_max_line_length=120
-" 针对项目随时修改
-let g:flake8_ignore="F401,E128"
+autocmd FileType python map <buffer> <F12> :call Flake8()<CR>
 
 
 "
@@ -219,9 +217,12 @@ au FileType c,cpp,objc,objcpp,python,cs nmap gD :YcmCompleter GoToDeclaration<cr
 " 所以回去系统默认的函数库中(依赖GOROOT??) 和 GOPATH/src下查询，所以设置好gopath非常重要呀
 "
 " 有用的命令
+" :GoImports 自动import缺失工具
+" :GoCallers
+" 这个可能有很多可能性，只会列出一种情况(TODO:想想原理是啥，以后别被这个坑才好)
 " :GoImplements 找到interface的实现， 和 GoCallers 那几个命令都是依赖于
 " oracle的， 但是还不知道怎么用 g:go_oracle_scope 这个参数, 用 下面这个成功过
-" let g:go_oracle_scope = 'github.com/GoogleCloudPlatform/kubernetes/cmd/kubectl'
+" let g:go_oracle_scope = 'github.com/GoogleCloudPlatform/kubernetes/cmd/kubectl XXXX'
 " 但是非常的慢
 au FileType go nmap <Leader>gd <Plug>(go-doc)
 

@@ -28,6 +28,8 @@ iotop
 lsof: 方向选中相关进程，l
 iotop: TODO 看IO怎么实现
 
+# perf TODO
+
 # END   计算机性能状况
 
 
