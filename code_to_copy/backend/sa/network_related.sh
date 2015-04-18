@@ -114,12 +114,22 @@ socksProxyType = socks5
 export http_proxy=127.0.0.1:6489  # don't capitalize it !!!!
 export https_proxy=127.0.0.1:6489  # don't capitalize it !!!!
 export SOCKS_SERVER=127.0.0.1:8964
+export no_proxy=localhost,127.0.0.1,127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.sock
 # after you use
-unset https_proxy  http_proxy SOCKS_SERVER
+unset https_proxy  http_proxy SOCKS_SERVER no_proxy
 # BEGIN polipo ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
 # ssh 妙用
+# 见： http://blog.trackets.com/2014/05/17/ssh-tunnel-local-and-remote-port-forwarding-explained-with-examples.html
+
+# local port forwarding
 ssh -L LOCAL_ADDRESS:LOCAL_PORT:REMOTE_ADDRESS:REMOTE_PORT XXX_USER@XXX_HOST
-# 所以配合polipo也可以在远方开一个http_proxy, 然后再ssh -L 转到本地来
+# 将 XXX_HOST *能访问到的* REMOTE_ADDRESS:REMOTE_PORT，变成能直接从 LOCAL_ADDRESS:LOCAL_PORT 访问。
+# -D 意思其实是 REMOTE_ADDRESS:REMOTE_PORT 能是任何值
+
+# remote port forwarding
+# -R 其实相当于反过来， TODO 还需具体实施 
+
+# 所以配合polipo也可以在远方开一个http_proxy(本来只有那边本地访问), 然后再ssh -L 转到本地来
 

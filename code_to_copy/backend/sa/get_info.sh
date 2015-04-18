@@ -52,3 +52,5 @@ lsmod
 
 
 
+# 查看running的程序的环境变量, 比如可以看到proxy到底有没有生效
+xargs --null --max-args=1 < /proc/XXX_PID/environ
