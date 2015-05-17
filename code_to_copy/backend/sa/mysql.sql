@@ -28,8 +28,11 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 
 
+-- 存相关
 -- 不用缓存
 select SQL_NO_CACHE ....
+-- 清理缓存:  http://stackoverflow.com/questions/5231678/clear-mysql-query-cache-without-restarting-server
+RESET QUERY CACHE;
 
 
 
@@ -41,6 +44,7 @@ CREATE DATABASE  `XXXX` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 -- BEGIN 给特定主机授权
 CREATE USER 'root_XXX'@'XXX_host_like_192.168.%.%' IDENTIFIED BY 'XXX_password';
 GRANT ALL ON *.* TO 'root_XXX'@'XXX_host_like_192.168.%.%';
+-- 表的通配符是*， 主机的通配符是% ……
 
 -- 如果不小心先运行了上面的grant， 则会自动创建用户，则需要设置密码
 SET PASSWORD FOR 'root'@'10.1.241.53' = PASSWORD('20131021');

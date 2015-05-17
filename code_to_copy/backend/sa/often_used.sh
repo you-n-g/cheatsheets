@@ -40,7 +40,7 @@ export EDITOR=`which vim`
 
 # bash 的一些工具
 # 多线程
-for i in {1..5} do
+for i in `seq 1 5`; do
 {
     #commands
     sleep 1
@@ -57,3 +57,12 @@ xfce4-terminal/gnome-terminal --working-directory="/home/young/" \
     --tab --title CB02  -e 'bash -c "ls ~ ;" '
 
 
+# 用分隔符处理数组
+while IFS=';' read -ra XXX_ARR; do
+    # 对$IN中的每一行分割成数组
+    # 如果只要处理一行，就直接用： IFS=';' read -ra XXX_ARR <<< "$IN"
+    for i in "${XXX_ARR[@]}"; do
+        # "$@" 两要素保证了分割后某个元素有空格也会被当成一个元素处理！！！！
+        # process "$i"
+    done
+done <<< "$IN"
