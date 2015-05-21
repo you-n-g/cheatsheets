@@ -28,8 +28,7 @@ mount -t tmpfs -o size=1024m tmpfs /mnt/ram
 
 # 一些常常需要的变量
 set -x # 设置允许的时候会把命令写出来， 而且会在命令前面输出+
-XXX_PATH=`dirname "$0"`
-XXX_PATH=`cd "$XXX_PATH"; pwd`
+DIR="$( cd "$(dirname "$0")" ; pwd -P )"
 
 
 

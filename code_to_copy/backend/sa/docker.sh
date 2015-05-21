@@ -30,3 +30,37 @@ docker exec -t -i CONTAINER bash # 这个是不是就可以代替 nsenter 访问
 
 # 查看log
 docker logs --tail=20 -f XXX_CONTAINER # 查看container的log
+
+
+
+# start起来之后 拷贝文件
+
+# 从host拷贝到container
+# 参考 http://stackoverflow.com/questions/22907231/copying-files-from-host-to-docker-container
+cp XXX-path-file-host /var/lib/docker/aufs/mnt/XXX_FULL_CONTAINER_ID/XXX_PATH-NEW-FILE 
+
+# 从container拷贝到host
+# 参考 http://stackoverflow.com/questions/22049212/docker-copy-file-from-container-to-host
+docker cp <containerId>:/file/path/within/container /host/path/target
+
+
+
+# 查看信息篇
+docker inspect -f '{{.Id}}' XXX_SHORT_ID_or_XXX_NAME # inspect the full id
+
+
+# container 联网篇
+# 最简单的方法是直接用host模式， 这些配置建了新的镜像后就不会存在了
+docker  run -it --net=host  ubuntu  /bin/bash
+
+
+# registry 篇
+# 
+docker commit <XXX_CONTAINER>  XXX
+docker tag XXX_IMAGE XXX_host:5000/XXX_IMAGE # 看来是用tag来描述repo的位置的
+docker push XXX_host:5000/XXX_IMAGE
+# push可能需要在"/etc/default/docker"加上  DOCKER_OPTS="--insecure-registry XXX_host:5000"
+docker pull XXX_host:5000/XXX_IMAGE
+
+
+
