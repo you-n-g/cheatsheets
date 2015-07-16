@@ -98,7 +98,7 @@ endfunc
 map <F9>c :call CompileRunCpp()<CR>
 func! CompileRunCpp()
     exec "w"
-    exec "!echo -e '\033[1;32mcompiling.....\033[0m';gcc % -o %:r.exe;echo -e '\033[1;34m-----------here_is_the_ans_of_%----------\033[0m';./%:r.exe;echo -e '\033[1;33mend...\033[0m';rm %:r.exe"
+    exec "!echo -e '\033[1;32mcompiling.....\033[0m';g++ % -o %:r.exe;echo -e '\033[1;34m-----------here_is_the_ans_of_%----------\033[0m';./%:r.exe;echo -e '\033[1;33mend...\033[0m';rm %:r.exe"
     "exec "!./%:r.exe"
 endfunc
 
@@ -203,8 +203,19 @@ autocmd FileType python map <buffer> <F12> :call Flake8()<CR>
 " 其他
 " <leader>d 是默认用于Diagnostic display的, 而且是用于C-family
 " 需要用 :YcmGenerateConfig 项目根目录在根目录下生成 .ycm_extra_conf.py
+" 如果生成失败，则用
+" ~/.vim/bundle/YouCompleteMe/third_party/ycmd/examples/.ycm_extra_conf.py 
+" 需要自己修改一下前面的flags, 可以make的时候ps grep 一下看看 -I 都有些啥
+" 典型的可以加上
+" '-I../../include',
+" '-I../include',
+" '-I./include',
+" '-Iinclude',
+" '-I.',
+" && make所出现的一些东西
+let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 let g:ycm_confirm_extra_conf=0
-au FileType c,cpp,objc,objcpp,python,cs nmap gd :YcmCompleter GoTo<cr>
+au FileType c,cpp,objc,objcpp,python,cs nmap gd :YcmCompleter GoToDefinition<cr>
 au FileType c,cpp,objc,objcpp,python,cs nmap gD :YcmCompleter GoToDeclaration<cr>
 
 
