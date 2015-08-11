@@ -22,6 +22,7 @@ git apply <filename> # 之后再导入, 默认不加参数时是不会出现在i
 # 看分支图
 git log --graph --oneline --decorate --all  # all 代表显示所有分支， 本来只会显示head所在的分支
 git diff '@{2}' # 查看最近两次改变的合集 # diff 默认是 working dir和index比较， diff HEAD才是 working dir 和 repo比较
+git reflog # 可以看到commit的纪录， 专门处理不在任何分支的commit
 
 
 # 恢复
