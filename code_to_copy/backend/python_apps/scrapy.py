@@ -25,8 +25,12 @@ class NewsSpider(CrawlSpider):
     def parse_XXX(self, response):
         hxs = HtmlXPathSelector(response) 
         hxs = HtmlXPathSelector(text = "XXX_STRING")
+        # 还不是很理解对 HtmlXPathSelector 选择 / 是什么意思??????
+        # hxs 本身是一个 HtmlXPathSelector, 它的 select的返回值也是 HtmlXPathSelector?????
+        # 但是如果加了绝对路径，就会不限制在这个点上了， 我觉得得用相对路径才行
         hxs.select("//div[@class='XXX']/*").extract()
         hxs.select("//div[@class='XXX']/text()").extract()
+        hxs.select("//div[@class='XXX']/@ATTR").extract() # 提取属性
         hxs.select("//div[@class='XXX']//p").extract() # 不考虑位置地获得所有的p
         for sel in hxs.select("//div[@class='XXX']"):
             sel.select("//p").extract()
