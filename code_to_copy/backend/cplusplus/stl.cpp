@@ -44,3 +44,15 @@ min(VALA, VALB);
 
 lower_bound(v.begin(), v.end(), VAL); // first iterator with val >= VAL, otherwith return the position that means v.end()
 upper_bound(v.begin(), v.end(), VAL); // first iterator with val > VAL,
+
+
+// string
+#include<string>
+str = to_string(INT|FLOAT);
+
+
+// useful numbers
+#include <climits>
+INT_MAX // (2147483647) 
+INT_MIN // (-2147483648)
+
