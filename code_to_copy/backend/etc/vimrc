@@ -98,7 +98,7 @@ endfunc
 map <F9>c :call CompileRunCpp()<CR>
 func! CompileRunCpp()
     exec "w"
-    exec "!echo -e '\033[1;32mcompiling.....\033[0m';g++ % -o %:r.exe;echo -e '\033[1;34m-----------here_is_the_ans_of_%----------\033[0m';./%:r.exe;echo -e '\033[1;33mend...\033[0m';rm %:r.exe"
+    exec "!echo -e '\033[1;32mcompiling.....\033[0m';g++ -std=c++11 % -o %:r.exe;echo -e '\033[1;34m-----------here_is_the_ans_of_%----------\033[0m';./%:r.exe;echo -e '\033[1;33mend...\033[0m';rm %:r.exe"
     "exec "!./%:r.exe"
 endfunc
 
