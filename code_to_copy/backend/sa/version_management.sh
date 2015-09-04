@@ -12,6 +12,8 @@ git config --global color.ui auto # 配置自动颜色
 # 配置merge
 git config --global merge.tool vimdiff
 git config --global mergetool.prompt false
+# 看看已经配置了哪些config
+git config --list
 
 
 #patch的导入导出

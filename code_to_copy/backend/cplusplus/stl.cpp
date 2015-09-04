@@ -48,7 +48,7 @@ upper_bound(v.begin(), v.end(), VAL); // first iterator with val > VAL,
 
 //string
 #include<string>
-string s = to_string(INT);
+str = to_string(INT|FLOAT);
 
 // stoi是C++11支持的标准，  必须加上 -std=c++11 才行
 std::string::size_type sz;
@@ -69,4 +69,10 @@ stringstream ss(s);
 while (getline(ss, item, ',')) {
     cout << item << endl;
 }
+
+
+// useful numbers
+#include <climits>
+INT_MAX // (2147483647) 
+INT_MIN // (-2147483648)
 
