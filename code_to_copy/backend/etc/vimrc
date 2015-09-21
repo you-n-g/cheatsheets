@@ -243,3 +243,12 @@ au FileType go nmap <Leader>gd <Plug>(go-doc)
 " TComment
 " https://github.com/tomtom/tcomment_vim
 " gc 确定一切
+
+
+" 
+" vim-slime
+" https://github.com/jpalardy/vim-slime
+" ":i.j" means the ith window, jth pane
+" C-c, C-c  --- the same as slime
+" C-c, v    --- mnemonic: "variables"
+let g:slime_target = "tmux"
