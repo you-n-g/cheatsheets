@@ -46,11 +46,11 @@ git reset HEAD filename  # 效果是 将 index中文件恢复到 HEAD状态(即t
 # 合并
 git reset --merge  # merge 失败
 git cherry-pick --abort  # cherry-pick 失败
-git mergtool  # merge失败之后呼唤mergetool来合并
+git mergetool  # 当发生分支冲突的时候merge失败之后呼唤mergetool来合并
 # TODO 如何Backport到以前的分支
 # 根据django的案例来说，直接提交到master就行，之后会有人backport到以前的分支
 # backport使用cherry-pick
-git mergetool # 当发生分支冲突的时候使用这个命令来合并分支
+git mergetool # 使用这个命令来合并分支
 
 # git pull -u 时不能将未提交的修改自动和分支合并， 所以需要先用stash将已经修改的内容存储起来
 git stash  # 可以把当前工作目录的 状态储存起来，然后去别的分支工作，  通过加参数 还可以直接创建分支。

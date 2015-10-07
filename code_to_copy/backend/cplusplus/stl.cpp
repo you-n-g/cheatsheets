@@ -70,6 +70,13 @@ while (getline(ss, item, ',')) {
     cout << item << endl;
 }
 
+// sub striing
+str.substr(INDEX, LENGTH);
+
+// find sub string
+std::size_t found = str.find(str2);
+if (found != std::string::npos) // 如果找到了
+
 
 // useful numbers
 #include <climits>

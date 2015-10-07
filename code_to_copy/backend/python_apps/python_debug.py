@@ -10,6 +10,8 @@ import pdb
 
 pdb.set_trace()
 (Pdb) p a  # 即打印a
+
+# TODO 优化的版本是 ipdb， 把上面的 pdb都换成ipdb
 # END   PDB
 
 
