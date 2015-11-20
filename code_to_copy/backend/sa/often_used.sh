@@ -65,3 +65,20 @@ while IFS=';' read -ra XXX_ARR; do
         # process "$i"
     done
 done <<< "$IN"
+
+
+
+
+# 管理服务
+service --status-all  # 查看所有服务的状态
+
+
+
+
+# 修改hostname
+# 先改 /etc/hosts  /etc/hostname， 然后
+hostname -F /etc/hostname
+
+
+
+# ubuntu server 中文乱码问题, 照着 http://www.cnblogs.com/top5/archive/2011/02/23/1962390.html 的前半部分做

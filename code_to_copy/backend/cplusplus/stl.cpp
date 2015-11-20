@@ -83,3 +83,4 @@ if (found != std::string::npos) // 如果找到了
 INT_MAX // (2147483647) 
 INT_MIN // (-2147483648)
 
+// 对象有哪些方法 http://www.cplusplus.com/reference/string/string/

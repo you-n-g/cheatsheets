@@ -34,6 +34,11 @@ finally:
 # END   traceback
 
 
+# 查看将要调用的方法到底来自哪里
+import inspect
+inspect.getmodule(XXX_FUNC)
+inspect.getsourcelines(XXX_FUNC)
+
 
 # BEGIN trace what your script is doing
 

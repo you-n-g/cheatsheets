@@ -8,3 +8,6 @@ sed -i '/LINE_XXX_PATTERN/a XXX_CONTENT' XXX_FILE
 sed -i '1d' # 删除第一行
 
 # sed 每次处理一行，先选择， 后接命令
+
+
+XXX | sort -k N  # 按第n列排序， 比如看日志时按时间排序！！！

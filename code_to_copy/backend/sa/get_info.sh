@@ -55,11 +55,22 @@ iotop: TODO 看IO怎么实现
 
 
 
+# BEGIN 查看进程相关
+sudo lsof -i :XXX_PORT # 看XXX_PORT被哪个进程占用了
+# END   查看进程相关
+
+
+
 
 # 查看硬件信息
 dmidecode
-# 常用的有
-System Information -> Serial Number: GWPCZY1
+# dmidecode列出的信息常用的有
+System Information -> Serial Number: GWPCZY1  # 查看序列号用于售后服务
+Product Name: ThinkServer RD640  # 查看机器型号
+Memory Device # 查看内存信息
+
+# 查看网卡信息
+lspci | grep Ethernet
 
 
 
