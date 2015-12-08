@@ -44,7 +44,11 @@ min(VALA, VALB);
 
 lower_bound(v.begin(), v.end(), VAL); // first iterator with val >= VAL, otherwith return the position that means v.end()
 upper_bound(v.begin(), v.end(), VAL); // first iterator with val > VAL,
+equal_bound(v.begin(), v.end(), VAL); // 直接求出等于VAL的阈值，返回upper_bound和 lower_bound
 
+sort(v.begin(), v.end()); // 有快排的效率
+
+v.erase(unique(v.begin(), v.end()), v.end()); // 可以把数组中连续的重复数字都去除，数值网前移动，最后用erase 删除掉其他数值
 
 //string
 #include<string>
@@ -84,3 +88,18 @@ INT_MAX // (2147483647)
 INT_MIN // (-2147483648)
 
 // 对象有哪些方法 http://www.cplusplus.com/reference/string/string/
+
+
+
+
+
+// iostream 输出格式设置
+// 设置小数格式
+cout.precision(5);
+cout << fixed << f << endl;
+cout << scientific << f << endl;
+
+// 整数
+cout.width(10);
+cout.fill('0');
+cout << dec << 20 << endl;

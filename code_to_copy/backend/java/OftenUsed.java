@@ -57,10 +57,26 @@ public class JavaDebug {
     public static void main(String[] args) {
     }
 
+    // 算法相关 
+    // 排序
+    Arrays.sort(nums); // int[] nums
 
+   
+    // 常用语法
+    for(char c: new char[]{'g', 'h', 'i'}) ///
+    char[][] a = {{}, {}, {'g', 'h'}} //  每个长度还可以不一样吗？？？
 
     // 坑！！！！！！！
     // ArrayList 转 Array居然要这样， 而不是直接 toArray
     List<String> list = ..;
     String[] array = list.toArray(new String[list.size()]);
+
+
+    // 字符串处理
+    String str;
+    str.indexOf(strB);
+    String.valueOf(STH); // 转换成字符串
+    // 基础中的基础
+    str.length(); //是一个method ，区别于普通数组的 length是属性
+    str.charAt(); //你不能对string直接用[]， 因为java中没有运算符重载
 }
