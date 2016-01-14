@@ -58,3 +58,7 @@ start XXXX
 
 :: 查看端口占用情况
 netstat -ano
+
+:: 查看分区的信息
+echo list volume > listvol.scr
+diskpart /s listvol.scr

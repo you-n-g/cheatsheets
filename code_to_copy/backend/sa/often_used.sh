@@ -82,3 +82,7 @@ hostname -F /etc/hostname
 
 
 # ubuntu server 中文乱码问题, 照着 http://www.cnblogs.com/top5/archive/2011/02/23/1962390.html 的前半部分做
+
+
+# 类似于git 的格式查看两个文件夹下的代码区别
+diff -bur folder1/ folder2/

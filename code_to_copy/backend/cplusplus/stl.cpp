@@ -3,6 +3,7 @@
 // common
 using namespace std;
 
+auto f = [](int x) -> int {return x;} // 返回值可以为空，然后它会自动判定返回值的类型。 
 
 // vector
 #include<vector>
@@ -14,6 +15,8 @@ for (vector<int>::iterator it = nums.begin(); it != nums.end(); it++) {
     index = std::distance(vec.begin(), it); // this will change the algorithm to O(n^2)
 }
 nums.push_back(STH);
+
+cout << vector<int>({1,2}).back() << endl;  // 使用匿名对象
 
 
 // map
@@ -80,6 +83,7 @@ str.substr(INDEX, LENGTH);
 // find sub string
 std::size_t found = str.find(str2);
 if (found != std::string::npos) // 如果找到了
+// 一般来说， 如果返回值是iterator， 那找没找到看 object.end()； 如果返回值是位置， 找没找到看 class::npos;
 
 
 // useful numbers
