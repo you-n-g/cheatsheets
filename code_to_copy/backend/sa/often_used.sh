@@ -30,6 +30,7 @@ mount -t tmpfs -o size=1024m tmpfs /mnt/ram
 set -x # 设置允许的时候会把命令写出来， 而且会在命令前面输出+
 DIR="$( cd "$(dirname "$0")" ; pwd -P )"
 
+DATETIME=`date +%Y-%m-%d:%H:%M:%S`
 
 
 
