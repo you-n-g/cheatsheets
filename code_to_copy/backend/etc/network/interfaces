@@ -11,6 +11,7 @@ iface eth0 inet static
 	netmask 255.255.255.224
 	gateway 117.79.235.129
 	dns-nameservers 202.106.0.20 8.8.8.8 8.8.4.4
+	hwaddress ether 00:01:04:1b:2C:1F
 
 auto eth1
 iface eth1 inet static
