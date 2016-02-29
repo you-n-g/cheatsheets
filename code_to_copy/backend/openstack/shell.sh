@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# 
+nova hypervisor-[list|servers|show|stats|uptime]
+# 用于看具体的compute节点上的hypervisor 的各种详细信息
 
 # boot the vm
 nova boot <vm_name> --image <image_name> --flavor <flavor_id>
@@ -12,5 +15,5 @@ glance image-create --name <image_name> --disk-format=<same_as_image-list> --con
 
 
 # restart all the openstack service
-for svc in api conductor scheduler compute network   cert ; do service openstack-nova-$svc restart; done
+for svc in api conductor scheduler compute network cert; do service openstack-nova-$svc restart; done
 

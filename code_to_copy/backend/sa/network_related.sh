@@ -11,7 +11,9 @@ route del/add -net CIDR gw 192.168.1.1
 route del/add -host IP gw 192.168.1.1
 route del/add default gw 192.168.1.1
 
-ifup eth0 # ifup is a script,  include check config and using DHCP 
+# 重启网卡，在ubuntu上会读取 /etc/network/interfaces, 所以修改后用这个命令生效比较好
+sudo ifdown eth0 && sudo ifup eth0 # ifup is a script,  include check config and using DHCP 
+
 dhclient eth0 # 如果上面有问题，则用这个获取ip地址
 
 # 给网络起别名
@@ -132,4 +134,18 @@ ssh -L LOCAL_ADDRESS:LOCAL_PORT:REMOTE_ADDRESS:REMOTE_PORT XXX_USER@XXX_HOST
 # -R 其实相当于反过来， TODO 还需具体实施 
 
 # 所以配合polipo也可以在远方开一个http_proxy(本来只有那边本地访问), 然后再ssh -L 转到本地来
+
+
+
+# BEGIN nmap VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+nmap -v target.com :: 扫描开了哪些端口
+nmap -sP '10.0.0.*' :: 扫描这个网段的ip
+nmap -sT targetHost :: 好处是很少有系统会把这种半tcp连接記入日志
+# 详情参见 http://dev.firnow.com/course/6_system/linux/Linuxxl/2007211/14170.html
+# BEGIN nmap ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+# config DHCP server
+# [DHCP server](http://www.tuicool.com/articles/AzEbii)
+sudo apt-get install isc-dhcp-server -y
 

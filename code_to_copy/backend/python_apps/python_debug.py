@@ -10,6 +10,8 @@ import pdb
 
 pdb.set_trace()
 (Pdb) p a  # 即打印a
+
+# TODO 优化的版本是 ipdb， 把上面的 pdb都换成ipdb
 # END   PDB
 
 
@@ -19,8 +21,23 @@ import traceback
 for line in traceback.format_stack():
     print line
 # 可以配合 os.getpid() 来得到当前进程的pid 看看在哪里运行
+
+# 如果是想输出抓住的异常的traceback
+try:
+    raise Exception
+except Exception:
+    ex_type, ex, tb = sys.exc_info()
+    traceback.print_tb(tb)
+finally:
+    del tb
+
 # END   traceback
 
+
+# 查看将要调用的方法到底来自哪里
+import inspect
+inspect.getmodule(XXX_FUNC)
+inspect.getsourcelines(XXX_FUNC)
 
 
 # BEGIN trace what your script is doing

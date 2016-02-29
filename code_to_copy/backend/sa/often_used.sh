@@ -30,6 +30,7 @@ mount -t tmpfs -o size=1024m tmpfs /mnt/ram
 set -x # 设置允许的时候会把命令写出来， 而且会在命令前面输出+
 DIR="$( cd "$(dirname "$0")" ; pwd -P )"
 
+DATETIME=`date +%Y-%m-%d:%H:%M:%S`
 
 
 
@@ -65,3 +66,24 @@ while IFS=';' read -ra XXX_ARR; do
         # process "$i"
     done
 done <<< "$IN"
+
+
+
+
+# 管理服务
+service --status-all  # 查看所有服务的状态
+
+
+
+
+# 修改hostname
+# 先改 /etc/hosts  /etc/hostname， 然后
+hostname -F /etc/hostname
+
+
+
+# ubuntu server 中文乱码问题, 照着 http://www.cnblogs.com/top5/archive/2011/02/23/1962390.html 的前半部分做
+
+
+# 类似于git 的格式查看两个文件夹下的代码区别
+diff -bur folder1/ folder2/

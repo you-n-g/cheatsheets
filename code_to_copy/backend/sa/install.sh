@@ -30,7 +30,8 @@ sudo apt-get install bash-completion dialog memcached python-memcache mercurial 
 sudo yum groupinstall 'Development Tools' # 相当于安装build-essential
 
 
-
+# 中文显示不完整
+[中文显示不完整](http://liangxu.wang/867/)
 
 
 

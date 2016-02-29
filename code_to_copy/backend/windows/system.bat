@@ -40,6 +40,9 @@ putty.exe -D 127.0.0.1:8964 -l XXX_USER -pw XXX_PASSWORD XXX_HOST
 :: 但是和 kitty 还是有点不兼容
 ::
 :: 上传文件使用 winscp
+::
+:: # 坑篇
+:: 如果报错 Unable to use key file，则需要用Putty Key Generator 重新转化一遍格式
 
 
 
@@ -55,3 +58,7 @@ start XXXX
 
 :: 查看端口占用情况
 netstat -ano
+
+:: 查看分区的信息
+echo list volume > listvol.scr
+diskpart /s listvol.scr
