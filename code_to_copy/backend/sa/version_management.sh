@@ -91,7 +91,7 @@ git	remote	add	upstream	https://github.com/yeasy/docker_practice
 git	fetch	upstream 
 git	checkout	master 
 git	rebase	upstream/master  
-# rebase 的过程中会遇到冲突，这时应该编辑，提交，然后继续rebase
+# rebase 的过程中会遇到冲突，这时应该编辑，然后add，**千万不要commit**，然后继续rebase
 <<EOF * rebase (分支衍合)
 git rebase [主分支] [某分支] :  把某分支 rebase 到主分支上去，相当于把某分支从主分支的接连处剪下来，然后接到主分支的尾巴上去
 - 如果没指定 某分支 则是 用当前分支当某分支
