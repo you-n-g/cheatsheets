@@ -19,6 +19,7 @@ nums.push_back(STH);
 cout << vector<int>({1,2}).back() << endl;  // 使用匿名对象
 
 
+
 // map
 #include<map>
 map<int, int> mymap;
@@ -107,3 +108,10 @@ cout << scientific << f << endl;
 cout.width(10);
 cout.fill('0');
 cout << dec << 20 << endl;
+
+
+
+
+//trick 获得最后一个元素的iterator
+auto i = container.end(); --i;
+

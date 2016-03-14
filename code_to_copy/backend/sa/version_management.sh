@@ -32,6 +32,7 @@ git reflog # 可以看到commit的纪录， 专门处理不在任何分支的com
 # 操作working directory
 git checkout .  # 恢复到head版本 仅仅作用于working directory, 不包括staged
 git checkout -- filename # 恢复某文件到 head 版本， --为了以防在 有和filename同名的branch时没有歧义
+git branch -f branch-name XXX_COMMIT # 可以直接将已经有的branch 设置到指定的commit
 
 # 操作分支指针
 git reset --hard COMMIT_NAME # 如果加了 --hard， working directory, staged通杀; 默认是--mixed 清除index，保留working directory; reset 不会删除commit， 但是会改变head指向的分支指针;

@@ -17,6 +17,7 @@ putty.exe -D 127.0.0.1:8964 -l XXX_USER -pw XXX_PASSWORD XXX_HOST
 ::      Window - Colours : Enable "Allow terminal to use xterm 256-colour mode"
 ::      Connection - Data - Terminal details : Terminal-type string : "xterm-256color"
 :: 如果还使用了tmux: 需要在 ~/.tmux.conf 中设置 set -g default-terminal "screen-256color"
+:: NOTICE :: 出现过一个奇怪的情况， tmux第一个窗口开的是代理时，中文会部分乱码
 :: 生成keypair
 :: Connection -> Data  -> Auto-login username
 ::            -> SSH -> Auth -> Private key file for authentication

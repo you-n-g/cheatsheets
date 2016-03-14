@@ -87,3 +87,7 @@ hostname -F /etc/hostname
 
 # 类似于git 的格式查看两个文件夹下的代码区别
 diff -bur folder1/ folder2/
+
+
+# 写脚本
+test "$XXX_STRING" = "XXX_STR" && echo True
