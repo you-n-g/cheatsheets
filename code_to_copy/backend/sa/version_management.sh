@@ -90,7 +90,9 @@ git submodule update --init --recursive # 其实千言万语可以汇成一句�
 git	remote	add	upstream	https://github.com/yeasy/docker_practice
 git	fetch	upstream 
 git	checkout	master 
-git	rebase	upstream/master 
+git	rebase	upstream/master  
+# rebase 的过程中会遇到冲突，这时应该编辑，然后add，**千万不要commit**，然后继续rebase
+# 比如你开发到一半，别的commit对你有影响，这时你rebase然后继续开发会更好
 <<EOF * rebase (分支衍合)
 git rebase [主分支] [某分支] :  把某分支 rebase 到主分支上去，相当于把某分支从主分支的接连处剪下来，然后接到主分支的尾巴上去
 - 如果没指定 某分支 则是 用当前分支当某分支
