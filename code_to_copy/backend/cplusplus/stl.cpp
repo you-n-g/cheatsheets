@@ -51,6 +51,7 @@ upper_bound(v.begin(), v.end(), VAL); // first iterator with val > VAL,
 equal_bound(v.begin(), v.end(), VAL); // 直接求出等于VAL的阈值，返回upper_bound和 lower_bound
 
 sort(v.begin(), v.end()); // 有快排的效率
+// 排序时如何指定比较方法: http://www.cplusplus.com/reference/algorithm/sort/ 
 
 v.erase(unique(v.begin(), v.end()), v.end()); // 可以把数组中连续的重复数字都去除，数值网前移动，最后用erase 删除掉其他数值
 
