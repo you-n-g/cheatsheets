@@ -128,6 +128,7 @@ unset https_proxy  http_proxy SOCKS_SERVER no_proxy
 # local port forwarding
 ssh -L LOCAL_ADDRESS:LOCAL_PORT:REMOTE_ADDRESS:REMOTE_PORT XXX_USER@XXX_HOST
 # 将 XXX_HOST *能访问到的* REMOTE_ADDRESS:REMOTE_PORT，变成能直接从 LOCAL_ADDRESS:LOCAL_PORT 访问。
+# 记忆时 -L 和 -R时， 靠近-X 一侧的代表 X端要开的端口
 # -D 意思其实是 REMOTE_ADDRESS:REMOTE_PORT 能是任何值
 
 # remote port forwarding

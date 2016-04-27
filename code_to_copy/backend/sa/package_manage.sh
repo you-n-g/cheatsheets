@@ -9,7 +9,8 @@ rpm -q #系列
     a: # 查看所有installed包
     f XXX_RPM: # 查看这个文件哪个包装的
     l INSTALLED_PACKAGE: # 查看这个installed包装了什么
-    pl XXX_RPM: # 查看包内的内容, p是provides
+    pl XXX_RPM: # 查看包内的内容； p是 package，即针对特定的 .rpm进行查看，类似的会有 rpm -qpi
+# mc这个工具可以用来查看rpm里面的内容，在putty下还可以用鼠标点哦......
 
 # 看是 *哪个repo* 安装的这个包
 yum list packagename
