@@ -42,6 +42,7 @@ set sm "show match
 set expandtab 
 set tabstop=4
 set shiftwidth=4
+autocmd FileType c,cpp setlocal shiftwidth=2 tabstop=2
 set number
 set ignorecase
 set smartcase
