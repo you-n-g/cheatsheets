@@ -253,3 +253,5 @@ au FileType go nmap <Leader>gd <Plug>(go-doc)
 " C-c, C-c  --- the same as slime
 " C-c, v    --- mnemonic: "variables"
 let g:slime_target = "tmux"
+" 这个一定要和ipython一起用，否则可能出现换行出问题
+let g:slime_python_ipython = 1
