@@ -53,7 +53,7 @@ map tn :tabnew<cr>
 map tm :tabmove 
 
 " XXX vim7.3 only
-set cc=120
+" set cc=120
 highlight ColorColumn ctermbg=Cyan
 
 
