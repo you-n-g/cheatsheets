@@ -118,18 +118,13 @@ func! CompileRunGo()
     exec "!go run %"
 endfunc
 
+nnoremap <F11>:set paste!<CR>
+
+
 " bundle 里的这些插件
 " 源于 http://python.42qu.com/11180003
 
 
-
-
-
-
-
-"
-"  
-"
 "
 " The plugins I always need
 "

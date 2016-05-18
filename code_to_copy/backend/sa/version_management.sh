@@ -61,6 +61,9 @@ git stash apply  # 应用 储存， 目录不一定要干净， 不一定要和�
 
 
 
+
+
+
 # 提交
 git push  [-u] [<repository> [<refspec>...]]
     # 相当于向repository 提交， 对应规则是 refspec; repository 省略相当于 orign
@@ -105,6 +108,14 @@ EOF
 git	push	-f	origin	master  # 需要force push的原因是rebase后整个branch和 origin的 branch分叉了
 
 
+# 清除文件
+# http://stackoverflow.com/questions/673407/how-do-i-clear-my-local-working-directory-in-git
+git clean -d -x -f
+# -d 表示删文件夹， -x 表示包括gitignore 中的文件， -f 换成 -n会先让你看一眼删什么。
+
+
+# 特殊文件
+.git/info/exclude 起到和GITIGNORE一样的作用　# http://stackoverflow.com/questions/1753070/git-ignore-files-only-locally
 
 # END   常用基本操作 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
