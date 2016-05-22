@@ -61,14 +61,18 @@ git stash apply  # 应用 储存， 目录不一定要干净， 不一定要和�
 
 
 
-# 提交
+# 提交: 我体验到真正的逻辑是 先看本地 branch track 哪个repo，然后去找相应repo的url，优先用pushurl (push 和 pull可以不一样)
+git remote set-url --push origin git@github.com:you-n-g/multiverso.git   #  设置代码库的push url
 git push  [-u] [<repository> [<refspec>...]]
     # 相当于向repository 提交， 对应规则是 refspec; repository 省略相当于 orign
     # refspec 格式为 <src>:<dst>
         # 省略<src> 相当于删除dst , 即  git push origin :branchname
         # 省略:<dst>相当于将同名branch同步到orign中
-    # -u 表示上传成功后自动设置本地branch track 相应的 remote branch
+    # -u 表示上传成功后自动设置本地branch track 相应的 remote branch,  似乎只有没设置过时有效？？
+        # git branch --set-upstream-to origin/my_branch : 如果已经设置过，那么可以手动用这个命令设置当前brach , 和改 .git/config 效果一样
+        # git pull 也支持这个参数， 设置过了就别平时没事就加这个参数了
 git push -f origin HEAD^:master  # 案例: 想反悔一个commit时， 将本地HEAD的上一个commit强行提交到master分支，这样本地不变，repo恢复一个
+
 
 
 
