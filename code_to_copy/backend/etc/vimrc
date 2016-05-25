@@ -118,7 +118,7 @@ func! CompileRunGo()
     exec "!go run %"
 endfunc
 
-nnoremap <F11>:set paste!<CR>
+nnoremap <F11> :set paste!<CR>
 
 
 " bundle 里的这些插件
