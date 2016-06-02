@@ -106,7 +106,7 @@ git rebase --onto master server client  :   取出 client 分支，找出 client
 如果 apply 失败则 会产生 .git/rebase-apply 这个文件
 rebase 的好处在于少了个merge，branch会cleaner
 EOF
-git	push	-f	origin	master  # 需要force push的原因是rebase后整个branch和 origin的 branch分叉了
+git	push -f	origin	master  # 需要force push的原因是rebase后整个branch和 origin的 branch分叉了
 
 
 # 清除文件
