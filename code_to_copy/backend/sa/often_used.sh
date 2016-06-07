@@ -91,3 +91,21 @@ diff -bur folder1/ folder2/
 
 # 写脚本
 test "$XXX_STRING" = "XXX_STR" && echo True
+
+
+
+
+# Cent OS / Red Hat 系列常常会用到的
+
+## selinux 篇
+Sestatus  # 查看selinux的状态
+vim /etc/selinux/config  # 设置disabled
+
+iptables 和 selinux 并不是同时开关，关了selinux后还得再关iptables
+
+
+## 服务管理篇
+chkconfig --list  # 列出来有什么服务
+chkconfig XXX on  # 开启开机启动
+
+## 网络配置篇 见interfaces

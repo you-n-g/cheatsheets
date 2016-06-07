@@ -1,3 +1,6 @@
+
+# debian 系列: /etc/network/interfaces
+# ============================================================
 # This file describes the network interfaces available on your system
 # and how to activate them. For more information, see interfaces(5).
 
@@ -32,3 +35,8 @@ auto wlan0
 iface wlan0 inet dhcp
 	wpa-ssid WIFI_NAME
 	wpa-psk WIFI_PASSWORD
+
+
+# red hat 系列: /etc/sysconfig/network-scripts/ifcfg-eth0
+
+# ONBOOT=yesONBOOT=yes

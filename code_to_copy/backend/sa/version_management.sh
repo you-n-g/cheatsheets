@@ -118,6 +118,12 @@ git clean -d -x -f
 # 特殊文件
 .git/info/exclude 起到和GITIGNORE一样的作用　# http://stackoverflow.com/questions/1753070/git-ignore-files-only-locally
 
+# 对于tracked files: http://stackoverflow.com/questions/13630849/git-difference-between-assume-unchanged-and-skip-worktree/13631525#13631525
+# 对于一些不会改变的文件， 比如SDK , 可以设置每次不去看它的变化， 这样可以提高git status的性能； 但是fetch下来的文件一旦变化，这里就失效了
+git update-index --[no-]assume-unchanged [<file>...]
+# 对于一些本地不希望和远程一样的配置文件， 可以用这个，这样就不会看它的变化， 而且服务器上变化了也不会有影响
+git update-index --[no-]skip-worktree [<file>...]
+
 # END   常用基本操作 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
