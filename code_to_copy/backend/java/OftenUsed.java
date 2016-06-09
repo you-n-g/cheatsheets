@@ -57,11 +57,11 @@ public class JavaDebug {
     public static void main(String[] args) {
     }
 
-    // 算法相关 
+    // 算法相关
     // 排序
     Arrays.sort(nums); // int[] nums
 
-   
+
     // 常用语法
     for(char c: new char[]{'g', 'h', 'i'}) ///
     char[][] a = {{}, {}, {'g', 'h'}} //  每个长度还可以不一样吗？？？

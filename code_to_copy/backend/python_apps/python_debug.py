@@ -140,3 +140,30 @@ def lock_program(LOG, lock_name):
 # 看一文件夹下的所有log输出
 tail -f *.log
 
+
+
+
+#================================== profiler and tuning ===================
+
+
+#  可以直接输出, 也可以输出统计文件后再排序
+import cProfile
+cProfile.run('foo()', , 'stat_out')
+
+python -m cProfile [-s time] [-o stat_out] myscript.py
+
+
+# 得到输出后就可以用 
+
+import pstats
+p = pstats.Stats('stat_out') # 再重新统计输出了
+
+p.strip_dirs().sort_stats("time").print_stats(100)
+
+
+# 支持 control+c 中断输出
+
+# python profiling 代码
+# short answer: http://stackoverflow.com/questions/582336/how-can-you-profile-a-python-script
+# ppt && video:  http://lanyrd.com/2013/pycon/scdywg/
+# document: https://docs.python.org/2/library/profile.html

@@ -11,7 +11,7 @@ set wildignore+=*.o,*.obj,*.pyc
 
 
 " XXX 需要安装插件
-call pathogen#infect() 
+call pathogen#infect()
 
 
 " BEGIN color  XXX 需要安装插件
@@ -24,6 +24,10 @@ set background=dark
 let g:solarized_termcolors=256
 colorscheme solarized
 " END color
+
+
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
 
 
 set hlsearch
@@ -39,7 +43,7 @@ set ai "auto indent
 " set cindent
 " set list "show the control charactor
 set sm "show match
-set expandtab 
+set expandtab
 set tabstop=4
 set shiftwidth=4
 autocmd FileType c,cpp setlocal shiftwidth=2 tabstop=2
@@ -53,7 +57,7 @@ set smartcase
 "map tl :tabnext<cr> "gt
 "map tc :tabclose<cr>
 map tn :tabnew<cr>
-map tm :tabmove 
+map tm :tabmove
 
 " XXX vim7.3 only
 " set cc=120
@@ -71,7 +75,7 @@ map gb :buffers<CR>
 " let g:neocomplcache_enable_at_startup = 1
 " syntax on  " 这个会 overrule solarized 的 color schema
 set nocompatible
-filetype plugin on 
+filetype plugin on
 
 " make markdown highlight works
 autocmd BufRead,BufNew *.md,*.markdown set filetype=markdown
@@ -120,6 +124,31 @@ endfunc
 
 nnoremap <F11> :set paste!<CR>
 
+nnoremap <F10> :set spell!<CR>
+
+
+" highlight the trailing whitespace, keep your code clean
+" http://vim.wikia.com/wiki/Highlight_unwanted_spaces
+highlight ExtraWhitespace ctermbg=red guibg=red
+augroup WhitespaceMatch
+  " Remove ALL autocommands for the WhitespaceMatch group.
+  autocmd!
+  autocmd BufWinEnter * let w:whitespace_match_number =
+        \ matchadd('ExtraWhitespace', '\s\+$')
+  autocmd InsertEnter * call s:ToggleWhitespaceMatch('i')
+  autocmd InsertLeave * call s:ToggleWhitespaceMatch('n')
+augroup END
+function! s:ToggleWhitespaceMatch(mode)
+  let pattern = (a:mode == 'i') ? '\s\+\%#\@<!$' : '\s\+$'
+  if exists('w:whitespace_match_number')
+    call matchdelete(w:whitespace_match_number)
+    call matchadd('ExtraWhitespace', pattern, 10, w:whitespace_match_number)
+  else
+    " Something went wrong, try to be graceful.
+    let w:whitespace_match_number =  matchadd('ExtraWhitespace', pattern)
+  endif
+endfunction
+
 
 " bundle 里的这些插件
 " 源于 http://python.42qu.com/11180003
@@ -150,7 +179,7 @@ map <leader>f :CommandTFlush<CR>
 "
 " vimwiki http://www.vim.org/scripts/script.php?script_id=2226
 "
-" map tb :VimwikiTable 
+" map tb :VimwikiTable
 map t<space> <Plug>VimwikiToggleListItem
 let g:vimwiki_hl_headers = 1
 " let g:vimwiki_conceallevel = 0
@@ -191,7 +220,7 @@ autocmd FileType python map <buffer> <F12> :call Flake8()<CR>
 "
 " 亮点：  可以兼容UltiSnips了  python 和 C的补全都很棒, 补全是字串补全, GoTo 这些子命令, 可以和go-vim兼容
 "
-" * INSTALL * 
+" * INSTALL *
 " apt-get install python-dev
 " cd ~/.vim/bundle
 " git clone https://github.com/Valloric/YouCompleteMe.git
@@ -238,13 +267,13 @@ au FileType go nmap <Leader>gd <Plug>(go-doc)
 
 
 
-" 
+"
 " TComment
 " https://github.com/tomtom/tcomment_vim
 " gc 确定一切
 
 
-" 
+"
 " vim-slime
 " https://github.com/jpalardy/vim-slime
 " ":i.j" means the ith window, jth pane
