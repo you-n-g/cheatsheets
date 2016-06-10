@@ -2,7 +2,7 @@
 
 
 
-# Red hat 系列
+# Red hat 系列的包管理
 
 #查看所有安装的包
 rpm -q #系列
@@ -20,6 +20,9 @@ yum list packagename
 sudo yum install epel-release
 
 
+
+# Debian系列的包管理
+apt-get install -f PACKAGE  # 可以直接安装.deb包，而且会自动安装依赖; dpkg -i 是不会自动安装依赖的
 
 
 
