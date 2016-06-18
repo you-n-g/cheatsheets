@@ -276,6 +276,7 @@ au FileType go nmap <Leader>gd <Plug>(go-doc)
 "
 " vim-slime
 " https://github.com/jpalardy/vim-slime
+" NOTICE: slime代表着一种边写脚本边搞bash的习惯！一种新的思维方式
 " ":i.j" means the ith window, jth pane
 " C-c, C-c  --- the same as slime
 " C-c, v    --- mnemonic: "variables"

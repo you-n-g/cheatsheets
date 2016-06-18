@@ -3,7 +3,7 @@
 
 
 
-# =======BEGIN config network 
+# =======BEGIN config network
 route -n
 brctl show
 
@@ -12,7 +12,7 @@ route del/add -host IP gw 192.168.1.1
 route del/add default gw 192.168.1.1
 
 # 重启网卡，在ubuntu上会读取 /etc/network/interfaces, 所以修改后用这个命令生效比较好
-sudo ifdown eth0 && sudo ifup eth0 # ifup is a script,  include check config and using DHCP 
+sudo ifdown eth0 && sudo ifup eth0 # ifup is a script,  include check config and using DHCP
 
 dhclient eth0 # 如果上面有问题，则用这个获取ip地址
 
@@ -23,7 +23,7 @@ ip addr add/del <CIDR> [scope link] dev <DEV> # 不加label的话，用 ip addr 
 
 # 设置无线网
 # 1) 确认能搜索到网络 && 驱动加载了
-iwlist scan 
+iwlist scan
 
 
 # SELinux
@@ -32,21 +32,21 @@ firewall-cmd --permanent --add-port=XXX_PORT/tcp
 firewall-cmd --reload
 setsebool -P nis_enabled 1
 
-# =======END   config network 
+# =======END   config network
 
 
 
 
 
 
-# =======BEGIN iptables 
+# =======BEGIN iptables
 # 换个端口
 # iptables -t nat -A PREROUTING -p tcp --dport FROM_XXX_PORT -j REDIRECT --to-ports TO_XXX_PORT
 # 这个成功过， 不需要 设置 route_localnet 也能成功
 # iptables -t nat -A PREROUTING -i eth1 -p tcp --dport FROM_XXX_PORT -j DNAT --to-destination XXX_HOST:XXX_PORT
 # 这个成功过， 反向代理到localhost需要设置 route_localnet， 但是不确定是否要设置 ip_forward
 
-# 
+#
 # 可能要做的设置
 # # ip_forward : 是否可以forward??? 设置vpn 时需要，反向代理到 localhost时还不确定是否需要
 # 看看 cat /proc/sys/net/ipv4/ip_forward
@@ -54,7 +54,7 @@ setsebool -P nis_enabled 1
 # # route_localnet: 是否可以 route到 localhost
 # cat  /proc/sys/net/ipv4/conf/eth_XXX/route_localnet
 # /etc/sysctl.conf 中 net.ipv4.conf.eth_XXX.route_localnet=1
-# =======END   iptables 
+# =======END   iptables
 
 
 
@@ -139,9 +139,10 @@ ssh -L LOCAL_ADDRESS:LOCAL_PORT:REMOTE_ADDRESS:REMOTE_PORT XXX_USER@XXX_HOST
 
 
 # BEGIN nmap VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-nmap -v target.com :: 扫描开了哪些端口
-nmap -sP '10.0.0.*' :: 扫描这个网段的ip
-nmap -sT targetHost :: 好处是很少有系统会把这种半tcp连接記入日志
+nmap -v target.com  # 扫描开了哪些端口 (这个可能只会扫描一下TCP端口或者常用端口)
+nmap -sP '10.0.0.*'  # 扫描这个网段的ip
+nmap -sT targetHost # 好处是很少有系统会把这种半tcp连接記入日志
+nmap -sTU -p PORT HOST  # 扫描指定服务器的的指定端口的TCP和UDP协议
 # 详情参见 http://dev.firnow.com/course/6_system/linux/Linuxxl/2007211/14170.html
 # BEGIN nmap ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

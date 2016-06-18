@@ -15,6 +15,9 @@ rpm -q #系列
 # 看是 *哪个repo* 安装的这个包
 yum list packagename
 
+# 看哪个包提供这个程序
+yum provides|whatprovides *bin/netstat
+
 # 开启 epel
 # https://support.rackspace.com/how-to/install-epel-and-additional-repositories-on-centos-and-red-hat/
 sudo yum install epel-release

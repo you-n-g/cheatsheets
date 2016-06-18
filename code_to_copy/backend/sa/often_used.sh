@@ -109,3 +109,25 @@ chkconfig --list  # 列出来有什么服务
 chkconfig XXX on  # 开启开机启动
 
 ## 网络配置篇 见interfaces
+
+
+# Debian系列常用的
+
+## 关闭防火墙
+service ufw stop; ufw disable  # 其实从来没有确认过这个会不会影响
+
+
+
+
+
+
+
+# 基本语法篇
+if ! grep "^proxy_up" ~/.bashrc ; then
+elif
+else
+fi
+
+if [ ! $? -eq 0 ]; then
+# 参见 ./WritingShellScripts.wiki
+#  -e file  # 文件是否存在
