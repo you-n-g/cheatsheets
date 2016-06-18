@@ -62,3 +62,14 @@ sudo adduser XXXX vboxsf  # 让普通用户成为vboxsf组里的东西，然后�
 # TODO  14.04 的sunpinyin输入法有问题
 
 # END   xubuntu
+
+
+
+# BEGIN ubuntu 16.04
+
+# 搜狗输入法直接上官网安装，用apt-get install -f安装，否则依赖不会自动安装; 但是需要你安装语言包, 自己在键盘中加入输入法(注意把show current language only这种选项去掉)
+
+# 开启 workspaces: appearance -> behaviour -> enable workspaces
+
+# END   ubuntu 16.04
+
