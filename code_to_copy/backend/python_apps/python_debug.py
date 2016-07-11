@@ -23,12 +23,12 @@ for line in traceback.format_stack():
 # 可以配合 os.getpid() 来得到当前进程的pid 看看在哪里运行
 
 # 如果是想输出抓住的异常的traceback
+import sys, traceback
 try:
     raise Exception
 except Exception:
     ex_type, ex, tb = sys.exc_info()
     traceback.print_tb(tb)
-finally:
     del tb
 
 # END   traceback
