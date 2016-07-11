@@ -24,13 +24,16 @@ for line in traceback.format_stack():
 
 # 如果是想输出抓住的异常的traceback
 import sys, traceback
+import StringIO
+output = StringIO.StringIO()
+
 try:
     raise Exception
 except Exception:
     ex_type, ex, tb = sys.exc_info()
-    traceback.print_tb(tb)
+    traceback.print_tb(tb, file=output)
     del tb
-
+print output.getvalue()
 # END   traceback
 
 
