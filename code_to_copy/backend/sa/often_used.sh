@@ -98,7 +98,7 @@ test "$XXX_STRING" = "XXX_STR" && echo True
 # Cent OS / Red Hat 系列常常会用到的
 
 ## selinux 篇
-Sestatus  # 查看selinux的状态
+sestatus  # 查看selinux的状态
 vim /etc/selinux/config  # 设置disabled
 
 iptables 和 selinux 并不是同时开关，关了selinux后还得再关iptables
@@ -120,9 +120,7 @@ service ufw stop; ufw disable  # 其实从来没有确认过这个会不会影�
 
 
 
-
-
-# 基本语法篇
+# 基本语法篇/常识
 if ! grep "^proxy_up" ~/.bashrc ; then
 elif
 else
@@ -131,3 +129,8 @@ fi
 if [ ! $? -eq 0 ]; then
 # 参见 ./WritingShellScripts.wiki
 #  -e file  # 文件是否存在
+
+
+cmd >> all.log 2>&1  # cmd &>> all.log 这个命令效果相同， 但是低版本的bash可能不支持; 2>&1 表示将 Red. STDERR to "where stdout goes" Note that the interpretion "redirect STDERR to STDOUT" is wrong.
+cmd &> all.log
+cmd > stdout.log 2>stderror.log
