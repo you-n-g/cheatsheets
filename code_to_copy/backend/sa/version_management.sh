@@ -26,8 +26,11 @@ git apply <filename> # 之后再导入, 默认不加参数时是不会出现在i
 git log --graph --oneline --decorate --all  # all 代表显示所有分支， 本来只会显示head所在的分支
 git diff '@{2}' # 查看最近两次改变的合集 # diff 默认是 working dir和index比较， diff HEAD才是 working dir 和 repo比较
 git reflog # 可以看到commit的纪录， 专门处理不在任何分支的commit
-## 查看
+## 查看具体的文件
 git blame -L9,+10 THE_FILE  # 可以看THE_FILE的 9 ~ 9 + 10 行是谁改过
+## 查看这个commit属于哪个分支, 一些可能有其他用途的东西：http://stackoverflow.com/questions/2706797/finding-what-branch-a-git-commit-came-from
+git branch --contains <commit>
+
 
 
 # 恢复

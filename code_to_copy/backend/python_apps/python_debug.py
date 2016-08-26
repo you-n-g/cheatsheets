@@ -62,10 +62,10 @@ http://stackoverflow.com/questions/132058/showing-the-stack-trace-from-a-running
 # 默认root logger的 level 一般是 warning, 即只显示 warning error critical
 # 默认是输出到 console 中
 
-# config log; 
+# config log;
 import logging
 logging.basicConfig(
-        filename="XXX.log", 
+        filename="XXX.log",
         level=logging.DEBUG,
         format='%(asctime)s %(name)s [%(levelname)s]:%(message)s', # name 是 logger的name
         # filemode='w', # 加上我就不会append而是覆盖之前的
@@ -153,7 +153,7 @@ cProfile.run('foo()', , 'stat_out')
 python -m cProfile [-s time] [-o stat_out] myscript.py
 
 
-# 得到输出后就可以用 
+# 得到输出后就可以用
 
 import pstats
 p = pstats.Stats('stat_out') # 再重新统计输出了

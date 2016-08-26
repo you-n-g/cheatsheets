@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # pip
 python setup.py build -f #的输出结果最后 的 PIL 1.1.7 SETUP SUMMARY 注意看看依赖是否都满足
+# pip 出现 AssertionError 是需要升级pip的版本
+pip install -U setuptools
+pip install -U pip
+# apt-get purge python-pip 后， 一定要重新开一个终端才能用上最新的pip
 
 # MySQL-python
 MySQL-python 的安装需要依赖 libmysqld-dev libmysqlclient-dev...
