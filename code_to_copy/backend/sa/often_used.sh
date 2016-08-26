@@ -98,7 +98,7 @@ test "$XXX_STRING" = "XXX_STR" && echo True
 # Cent OS / Red Hat 系列常常会用到的
 
 ## selinux 篇
-Sestatus  # 查看selinux的状态
+sestatus  # 查看selinux的状态
 vim /etc/selinux/config  # 设置disabled
 
 iptables 和 selinux 并不是同时开关，关了selinux后还得再关iptables
@@ -120,9 +120,7 @@ service ufw stop; ufw disable  # 其实从来没有确认过这个会不会影�
 
 
 
-
-
-# 基本语法篇
+# 基本语法篇/常识
 if ! grep "^proxy_up" ~/.bashrc ; then
 elif
 else
@@ -131,3 +129,21 @@ fi
 if [ ! $? -eq 0 ]; then
 # 参见 ./WritingShellScripts.wiki
 #  -e file  # 文件是否存在
+
+
+cmd >> all.log 2>&1  # cmd &>> all.log 这个命令效果相同， 但是低版本的bash可能不支持; 2>&1 表示将 Red. STDERR to "where stdout goes" Note that the interpretion "redirect STDERR to STDOUT" is wrong.
+cmd &> all.log
+cmd > stdout.log 2>stderror.log
+
+# sudo 保持环境变量
+sudo -E # 这个能保持绝大部分环境变量
+sudo env "PATH=$PATH" godi_console  # 因为 secure_path 的配置，所以path无法用-E直接保存
+
+
+# shell函数取参数
+# http://stackoverflow.com/questions/12314451/accessing-bash-command-line-args-vs
+# for 循环时会有大量的不同
+# $* 和 $@ 会把你引号包住的全拆开
+# "$*" 会把各个段都合并成一个
+# "$@" 常常是我们想要的， 引号包住的在一起， 该分开的分开
+# 有引号空格数量也不一致时， echo $word 和  echo "$word" 是有区别的

@@ -11,3 +11,11 @@ sys.setdefaultencoding('utf8')
 
 # 模仿这个就能得到相对当前脚本的一个绝对路径
 DIRNAME = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))  # 注意这得到的是上级目录的绝对路径
+
+
+# python package加载顺序
+# http://stackoverflow.com/questions/26193193/change-the-priority-of-python-sys-path
+# 本来的加载顺序, 你修改 PYTHONPATH 就好， 但是
+# setuptools会通过/usr/local/lib/python2.7/dist-packages/easy-install.pth
+# 再prepend 一堆路径，这里导致了 /usr/lib/python2.7/dist-packages
+# 总是在 /usr/local/lib/python2.7/dist-packages 之前， 而且你改了后还可能被改回来

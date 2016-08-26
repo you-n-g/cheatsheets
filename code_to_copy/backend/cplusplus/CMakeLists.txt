@@ -44,6 +44,9 @@ target_link_libraries (executable MathFunctions)  # 编译executable的时候把
 # 定义如何安装
 install (TARGETS MathFunctions DESTINATION bin)  # 定义这些targets要安装到bin里
 install (FILES MathFunctions.h DESTINATION include)  # 定义这些文件要安装到include里
+if (UNIX)
+    install(CODE "execute_process(COMMAND ldconfig)")  # 安装后自动运行 ldconfig
+endif()
 
 
 # introspection
