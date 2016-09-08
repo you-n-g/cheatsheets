@@ -147,3 +147,32 @@ sudo env "PATH=$PATH" godi_console  # 因为 secure_path 的配置，所以path�
 # "$*" 会把各个段都合并成一个
 # "$@" 常常是我们想要的， 引号包住的在一起， 该分开的分开
 # 有引号空格数量也不一致时， echo $word 和  echo "$word" 是有区别的
+
+
+# read the configure
+MINIBATCH_SIZE=64
+NUMBER_OF_MINIBATCHES=100
+
+for i in "$@"
+do
+case $i in
+    -m=*|--mini_batch_size=*)
+    MINIBATCH_SIZE="${i#*=}"
+    shift # past argument=value
+    ;;
+    -n=*|--num_batch=*)
+    NUMBER_OF_MINIBATCHES="${i#*=}"
+    shift # past argument=value
+    ;;
+    --default)
+    DEFAULT=YES
+    shift # past argument with no value
+    ;;
+    *)
+            # unknown option
+    ;;
+esac
+done
+echo "Mini Batch Size  = ${MINIBATCH_SIZE}"
+echo "Number of Batch = ${NUMBER_OF_MINIBATCHES}"
+
