@@ -11,19 +11,8 @@ set wildignore+=*.o,*.obj,*.pyc
 
 
 " XXX 需要安装插件
-call pathogen#infect()
+" call pathogen#infect()
 
-
-" BEGIN color  XXX 需要安装插件
-" let g:solarized_termtrans=1
-" let g:solarized_visibility="low"
-
-" 这几个顺序别乱
-syntax enable
-set background=dark
-let g:solarized_termcolors=256
-colorscheme solarized
-" END color
 
 
 highlight ExtraWhitespace ctermbg=red guibg=red
@@ -150,6 +139,34 @@ function! s:ToggleWhitespaceMatch(mode)
 endfunction
 
 
+
+" .dein.vim
+if &compatible
+  set nocompatible
+endif
+set runtimepath+=~/.dein.vim/repos/github.com/Shougo/dein.vim/
+call dein#begin('~/.dein.vim/')
+call dein#add('Shougo/dein.vim')
+call dein#add('scrooloose/nerdtree')
+call dein#add('wincent/command-t')
+call dein#add('majutsushi/tagbar')
+call dein#add('altercation/vim-colors-solarized', {'merged': 0})
+call dein#source('vim-colors-solarized')
+call dein#add('fatih/vim-go')
+call dein#add('Valloric/YouCompleteMe.git')
+call dein#add('tomtom/tcomment_vim')
+call dein#add('rdnetto/YCM-Generator')
+call dein#add('nvie/vim-flake8')
+call dein#add('jpalardy/vim-slime')
+call dein#add('ctrlpvim/ctrlp.vim')
+call dein#end()
+
+filetype plugin indent on
+syntax enable
+
+" :call dein#install()  to install
+
+
 " bundle 里的这些插件
 " 源于 http://python.42qu.com/11180003
 
@@ -159,20 +176,40 @@ endfunction
 "
 
 
+" BEGIN color  XXX 需要安装插件
+" let g:solarized_termtrans=1
+" let g:solarized_visibility="low"
+
+" 这几个顺序别乱
+syntax enable
+set background=dark
+let g:solarized_termcolors=256
+colorscheme solarized
+" END color
+
+
+
 "
 " Pathogen http://www.vim.org/scripts/script.php?script_id=2332
 "   mkdir -p ~/.vim/bundle
 "
 
 
-"
+" 
+" Deprecated because of ruby dependency
 " command-T http://www.vim.org/scripts/script.php?script_id=3025
 "   :ruby 1  or  +ruby
 "   sudo apt-get install ruby ruby-mkrf ruby-dev
 "   Do what the page tell you !!!!
 "
-let g:CommandTWildIgnore=&wildignore . ",*.o,*.obj,.git,*.pyc,*/migrations/*,django,*static/plugins/*,*Godeps/_workspace/*"
-map <leader>f :CommandTFlush<CR>
+" let g:CommandTWildIgnore=&wildignore . ",*.o,*.obj,.git,*.pyc,*/migrations/*,django,*static/plugins/*,*Godeps/_workspace/*"
+" map <leader>f :CommandTFlush<CR>
+
+
+"
+" ctrlp.vim
+" https://github.com/kien/ctrlp.vim
+map <leader>t :CtrlP<CR>
 
 
 
@@ -245,6 +282,9 @@ let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 let g:ycm_confirm_extra_conf=0
 au FileType c,cpp,objc,objcpp,python,cs nmap gd :YcmCompleter GoToDefinition<cr>
 au FileType c,cpp,objc,objcpp,python,cs nmap gD :YcmCompleter GoToDeclaration<cr>
+" ycm for debug
+" let g:ycm_keep_logfiles = 1
+" let g:ycm_log_level = 'debug'
 
 
 "
