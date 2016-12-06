@@ -148,7 +148,6 @@ set runtimepath+=~/.dein.vim/repos/github.com/Shougo/dein.vim/
 call dein#begin('~/.dein.vim/')
 call dein#add('Shougo/dein.vim')
 call dein#add('scrooloose/nerdtree')
-call dein#add('wincent/command-t')
 call dein#add('majutsushi/tagbar')
 call dein#add('altercation/vim-colors-solarized', {'merged': 0})
 call dein#source('vim-colors-solarized')
@@ -184,7 +183,7 @@ syntax enable
 syntax enable
 set background=dark
 let g:solarized_termcolors=256
-colorscheme solarized
+silent! colorscheme solarized
 " END color
 
 
