@@ -210,6 +210,7 @@ colorscheme solarized
 " ctrlp.vim
 " https://github.com/kien/ctrlp.vim
 map <leader>t :CtrlP<CR>
+let g:ctrlp_working_path_mode = 'wa'
 
 
 
@@ -278,9 +279,11 @@ autocmd FileType python map <buffer> <F12> :call Flake8()<CR>
 " '-Iinclude',
 " '-I.',
 " && make所出现的一些东西
+" 这些单数可能会影响std里的东西的跳转: -nostdinc, -nostdlib,
+" 一些类似于sgx中的stl的port
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 let g:ycm_confirm_extra_conf=0
-au FileType c,cpp,objc,objcpp,python,cs nmap gd :YcmCompleter GoToDefinition<cr>
+au FileType c,cpp,objc,objcpp,python,cs nmap gd :YcmCompleter GoTo<cr>
 au FileType c,cpp,objc,objcpp,python,cs nmap gD :YcmCompleter GoToDeclaration<cr>
 " ycm for debug
 " let g:ycm_keep_logfiles = 1
