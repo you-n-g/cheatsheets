@@ -15,6 +15,10 @@ pdb.set_trace()
 # END   PDB
 
 
+# remote pdb 特别好用
+# https://pypi.python.org/pypi/rpdb/
+import rpdb; rpdb.set_trace()
+
 
 # BEGIN traceback
 import traceback
