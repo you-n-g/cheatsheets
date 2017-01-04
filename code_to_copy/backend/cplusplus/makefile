@@ -1,5 +1,5 @@
 # This file will contains some instructions about compiling
-.PHONY: all
+.PHONY: all clean
 
 all: program
 
