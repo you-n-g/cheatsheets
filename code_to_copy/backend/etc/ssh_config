@@ -1,0 +1,9 @@
+#
+HOST linode
+  USER root
+  HOSTNAME 45.79.10.245
+  PORT 2222
+
+HOST aliyun
+  USER root
+  HOSTNAME 123.57.81.247
