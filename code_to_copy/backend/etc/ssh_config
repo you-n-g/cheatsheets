@@ -7,3 +7,5 @@ HOST linode
 HOST aliyun
   USER root
   HOSTNAME 123.57.81.247
+
+# USERNAME ALL=(ALL) NOPASSWD: ALL

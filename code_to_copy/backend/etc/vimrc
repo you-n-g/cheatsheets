@@ -140,6 +140,14 @@ endfunction
 
 
 
+" Go to the last cursor location when a file is opened, unless this is a
+" git commit (in which case it's annoying)
+au BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") && &filetype != "gitcommit" |
+        \ execute("normal `\"") |
+    \ endif
+
+
 " .dein.vim
 if &compatible
   set nocompatible
@@ -158,6 +166,8 @@ call dein#add('rdnetto/YCM-Generator')
 call dein#add('nvie/vim-flake8')
 call dein#add('jpalardy/vim-slime')
 call dein#add('ctrlpvim/ctrlp.vim')
+call dein#add('vim-airline/vim-airline')
+call dein#add('vim-airline/vim-airline-themes')
 call dein#end()
 
 filetype plugin indent on
@@ -194,7 +204,7 @@ silent! colorscheme solarized
 "
 
 
-" 
+"
 " Deprecated because of ruby dependency
 " command-T http://www.vim.org/scripts/script.php?script_id=3025
 "   :ruby 1  or  +ruby
@@ -286,6 +296,7 @@ au FileType c,cpp,objc,objcpp,python,cs nmap gD :YcmCompleter GoToDeclaration<cr
 " ycm for debug
 " let g:ycm_keep_logfiles = 1
 " let g:ycm_log_level = 'debug'
+" let g:ycm_server_python_interpreter = '/usr/local/bin/python'
 
 
 "
@@ -324,3 +335,9 @@ au FileType go nmap <Leader>gd <Plug>(go-doc)
 let g:slime_target = "tmux"
 " 这个一定要和ipython一起用，否则可能出现换行出问题
 let g:slime_python_ipython = 1
+
+
+
+" 
+" vim-airline-themes
+let g:airline_theme='dark'
