@@ -74,8 +74,11 @@ lspci | grep Ethernet
 
 
 
-# 查看进程当前目录
+# 查看进程信息
+## 查看进程当前目录
 pwdx pid # 其实是看   /proc/<pid>/pwd link到哪里
+## 查看进程启动时间
+ps -p PID -o lstart  
 
 
 

@@ -18,6 +18,7 @@ git config --list
 
 #patch的导入导出
 git format-patch master # 将patch都导出来
+git format-patch -N # 将最新的N个patch都导出来
 git apply <filename> # 之后再导入, 默认不加参数时是不会出现在index里的，更不会commit
 
 

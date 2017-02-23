@@ -11,7 +11,7 @@ cd "D:\XXX\putty\"
 putty.exe -D 127.0.0.1:8964 -l XXX_USER -pw XXX_PASSWORD XXX_HOST
 ::
 :: putty GUI设置
-:: 下载 putty.zip 
+:: 下载 putty.zip
 :: 这里导入相应配色 https://github.com/altercation/solarized/tree/master/putty-colors-solarized
 :: 设置兼容颜色
 ::      Window - Colours : Enable "Allow terminal to use xterm 256-colour mode"
@@ -33,9 +33,9 @@ putty.exe -D 127.0.0.1:8964 -l XXX_USER -pw XXX_PASSWORD XXX_HOST
 :: 我觉得对我比较有用的：Send to tray, Always visible, Automatic password, Roll-up, Quick start of a duplicate session
 :: 最好在 kitty.ini 改下那个恶心的F7快捷键
 :: [Shortcuts]
-:: printall={SHIFT}{CONTROL}{F7} 
+:: printall={SHIFT}{CONTROL}{F7}
 ::
-:: MTPutty 
+:: MTPutty
 :: http://ttyplus.com/downloads.html
 :: 支持多个tab
 :: 但是和 kitty 还是有点不兼容
