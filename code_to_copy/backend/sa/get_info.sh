@@ -7,7 +7,7 @@ cat /proc/version
 
 # linux version
 lsb_release -a
-
+cat /etc/redhat-release  # 仅仅限于 redhat系列
 
 
 # disk ，参考  backend/sa/disk.sh

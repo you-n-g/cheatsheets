@@ -20,6 +20,17 @@ umount /mnt/opvm/
 
 
 
+# 用户权限管理 VVVVVVVVVVVVVVVVVVV
+sudo useradd -m -s /bin/bash -G NEW_USER NEW_USER
+# -m 表示创建用户的时候创建主目录
+# 修改用户的某一特性时使用 usermod，这时之前的权限无法生效，这时可以用下面两个命令之一来切换到新的权限
+su - $USER
+newgrp <NEW_GROUP>
+
+# 如果修改了用户的组，是无法立即生效的。
+# 用户权限管理 ^^^^^^^^^^^^^^^^^^^
+
+
 # 挂载内存当文件系统使用
 mount -t tmpfs -o size=1024m tmpfs /mnt/ram
 

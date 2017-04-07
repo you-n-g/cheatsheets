@@ -31,7 +31,8 @@ git reflog # 可以看到commit的纪录， 专门处理不在任何分支的com
 git blame -L9,+10 THE_FILE  # 可以看THE_FILE的 9 ~ 9 + 10 行是谁改过
 ## 查看这个commit属于哪个分支, 一些可能有其他用途的东西：http://stackoverflow.com/questions/2706797/finding-what-branch-a-git-commit-came-from
 git branch --contains <commit>
-
+## 看看head的 commit是哪个
+git rev-parse HEAD
 
 
 # 恢复
