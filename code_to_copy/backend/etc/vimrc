@@ -173,6 +173,7 @@ call dein#add('jpalardy/vim-slime')
 call dein#add('ctrlpvim/ctrlp.vim')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
+call dein#add('heavenshell/vim-pydocstring')
 call dein#end()
 
 filetype plugin indent on
@@ -302,6 +303,7 @@ au FileType c,cpp,objc,objcpp,python,cs nmap gD :YcmCompleter GoToDeclaration<cr
 " let g:ycm_keep_logfiles = 1
 " let g:ycm_log_level = 'debug'
 " let g:ycm_server_python_interpreter = '/usr/local/bin/python'
+let g:ycm_goto_buffer_command = 'new-or-existing-tab'
 
 
 "
@@ -346,3 +348,8 @@ let g:slime_python_ipython = 1
 " 
 " vim-airline-themes
 let g:airline_theme='dark'
+
+
+"
+" heavenshell/vim-pydocstring
+nmap <silent> <C-I> <Plug>(pydocstring)

@@ -187,3 +187,8 @@ done
 echo "Mini Batch Size  = ${MINIBATCH_SIZE}"
 echo "Number of Batch = ${NUMBER_OF_MINIBATCHES}"
 
+
+
+# 进程替换 / Process substitution:  相当于把里面这组命令的输出或者输入 替换成一个文件；方便有些命令不接受stdin，只能接受文件名做参数。
+diff <(sort file1) <(sort file2) # >(command)  <(command)
+

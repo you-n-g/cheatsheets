@@ -43,12 +43,14 @@ git checkout -- filename # 恢复某文件到 head 版本， --为了以防在 �
 git branch -f branch-name XXX_COMMIT # 可以直接将已经有的branch 设置到指定的commit
 
 # 操作分支指针
-git reset --hard COMMIT_NAME # 如果加了 --hard， working directory, staged通杀; 默认是--mixed 清除index，保留working directory; reset 不会删除commit， 但是会改变head指向的分支指针;
+git reset --hard COMMIT_NAME # 我会但是会改变当前的branch指针和head指向的分支指针;
+# 如果加了 --hard， working directory, staged通杀; 默认是--mixed 清除index，保留working directory(所以相当于当前文件保留，但是只改变分支指针的指向); reset 不会删除commit;
+
 
 # 操作 cached/staged/index # 可以 git ls-files 看index里有什么
-git rm --cached filename  # 从 Index 删除文件， 其他都不管； 如果以前就有，新的commit中就不会有这个文件， 有点像hg forget； 如果这个文件是最新commit之后加上的，则直接在index删除
-# 据说 git reset filename 也有一样的效果， 区别仅仅在于这里需要 filename 有一个 previous 版本 在 HEAD中
+git rm --cached <filename>  # 从 Index 删除文件， 其他都不管； 如果以前就有，新的commit中就不会有这个文件， 有点像hg forget； 如果这个文件是最新commit之后加上的，则直接在index删除
 git reset HEAD filename  # 效果是 将 index中文件恢复到 HEAD状态(即to be committed的会被消除， 但是文件不会被标记成下次删除)，  不管working directory
+# - rm --cached 表示在index中删除文件;   reset表示在index中重置文件成某个版本
 
 
 

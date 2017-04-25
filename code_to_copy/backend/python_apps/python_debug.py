@@ -18,6 +18,7 @@ pdb.set_trace()
 # remote pdb 特别好用
 # https://pypi.python.org/pypi/rpdb/
 import rpdb; rpdb.set_trace()
+# rpdb的异常显示有问题
 
 
 # BEGIN traceback
