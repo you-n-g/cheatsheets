@@ -12,6 +12,11 @@ git config --global color.ui auto # 配置自动颜色
 # 配置merge
 git config --global merge.tool vimdiff
 git config --global mergetool.prompt false
+
+# 忽略chmod的影响: http://stackoverflow.com/questions/1580596/how-do-i-make-git-ignore-file-mode-chmod-changes
+git config core.fileMode false
+# 但是默认这个配置仅仅会影响x位(需要确认到底是他仅仅管x位还是git仅仅管x位)，但是一般我们仅仅需要改变读写权限，可以chmod g+r 之类的命令代替
+
 # 看看已经配置了哪些config
 git config --list
 
