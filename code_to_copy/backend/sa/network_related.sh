@@ -36,6 +36,16 @@ setsebool -P nis_enabled 1
 
 
 
+# =======BEGIN 如何关闭防火墙
+
+# CentOS 7.2
+systemctl list-unit-files  # 查看所有服务状态
+systemctl status firewalld.service  # 检查防火墙状态
+systemctl stop firewalld.service   # 关闭防火墙
+systemctl disable firewalld.service   # 禁止防火墙
+# 其他版本如何关闭防火墙 http://www.jb51.net/article/101576.htm
+
+# =======END   如何关闭防火墙
 
 
 
