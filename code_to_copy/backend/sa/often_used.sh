@@ -88,8 +88,13 @@ service --status-all  # 查看所有服务的状态
 
 
 # 修改hostname
+# 方法 1)
 # 先改 /etc/hosts  /etc/hostname， 然后
 hostname -F /etc/hostname
+# 方法 2)
+hostnamectl set-hostname HOSTNAME
+# 然后重新登录
+
 
 
 

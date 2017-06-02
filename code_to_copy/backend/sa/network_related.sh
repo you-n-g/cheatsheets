@@ -32,6 +32,12 @@ firewall-cmd --permanent --add-port=XXX_PORT/tcp
 firewall-cmd --reload
 setsebool -P nis_enabled 1
 
+# 如何关闭selinux
+vim /etc/selinux/config  # 设置成disable
+setenforce 0  # 关闭selinux
+sestatus  # 查看状态；   我发现这时还是显示为enabled
+# 我看到必须重启之后才能让selinux生效
+
 # =======END   config network
 
 

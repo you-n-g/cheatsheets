@@ -39,4 +39,13 @@ iface wlan0 inet dhcp
 
 # red hat 系列: /etc/sysconfig/network-scripts/ifcfg-eth0
 
-# ONBOOT=yesONBOOT=yes
+ONBOOT=yes
+DEVICE=eth0
+BOOTPROTO=none
+NETMASK=255.255.255.0
+IPADDR=192.168.1.186
+GATEWAY=192.168.1.1
+USERCTL=no  # Non-root users are not allowed to control this device.
+DNS1=223.5.5.5
+DNS2=8.8.8.8
+
