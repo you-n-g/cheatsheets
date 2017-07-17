@@ -302,7 +302,9 @@ au FileType c,cpp,objc,objcpp,python,cs nmap gD :YcmCompleter GoToDeclaration<cr
 " ycm for debug
 " let g:ycm_keep_logfiles = 1
 " let g:ycm_log_level = 'debug'
+" This is necessary when using ubuntu, otherwise it will report module ycm_core not found ERROR.
 " let g:ycm_server_python_interpreter = '/usr/local/bin/python'
+let g:ycm_server_python_interpreter = '/usr/bin/python'
 let g:ycm_goto_buffer_command = 'new-or-existing-tab'
 
 
