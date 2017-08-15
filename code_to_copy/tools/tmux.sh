@@ -28,3 +28,9 @@ tmux splitw -h -t sgx:1  # 把目标窗口的当前pane 分左右两边
 
 # 把另外一个pane弄到当前window新建的一个pane
 tmux join-pane -s ":0.0"
+
+
+
+# trouble shooting
+
+ctrl + q  # 有时候整个pane会卡住，我无法稳定复现，但是这个可以解决

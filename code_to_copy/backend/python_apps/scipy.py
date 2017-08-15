@@ -9,7 +9,7 @@ Matplotlib是一个帮助绘图的语言扩展。
 
 # 我们来搞定科学计算
 
-import numpy
+import numpy as np
 from scipy import stats
 
 XXX_ar = stats.pearsonr([XXX])
@@ -19,13 +19,13 @@ print stats.tvar(XXX_ar), stats.tstd(XXX_ar), stats.tmean(XXX_ar)
 print stats.pearsonr(XXX_LISTA, XXX_LISTB)
 
 
-print numpy.log2(1024)
-print numpy.log10(0)
-print numpy.log(XXX)  #it's ln
+print np.log2(1024)
+print np.log10(0)
+print np.log(XXX)  #it's ln
 
-print numpy.exp(1)
+print np.exp(1)
 
-print numpy.e, numpy.pi
+print np.e, np.pi
 
 
 
@@ -40,16 +40,16 @@ print S.log1p(1e-20)  ## 计算 ln(1 + 1e-20)
 
 # 矩阵相关
 # 我觉得这里有很多工具 http://blog.sina.com.cn/s/blog_70586e000100moen.html
-x = numpy.array([
+x = np.array([
     [0, 0, 0],
     [1, 0, 0],
     [1, 1, 0],
     [1, 0, 1],
 ]).T  # 样本向量都按标准的列的形式给出
 
-print numpy.cov(x, bias=1) # 如果需要除以 N 而不是 N-1， 则 bias=1
+print np.cov(x, bias=1) # 如果需要除以 N 而不是 N-1， 则 bias=1
 
-x = numpy.array([[2, 0], [0, 2]])
+x = np.array([[2, 0], [0, 2]])
 y = linalg.inv(x)  # 求逆矩阵
 
 
@@ -58,4 +58,6 @@ from scipy import stats
 print stats.describe(data.flatten())
 
 
-
+# 存取数据要注意的问题
+# 数据都会被转化为 array，如果是list大概感觉不到太大区别，如果是dict则需要调用下面的方法
+np.load('dict_data.npy').item()
