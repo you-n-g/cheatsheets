@@ -39,7 +39,13 @@ mount -t tmpfs -o size=1024m tmpfs /mnt/ram
 
 # 一些常常需要的变量
 set -x # 设置允许的时候会把命令写出来， 而且会在命令前面输出+
-DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+
+## = must used instead of ==
+if [ $0 = "-bash" ]; then
+    DIR=`pwd`
+else
+    DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+fi
 
 DATETIME=`date +%Y-%m-%d:%H:%M:%S`
 
@@ -197,3 +203,11 @@ echo "Number of Batch = ${NUMBER_OF_MINIBATCHES}"
 # 进程替换 / Process substitution:  相当于把里面这组命令的输出或者输入 替换成一个文件；方便有些命令不接受stdin，只能接受文件名做参数。
 diff <(sort file1) <(sort file2) # >(command)  <(command)
 
+
+
+
+# 数值计算
+for ((train=2006, test=2012; test < 2017; train++, test++ )) ; do
+    train_s=${train}0101
+    train_e=$((test - 1))1231
+done

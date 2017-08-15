@@ -51,3 +51,11 @@ print numpy.cov(x, bias=1) # 如果需要除以 N 而不是 N-1， 则 bias=1
 
 x = numpy.array([[2, 0], [0, 2]])
 y = linalg.inv(x)  # 求逆矩阵
+
+
+# 大概瞧一瞧数据长啥样
+from scipy import stats
+print stats.describe(data.flatten())
+
+
+
