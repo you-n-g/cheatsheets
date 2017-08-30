@@ -199,6 +199,21 @@ echo "Mini Batch Size  = ${MINIBATCH_SIZE}"
 echo "Number of Batch = ${NUMBER_OF_MINIBATCHES}"
 
 
+# read args with default value
+# https://stackoverflow.com/questions/9332802/how-to-write-a-bash-script-that-takes-optional-input-arguments
+ARG1=${1:-DEFAULT_ARG1}
+
+
+# for pairs array
+# https://stackoverflow.com/questions/14370133/is-there-a-way-to-create-key-value-pairs-in-bash-script
+for i in a,b c_s,d ; do 
+  KEY=${i%,*};
+  VAL=${i#*,};
+  echo $KEY" XX "$VAL;
+done
+# 看不懂的操作看 http://tldp.org/LDP/abs/html/parameter-substitution.html
+
+
 
 # 进程替换 / Process substitution:  相当于把里面这组命令的输出或者输入 替换成一个文件；方便有些命令不接受stdin，只能接受文件名做参数。
 diff <(sort file1) <(sort file2) # >(command)  <(command)

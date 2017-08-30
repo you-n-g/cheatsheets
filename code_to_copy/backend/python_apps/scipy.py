@@ -55,9 +55,18 @@ y = linalg.inv(x)  # 求逆矩阵
 
 # 大概瞧一瞧数据长啥样
 from scipy import stats
-print stats.describe(data.flatten())
+print stats.describe(data.astype(np.float).flatten())
 
 
 # 存取数据要注意的问题
 # 数据都会被转化为 array，如果是list大概感觉不到太大区别，如果是dict则需要调用下面的方法
 np.load('dict_data.npy').item()
+
+
+
+
+# 数据选择相关
+a = np.array(range(10))
+a[np.logical_and(3 < a, a < 8)] # 因为 a < 3 会返回是否满足要求的 boolean 矩阵， 这个矩阵作为选择， 最终得到筛选之后的数据。
+# 但是array之间无法直接运行 and 或者 or 运算， 
+
