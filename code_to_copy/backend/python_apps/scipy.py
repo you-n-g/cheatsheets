@@ -70,3 +70,16 @@ a = np.array(range(10))
 a[np.logical_and(3 < a, a < 8)] # 因为 a < 3 会返回是否满足要求的 boolean 矩阵， 这个矩阵作为选择， 最终得到筛选之后的数据。
 # 但是array之间无法直接运行 and 或者 or 运算， 
 
+
+# pandas 相关
+# pandas中，一张表是 pandas.core.frame.DataFrame, 一行或一列数据是pandas.core.series.Series
+# 用pandas可以让数据本身包含很多信息，不用单独再对行列再进行描述
+import pandas as pd
+df = pd.read_csv(CSV_PATH)
+
+# selecting is supported.  loc只支持label来 index, 如果想按下标顺序index， 必须用index
+df.loc[BEGIN_ROW:END_ROW, BEGIN_COL:END_COL]  # such as df.loc[1:2, 'InnerCode':'IfWeekEnd']
+
+# 如果使用name作为slice的index，那么会包含最后一项
+for index, row in df.iterrows():
+    print row["c1"], row["c2"]

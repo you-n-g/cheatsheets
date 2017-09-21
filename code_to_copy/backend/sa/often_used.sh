@@ -44,7 +44,7 @@ set -x # 设置允许的时候会把命令写出来， 而且会在命令前面�
 if [ $0 = "-bash" ]; then
     DIR=`pwd`
 else
-    DIR="$( cd "$(dirname "$0")" ; pwd -P )"
+    DIR="$( cd "$(dirname $(readlink -f "$0"))" ; pwd -P )"
 fi
 
 DATETIME=`date +%Y-%m-%d:%H:%M:%S`
