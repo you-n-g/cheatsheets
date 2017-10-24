@@ -110,8 +110,8 @@ def plot_two_yaxes():
 		    right_axes.xaxis.get_major_ticks(), right_axes.yaxis.get_major_ticks()]:
 	for tick in tickset:
 	    tick.label.set_fontsize(fontsz)
-    axes.plot(x, np.exp(x), 'b--',label='exp')
-    right_axes.plot(x, np.log(x), 'r+', label='log')
+    axes.plot(x, np.exp(x), ls='b--',label='exp')
+    right_axes.plot(x, np.log(x), ls='r+', label='log')
     h1, l1 = axes.get_legend_handles_labels()
     h2, l2 = right_axes.get_legend_handles_labels()
 
@@ -147,5 +147,31 @@ row_colors=pd.DataFrame(data=str_colors, index=filtered_dataframe.index)
 g = sns.clustermap(filtered_dataframe, row_cluster=False, row_colors=row_colors, figsize=(24, 24))
 ## 返回值是:  A ClusterGrid instance.
 plt.show()
+
+
+
+# share the same x and y
+# http://matplotlib.org/examples/pylab_examples/shared_axis_demo.html
+# set the figure size at the same time https://stackoverflow.com/questions/10388462/matplotlib-different-size-subplots
+# 注意subplot必须要设置subplot(nrows, ncols, plot_number) 参数！！！
+ 
+import matplotlib.pyplot as plt
+import numpy as np
+def share_x_y():
+    t = np.arange(0.01, 5.0, 0.01)
+    s1 = np.sin(2*np.pi*t)
+    s2 = np.exp(-t)
+    s3 = np.sin(4*np.pi*t)
+
+    fig = plt.figure(figsize=(12, 6))
+
+    ax1 = plt.subplot(2, 1, 1)
+    ax1.scatter(t, s1)
+
+    # share x and y
+    ax2 = plt.subplot(2, 1, 2, sharex=ax1, sharey=ax1)
+    ax2.scatter(t, s3)
+
+    plt.show()
 
 

@@ -81,6 +81,7 @@ logging.basicConfig(
         format='%(asctime)s %(name)s [%(levelname)s]:%(message)s', # name 是 logger的name
         # filemode='w', # 加上我就不会append而是覆盖之前的
 ) # *只有第一次配置会生效，之后就完全无效了*。
+# 难点在于当前的系统已经有logger了，如何做到能并存
 
 
 # 几个比较特殊的 log
