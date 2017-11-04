@@ -104,14 +104,17 @@ def plot_two_yaxes():
     fontsz = 40
     fig, axes = plt.subplots(1, 1, figsize=(20, 12))
 
+    # This must run before defining twinx but after defining  axes to take effect
+    plt.xticks(rotation=45)
+
     x = np.linspace(0.0001, 1, 100)
     right_axes = axes.twinx()
     for tickset in [axes.xaxis.get_major_ticks(), axes.yaxis.get_major_ticks(),
 		    right_axes.xaxis.get_major_ticks(), right_axes.yaxis.get_major_ticks()]:
 	for tick in tickset:
 	    tick.label.set_fontsize(fontsz)
-    axes.plot(x, np.exp(x), ls='b--',label='exp')
-    right_axes.plot(x, np.log(x), ls='r+', label='log')
+    axes.plot(x, np.exp(x), ls='--',label='exp')
+    right_axes.plot(x, np.log(x), ls=':', label='log')
     h1, l1 = axes.get_legend_handles_labels()
     h2, l2 = right_axes.get_legend_handles_labels()
 
@@ -119,10 +122,48 @@ def plot_two_yaxes():
     axes.set_ylabel("Y", fontsize=fontsz)
     right_axes.set_ylabel("YY", fontsize=fontsz)
     plt.legend(h1+h2, l1+l2, fontsize=fontsz)
-    plt.xticks(rotation=45)
     plt.yticks(fontsize=fontsz)  # this will decide the right axes
     plt.show()
 
+
+def plot_three_yaxes():
+    fontsz = 40
+    fig, axes = plt.subplots(1, 1, figsize=(20, 12))
+
+    # This must run before defining twinx but after defining  axes to take effect
+    plt.xticks(rotation=45)
+
+    x = np.linspace(0.0001, 1, 100)
+    right_axes = axes.twinx()
+    plt.yticks(fontsize=fontsz) # this will decide the ticks fontsize of right_axes
+
+    right_axes2 = axes.twinx()
+    for tickset in [axes.xaxis.get_major_ticks(), axes.yaxis.get_major_ticks(),
+                    right_axes.xaxis.get_major_ticks(), right_axes.yaxis.get_major_ticks(),
+                    right_axes2.xaxis.get_major_ticks(), right_axes2.yaxis.get_major_ticks(),]:
+        for tick in tickset:
+            tick.label.set_fontsize(fontsz)
+    axes.plot(x, np.exp(x), ls='--',label='exp')
+    right_axes.plot(x, np.log(x), ls=':', label='log')
+    right_axes2.plot(x, x, ls='-', label='linear')
+
+    right_axes2.spines['right'].set_position(('outward', 120))
+
+    h1, l1 = axes.get_legend_handles_labels()
+    h2, l2 = right_axes.get_legend_handles_labels()
+    h3, l3 = right_axes2.get_legend_handles_labels()
+
+    axes.set_xlabel("X", fontsize=fontsz)
+    axes.set_ylabel("Y", fontsize=fontsz)
+    right_axes.set_ylabel("YY", fontsize=fontsz)
+    right_axes2.set_ylabel("YYY", fontsize=fontsz)
+
+    plt.legend(h1+h2+h3, l1+l2+l3, fontsize=fontsz)
+    plt.yticks(fontsize=fontsz)  # this will decide the font size of right_axes2
+    plt.show()
+
+
+# seaborn related BEGIN --------------------------------------------------
 
 # 可以用seaborn来画heatmap， 但是最后得自己加上plot.show()
 ## DOC: http://seaborn.pydata.org/generated/seaborn.clustermap.html
@@ -148,6 +189,35 @@ g = sns.clustermap(filtered_dataframe, row_cluster=False, row_colors=row_colors,
 ## 返回值是:  A ClusterGrid instance.
 plt.show()
 
+# 如果想提取其中的类:  https://stackoverflow.com/questions/27924813/extracting-clusters-from-seaborn-clustermap
+from scipy.cluster import hierarchy
+from scipy.spatial import distance
+row_linkage = hierarchy.linkage(
+            distance.pdist(dataframe), method='average')
+sns.clustermap(dataframe, row_linkage=row_linkage, figsize=(24, 24))
+plt.show()
+
+def merge_linkage(linkage, cluster_n):
+    total_n = len(train_keys)
+    new_cluster_i = total_n
+    cluster_set_map = {}
+    for i in range(total_n):
+        cluster_set_map[i] = set([i])
+    for clst1, clst2, diff, cls_n in linkage[:-cluster_n + 1]:
+        # print clst1, clst2, diff, cls_n, new_cluster_i
+        clst1, clst2, cls_n = int(clst1), int(clst2), int(cls_n)
+        cluster_set_map[new_cluster_i] = cluster_set_map[clst1] | cluster_set_map[clst2]
+        assert(len(cluster_set_map[new_cluster_i]) == cls_n)
+        del cluster_set_map[clst1]
+        del cluster_set_map[clst2]
+        new_cluster_i += 1
+    return cluster_set_map
+
+
+# seaborn 有很多 pyplot的替代但是信息更丰富的图像, 而且文档也更好
+sns.distplot(x) # 替代histplot, https://seaborn.pydata.org/generated/seaborn.distplot.html
+
+# seaborn related END    --------------------------------------------------
 
 
 # share the same x and y

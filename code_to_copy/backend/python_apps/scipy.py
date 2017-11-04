@@ -83,6 +83,7 @@ for fname in os.listdir(STOCK_PRICE_PATH):
         fpath = os.path.join(STOCK_PRICE_PATH, fname)
         csv_list.append(pd.read_csv(fpath, encoding='utf8')) # 事后去逐行encoding会非常非常慢. 不加encoding，得到的str列都是str，而不是utf8
 df = pd.concat(csv_list)
+pd.reset_index(drop=True, inplace=True)
 
 # selecting is supported.  loc只支持label来 index, 如果想按下标顺序index， 必须用iloc
 df.loc[BEGIN_ROW:END_ROW, BEGIN_COL:END_COL]  # such as df.loc[1:2, 'InnerCode':'IfWeekEnd']
@@ -114,7 +115,7 @@ for midx, score in grouped_top_data.iteritems():
 df.to_csv("CSV_FILE")
 df = pd.read_csv("CSV_FILE", index_col=0)
 # OR
-df.to_csv("CSV_FILE", index=False)
+df.to_csv("CSV_FILE", index=False, header=False)
 df = pd.read_csv("CSV_FILE")
 
 
@@ -134,14 +135,31 @@ all_data = pd.merge(key_score_loss_df, data.loc[:, ('date', 'SecuAbbr', 'nextRis
 df['col_name'].value_counts() 
 
 
+# processing multi index
+df = pd.read_csv(fname, encoding='gbk', names=['date', 'sector'], sep='\t', index_col=(0, 1))
+df.index.get_level_values(0) # get the values of specific level
+
+
 ## 一些要注意的点
 # 在 slice 上的修改有时候会影响到 原数据的, 在 numpy 也是同样的,  numpy需要用  numpy.copy才能避免
 # - 一般直接看是否有 SettingWithCopyWarning就行, http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
 # - 会直接修改源数据的: a.loc[a[0] < 5, 'idx'] = False
 # - 不会直接修改源数据的：a.loc[a[0] < 5]['idx'] = False
 # bool index 时，如果传入的是带有index的boolean值， 取值是看 index + bool的结果， 而不是
+# 
+# pandas 的 to_datetime 得到的对象不是 datetime,  和datetime比较时它必须放在左边
 
 # pandas 相关  =========================================================================================
+
+
+
+# TODO: preprocessing
+from sklearn import preprocessing
+# http://scikit-learn.org/stable/modules/preprocessing.html
+min_max_scaler = preprocessing.MinMaxScaler()
+min_max_scaler.fit(train_total_x)
+train_resc_total_x = min_max_scaler.transform(train_total_x)
+test_resc_total_x = min_max_scaler.transform(test_total_x)
 
 
 

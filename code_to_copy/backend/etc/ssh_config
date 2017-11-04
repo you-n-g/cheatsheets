@@ -1,4 +1,4 @@
-#
+# ~/.ssh/config
 HOST linode
   USER root
   HOSTNAME 45.79.10.245
