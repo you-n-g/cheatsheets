@@ -7,6 +7,18 @@
 # 最终没有解决
 
 
+# https://stackoverflow.com/questions/37604289/tkinter-tclerror-no-display-name-and-no-display-environment-variable
+# 在terminal里画图会报错 _tkinter.TclError: no display name and no $DISPLAY environment variable 
+# 必须加下面来防止出错
+import matplotlib
+matplotlib.use('Agg')
+plt.savefig('filename.png')  # use this instead of plt.show()
+
+# use seaborn
+import seaborn as sns; sns.set(color_codes=True)
+
+
+
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
@@ -237,11 +249,46 @@ def share_x_y():
 
     ax1 = plt.subplot(2, 1, 1)
     ax1.scatter(t, s1)
+    ax1.set_facecolor((0.9, 0.9, 0.9))  # change the color of this axes
 
     # share x and y
     ax2 = plt.subplot(2, 1, 2, sharex=ax1, sharey=ax1)
     ax2.scatter(t, s3)
 
+    plt.show()
+
+
+def auto_label(bar_ret, axes=None, color='k'):
+    if axes is None:
+        axes = plt
+    for rect in bar_ret:
+        height = rect.get_height()
+        axes.text(rect.get_x() + rect.get_width()/2., 1.01 * height,
+                '%.03f' % height,
+                ha='center', va='bottom', rotation='vertical', color=color)
+
+# Plot multiple bar
+def plot_multi_bars():
+    '''
+    How to set text on bar:How to set text on bar:  https://matplotlib.org/examples/api/barchart_demo.html
+    '''
+    fig = plt.figure(figsize=(20, 10))
+    N = 3.
+    width = 0.9 / N
+    xticks_n = np.arange(10)
+    xticks_label = ['label%d' % i for i in range(10)]
+
+    data = np.random.rand(3, 10)
+   
+
+    plt.title("Data")
+    auto_label(plt.bar(xticks_n - width, data[0], width=width, label='data1'))
+    auto_label(plt.bar(xticks_n, data[1], width=width, label='data2'))
+    auto_label(plt.bar(xticks_n + width, data[2], width=width, label='data3'))
+
+    #  If multi axes is needed in one plot. This must run before defining twinx but after defining axes.
+    plt.xticks(xticks_n, xticks_label, rotation='vertical')
+    plt.legend()
     plt.show()
 
 

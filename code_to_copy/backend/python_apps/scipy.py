@@ -28,6 +28,10 @@ print np.exp(1)
 print np.e, np.pi
 
 
+def softmax(x, axis=-1):
+    """Compute softmax values for each sets of scores in x on axis `axis`."""
+    e_x = np.exp(x - np.max(x, axis=axis, keepdims=True))
+    return e_x / e_x.sum(axis=axis, keepdims=True)
 
 
 
@@ -71,6 +75,16 @@ a[np.logical_and(3 < a, a < 8)] # 因为 a < 3 会返回是否满足要求的 bo
 # 但是array之间无法直接运行 and 或者 or 运算， 
 
 
+# 排序相关
+
+from scipy.stats.mstats import rankdata
+# rankdata  得到的rank是从1开始的，而且相同排名时会显示排名的平均
+# 数值越大 rank值越大
+
+np.argsort
+
+
+
 # pandas 相关  =========================================================================================
 # pandas中，一张表是 pandas.core.frame.DataFrame, 一行或一列数据是pandas.core.series.Series
 # 用pandas可以让数据本身包含很多信息，不用单独再对行列再进行描述
@@ -110,6 +124,9 @@ for midx, score in grouped_top_data.iteritems():
     date, idx = midx
     
 
+# groupby会压缩数据，transform会变成长度相等的新的列。  http://pbpython.com/pandas_transform.html
+df["total_price"] = df.groupby('order')["price"].transform('total_price')
+
 
 # read_csv  load_csv 处理好多出来的索引列
 df.to_csv("CSV_FILE")
@@ -117,6 +134,11 @@ df = pd.read_csv("CSV_FILE", index_col=0)
 # OR
 df.to_csv("CSV_FILE", index=False, header=False)
 df = pd.read_csv("CSV_FILE")
+
+
+# get date number: make it easier to plot datetime
+csv['trading_day'] = pd.to_datetime(csv['trading_day'])
+csv['time_num'] = map(mdates.date2num, csv['trading_day'])
 
 
 # shift by group: https://stackoverflow.com/questions/26280345/pandas-shift-down-values-by-one-row-within-a-group
@@ -165,3 +187,37 @@ test_resc_total_x = min_max_scaler.transform(test_total_x)
 
 # 验证结果相关
 from sklearn.metrics import confusion_matrix, classification_report
+
+
+
+
+# 坑!!!!!
+# TODO: indexing, https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html
+# Index 包括
+# - Basic Slicing and Indexing: 当index是integer, slice和Ellipsis。 或者这些的组合的tuple
+# - Advanced Indexing: non-tuple的sequance或者ndarray 或者是他们的tuple
+#   - 如果都是ndarray:  result[i_1, ..., i_M] == x[ind_1[i_1, ..., i_M], ind_2[i_1, ..., i_M],
+#                                                  ..., ind_N[i_1, ..., i_M]]
+#       - 相当于会把index先都broadcast到统一维度和长度，然后从这几维选择
+#   - Boolean array: 
+#       - 如果只有一个： 需要index的维度和被index的维度一致，没有broadcast
+#       - 否则其他index混用时， 相当于 idx.nonzero()生成的几维替换成原来的一维。
+# - 如果是basic slicing和 advanced indexing 的合并，我理解是先选出slicing，然后剩下的维度扩充成advanced indexing
+
+# 问题  a[[1, 1]]:
+# - 我理解空着都是全slicing，所以这一列是Advanced indexing.
+
+np.eye(10)[1, 1]  # 取index是 1, 1的元素
+np.eye(10)[[1, 1]] # 取第一行取两遍
+np.eye(10)[(1, 1)] # 取index是 1, 1的元素
+
+# slicing 会默认return views,  对views的直接修改会影响到元数据
+# - 高级indexing 一直会返回返回copy
+#  - b = a[<高级index>]; b += XXX; 不会对原ll 进行影响。
+#  - 但是如果是 a[<高级index>] += XXX， 会对原来影响
+
+
+# Broadcasting: https://docs.scipy.org/doc/numpy-1.13.0/reference/ufuncs.html#ufuncs-broadcasting
+# 当多个array做element-wize function时，按下面的规则broadcasting
+# - 对齐维度: 确定最大的dimension， 先prepend 长度为1的dimension来对齐所有dimension
+# - 对齐维度长度： 所有维度要么长度相等，要么长度为1.

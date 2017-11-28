@@ -19,3 +19,10 @@ DIRNAME = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir
 # setuptools会通过/usr/local/lib/python2.7/dist-packages/easy-install.pth
 # 再prepend 一堆路径，这里导致了 /usr/lib/python2.7/dist-packages
 # 总是在 /usr/local/lib/python2.7/dist-packages 之前， 而且你改了后还可能被改回来
+
+
+
+
+
+# https://docs.python.org/2/library/glob.html#module-glob
+import glob

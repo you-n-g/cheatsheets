@@ -42,3 +42,29 @@ Manager()
 # 1. 使用Queue的process会卡在那里，join时会导致调用join的进程也被卡主，最终产生死锁。
 # 1. 虽然在Unix下可以 不要使用全局变量在父子进程中实现共享，但是windows不行， 而且父进程相应的全局变量被回收会导致子进程出问题。
 # 1. multiprocessing会把stdin close掉，对它读取可能会出错
+
+
+# https://docs.python.org/3/library/multiprocessing.html
+
+# For fast implementing
+from multiprocessing import Pool
+
+def worker(x):
+    return x*x
+def worker_wrapper(kwargs):
+    return worker(**kwargs)
+p = Pool(5)
+print(p.map(worker_wrapper, [{'x': 1}, {'x': 2}, {'x': 3}]))
+
+
+# 在Interactive script中，parallel运行子程序会出错 https://stackoverflow.com/questions/34086112/python-multiprocessing-pool-stuck
+# 因为它的原理是先fork，然后子程序再从当前的 python file来import 需要运行的程序
+
+from multiprocessing import Pool
+# if __name__ == '__main__':
+p = Pool(5)
+def f(x):
+    return x*x
+p.map(f, [1,2,3])
+
+# IPython需要用更复杂的并行处理的程序  http://ipython.org/ipython-doc/dev/parallel/

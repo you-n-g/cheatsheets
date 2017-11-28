@@ -235,3 +235,12 @@ p.strip_dirs().sort_stats("time").print_stats(100)
 # short answer: http://stackoverflow.com/questions/582336/how-can-you-profile-a-python-script
 # ppt && video:  http://lanyrd.com/2013/pycon/scdywg/
 # document: https://docs.python.org/2/library/profile.html
+
+
+
+
+
+# Ipython Debug https://github.com/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/01.06-Errors-and-Debugging.ipynb
+# %debug  : 可以在出现exception之后直接看结果
+# Debug 和 Profiling都有
+# https://github.com/jakevdp/PythonDataScienceHandbook/tree/master/notebooks
