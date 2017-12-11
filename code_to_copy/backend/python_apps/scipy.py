@@ -108,6 +108,7 @@ df.loc[BEGIN_ROW:END_ROW, BEGIN_COL:END_COL]  # such as df.loc[1:2, 'InnerCode':
 
 for index, row in df.iterrows():
     print row["c1"], row["c2"]
+# 如果是想对index进行filter，直接对 df.index 进行计算转化为boolean index就行
 
 
 # 如何操作Groupby的数据: groupby后会出现多重索引
@@ -221,3 +222,30 @@ np.eye(10)[(1, 1)] # 取index是 1, 1的元素
 # 当多个array做element-wize function时，按下面的规则broadcasting
 # - 对齐维度: 确定最大的dimension， 先prepend 长度为1的dimension来对齐所有dimension
 # - 对齐维度长度： 所有维度要么长度相等，要么长度为1.
+
+
+
+
+
+
+
+# Jupyter notebook 相关  --------------------------
+ipython nbconvert --to=python [YOUR_NOTEBOOK].ipynb  # 会生成 [YOUR_NOTEBOOK].py 文件
+jupyter nbconvert --to notebook --output OUT.ipynb --execute [YOUR_NOTEBOOK].ipynb 
+# 如果没有指定 --to nbtebook，默认输出类型是html
+# 不加output会生成 [YOUR_NOTEBOOK].html 或者 [YOUR_NOTEBOOK].nbconvert.ipynb
+
+# 如果你想传参进去: 默认是无法直接传入参数到 sys.argv 中的
+# https://github.com/nteract/papermill
+# `parameters`
+# 基本原理:
+# - 参数：将相关cell的代码直接替换掉
+# - 读取结果: 将结果存在output中， 但是隐藏不显示.  所以必须运行而且save之后才能被其他的脚本读取到
+# TODO: 确认一下cwd 是哪里
+# TODO: 确认一下传入字典是否可行
+
+
+
+# 可以随意地display结果
+from IPython.display import display
+display(df1)

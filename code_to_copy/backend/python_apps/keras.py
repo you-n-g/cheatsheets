@@ -37,9 +37,9 @@ def plot_history(history, keys=['loss', 'acc']):
         fontsz = 18
         minmax = lambda x: (min(x), max(x))
         fig = plt.figure(figsize=(15, 15))
-        # print ([train_key] + minmax(history.history[train_key]))
         plt.plot(history.history[train_key], label='training %s(%f~%f)' % ((train_key,) + minmax(history.history[train_key])))
-        plt.plot(history.history[val_key], label='validation %s(%f~%f)' % ((train_key,) + minmax(history.history[val_key])))
+        if val_key in history.history:
+            plt.plot(history.history[val_key], label='validation %s(%f~%f)' % ((train_key,) + minmax(history.history[val_key])))
         plt.xlabel('epoch', fontsize=fontsz)
         plt.ylabel(train_key, fontsize=fontsz)
         plt.xticks(fontsize=fontsz)
@@ -54,6 +54,7 @@ best_path = 'best_model_%s.hdf5' % model_name
 last_path = 'last_model_%s.hdf5' % model_name
 
 earlyStoper = keras.callbacks.EarlyStopping(monitor='val_loss', verbose=1, patience=10)
+# keras.callbacks.EarlyStopping(monitor='loss', min_delta=1e-6, verbose=1, patience=10)  # sometime I train to convergence of training data.
 saveBestModel = keras.callbacks.ModelCheckpoint(best_path, monitor='val_loss', verbose=1, save_best_only=True)
 saveLastModel = keras.callbacks.ModelCheckpoint(last_path, monitor='val_loss', verbose=1, save_best_only=False)
 callbacks = [earlyStoper, saveBestModel, saveLastModel]
@@ -62,7 +63,7 @@ model.compile(optimizer='adadelta', loss='mean_squared_error')
 history = model.fit(train_x, train_y, epochs=1000, shuffle=True, validation_data=(test_x, test_y), callbacks=callbacks, verbose=False)
 plot_history(history)
 
-model = load_model(best_path)
+model.load_weights(best_path)  # load weights will be a little faster than load model
 
 
 
@@ -110,6 +111,7 @@ for layer in model.layers:
     if hasattr(layer, 'layer'):
 	layer.layer.trainable = False
     layer.trainable = False
+# You must recompile to make the trainable attribute to take effect
 
 
 
@@ -137,3 +139,9 @@ inputs = [train_hist_perf[:sample_n], train_all_factors[:sample_n], train_next_e
 for w, g in zip(weights, get_gradients(inputs)):
     print w
     print g
+
+
+
+
+# Keras costum the loss function and change regulization during training
+# https://github.com/fchollet/keras/issues/4813#issuecomment-339466180

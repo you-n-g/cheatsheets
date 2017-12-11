@@ -241,6 +241,6 @@ p.strip_dirs().sort_stats("time").print_stats(100)
 
 
 # Ipython Debug https://github.com/jakevdp/PythonDataScienceHandbook/blob/master/notebooks/01.06-Errors-and-Debugging.ipynb
-# %debug  : 可以在出现exception之后直接看结果
+# %debug  : 可以在出现exception之后立马跳转到相应的出错位置！！！！ 极度方便！！！！！
 # Debug 和 Profiling都有
 # https://github.com/jakevdp/PythonDataScienceHandbook/tree/master/notebooks

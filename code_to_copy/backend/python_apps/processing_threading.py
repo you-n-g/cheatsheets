@@ -51,14 +51,18 @@ from multiprocessing import Pool
 
 def worker(x):
     return x*x
-def worker_wrapper(kwargs):
-    return worker(**kwargs)
-p = Pool(5)
-print(p.map(worker_wrapper, [{'x': 1}, {'x': 2}, {'x': 3}]))
+pool = Pool(5)
+res = []
+for kwargs in [{'x': 1}, {'x': 2}, {'x': 3}]:
+    res.append(pool.apply_async(worker, [], kwargs))
+
+# get result and prevent the main process from exiting
+for r in res:
+    print 'task_ended', r.get()
 
 
 # 在Interactive script中，parallel运行子程序会出错 https://stackoverflow.com/questions/34086112/python-multiprocessing-pool-stuck
-# 因为它的原理是先fork，然后子程序再从当前的 python file来import 需要运行的程序
+# 因为它的原理是先fork，然后子程序再从当前的 python file来import 需要运行的程序. 所以要注意加__main__，解释器本身没有python file ， 无法被import
 
 from multiprocessing import Pool
 # if __name__ == '__main__':
