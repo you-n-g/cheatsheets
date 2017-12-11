@@ -236,13 +236,6 @@ jupyter nbconvert --to notebook --output OUT.ipynb --execute [YOUR_NOTEBOOK].ipy
 # 不加output会生成 [YOUR_NOTEBOOK].html 或者 [YOUR_NOTEBOOK].nbconvert.ipynb
 
 # 如果你想传参进去: 默认是无法直接传入参数到 sys.argv 中的
-# https://github.com/nteract/papermill
-# `parameters`
-# 基本原理:
-# - 参数：将相关cell的代码直接替换掉
-# - 读取结果: 将结果存在output中， 但是隐藏不显示.  所以必须运行而且save之后才能被其他的脚本读取到
-# TODO: 确认一下cwd 是哪里
-# TODO: 确认一下传入字典是否可行
 
 
 
