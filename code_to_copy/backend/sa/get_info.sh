@@ -58,6 +58,7 @@ iotop: TODO 看IO怎么实现
 # BEGIN 查看进程相关
 sudo lsof -i :XXX_PORT # 看XXX_PORT被哪个进程占用了
 sudo lsof <file>  # 查看进程被谁打开了，但是必须用sudo，即使是自己的用户和文件！！！！
+sudo lsof -p <PID> # 看进程打开了什么文件
 # END   查看进程相关
 
 

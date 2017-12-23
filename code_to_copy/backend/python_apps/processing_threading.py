@@ -58,7 +58,17 @@ for kwargs in [{'x': 1}, {'x': 2}, {'x': 3}]:
 
 # get result and prevent the main process from exiting
 for r in res:
-    print 'task_ended', r.get()
+    try:
+        print 'task ended:', r.get()
+        # TODO: 如果在另外一个进程里core dumped，会在r.get()这一步卡住
+    except Exception, e:
+        print u"Type=%s, Args=%s" % (type(e), e.args)
+pool.close()
+# TODO: If I put it before r.get(). The print info above will never output the data.
+# 在并行地分配任务的代码结束后调用它，这样pool在完成所有任务后就会自动关闭了
+
+pool.join()
+# one must call close or terminate() before call join. 不然主进程会等子进程结束，子进程会等主进程分配任务
 
 
 # 在Interactive script中，parallel运行子程序会出错 https://stackoverflow.com/questions/34086112/python-multiprocessing-pool-stuck

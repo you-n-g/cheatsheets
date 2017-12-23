@@ -19,6 +19,11 @@ import seaborn as sns; sns.set(color_codes=True)
 
 
 
+# 如果pandas希望在jupyter里display所有的列，那么用下面的代码
+# https://stackoverflow.com/questions/11361985/output-data-from-all-columns-in-a-dataframe-in-pandas
+pd.set_option('display.max_columns', None)  
+
+
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
@@ -121,6 +126,7 @@ def plot_two_yaxes():
 
     x = np.linspace(0.0001, 1, 100)
     right_axes = axes.twinx()
+    right_axes.grid(False)  # Only the first shows grid.
     for tickset in [axes.xaxis.get_major_ticks(), axes.yaxis.get_major_ticks(),
 		    right_axes.xaxis.get_major_ticks(), right_axes.yaxis.get_major_ticks()]:
 	for tick in tickset:
@@ -147,9 +153,11 @@ def plot_three_yaxes():
 
     x = np.linspace(0.0001, 1, 100)
     right_axes = axes.twinx()
+    right_axes.grid(False)  # Only the first shows grid.
     plt.yticks(fontsize=fontsz) # this will decide the ticks fontsize of right_axes
 
     right_axes2 = axes.twinx()
+    right_axes2.grid(False)  # Only the first shows grid.
     for tickset in [axes.xaxis.get_major_ticks(), axes.yaxis.get_major_ticks(),
                     right_axes.xaxis.get_major_ticks(), right_axes.yaxis.get_major_ticks(),
                     right_axes2.xaxis.get_major_ticks(), right_axes2.yaxis.get_major_ticks(),]:
@@ -210,7 +218,7 @@ sns.clustermap(dataframe, row_linkage=row_linkage, figsize=(24, 24))
 plt.show()
 
 def merge_linkage(linkage, cluster_n):
-    total_n = len(train_keys)
+    total_n = len(linkage) + 1  # there are `totoal_n` leaves
     new_cluster_i = total_n
     cluster_set_map = {}
     for i in range(total_n):
@@ -224,6 +232,19 @@ def merge_linkage(linkage, cluster_n):
         del cluster_set_map[clst2]
         new_cluster_i += 1
     return cluster_set_map
+
+
+def get_clusters(cluster_set_map):
+    '''
+    Get an Object like what sklearn.cluster.XXXX.fit returns
+    '''
+    total_n = np.sum([len(cids) for cids in cluster_set_map.values()])
+    labels = np.full((total_n,), -1)
+    for i, cids in enumerate(cluster_set_map.values()):
+        labels[list(cids)] = i
+    clusters = lambda: None
+    clusters.labels_ = labels
+    return clusters
 
 
 # seaborn 有很多 pyplot的替代但是信息更丰富的图像, 而且文档也更好
@@ -272,13 +293,14 @@ def plot_multi_bars():
     '''
     How to set text on bar:How to set text on bar:  https://matplotlib.org/examples/api/barchart_demo.html
     '''
+    N = 10
     fig = plt.figure(figsize=(20, 10))
-    N = 3.
-    width = 0.9 / N
-    xticks_n = np.arange(10)
-    xticks_label = ['label%d' % i for i in range(10)]
+    GROUP_N = 3.
+    width = 0.9 / GROUP_N
+    xticks_n = np.arange(N)
+    xticks_label = ['label%d' % i for i in range(N)]
 
-    data = np.random.rand(3, 10)
+    data = np.random.rand(GROUP_N, 10)
    
 
     plt.title("Data")
@@ -291,4 +313,36 @@ def plot_multi_bars():
     plt.legend()
     plt.show()
 
+# Plot multiple bar
+def plot_multi_bars_with_sns():
+    '''
+    How to set text on bar:How to set text on bar:  https://matplotlib.org/examples/api/barchart_demo.html
+    '''
+    N = 10
+    GROUP_N = 3
+    labels = ['label%d' % i for i in range(N)]
+    data = np.random.rand(GROUP_N, 10).reshape(-1)
+    
+    df = pd.DataFrame(dict(data=data, label=labels * GROUP_N, group=['g1', 'g2', 'g3'] * N))
+    sns.factorplot(data=df,  x='label', y='data', hue='group', kind='bar')
+    plt.xticks(rotation='vertical')
+    plt.show()
 
+# 几种创建 subplots的方法比较
+
+
+# 1) 直接plot
+plt.plot(....)  # 只画一张图时最方便
+
+# 2) plt.subplots
+# 以array的方式返回 fig 和 一组subplot的 axes
+# 缺点是类似于 plt.legend 和 plt.xticks 这种方法只能作用于最后的一个ax
+
+
+# 3) plt.subplot, 之后plt.xxx 一般就是等于 ax.xxx(也有小部分是找不到的)
+# 似乎最好， 功能最全....
+
+
+
+# 非常有用的方法
+plt.gca()  # get current axes

@@ -15,7 +15,7 @@ DEFAULT_PARAMETERS = {
 }
 
 def get_result_path(param, exp_path):
-    basename = 'SOMETHING'
+    basename = 'SOMETHING_XXX'
 
     # This is for distinguishing different version of results for same parameters
     if "VERSION" in param:
@@ -64,20 +64,48 @@ if __name__ == '__main__':
     random.shuffle(parameters)  # Useful when no enough time to run all exp.
     for param in parameters:
         kwargs = dict(
-            notebook=os.path.join(DIRNAME, 'reproduce_heuristic_strategy_template-solve_data_problem.ipynb'),
+            notebook=os.path.join(DIRNAME, 'XXXXX.ipynb'),
             output=os.path.join(param['RES_PATH'], 'script.ipynb'),
             parameters=param)
         res.append((tid, pool.apply_async(pm.execute_notebook, [], kwargs)))
         tid += 1
         time.sleep(0.2)
     for i, r in res:
-        print 'task (%d / %d) ended: ' % (i, tid), r.get()
+        try:
+            print 'task (%d / %d) ended: ' % (i, tid), r.get()
+        except Exception, e:
+            print u"Type=%s, Args=%s" % (type(e), e.args)
+    # pool.close() # TODO: If I put it before r.get(). The print info above will never output the data.
+    # pool.join() # TODO: one must call close before call join
 # END   run_exp.py --------------------------------------------------
 
 
-# BEGIN summary.py --------------------------------------------------
+# BEGIN exp_summary.py --------------------------------------------------
 # 汇总所有的实验结果
-# END   summary.py --------------------------------------------------
+import os
+import papermill as pm
+from get_tasks import get_task_params, get_result_path
+import pandas as pd
+from IPython.display import display
+
+sum_pd = {}
+for param in get_task_params():
+    for k, v in param.items():
+        if k not in sum_pd:
+            sum_pd[k] = []
+        sum_pd[k].append(v)
+sum_pd = pd.DataFrame(sum_pd)
+
+
+for i, row in sum_pd.iterrows():
+    display(sum_pd[i:i + 1])
+    res_nb_path = os.path.join(row['RES_PATH'], 'script.ipynb')
+
+    # READ  the config
+    res_nb = pm.read_notebook(res_nb_path)
+    res_nb.display_output('XXXX')
+
+# END   exp_summary.py --------------------------------------------------
 
 
 # BEGIN jupyter.ipynb -----------------------------------------------

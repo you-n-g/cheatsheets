@@ -126,20 +126,24 @@ for midx, score in grouped_top_data.iteritems():
     
 
 # groupby会压缩数据，transform会变成长度相等的新的列。  http://pbpython.com/pandas_transform.html
-df["total_price"] = df.groupby('order')["price"].transform('total_price')
+df["total_price"] = df.groupby('order')["price"].transform('sum')
 
 
-# read_csv  load_csv 处理好多出来的索引列
+# 处理好 read_csv
+## read_csv  load_csv 处理好多出来的索引列
 df.to_csv("CSV_FILE")
 df = pd.read_csv("CSV_FILE", index_col=0)
 # OR
 df.to_csv("CSV_FILE", index=False, header=False)
 df = pd.read_csv("CSV_FILE")
 
+## pandas 默认会把 na_values 中的所有字符串匹配的值都当成 NAN，如果想都把特殊列都当成字符串，不处理Nan，必须如下处理
+df = pd.read_csv("CSV_FILE", keep_default_na=False, dtype={'word': np.str})
+
 
 # get date number: make it easier to plot datetime
 csv['trading_day'] = pd.to_datetime(csv['trading_day'])
-csv['time_num'] = map(mdates.date2num, csv['trading_day'])
+csv['time_num'] = map(mdates.date2num, csv['trading_day'])  # TODO: will apply be faster????
 
 
 # shift by group: https://stackoverflow.com/questions/26280345/pandas-shift-down-values-by-one-row-within-a-group
@@ -148,19 +152,27 @@ data['nextRisePct'] = data.groupby(['SecuAbbr'])['risePct'].shift(1)
 
 
 
-# left join table
-all_data = pd.merge(key_score_loss_df, data.loc[:, ('date', 'SecuAbbr', 'nextRisePct')], how='left', left_on = ['date', 'sec'], right_on = ['date', 'SecuAbbr'])
-
+# left join table:
+all_data = pd.merge(key_score_loss_df, data.loc[:, ('date', 'SecuAbbr', 'nextRisePct')], how='left',
+                    left_on = ['date', 'sec'], right_on = ['date', 'SecuAbbr'], suffixes=('', '_y'))  # suffix is necessary when 
+# 看看各种情况实际运作的例子: https://pandas.pydata.org/pandas-docs/stable/merging.html#brief-primer-on-merge-methods-relational-algebra
+# NOTE: 如果合并之前有两列的名称一样，会自动改成 XXX_x, XXX_y, 下面的方法可以更好地处理这种情况
+# https://stackoverflow.com/questions/19125091/pandas-merge-how-to-avoid-duplicating-columns
 
 
 
 # equal to R table
 df['col_name'].value_counts() 
+# sns.countplot  #我觉得这个可能是对应的图
 
 
 # processing multi index
 df = pd.read_csv(fname, encoding='gbk', names=['date', 'sector'], sep='\t', index_col=(0, 1))
 df.index.get_level_values(0) # get the values of specific level
+
+
+# Roling : https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.rolling.html
+pd.Series(STH_LIKE_LIST).rolling(window=3, min_periods=1, center=True).mean()
 
 
 ## 一些要注意的点
@@ -200,8 +212,8 @@ from sklearn.metrics import confusion_matrix, classification_report
 #   - 如果都是ndarray:  result[i_1, ..., i_M] == x[ind_1[i_1, ..., i_M], ind_2[i_1, ..., i_M],
 #                                                  ..., ind_N[i_1, ..., i_M]]
 #       - 相当于会把index先都broadcast到统一维度和长度，然后从这几维选择
-#   - Boolean array: 
-#       - 如果只有一个： 需要index的维度和被index的维度一致，没有broadcast
+#   - Boolean array:  x[bool_obj] 完全相当于 x[bool_obj.nonzero()]
+#       - 如果只有一个有个限制： 需要index的维度和被index的维度一致，没有broadcast
 #       - 否则其他index混用时， 相当于 idx.nonzero()生成的几维替换成原来的一维。
 # - 如果是basic slicing和 advanced indexing 的合并，我理解是先选出slicing，然后剩下的维度扩充成advanced indexing
 
@@ -241,4 +253,4 @@ jupyter nbconvert --to notebook --output OUT.ipynb --execute [YOUR_NOTEBOOK].ipy
 
 # 可以随意地display结果
 from IPython.display import display
-display(df1)
+display(df)

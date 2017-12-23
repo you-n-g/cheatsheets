@@ -78,4 +78,9 @@ if __name__ == '__main__':
         res.append((tid, pool.apply_async(download_data, [], kwargs)))
         tid += 1
     for i, r in res:
-        print 'task (%d / %d) ended: ' % (i, tid), r.get()
+        try:
+            print 'task (%d / %d) ended: ' % (i, tid), r.get()
+        except Exception, e:
+            print u"Type=%s, Args=%s" % (type(e), e.args)
+    # pool.close() # TODO: If I put it before r.get(). The print info above will never output the data.
+    # pool.join() # TODO: one must call close before call join

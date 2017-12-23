@@ -42,6 +42,11 @@ except Exception:
     logging.getLogger("ex")  # TODO: 据说这个可以把exception直接打印到logger里
 
 print output.getvalue()
+
+try:
+    raise ValueError("I'm not fine")
+except Exception, e:
+    print u"Type=%s, Args=%s" % (type(e), e.args)
 # END   traceback
 
 
