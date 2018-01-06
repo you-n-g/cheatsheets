@@ -60,6 +60,7 @@ for kwargs in [{'x': 1}, {'x': 2}, {'x': 3}]:
 for r in res:
     try:
         print 'task ended:', r.get()
+	# 子进程如果出现异常，会在r.get()这里reraise异常. 导致父进程挂掉，子进程无法继续执行
         # TODO: 如果在另外一个进程里core dumped，会在r.get()这一步卡住
     except Exception, e:
         print u"Type=%s, Args=%s" % (type(e), e.args)

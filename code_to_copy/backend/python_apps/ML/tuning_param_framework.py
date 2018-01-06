@@ -2,7 +2,38 @@
 #-*- coding:utf8 -*-
 
 
-# backend/python_apps/ML/scipy.py
+# BEGIN config ---------------------------------------------------
+# Stop to use sqlite to store the history
+# Otherwise the multi-processes will conflicts.
+# ~/.ipython/profile_default/ipython_config.py
+c = get_config()
+c.HistoryManager.enabled = False
+
+
+# TODO: some  error to be fixed
+
+# Traceback (most recent call last):
+#   File "/home/xiaoyang/anaconda2/lib/python2.7/threading.py", line 801, in __bootstrap_inner
+#     self.run()
+#   File "/home/xiaoyang/anaconda2/lib/python2.7/site-packages/ipykernel/parentpoller.py", line 36, in run
+#     if os.getppid() == 1:
+# AttributeError: 'NoneType' object has no attribute 'getppid'
+
+
+
+# Solution: https://github.com/tqdm/tqdm/issues/481
+# Exception in thread Thread-7:
+# Traceback (most recent call last):
+#   File "/usr/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+#     self.run()
+#   File "/home/vagrant/regex/lib/python3.6/site-packages/tqdm/_tqdm.py", line 144, in run
+#     for instance in self.tqdm_cls._instances:
+#   File "/usr/lib/python3.6/_weakrefset.py", line 60, in __iter__
+#     for itemref in self.data:
+# RuntimeError: Set changed size during iteration
+# END   config ---------------------------------------------------
+
+
 
 
 
@@ -11,6 +42,7 @@ import os
 import copy
 import numpy as np
 
+# The parameters that will included in the result path
 DEFAULT_PARAMETERS = {
 }
 
@@ -36,9 +68,6 @@ def get_task_params(exp_path='exp_results'):
         # the res_path will be the place to save the result for the script
         res_path = get_result_path(param, exp_path)
         param['RES_PATH'] = res_path
-        # This is folder is created for generating the script.
-        if not os.path.exists(res_path):
-            os.makedirs(res_path)
     return parameters
 # END   get_tasks ---------------------------------------------------
 
@@ -53,9 +82,36 @@ import time
 from get_tasks import get_task_params
 import random
 
+# 为了保证进度条不会出错
+# TODO; to solve `RuntimeError: Set changed size during iteration`
+from tqdm import tqdm
+tqdm.monitor_interval = 0
+
 DIRNAME = os.path.abspath(os.path.dirname(__file__))
 
+
+import logging
+logging.basicConfig(
+        filename=os.path.join(DIRNAME, "task.log"),
+        level=logging.INFO,
+        format='%(asctime)s %(name)s (PID:%(process)d) [%(levelname)s]:%(message)s', # name 是 logger的name
+)
+LOG = logging.getLogger(__file__)
+
+
+def task_wrapper(*args, **kwargs):
+    ''' In case that some tasks are executed repeatedly'''
+    fin_flag_path = os.path.join(os.path.dirname(kwargs['output']), 'fin_flag')
+    if os.path.exists(fin_flag_path):
+        print "Task has been finished before."
+    else:
+        pm.execute_notebook(*args, **kwargs)
+        open(fin_flag_path, 'a').close() # touch to indicate the task has been finished
+    return 0
+
 if __name__ == '__main__':
+    # check "code_to_copy/backend/python_apps/processing_threading.py" for the latest version and detailed explaination
+
     pool = Pool(5)
     res = []
     tid = 0
@@ -63,20 +119,26 @@ if __name__ == '__main__':
     parameters = get_task_params(exp_path)
     random.shuffle(parameters)  # Useful when no enough time to run all exp.
     for param in parameters:
+        res_path = param['RES_PATH']
+        # This is folder is created for generating the script.
+        if not os.path.exists(res_path):
+            os.makedirs(res_path)
         kwargs = dict(
             notebook=os.path.join(DIRNAME, 'XXXXX.ipynb'),
-            output=os.path.join(param['RES_PATH'], 'script.ipynb'),
+            output=os.path.join(res_path, 'script.ipynb'),
             parameters=param)
-        res.append((tid, pool.apply_async(pm.execute_notebook, [], kwargs)))
+        res.append((tid, kwargs, pool.apply_async(task_wrapper, [], kwargs)))
         tid += 1
         time.sleep(0.2)
-    for i, r in res:
+    for i, args, r in res:
         try:
             print 'task (%d / %d) ended: ' % (i, tid), r.get()
+            print 'Args:\n', args
         except Exception, e:
-            print u"Type=%s, Args=%s" % (type(e), e.args)
-    # pool.close() # TODO: If I put it before r.get(). The print info above will never output the data.
-    # pool.join() # TODO: one must call close before call join
+            LOG.exception(u"Type=%s, Args=%s.\nRun order=%d.\nTask args:\n%s" %
+                            (type(e), e.args, i, str(args)))
+    pool.close() # TODO: If I put it before r.get(). The print info above will never output the data.
+    pool.join() # TODO: one must call close before call join
 # END   run_exp.py --------------------------------------------------
 
 

@@ -63,6 +63,8 @@ def download_report(url, fpath, tid):
 
 
 if __name__ == '__main__':
+    # check "code_to_copy/backend/python_apps/processing_threading.py" for the latest version and detailed explaination
+
     # get tasks
     pool = Pool(40)
     res = []

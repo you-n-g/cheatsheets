@@ -82,8 +82,8 @@ http://stackoverflow.com/questions/132058/showing-the-stack-trace-from-a-running
 import logging
 logging.basicConfig(
         filename="XXX.log",
-        level=logging.DEBUG,
-        format='%(asctime)s %(name)s [%(levelname)s]:%(message)s', # name 是 logger的name
+        level=logging.DEBUG,  # be careful that all the subprocess may use the same config
+        format='%(asctime)s %(name)s PID:%(process)d [%(levelname)s]:%(message)s', # name 是 logger的name
         # filemode='w', # 加上我就不会append而是覆盖之前的
 ) # *只有第一次配置会生效，之后就完全无效了*。
 # 难点在于当前的系统已经有logger了，如何做到能并存
@@ -100,7 +100,7 @@ LOG.exception("XXX") # level是ERROR， 但是会把 exception的 stack trace �
 # Handler: 具体的handler，在此设置level, formatter
 
 # logger: logger之间有层级关系，  名字随意取，有从属关系; propagate=True时， message会一直向父节点传;  a是 a.b的parent， 根层级是root(不知对应的名字是"root"还是"")，root logger是必须要设置的;  *主要为了知道message从哪里来的*
-LOG = logging.getLogger("XXX") # 不加名字或者 只用用 logging的方法 就是用root; logger没有设定level的自动从parent找
+LOG = logging.getLogger(__file__) # 不加名字或者 只用用 logging的方法 就是用root; logger没有设定level的自动从parent找
 # 可以被logger 设置handler， level(TODO: 这个level和 handler的level有什么关系)
 
 

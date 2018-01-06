@@ -53,14 +53,16 @@ model_name = 'MODEL_NAME'
 best_path = 'best_model_%s.hdf5' % model_name
 last_path = 'last_model_%s.hdf5' % model_name
 
-earlyStoper = keras.callbacks.EarlyStopping(monitor='val_loss', verbose=1, patience=10)
-# keras.callbacks.EarlyStopping(monitor='loss', min_delta=1e-6, verbose=1, patience=10)  # sometime I train to convergence of training data.
-saveBestModel = keras.callbacks.ModelCheckpoint(best_path, monitor='val_loss', verbose=1, save_best_only=True)
-saveLastModel = keras.callbacks.ModelCheckpoint(last_path, monitor='val_loss', verbose=1, save_best_only=False)
+verbose = True
+
+earlyStoper = keras.callbacks.EarlyStopping(monitor='val_loss', verbose=verbose, patience=10)
+# keras.callbacks.EarlyStopping(monitor='loss', min_delta=1e-6, verbose=verbose, patience=10)  # sometime I train to convergence of training data.
+saveBestModel = keras.callbacks.ModelCheckpoint(best_path, monitor='val_loss', verbose=verbose, save_best_only=True)
+saveLastModel = keras.callbacks.ModelCheckpoint(last_path, monitor='val_loss', verbose=verbose, save_best_only=False)
 callbacks = [earlyStoper, saveBestModel, saveLastModel]
 
 model.compile(optimizer='adadelta', loss='mean_squared_error')
-history = model.fit(train_x, train_y, epochs=1000, shuffle=True, validation_data=(test_x, test_y), callbacks=callbacks, verbose=False)
+history = model.fit(train_x, train_y, epochs=1000, shuffle=True, validation_data=(test_x, test_y), callbacks=callbacks, verbose=verbose)
 plot_history(history)
 
 model.load_weights(best_path)  # load weights will be a little faster than load model
