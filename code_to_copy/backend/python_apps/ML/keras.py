@@ -57,8 +57,10 @@ verbose = True
 
 earlyStoper = keras.callbacks.EarlyStopping(monitor='val_loss', verbose=verbose, patience=10)
 # keras.callbacks.EarlyStopping(monitor='loss', min_delta=1e-6, verbose=verbose, patience=10)  # sometime I train to convergence of training data.
-saveBestModel = keras.callbacks.ModelCheckpoint(best_path, monitor='val_loss', verbose=verbose, save_best_only=True)
 saveLastModel = keras.callbacks.ModelCheckpoint(last_path, monitor='val_loss', verbose=verbose, save_best_only=False)
+saveBestModel = keras.callbacks.ModelCheckpoint(best_path, monitor='val_loss', verbose=verbose, save_best_only=True)
+model.save_weights(best_path)  # Save the initial best model
+saveBestModel.best = model.evaluate(test_x, test_y)  # initial the best value to the right validation loss
 callbacks = [earlyStoper, saveBestModel, saveLastModel]
 
 model.compile(optimizer='adadelta', loss='mean_squared_error')
@@ -145,5 +147,10 @@ for w, g in zip(weights, get_gradients(inputs)):
 
 
 
+# Something we can learn
+
 # Keras costum the loss function and change regulization during training
 # https://github.com/fchollet/keras/issues/4813#issuecomment-339466180
+
+# How to print the loss without the regularization term during training?
+# https://github.com/keras-team/keras/issues/2575

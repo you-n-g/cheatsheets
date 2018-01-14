@@ -16,8 +16,12 @@ parser = argparse.ArgumentParser(
 
 from datetime import datetime
 get_date = lambda x: datetime.strptime(x, "%Y%m%d").date()
-parser.add_argument('--train_s', type=get_date, help='dattime args', required=True)
+parser.add_argument('--train_s', type=get_date, help='datetime args', required=True)
 parser.add_argument('--exist-then-true', action='store_true', help='the exist_then_true will be true if present')
+
+# Add position argument
+# If there is no  -- or -, it will be position variable. You can give it the new name by metavar
+
 
 # multi args
 parser.add_argument('--file', action='append')
@@ -29,7 +33,7 @@ parser.add_argument('--multi_arg_with_default', nargs='*', default=[1,2,3])
 
 parser.add_argument('default_args', nargs='*')
 
-# args = parser.parse_args()
+# ARGS = parser.parse_args()
 # print args
 
 

@@ -83,3 +83,6 @@ def f(x):
 p.map(f, [1,2,3])
 
 # IPython需要用更复杂的并行处理的程序  http://ipython.org/ipython-doc/dev/parallel/
+
+# ipyparallel 的使用方法
+# http://nbviewer.jupyter.org/github/ipython/ipyparallel/blob/master/examples/Index.ipynb
