@@ -175,6 +175,11 @@ df.index.get_level_values(0) # get the values of specific level
 pd.Series(STH_LIKE_LIST).rolling(window=3, min_periods=1, center=True).mean()
 
 
+# Filter data
+# {'HIST_PERF_RANK_ADD': '10', 'HIST_PERF_TOP_RANK_N': '10', 'MAX_MS_MODEL_EPOCH': '120'}
+df[(df[list(keys)] == pd.Series(keys)).all(axis=1)]
+
+
 ## 一些要注意的点
 # 在 slice 上的修改有时候会影响到 原数据的, 在 numpy 也是同样的,  numpy需要用  numpy.copy才能避免
 # - 一般直接看是否有 SettingWithCopyWarning就行, http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
@@ -183,6 +188,8 @@ pd.Series(STH_LIKE_LIST).rolling(window=3, min_periods=1, center=True).mean()
 # bool index 时，如果传入的是带有index的boolean值， 取值是看 index + bool的结果， 而不是
 # 
 # pandas 的 to_datetime 得到的对象不是 datetime,  和datetime比较时它必须放在左边
+# 
+# NOTE, TODO: 从一列有indexing的值赋值给 另外一个indexing的值， 很可能赋值对应管是按indexing来的！！！  一一对应得转化为list
 
 # pandas 相关  =========================================================================================
 

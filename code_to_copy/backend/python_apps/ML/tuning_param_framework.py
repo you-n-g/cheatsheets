@@ -2,6 +2,15 @@
 #-*- coding:utf8 -*-
 
 
+
+# Meta: 我在解决什么问题
+# 加载和预处理数据变得代价较大，所以要用jupyter这种来。
+# Jupyter调参比较困难，需要papermill来传参。
+# 需要做的尝试比较多，需要一个多进程的框架来做尝试。
+# 实验结果比较多，需要比较好地组织实验结果。
+# 同时满足上述各种需求需要好的设计，我大概实现了这样一套设计。
+
+
 # BEGIN config ---------------------------------------------------
 # Stop to use sqlite to store the history
 # Otherwise the multi-processes will conflicts.
@@ -60,8 +69,11 @@ def get_result_path(param, exp_path):
     '''
     basename = ['SOMETHING_XXX']
 
+    # 原本想法：
     # 尽量把可能考虑的因素在前面搞定
     # 没考虑到的因素加在后面兼容的部分
+    # 现在想法：
+    # 有了众多参数后，文件名实在是太长了，默认参数就不要显示了
 
     # BEGIN 向之前版本兼容的变量
     # # An example
@@ -108,6 +120,7 @@ import random
 import shutil
 from distutils.util import strtobool
 import sys
+from datetime import datetime
 
 import argparse
 import multiprocessing
@@ -127,7 +140,7 @@ tqdm.monitor_interval = 0
 
 DIRNAME = os.path.abspath(os.path.dirname(__file__))
 
-RES_DIR = os.path.join(DIRNAME, 'exp_results')
+RES_DIR = os.path.join(DIRNAME, 'exp_results/XXXX')
 
 import logging
 logging.basicConfig(
@@ -149,13 +162,14 @@ def user_yes_no_query(question):
 
 def task_wrapper(*args, **kwargs):
     ''' In case that some tasks are executed repeatedly'''
+    start = datetime.now()
     fin_flag_path = os.path.join(os.path.dirname(kwargs['output']), 'fin_flag')
     if os.path.exists(fin_flag_path):
         print "Task has been finished before."
     else:
         pm.execute_notebook(*args, **kwargs)
         open(fin_flag_path, 'a').close() # touch to indicate the task has been finished
-    return 0
+    return datetime.now() - start
 
 
 def back_up_script():
@@ -193,7 +207,7 @@ if __name__ == '__main__':
         time.sleep(0.1)
     for i, args, r in res:
         try:
-            print 'task (%d / %d) ended: ' % (i, tid), r.get()
+            print 'task (%d / %d) ended, time:' % (i, tid), r.get()
             print 'Args:\n', args
         except Exception, e:
             LOG.exception(u"Type=%s, Args=%s.\nRun order=%d.\nTask args:\n%s" %
@@ -271,11 +285,15 @@ for attr in GB_ATTRS:
 # 基本原理:
 # - 参数：将相关cell的代码直接替换掉
 # - 读取结果: 将结果存在output中， 但是隐藏不显示.  所以必须运行而且save之后才能被其他的脚本读取到
-# TODO: 确认一下cwd 是哪里
+# TODO: 确认一下cwd 是哪里.  确定不会锁定为最终生成脚本的所在目录
+# 传入list是可行的
 # TODO: 确认一下传入字典是否可行
 
-# 第一个cell放现在不需要调的参数
-# 第二个cell放正在调的参数
+# 第一个cell放现在不需要调的参数 const
+# 第二个cell放调参时的 default value.
+# - 和get_task中的默认参数dict重复， 解决方法是只留一套，觉得再ipynb中留更省事(ipynb编程时方便)
+# 第三个cell放 `parameters` tag,  表示只针对这次运行的参数
+# 第四个cell放 Assertion，遇到不必要的参数组合直接退出  (和create tasks时的逻辑重复)
 # 该代码时尽量保留原有功能，将其变成一个参数，这样方便调参， 也方便对比修改前后的区别。
 
 # END   jupyter.ipynb -----------------------------------------------

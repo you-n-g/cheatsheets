@@ -67,6 +67,9 @@ done
 wait
 echo "all done"
 
+# 这个工具似乎更好用，还可以控制线程池
+seq 1000 | parallel -j 8 --workdir $PWD ./myrun {} # https://stackoverflow.com/questions/5547787/running-shell-script-in-parallel
+
 
 # 同时打开多个窗口
 xfce4-terminal/gnome-terminal --working-directory="/home/young/" \

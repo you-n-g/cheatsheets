@@ -248,7 +248,16 @@ def get_clusters(cluster_set_map):
 
 
 # seaborn 有很多 pyplot的替代但是信息更丰富的图像, 而且文档也更好
-sns.distplot(x) # 替代histplot, https://seaborn.pydata.org/generated/seaborn.distplot.html
+sns.distplot(x, rug=True) # 替代histplot, https://seaborn.pydata.org/generated/seaborn.distplot.html
+# rug is really a good function to check the distribution of the data
+
+# NOTE: seaborn的图像分类,  https://zhuanlan.zhihu.com/p/27683042
+
+# Barplot的最小单位是一组值，用一个柱状图和一个误差线来描述。  
+sns.barplot(x='type', y=iname, data=df) # 需要画误差线时用这个工具 https://seaborn.pydata.org/generated/seaborn.barplot.html
+# x will be a attribute to describe the x class
+# y will be the value in that class。
+# ci default value is 'sd', the stand variable will be there
 
 # seaborn related END    --------------------------------------------------
 
@@ -316,7 +325,6 @@ def plot_multi_bars():
 # Plot multiple bar
 def plot_multi_bars_with_sns():
     '''
-    How to set text on bar:How to set text on bar:  https://matplotlib.org/examples/api/barchart_demo.html
     '''
     N = 10
     GROUP_N = 3
@@ -325,6 +333,7 @@ def plot_multi_bars_with_sns():
     
     df = pd.DataFrame(dict(data=data, label=labels * GROUP_N, group=['g1', 'g2', 'g3'] * N))
     sns.factorplot(data=df,  x='label', y='data', hue='group', kind='bar')
+    # Hue 代表x轴每个值 再分成小类别显示
     plt.xticks(rotation='vertical')
     plt.show()
 

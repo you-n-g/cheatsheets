@@ -249,3 +249,7 @@ p.strip_dirs().sort_stats("time").print_stats(100)
 # %debug  : 可以在出现exception之后立马跳转到相应的出错位置！！！！ 极度方便！！！！！
 # Debug 和 Profiling都有
 # https://github.com/jakevdp/PythonDataScienceHandbook/tree/master/notebooks
+# profiling
+# %load_ext line_profiler
+# %lprun -f FUNC1 -f FUNC2 STATEMENT
+# 可以看到 func1 func2 中每一行的开销
