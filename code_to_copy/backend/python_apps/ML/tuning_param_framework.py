@@ -18,6 +18,11 @@
 c = get_config()
 c.HistoryManager.enabled = False
 
+# Configuring https://nbconvert.readthedocs.io/en/latest/config_options.html
+~/.jupyter/jupyter_nbconvert_config.json
+# Otherwise TimeoutError: Cell execution timed out
+
+
 
 # TODO: some  error to be fixed
 

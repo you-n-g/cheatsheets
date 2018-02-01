@@ -247,6 +247,14 @@ def get_clusters(cluster_set_map):
     return clusters
 
 
+# show heatmap with color selected
+# https://seaborn.pydata.org/generated/seaborn.diverging_palette.html#seaborn.diverging_palette
+# h_neg, h_pos 代表正负的颜色
+cmap = sns.diverging_palette(10, 150,sep=20, as_cmap=True, center='light')
+sns.heatmap(data, linewidths=1, cmap=cmap)
+plt.show()
+
+
 # seaborn 有很多 pyplot的替代但是信息更丰富的图像, 而且文档也更好
 sns.distplot(x, rug=True) # 替代histplot, https://seaborn.pydata.org/generated/seaborn.distplot.html
 # rug is really a good function to check the distribution of the data
@@ -337,8 +345,16 @@ def plot_multi_bars_with_sns():
     plt.xticks(rotation='vertical')
     plt.show()
 
-# 几种创建 subplots的方法比较
 
+
+# format y plot.  https://stackoverflow.com/questions/31357611/format-y-axis-as-percent
+# percentage example
+vals = ax.get_yticks()
+ax.set_yticklabels(['{:3.2f}%'.format(x*100) for x in vals])
+
+
+
+# 几种创建 subplots的方法比较
 
 # 1) 直接plot
 plt.plot(....)  # 只画一张图时最方便

@@ -187,6 +187,16 @@ df = pd.read_sql('select * from %s limit 10;' % table_name, CONN)
 df.to_csv('%s.csv' % table_name, encoding='utf8')  # 这里的encoding必须设置，否则会报编码错误！！！！
 
 
+
+# 计算相关
+pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
+# com, span, halflife, alpha都是用来定alpha的
+# min_periods 表示最少前面有几个非NA才计算具体值
+# adjust=True时(default), 使用这组权重计算平均: (1-alpha)**(n-1), (1-alpha)**(n-2), ..., 1-alpha, 1. 
+# adjust=False时， 值就直接这么计算: weighted_average[0] = arg[0]; weighted_average[i] = (1-alpha)*weighted_average[i-1] + alpha*arg[i].
+# Ignore NA的情况我还不明白
+
+
 ## 一些要注意的点
 # 在 slice 上的修改有时候会影响到 原数据的, 在 numpy 也是同样的,  numpy需要用  numpy.copy才能避免
 # - 一般直接看是否有 SettingWithCopyWarning就行, http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
@@ -256,10 +266,18 @@ np.eye(10)[(1, 1)] # 取index是 1, 1的元素
 
 
 # Jupyter notebook 相关  --------------------------
-ipython nbconvert --to=python [YOUR_NOTEBOOK].ipynb  # 会生成 [YOUR_NOTEBOOK].py 文件
-jupyter nbconvert --to notebook --output OUT.ipynb --execute [YOUR_NOTEBOOK].ipynb
+jupyter nbconvert --to=python [YOUR_NOTEBOOK].ipynb  # 会生成 [YOUR_NOTEBOOK].py 文件
+jupyter nbconvert --to notebook --output OUT.ipynb --execute [YOUR_NOTEBOOK].ipynb 
 # 如果没有指定 --to nbtebook，默认输出类型是html
 # 不加output会生成 [YOUR_NOTEBOOK].html 或者 [YOUR_NOTEBOOK].nbconvert.ipynb
+
+# Seems below method does not work
+# Configuring https://nbconvert.readthedocs.io/en/latest/config_options.html
+# add below into  ~/.jupyter/jupyter_nbconvert_config.json
+"ExecutePreprocessor": {
+  "timeout": -1
+},
+# Otherwise TimeoutError: Cell execution timed out
 
 # 如果你想传参进去: 默认是无法直接传入参数到 sys.argv 中的
 

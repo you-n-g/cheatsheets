@@ -16,6 +16,11 @@ import keras.callbacks
 import keras.backend as K
 
 
+# sudo apt-get install graphviz
+# pip install pydot-ng    # TODO:   ng是否需要？？？
+# pip install graphviz
+# 需要restart python解释器才有用 !!!!!!
+
 def plot_model(model):
     from keras.utils import plot_model as keras_plot_model
     keras_plot_model(model, show_shapes=True, show_layer_names=True)
