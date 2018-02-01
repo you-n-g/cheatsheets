@@ -1,3 +1,8 @@
+-- 安装相关
+sudo apt-get install mariadb-server mariadb-client
+
+
+
 -- BEGIN 参数配置
 -- 编码问题
 collation-server = utf8_general_ci
@@ -48,8 +53,11 @@ RESET QUERY CACHE;
 
 
 -- 新建数据库(包含编码)
-CREATE DATABASE  `XXXX` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-
+-- UTF8:
+CREATE DATABASE `XXXX` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+-- GBK:
+CREATE DATABASE `XXXX` DEFAULT CHARACTER SET gbk COLLATE gbk_chinese_ci;  
+  
 
 
 -- BEGIN 给特定主机授权

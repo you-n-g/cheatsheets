@@ -72,7 +72,7 @@ np.load('dict_data.npy').item()
 # 数据选择相关
 a = np.array(range(10))
 a[np.logical_and(3 < a, a < 8)] # 因为 a < 3 会返回是否满足要求的 boolean 矩阵， 这个矩阵作为选择， 最终得到筛选之后的数据。
-# 但是array之间无法直接运行 and 或者 or 运算， 
+# 但是array之间无法直接运行 and 或者 or 运算，
 
 
 # 排序相关
@@ -123,7 +123,7 @@ for groupby_name, group in grouped_top_data.groupby(level=0):
 # If you want to get index directly
 for midx, score in grouped_top_data.iteritems():
     date, idx = midx
-    
+
 
 # groupby会压缩数据，transform会变成长度相等的新的列。  http://pbpython.com/pandas_transform.html
 df["total_price"] = df.groupby('order')["price"].transform('sum')
@@ -154,7 +154,7 @@ data['nextRisePct'] = data.groupby(['SecuAbbr'])['risePct'].shift(1)
 
 # left join table:
 all_data = pd.merge(key_score_loss_df, data.loc[:, ('date', 'SecuAbbr', 'nextRisePct')], how='left',
-                    left_on = ['date', 'sec'], right_on = ['date', 'SecuAbbr'], suffixes=('', '_y'))  # suffix is necessary when 
+                    left_on = ['date', 'sec'], right_on = ['date', 'SecuAbbr'], suffixes=('', '_y'))  # suffix is necessary when
 # 看看各种情况实际运作的例子: https://pandas.pydata.org/pandas-docs/stable/merging.html#brief-primer-on-merge-methods-relational-algebra
 # NOTE: 如果合并之前有两列的名称一样，会自动改成 XXX_x, XXX_y, 下面的方法可以更好地处理这种情况
 # https://stackoverflow.com/questions/19125091/pandas-merge-how-to-avoid-duplicating-columns
@@ -162,7 +162,7 @@ all_data = pd.merge(key_score_loss_df, data.loc[:, ('date', 'SecuAbbr', 'nextRis
 
 
 # equal to R table
-df['col_name'].value_counts() 
+df['col_name'].value_counts()
 # sns.countplot  #我觉得这个可能是对应的图
 
 
@@ -179,6 +179,13 @@ pd.Series(STH_LIKE_LIST).rolling(window=3, min_periods=1, center=True).mean()
 # {'HIST_PERF_RANK_ADD': '10', 'HIST_PERF_TOP_RANK_N': '10', 'MAX_MS_MODEL_EPOCH': '120'}
 df[(df[list(keys)] == pd.Series(keys)).all(axis=1)]
 
+# 和mysql相连 有中文的情况
+CONN = 'mysql://USERNAME:PASSWORD@IP:3306/fin_data?charset=utf8'
+# 下面这种方式设置的 encoding不管用!!! 必须用上面的charset !!!!
+# from sqlalchemy import create_engine; CONN = create_engine(DB_URI, encoding='utf8')
+df = pd.read_sql('select * from %s limit 10;' % table_name, CONN)
+df.to_csv('%s.csv' % table_name, encoding='utf8')  # 这里的encoding必须设置，否则会报编码错误！！！！
+
 
 ## 一些要注意的点
 # 在 slice 上的修改有时候会影响到 原数据的, 在 numpy 也是同样的,  numpy需要用  numpy.copy才能避免
@@ -186,9 +193,9 @@ df[(df[list(keys)] == pd.Series(keys)).all(axis=1)]
 # - 会直接修改源数据的: a.loc[a[0] < 5, 'idx'] = False
 # - 不会直接修改源数据的：a.loc[a[0] < 5]['idx'] = False
 # bool index 时，如果传入的是带有index的boolean值， 取值是看 index + bool的结果， 而不是
-# 
+#
 # pandas 的 to_datetime 得到的对象不是 datetime,  和datetime比较时它必须放在左边
-# 
+#
 # NOTE, TODO: 从一列有indexing的值赋值给 另外一个indexing的值， 很可能赋值对应管是按indexing来的！！！  一一对应得转化为list
 
 # pandas 相关  =========================================================================================
@@ -250,7 +257,7 @@ np.eye(10)[(1, 1)] # 取index是 1, 1的元素
 
 # Jupyter notebook 相关  --------------------------
 ipython nbconvert --to=python [YOUR_NOTEBOOK].ipynb  # 会生成 [YOUR_NOTEBOOK].py 文件
-jupyter nbconvert --to notebook --output OUT.ipynb --execute [YOUR_NOTEBOOK].ipynb 
+jupyter nbconvert --to notebook --output OUT.ipynb --execute [YOUR_NOTEBOOK].ipynb
 # 如果没有指定 --to nbtebook，默认输出类型是html
 # 不加output会生成 [YOUR_NOTEBOOK].html 或者 [YOUR_NOTEBOOK].nbconvert.ipynb
 
@@ -261,3 +268,12 @@ jupyter nbconvert --to notebook --output OUT.ipynb --execute [YOUR_NOTEBOOK].ipy
 # 可以随意地display结果
 from IPython.display import display
 display(df)
+
+
+
+
+
+# 处理文本数据可能会遇到的坑
+# 文本最好开始就统一成utf8的
+# - 不然之后计算长度容易出问题
+# - 不然用文本做key后， 之后又改编码会导致之前代码出问题

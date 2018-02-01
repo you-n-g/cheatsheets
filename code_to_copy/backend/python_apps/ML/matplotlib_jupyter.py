@@ -8,7 +8,7 @@
 
 
 # https://stackoverflow.com/questions/37604289/tkinter-tclerror-no-display-name-and-no-display-environment-variable
-# 在terminal里画图会报错 _tkinter.TclError: no display name and no $DISPLAY environment variable 
+# 在terminal里画图会报错 _tkinter.TclError: no display name and no $DISPLAY environment variable
 # 必须加下面来防止出错
 import matplotlib
 matplotlib.use('Agg')
@@ -21,7 +21,7 @@ import seaborn as sns; sns.set(color_codes=True)
 
 # 如果pandas希望在jupyter里display所有的列，那么用下面的代码
 # https://stackoverflow.com/questions/11361985/output-data-from-all-columns-in-a-dataframe-in-pandas
-pd.set_option('display.max_columns', None)  
+pd.set_option('display.max_columns', None)
 
 
 import numpy as np
@@ -73,17 +73,17 @@ def plot(x, data, year_start, year_end):
         dates.extend(list(data[i]))
     date_nums = [mdates.date2num(datetime.strptime(d, '%Y-%m-%d')) for d in dates]
     min_date, max_date = min(date_nums), max(date_nums)
-    
+
     fig, axes = plt.subplots(1, 1, figsize=(25, 5)) # Unkown size
     axes.set_title("The number of days in a month with more than `x - 1` loss")
-    
+
     bin_num = (year_end - year_start) * 12
     start_num = mdates.date2num(datetime(year_start, 1, 1))
     end_num = mdates.date2num(datetime(year_end, 1, 1))
     span = (end_num - start_num) * 1. / bin_num
     bins = np.linspace(start_num, end_num, bin_num + 1)
     bins  = [num for num in bins if  min_date - span <= num <= max_date + span]
-    
+
     axes.hist(date_nums, bins=bins)
     # axes.hist(date_nums, bins=12 * 9)  # only numbers are ok.
     # axes.hist(date_nums, bins= "auto")  #  auto will be also ok In most times.
@@ -95,7 +95,7 @@ def plot(x, data, year_start, year_end):
 
     axes.xaxis.set_major_locator(mdates.MonthLocator(interval=3))
     axes.xaxis.set_major_formatter(mdates.DateFormatter('%Y.%m'))
-    
+
     axes.xaxis.set_label_text('Date')
     axes.yaxis.set_label_text('Freq')
     plt.show()
@@ -106,7 +106,7 @@ def set_x_labels_manully():
     y = x.copy()
     x_ticks_labels = ['jan','feb','mar','apr','may']
 
-    fig, ax = plt.subplots(1,1) 
+    fig, ax = plt.subplots(1,1)
     ax.plot(x,y, '-', lw=1.)  # line weight will how much the line weights. Less than 1. will make it transparent
     # Set number of ticks for x-axis
     ax.set_xticks(x)
@@ -266,7 +266,7 @@ sns.barplot(x='type', y=iname, data=df) # 需要画误差线时用这个工具 h
 # http://matplotlib.org/examples/pylab_examples/shared_axis_demo.html
 # set the figure size at the same time https://stackoverflow.com/questions/10388462/matplotlib-different-size-subplots
 # 注意subplot必须要设置subplot(nrows, ncols, plot_number) 参数！！！
- 
+
 import matplotlib.pyplot as plt
 import numpy as np
 def share_x_y():
@@ -310,7 +310,7 @@ def plot_multi_bars():
     xticks_label = ['label%d' % i for i in range(N)]
 
     data = np.random.rand(GROUP_N, 10)
-   
+
 
     plt.title("Data")
     auto_label(plt.bar(xticks_n - width, data[0], width=width, label='data1'))
@@ -330,7 +330,7 @@ def plot_multi_bars_with_sns():
     GROUP_N = 3
     labels = ['label%d' % i for i in range(N)]
     data = np.random.rand(GROUP_N, 10).reshape(-1)
-    
+
     df = pd.DataFrame(dict(data=data, label=labels * GROUP_N, group=['g1', 'g2', 'g3'] * N))
     sns.factorplot(data=df,  x='label', y='data', hue='group', kind='bar')
     # Hue 代表x轴每个值 再分成小类别显示

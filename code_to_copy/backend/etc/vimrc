@@ -176,6 +176,7 @@ call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
 call dein#add('heavenshell/vim-pydocstring')
 call dein#add('tell-k/vim-autopep8')
+call dein#add('python-mode/python-mode')
 call dein#end()
 
 filetype plugin indent on
@@ -357,3 +358,11 @@ let g:airline_theme='dark'
 "
 " heavenshell/vim-pydocstring
 nmap <silent> <C-I> <Plug>(pydocstring)
+
+
+
+"
+" python-mode
+" 这个插件遇到过保存失败,导致运行脚本跑的不是最新代码！！！！
+" help PymodeDoc
+let g:pymode_lint_ignore = ["E0100",]
