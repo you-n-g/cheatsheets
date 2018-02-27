@@ -23,4 +23,8 @@ source activate py36
 source deactivate
 
 
+# set default environment: https://stackoverflow.com/questions/28436769/how-to-change-default-anaconda-python-environment
+# Add some command to conda
+
+
 

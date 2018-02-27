@@ -12,7 +12,10 @@
 # 必须加下面来防止出错
 import matplotlib
 matplotlib.use('Agg')
-plt.savefig('filename.png')  # use this instead of plt.show()
+# plt.clf()  # 清理之前的内容。好像plt.savefig和plt.show()不一样，似乎有时候不会清理之前的内容
+plt.savefig('filename.png', bbox_inches='tight')  # use this instead of plt.show()
+#  bbox_inches='tight' 的效果非常赞，它可以让两边边变窄， 周围的文字留全！！！！
+
 
 # use seaborn
 import seaborn as sns; sns.set(color_codes=True)
@@ -267,6 +270,12 @@ sns.barplot(x='type', y=iname, data=df) # 需要画误差线时用这个工具 h
 # y will be the value in that class。
 # ci default value is 'sd', the stand variable will be there
 
+# 如果一个图中有多个axes， 需要单独对axes做操作, 做下面的操作。
+g = sns.XXXXX
+rotation = 90 
+for i, ax in enumerate(g.fig.axes):   ## getting all axes of the fig object
+     ax.set_xticklabels(ax.get_xticklabels(), rotation = rotation)
+
 # seaborn related END    --------------------------------------------------
 
 
@@ -354,6 +363,20 @@ ax.set_yticklabels(['{:3.2f}%'.format(x*100) for x in vals])
 
 
 
+# subplots 之间的距离
+# 省事直接用 fig.tight_layout() https://stackoverflow.com/questions/6541123/improve-subplot-size-spacing-with-many-subplots-in-matplotlib
+# 没用再
+plt.subplots_adjust(
+left  = 0.125  # the left side of the subplots of the figure
+right = 0.9    # the right side of the subplots of the figure
+bottom = 0.1   # the bottom of the subplots of the figure
+top = 0.9      # the top of the subplots of the figure
+wspace = 0.2   # the amount of width reserved for blank space between subplots
+hspace = 0.2   # the amount of height reserved for white space between subplots)
+)
+
+
+
 # 几种创建 subplots的方法比较
 
 # 1) 直接plot
@@ -362,6 +385,8 @@ plt.plot(....)  # 只画一张图时最方便
 # 2) plt.subplots
 # 以array的方式返回 fig 和 一组subplot的 axes
 # 缺点是类似于 plt.legend 和 plt.xticks 这种方法只能作用于最后的一个ax
+# 其实没有这个问题，可以直接通过ax画legened https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.legend.html
+# TODO: 为什 g = sns.plot(ax=ax)中, 不能ax.legend(), 可以g.legend()
 
 
 # 3) plt.subplot, 之后plt.xxx 一般就是等于 ax.xxx(也有小部分是找不到的)

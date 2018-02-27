@@ -45,6 +45,12 @@ rsync  -avzrP -e ssh /home/deploy/livesites/XXX_SITE  XXX_IP:/home/deploy/livesi
 tar czf - stuff_to_backup | ssh backupmachine tar xvzf -
 
 
+
+# https://stackoverflow.com/questions/18731603/how-to-tar-certain-file-types-in-all-subdirectories
+find ./someDir -name "*.php" -o -name "*.html" | tar -cf my_archive -T -
+# -T 表示分割文件名字的方式
+
+
 # 利用 logrotate 处理log
 /path_to_app/log/production.log {
     daily   #按日阶段
