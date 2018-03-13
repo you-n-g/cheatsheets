@@ -6,6 +6,8 @@ awk '{print $2}'
 # 在匹配到的某行后再加一行, 自己举一反三得到 /i 怎么用
 sed -i '/LINE_XXX_PATTERN/a XXX_CONTENT' XXX_FILE
 sed -i '1d' # 删除第一行
+sed -i '0,/port=-1/{s/port=-1/port=ask-1/}' /etc/xrdp/xrdp.ini  # 找到第一个port=-1, 执行中括号里面的命令   https://stackoverflow.com/a/9453461
+
 
 # sed 每次处理一行，先选择， 后接命令
 

@@ -27,4 +27,12 @@ source deactivate
 # Add some command to conda
 
 
+# save the configuration of environment
+# https://conda.io/docs/user-guide/tasks/manage-environments.html#building-identical-conda-environments
+# 下面的好像有点问题， papermil 似乎没有安装好
+# conda list --explicit > spec-file.txt
+# conda create --name <YOUR ENV> --file spec-file.txt
 
+conda env export > environment.yml
+conda env create -f environment.yml  # create an environment
+conda env update -f environment.yml  # update current envrionment

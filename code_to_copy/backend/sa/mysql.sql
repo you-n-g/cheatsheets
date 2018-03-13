@@ -1,6 +1,12 @@
 -- 安装相关
-sudo apt-get install mariadb-server mariadb-client
+sudo apt-get install -y mariadb-server mariadb-client
 
+
+-- 数据库前迁移
+-- innodb 的话，一定要拷贝整个 /var/lib/mysql 到新的服务器上
+-- /etc/mysql/debian.cnf 也需要迁移，里面保存了一个看数据库状态的账号，否则出这个错误 https://stackoverflow.com/questions/11644300/access-denied-for-user-debian-sys-maint
+-- 其他的看哪里改了就迁移哪里
+-- 这个报错不要管 "Checking for corrupt, not cleanly closed and upgrade needing tables.." :  https://serverfault.com/questions/613533/how-to-fix-corrupt-not-cleanly-closed-and-upgrade-needing-tables-in-mysql
 
 
 -- BEGIN 参数配置

@@ -54,6 +54,8 @@ def plot_history(history, keys=['loss', 'acc']):
 
 plot_model(model)
 
+model.compile(optimizer='adadelta', loss='mean_squared_error')
+
 model_name = 'MODEL_NAME'
 best_path = 'best_model_%s.hdf5' % model_name
 last_path = 'last_model_%s.hdf5' % model_name
@@ -68,7 +70,6 @@ model.save_weights(best_path)  # Save the initial best model
 saveBestModel.best = model.evaluate(test_x, test_y)  # initial the best value to the right validation loss
 callbacks = [earlyStoper, saveBestModel, saveLastModel]
 
-model.compile(optimizer='adadelta', loss='mean_squared_error')
 history = model.fit(train_x, train_y, epochs=1000, shuffle=True, validation_data=(test_x, test_y), callbacks=callbacks, verbose=verbose)
 plot_history(history)
 
