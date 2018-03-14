@@ -264,15 +264,18 @@ sns.distplot(x, rug=True) # 替代histplot, https://seaborn.pydata.org/generated
 
 # NOTE: seaborn的图像分类,  https://zhuanlan.zhihu.com/p/27683042
 
-# Barplot的最小单位是一组值，用一个柱状图和一个误差线来描述。  
+# Barplot的最小单位是一组值，用一个柱状图和一个误差线来描述。
 sns.barplot(x='type', y=iname, data=df) # 需要画误差线时用这个工具 https://seaborn.pydata.org/generated/seaborn.barplot.html
 # x will be a attribute to describe the x class
 # y will be the value in that class。
 # ci default value is 'sd', the stand variable will be there
 
+sns.tsplot # 用来画时间轴
+
+
 # 如果一个图中有多个axes， 需要单独对axes做操作, 做下面的操作。
 g = sns.XXXXX
-rotation = 90 
+rotation = 90
 for i, ax in enumerate(g.fig.axes):   ## getting all axes of the fig object
      ax.set_xticklabels(ax.get_xticklabels(), rotation = rotation)
 

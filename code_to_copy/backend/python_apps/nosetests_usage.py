@@ -31,6 +31,13 @@ class TestMultiversoTables(unittest.TestCase):
     Useful options:
     --pdb  Drop into debugger on failures or errors
     '''
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
     def test_func(self):
         self.assertSetEqual(True)
 

@@ -26,3 +26,10 @@ DIRNAME = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir
 
 # https://docs.python.org/2/library/glob.html#module-glob
 import glob
+
+
+
+
+# 配置文件，从磁盘读取
+# 这个 quick start 就可以了
+# https://docs.python.org/3/library/configparser.html#quick-start
