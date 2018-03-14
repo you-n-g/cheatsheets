@@ -31,7 +31,7 @@ wget -r -p -np -k http://xxx.com/abc/
 # -p 表示获得网页显示所需要的元素
 
 
-# 从一台服务器rsync到另外一台服务器上 "注意 / 不能错!!!"
+# 从一台服务器rsync到另外一台服务器上 "注意 / 不能错!!!":  如果source不以/结尾， 那么会当成一个新文件放进去；否则会把source和target这两个文件夹同步成一样的。
 rsync  -avzrP -e ssh /home/deploy/livesites/XXX_SITE  XXX_IP:/home/deploy/livesites/
 # -a archive; -v verbose; -z compress; -r recursive; -P progress
 # 对小文件, -a 会加速很多; 这个命令可以多次运行，每次只传输两个文件之间的差

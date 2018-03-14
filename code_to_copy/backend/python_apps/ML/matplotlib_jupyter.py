@@ -258,7 +258,13 @@ sns.heatmap(data, linewidths=1, cmap=cmap)
 plt.show()
 
 
-# seaborn 有很多 pyplot的替代但是信息更丰富的图像, 而且文档也更好
+
+# seaborn 实现 stack=True的效果
+# https://stackoverflow.com/questions/22787209/how-to-have-clusters-of-stacked-bars-with-python-pandas
+# 普通的这么画就可以  https://python-graph-gallery.com/13-percent-stacked-barplot/
+
+# seaborn 有很多 pyplot的替代但是信息更丰富的图像, 而且文档也更好;
+# 这里有各种全面的example. https://seaborn.pydata.org/examples/index.html
 sns.distplot(x, rug=True) # 替代histplot, https://seaborn.pydata.org/generated/seaborn.distplot.html
 # rug is really a good function to check the distribution of the data
 
@@ -275,9 +281,10 @@ sns.tsplot # 用来画时间轴
 
 # 如果一个图中有多个axes， 需要单独对axes做操作, 做下面的操作。
 g = sns.XXXXX
-rotation = 90
 for i, ax in enumerate(g.fig.axes):   ## getting all axes of the fig object
-     ax.set_xticklabels(ax.get_xticklabels(), rotation = rotation)
+     ax.set_xticklabels(ax.get_xticklabels(), rotation=90)
+
+sns.countplot # https://seaborn.pydata.org/generated/seaborn.countplot.html
 
 # seaborn related END    --------------------------------------------------
 
@@ -370,13 +377,20 @@ ax.set_yticklabels(['{:3.2f}%'.format(x*100) for x in vals])
 # 省事直接用 fig.tight_layout() https://stackoverflow.com/questions/6541123/improve-subplot-size-spacing-with-many-subplots-in-matplotlib
 # 没用再
 plt.subplots_adjust(
-left  = 0.125  # the left side of the subplots of the figure
-right = 0.9    # the right side of the subplots of the figure
-bottom = 0.1   # the bottom of the subplots of the figure
-top = 0.9      # the top of the subplots of the figure
-wspace = 0.2   # the amount of width reserved for blank space between subplots
-hspace = 0.2   # the amount of height reserved for white space between subplots)
+    left = 0.125,  # the left side of the subplots of the figure
+    right = 0.9,    # the right side of the subplots of the figure
+    bottom = 0.1,   # the bottom of the subplots of the figure
+    top = 0.9,      # the top of the subplots of the figure
+    wspace = 0.2,   # the amount of width reserved for blank space between subplots
+    hspace = 0.2,   # the amount of height reserved for white space between subplots)
 )
+
+# 进一步微调某个ax的距离
+pos2 = ax.get_position()
+pos2.x0 -= 0.02
+pos2.x1 -= 0.02
+pos2.y1 -= 0.05
+ax.set_position(pos2)
 
 
 

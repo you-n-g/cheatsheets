@@ -45,6 +45,7 @@ git rev-parse HEAD
 # 操作working directory
 git checkout .  # 恢复到head版本 仅仅作用于working directory, 不包括staged
 git checkout -- filename # 恢复某文件到 head 版本， --为了以防在 有和filename同名的branch时没有歧义
+git checkout c5f567 -- file1/to/restore file2/to/restore # 将指定文件恢复成指定版本 https://stackoverflow.com/a/215731
 git branch -f branch-name XXX_COMMIT # 可以直接将已经有的branch 设置到指定的commit
 
 # 操作分支指针

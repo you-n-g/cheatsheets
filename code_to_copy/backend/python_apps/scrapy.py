@@ -23,7 +23,7 @@ class NewsSpider(CrawlSpider):
         # and so on...
     )
     def parse_XXX(self, response):
-        hxs = HtmlXPathSelector(response) 
+        hxs = HtmlXPathSelector(response)
         hxs = HtmlXPathSelector(text = "XXX_STRING")
         # 还不是很理解对 HtmlXPathSelector 选择 / 是什么意思??????
         # hxs 本身是一个 HtmlXPathSelector, 它的 select的返回值也是 HtmlXPathSelector?????
@@ -46,3 +46,6 @@ class XXXPipeline(object):
     def process_item(self, item, spider):
         self.conn.scrapydb.news.update({"title" : item["title"]}, {"$set" : dict(item)}, upsert = True, multi=False)
         return item
+
+# Requests-HTML: HTML Parsing for Humans™
+# https://github.com/kennethreitz/requests-html

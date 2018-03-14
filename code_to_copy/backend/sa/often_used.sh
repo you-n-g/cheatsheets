@@ -229,3 +229,8 @@ for ((train=2006, test=2012; test < 2017; train++, test++ )) ; do
     train_s=${train}0101
     train_e=$((test - 1))1231
 done
+
+
+# 用户相关
+adduser xiaoyang
+usermod -aG sudo xiaoyang

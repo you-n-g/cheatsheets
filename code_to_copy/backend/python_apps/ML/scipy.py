@@ -192,7 +192,7 @@ df.to_csv('%s.csv' % table_name, encoding='utf8')  # 这里的encoding必须设�
 pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
 # com, span, halflife, alpha都是用来定alpha的
 # min_periods 表示最少前面有几个非NA才计算具体值
-# adjust=True时(default), 使用这组权重计算平均: (1-alpha)**(n-1), (1-alpha)**(n-2), ..., 1-alpha, 1. 
+# adjust=True时(default), 使用这组权重计算平均: (1-alpha)**(n-1), (1-alpha)**(n-2), ..., 1-alpha, 1.
 # adjust=False时， 值就直接这么计算: weighted_average[0] = arg[0]; weighted_average[i] = (1-alpha)*weighted_average[i-1] + alpha*arg[i].
 # Ignore NA的情况我还不明白
 
@@ -207,6 +207,8 @@ pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
 # pandas 的 to_datetime 得到的对象不是 datetime,  和datetime比较时它必须放在左边
 #
 # NOTE, TODO: 从一列有indexing的值赋值给 另外一个indexing的值， 很可能赋值对应管是按indexing来的！！！  一一对应得转化为list
+#
+# 带index的 Series 之间加减法会按index对应值操作，而不是按位置顺序操作
 
 # pandas 相关  =========================================================================================
 
@@ -267,7 +269,7 @@ np.eye(10)[(1, 1)] # 取index是 1, 1的元素
 
 # Jupyter notebook 相关  --------------------------
 jupyter nbconvert --to=python [YOUR_NOTEBOOK].ipynb  # 会生成 [YOUR_NOTEBOOK].py 文件
-jupyter nbconvert --to notebook --output OUT.ipynb --execute [YOUR_NOTEBOOK].ipynb 
+jupyter nbconvert --to notebook --output OUT.ipynb --execute [YOUR_NOTEBOOK].ipynb
 # 如果没有指定 --to nbtebook，默认输出类型是html
 # 不加output会生成 [YOUR_NOTEBOOK].html 或者 [YOUR_NOTEBOOK].nbconvert.ipynb
 

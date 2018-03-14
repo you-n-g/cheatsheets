@@ -27,7 +27,7 @@ tmux splitw -h -t sgx:1  # 把目标窗口的当前pane 分左右两边
 
 
 # 把另外一个pane弄到当前window新建的一个pane
-tmux join-pane -s ":0.0"
+tmux join-pane -s ":0.0"  # 带session name 可以是 "[session name]:0.0"
 
 
 
