@@ -178,6 +178,7 @@ call dein#add('heavenshell/vim-pydocstring')
 call dein#add('tell-k/vim-autopep8')
 call dein#add('python-mode/python-mode')
 call dein#add('tpope/vim-surround')
+call dein#add('vim-scripts/bash-support.vim')
 call dein#end()
 
 filetype plugin indent on
@@ -373,3 +374,11 @@ let g:pymode_lint_ignore = ["E0100",]
 "
 " vim-surround
 " https://github.com/tpope/vim-surround
+"
+
+
+
+
+" 
+" bash-support
+" https://www.tecmint.com/use-vim-as-bash-ide-using-bash-support-in-linux/
