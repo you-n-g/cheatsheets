@@ -112,20 +112,29 @@ LOG = logging.getLogger(__file__) # 不加名字或者 只用用 logging的方�
 # 描述的信息量都是一样的
 
 
+# 在这里搜索 https://docs.python.org/3/howto/logging-cookbook.html
+# dictConfig 可以找到你要的handler
+
 # 典型的层级
 import logging
 import logging.config
 dictLogConfig = {
     "version": 1,
     "handlers":{
-                "consoleHandler":{
-                    "class":"logging.StreamHandler",
-                    "formatter":"myFormatter",
-                    }
-                },
+        "consoleHandler":{
+            "class":"logging.StreamHandler",
+            "formatter":"myFormatter",
+            }
+        "fileHandler": {
+            'class': 'logging.FileHandler',
+            'filename': './log/assets.log',
+            'mode': 'a',
+            'formatter': 'myFormatter',
+        },
+    },
     "loggers":{
         "foo.bar":{
-            "handlers":["consoleHandler"],
+            "handlers":["fileHandler"],
             "level":"INFO",
             "propagate": True,
         },
@@ -133,17 +142,17 @@ dictLogConfig = {
             "handlers":["consoleHandler"],
             "level":"INFO",
             "propagate": False,
-            },
+        },
         "":{
             "handlers":["consoleHandler"],
             "level":"INFO",
-            }
-        },
+        }
+    },
     "formatters":{
         "myFormatter":{
             "format":"%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-            }
         }
+    }
 }
 logging.config.dictConfig(dictLogConfig)
 logger = logging.getLogger("foo.bar")

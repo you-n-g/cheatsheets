@@ -9,3 +9,11 @@ d1 = datetime.datetime(2011, 3, 7).date()
 d2 = datetime.datetime.strptime('2011-03-11', '%Y-%m-%d').date()
 gap = d1 - d2
 gap == datetime.timedelta(days=-4)
+
+
+
+
+# pendulum
+# https://github.com/sdispater/pendulum
+import pendulum
+pendulum.parse('2018-03-11T13:23:16.365083')

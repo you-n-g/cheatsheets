@@ -31,3 +31,10 @@ DIRNAME = Path(__file__).parent.absolute()
 
 # https://docs.python.org/2/library/glob.html#module-glob
 import glob
+
+
+
+
+# 配置文件，从磁盘读取
+# 这个 quick start 就可以了
+# https://docs.python.org/3/library/configparser.html#quick-start

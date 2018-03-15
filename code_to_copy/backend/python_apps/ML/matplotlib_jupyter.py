@@ -258,12 +258,6 @@ sns.heatmap(data, linewidths=1, cmap=cmap)
 plt.show()
 
 
-# 如果一个图中有多个axes， 需要单独对axes做操作, 做下面的操作。
-g = sns.XXXXX
-rotation = 90
-for i, ax in enumerate(g.fig.axes):   ## getting all axes of the fig object
-     ax.set_xticklabels(ax.get_xticklabels(), rotation = rotation)
-
 
 # seaborn 实现 stack=True的效果
 # https://stackoverflow.com/questions/22787209/how-to-have-clusters-of-stacked-bars-with-python-pandas
@@ -281,6 +275,15 @@ sns.barplot(x='type', y=iname, data=df) # 需要画误差线时用这个工具 h
 # x will be a attribute to describe the x class
 # y will be the value in that class。
 # ci default value is 'sd', the stand variable will be there
+
+sns.tsplot # 用来画时间轴
+
+
+# 如果一个图中有多个axes， 需要单独对axes做操作, 做下面的操作。
+g = sns.XXXXX
+for i, ax in enumerate(g.fig.axes):   ## getting all axes of the fig object
+     ax.set_xticklabels(ax.get_xticklabels(), rotation=90)
+
 sns.countplot # https://seaborn.pydata.org/generated/seaborn.countplot.html
 
 # seaborn related END    --------------------------------------------------

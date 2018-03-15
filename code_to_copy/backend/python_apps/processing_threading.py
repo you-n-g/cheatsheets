@@ -86,3 +86,15 @@ p.map(f, [1,2,3])
 
 # ipyparallel 的使用方法
 # http://nbviewer.jupyter.org/github/ipython/ipyparallel/blob/master/examples/Index.ipynb
+
+
+
+
+
+
+
+
+# BEGIN gevent ---------------------------------------
+# http://sdiehl.github.io/gevent-tutorial/
+
+# end gevent ---------------------------------------
