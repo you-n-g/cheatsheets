@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#-*- coding:utf8 -*-
+# -*- coding:utf8 -*-
 
 
 
@@ -19,7 +19,11 @@ c = get_config()
 c.HistoryManager.enabled = False
 
 # Configuring https://nbconvert.readthedocs.io/en/latest/config_options.html
-~/.jupyter/jupyter_nbconvert_config.json
+# add below into  ~/.jupyter/jupyter_nbconvert_config.json
+# "ExecutePreprocessor": {
+#   "timeout": -1
+# },
+
 # Otherwise TimeoutError: Cell execution timed out
 
 
@@ -83,8 +87,8 @@ def get_result_path(param, exp_path):
     # BEGIN 向之前版本兼容的变量
     # # An example
     # # If not present, use the default value `mse` in ipynb.
-    # if param.get('LOSS_FUNC', 'mse') != 'mse':
-    #     basename.append('loss=%s' % param['LOSS_FUNC'])
+    # if param.get('LOSS_FUNC_XXX', 'mse') != 'mse':
+    #     basename.append('loss=%s' % param['LOSS_FUNC_XXX'])
     # END   向之前版本兼容的变量
 
     # This should be the last
@@ -146,6 +150,8 @@ tqdm.monitor_interval = 0
 DIRNAME = os.path.abspath(os.path.dirname(__file__))
 
 RES_DIR = os.path.join(DIRNAME, 'exp_results/XXXX')
+if not os.path.exists(RES_DIR):
+    os.makedirs(RES_DIR)
 
 import logging
 logging.basicConfig(
@@ -157,10 +163,11 @@ LOG = logging.getLogger(__file__)
 
 
 def user_yes_no_query(question):
+    from six.moves import input
     sys.stdout.write('%s [y/n]\n' % question)
     while True:
         try:
-            return strtobool(raw_input().lower())
+            return strtobool(input().lower())
         except ValueError:
             sys.stdout.write('Please respond with \'y\' or \'n\'.\n')
 
@@ -170,7 +177,7 @@ def task_wrapper(*args, **kwargs):
     start = datetime.now()
     fin_flag_path = os.path.join(os.path.dirname(kwargs['output']), 'fin_flag')
     if os.path.exists(fin_flag_path):
-        print "Task has been finished before."
+        print("Task has been finished before.")
     else:
         pm.execute_notebook(*args, **kwargs)
         open(fin_flag_path, 'a').close() # touch to indicate the task has been finished
@@ -212,9 +219,9 @@ if __name__ == '__main__':
         time.sleep(0.1)
     for i, args, r in res:
         try:
-            print 'task (%d / %d) ended, time:' % (i, tid), r.get()
-            print 'Args:\n', args
-        except Exception, e:
+            print('task (%d / %d) ended, time:' % (i, tid), r.get())
+            print('Args:\n', args)
+        except Exception as e:
             LOG.exception(u"Type=%s, Args=%s.\nRun order=%d.\nTask args:\n%s" %
                             (type(e), e.args, i, str(args)))
     pool.close() # TODO: If I put it before r.get(). The print info above will never output the data.
@@ -222,19 +229,20 @@ if __name__ == '__main__':
 # END   run_exp.py --------------------------------------------------
 
 
-# BEGIN exp_summary.py --------------------------------------------------
+# BEGIN exp_summary.ipynb --------------------------------------------------
 # 汇总所有的实验结果
 import os
 import papermill as pm
 import pandas as pd
 from IPython.display import display
-
+import numpy as np
+RES_DIR = os.path.join('./exp_results/XXXX')
 # get task from the valid
 import imp
-get_tasks = imp.load_source('get_tasks', os.path.join(RES_PATH, 'get_tasks.py'))
+get_tasks = imp.load_source('get_tasks', os.path.join(RES_DIR, 'get_tasks.py'))
 
-params_l = get_tasks.get_task_params(RES_PATH)
-print len(params_l)
+params_l = get_tasks.get_task_params(RES_DIR)
+print(len(params_l))
 data = {}
 
 # get all keys
@@ -260,7 +268,7 @@ for cname in GB_ATTRS:
     # convert to str for grouping.
     sum_df[cname] = sum_df[cname].astype(np.str)
 
-sum_df['exp_n'] = sum_df.groupby(GB_ATTRS)['ANY_PERF_ATTR'].transform('count')
+sum_df['exp_n'] = sum_df.groupby(GB_ATTRS)['RES_PATH'].transform('count')
 
 g_sum_df = sum_df.groupby(GB_ATTRS).mean()
 
@@ -277,7 +285,7 @@ for i, row in sum_df.iterrows():
 
 # Check the affect of every parameters
 for attr in GB_ATTRS:
-    print attr, '=' * 20
+    print(attr, '=' * 20)
     display(sum_df.groupby(attr).mean().loc[:, 'pretrain_group5_model_ar':'ft_group5_wr'])
     display(sum_df.groupby(attr).count().loc[:, 'pretrain_group5_model_ar':'ft_group5_wr'])
 
