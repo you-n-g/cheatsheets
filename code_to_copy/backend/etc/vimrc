@@ -179,6 +179,7 @@ call dein#add('tell-k/vim-autopep8')
 call dein#add('python-mode/python-mode')
 call dein#add('tpope/vim-surround')
 call dein#add('vim-scripts/bash-support.vim')
+call dein#add('dhruvasagar/vim-table-mode')
 call dein#end()
 
 filetype plugin indent on

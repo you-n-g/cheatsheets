@@ -138,7 +138,7 @@ parser = argparse.ArgumentParser(
     description='''
         This script will run multiple experiments concurrently
 ''')
-parser.add_argument('-c', dest='concurrency', type=int, help='Concurrency of tasks. How many tasks to   run concurrently', default=multiprocessing.cpu_count() * 3 / 4)
+parser.add_argument('-c', dest='concurrency', type=int, help='Concurrency of tasks. How many tasks to   run concurrently', default=multiprocessing.cpu_count() * 3 // 4)
 ARGS = parser.parse_args()
 
 
