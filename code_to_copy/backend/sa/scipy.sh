@@ -36,3 +36,8 @@ source deactivate
 conda env export > environment.yml
 conda env create -f environment.yml  # create an environment
 conda env update -f environment.yml  # update current envrionment
+
+
+
+# 有时候 conda的包依赖于 .so文件，现在找.so文件似乎有bug
+# https://stackoverflow.com/a/46833531

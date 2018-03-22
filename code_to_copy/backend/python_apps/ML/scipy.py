@@ -148,7 +148,7 @@ csv['time_num'] = map(mdates.date2num, csv['trading_day'])  # TODO: will apply b
 
 # shift by group: https://stackoverflow.com/questions/26280345/pandas-shift-down-values-by-one-row-within-a-group
 data.sort_values(['SecuAbbr', 'date'], inplace=True)
-data['nextRisePct'] = data.groupby(['SecuAbbr'])['risePct'].shift(1)
+data['nextRisePct'] = data.groupby(['SecuAbbr'])['risePct'].shift(-1)
 
 
 

@@ -16,4 +16,5 @@ gap == datetime.timedelta(days=-4)
 # pendulum
 # https://github.com/sdispater/pendulum
 import pendulum
-pendulum.parse('2018-03-11T13:23:16.365083')
+dt = pendulum.parse('2018-03-11T13:23:16.365083')
+print(dt.format('%Y-%m-%d'))

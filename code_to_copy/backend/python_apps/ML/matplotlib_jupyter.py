@@ -67,6 +67,11 @@ def multi_plot_like_grid(n):
 import matplotlib.dates as mdates
 from datetime import datetime
 
+# 如果想实现坐标显示时间，可以直接用 datetime64 这个类型就好
+# map(pendulum.parse, data) 会有问题,得到的类型不是datetime64.
+# 用下面的可以从string得到datetime64这个类型
+pd.Series(play_df.TradeDate.unique()).apply(pendulum.parse)
+
 def plot(x, data, year_start, year_end):
     '''
     plot histgram to control the details.
