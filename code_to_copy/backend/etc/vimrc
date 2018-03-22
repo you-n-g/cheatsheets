@@ -369,7 +369,8 @@ nmap <silent> <C-I> <Plug>(pydocstring)
 " 这个插件遇到过保存失败,导致运行脚本跑的不是最新代码！！！！
 " help PymodeDoc
 " this plugin will auto folder all the code, please use `:help zo` to find the code
-let g:pymode_lint_ignore = ["E0100", "E501"]
+let g:pymode_lint_ignore = ["E0100", "E501", "E402"]
+" E402 module level import not at top of file
 let g:pymode_rope=0  " disable refracting because I don't use it
 let g:pymode_folding=0  " auto folding really makes python coding really slow.
 
