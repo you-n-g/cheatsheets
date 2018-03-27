@@ -44,3 +44,4 @@ from XXXXX;
 -- 选择每组最高分：先group by 计算最高分， 然后再做表链接
 
 
+UPDATE `table_name` SET `attr`= -`attr`;

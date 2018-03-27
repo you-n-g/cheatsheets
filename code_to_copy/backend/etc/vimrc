@@ -178,8 +178,11 @@ call dein#add('heavenshell/vim-pydocstring')
 call dein#add('tell-k/vim-autopep8')
 call dein#add('python-mode/python-mode')
 call dein#add('tpope/vim-surround')
-call dein#add('vim-scripts/bash-support.vim')
+" call dein#add('vim-scripts/bash-support.vim')
+" this is confilict with vim-table-mode
+" :verbose map <LocalLeader>tm  would show all plugins use this mapping
 call dein#add('dhruvasagar/vim-table-mode')
+call dein#add('mileszs/ack.vim')
 call dein#end()
 
 filetype plugin indent on
@@ -361,7 +364,7 @@ let g:airline_theme='dark'
 
 "
 " heavenshell/vim-pydocstring
-nmap <silent> <C-I> <Plug>(pydocstring)
+nmap <silent> <C-M> <Plug>(pydocstring)
 
 
 
@@ -374,6 +377,8 @@ let g:pymode_lint_ignore = ["E0100", "E501", "E402"]
 " E402 module level import not at top of file
 let g:pymode_rope=0  " disable refracting because I don't use it
 let g:pymode_folding=0  " auto folding really makes python coding really slow.
+" lint还是挺有用的，改完代码马上就能检查出一些语法错误，不必等到运行时发现
+let g:pymode_lint_unmodified = 1  " Check code on every save (every)
 
 
 
@@ -390,3 +395,9 @@ let g:pymode_folding=0  " auto folding really makes python coding really slow.
 " 
 " bash-support
 " https://www.tecmint.com/use-vim-as-bash-ide-using-bash-support-in-linux/
+"
+
+" 
+" mileszs/ack.vim
+let g:ackprg = 'ag --vimgrep'
+nnoremap <Leader>a :Ack<cr>

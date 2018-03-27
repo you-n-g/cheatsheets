@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 #-*- coding:utf8 -*-
 
+
+# 知道你可以画什么
+# 1) https://python-graph-gallery.com
+# 2) seanborn本来的gallary
+
 # interactive: https://blog.dominodatalab.com/interactive-dashboards-in-jupyter/
 # you must install this extension https://github.com/jupyter-widgets/ipywidgets
 # 可能会遇到这个错误  Widget Javascript not detected.  It may not be installed or enabled properly
@@ -370,11 +375,15 @@ def plot_multi_bars_with_sns():
     plt.show()
 
 
-
 # format y plot.  https://stackoverflow.com/questions/31357611/format-y-axis-as-percent
 # percentage example
 vals = ax.get_yticks()
 ax.set_yticklabels(['{:3.2f}%'.format(x*100) for x in vals])
+
+
+# stack plot
+# example 1): https://python-graph-gallery.com/251-stacked-area-chart-with-seaborn-style/
+# example 2): https://matplotlib.org/gallery/lines_bars_and_markers/stackplot_demo.html
 
 
 

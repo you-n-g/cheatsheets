@@ -28,8 +28,12 @@ show variables like 'char%'; 查看数据库的参数设置;
 -- binlog删除请用sql语句删除. ????
 
 
+-- ubuntu 16.04 root用户无密码程登录！！！！
+-- ERROR 1698 (28000): Access denied for user 'root'@'localhost'
+-- solution: https://stackoverflow.com/a/42742610
 
 
+-- mysql 如果发现修改配置文件后启动无效，可能mysql并不是service命令启动的，需要手动kill再重启
 
 
 -- BEGIN 忘记用户名密码

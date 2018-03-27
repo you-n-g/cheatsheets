@@ -5,7 +5,7 @@
 
 session=whatever  # the session can be blank to be  current window
 window=${session}:0
-pane=${window}.4  # This can be ":0.1"
+pane=${window}.4  # This can be ":0.1".   "session:window_name" is also ok
 tmux send-keys -t "$pane" C-c 
 tmux send-keys -t "$pane" C-p 'some -new command' C-m
 tmux send-keys -t "$pane" C-p C-m
