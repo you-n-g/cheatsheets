@@ -93,6 +93,11 @@ logging.basicConfig(
 LOG.exception("XXX") # level是ERROR， 但是会把 exception的 stack trace 加上，  所以一定要在 exception handler
 
 
+# Add multiple handlers dynamically:
+# https://docs.python.org/3/howto/logging-cookbook.html#multiple-handlers-and-formatters
+# 动态地制定handler，log名字是动态的
+
+
 # LOG的组件
 
 # formatters: log的格式

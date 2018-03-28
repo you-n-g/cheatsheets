@@ -179,12 +179,18 @@ pd.Series(STH_LIKE_LIST).rolling(window=3, min_periods=1, center=True).mean()
 # {'HIST_PERF_RANK_ADD': '10', 'HIST_PERF_TOP_RANK_N': '10', 'MAX_MS_MODEL_EPOCH': '120'}
 df[(df[list(keys)] == pd.Series(keys)).all(axis=1)]
 
+
 # 和mysql相连 有中文的情况
 CONN = 'mysql://USERNAME:PASSWORD@IP:3306/fin_data?charset=utf8'
 # 下面这种方式设置的 encoding不管用!!! 必须用上面的charset !!!!
 # from sqlalchemy import create_engine; CONN = create_engine(DB_URI, encoding='utf8')
-df = pd.read_sql('select * from %s limit 10;' % table_name, CONN)
+df = pd.read_sql(sql='select * from %s limit 10;' % table_name, con=CONN)
 df.to_csv('%s.csv' % table_name, encoding='utf8')  # 这里的encoding必须设置，否则会报编码错误！！！！
+
+
+# save to mysql
+df.to_sql(con=CONN, name=table_name, if_exists='append', index=False)
+# This will create table automatically
 
 
 
