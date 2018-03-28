@@ -164,6 +164,22 @@ cmd > stdout.log 2>stderror.log
 sudo -E # 这个能保持绝大部分环境变量
 sudo env "PATH=$PATH" godi_console  # 因为 secure_path 的配置，所以path无法用-E直接保存
 
+# 切换到用户执行command最好用 -l，不然不会执行 .bashrc中的信息
+# https://unix.stackexchange.com/a/29811
+su -l $USER -c "COMMAND" -s /bin/bash
+# 另外一个坑就是 $USER 的默认shell不是bash， 所以并不会设置bash的环境变量
+|------------------------+---------------------------------------------------------------------+----------+----------------------|
+| 用户打开的shell属性    | 会source哪些file                                                    | 本质区别 | 场合会出现区别的地方 |
+|------------------------+---------------------------------------------------------------------+----------+----------------------|
+| login shell            | /etc/profile, ~/.profile, (for bash ~/.bash_profile, ~/.bash_login) |          |                      |
+| non login shell        |                                                                     |          |                      |
+| Interactive shell      | /etc/bash.bashrc   ~/.bashrc                                        |          |                      |
+| None Interactive shell | source $BASH_ENV                                                    |          |                      |
+|------------------------+---------------------------------------------------------------------+----------+----------------------|
+# 为什么.bashrc用的多: ~/.profile 一般会读 ~/.bashrc,  所以如果你用bash, 只要是 login shell 或者 interactive shell, ~/.bashrc是就可以被读到.
+# https://stackoverflow.com/a/415444
+
+
 
 # shell函数取参数
 # http://stackoverflow.com/questions/12314451/accessing-bash-command-line-args-vs

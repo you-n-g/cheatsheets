@@ -202,7 +202,9 @@ pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
 # - 一般直接看是否有 SettingWithCopyWarning就行, http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
 # - 会直接修改源数据的: a.loc[a[0] < 5, 'idx'] = False
 # - 不会直接修改源数据的：a.loc[a[0] < 5]['idx'] = False
-# bool index 时，如果传入的是带有index的boolean值， 取值是看 index + bool的结果， 而不是
+#   - 看样子是直接loc上赋值的才会修改源数据
+
+# bool index 时，如果传入的是带有index的boolean值， 取值是看index + bool的结果
 #
 # pandas 的 to_datetime 得到的对象不是 datetime,  和datetime比较时它必须放在左边
 #
@@ -262,6 +264,15 @@ np.eye(10)[(1, 1)] # 取index是 1, 1的元素
 # - 对齐维度长度： 所有维度要么长度相等，要么长度为1.
 
 
+
+
+# 存储整个环境变量
+# https://stackoverflow.com/a/35296032
+import dill # pip install dill
+filename = 'globalsave.pkl'
+dill.dump_session(filename)
+# and to load the session again:
+dill.load_session(filename)
 
 
 
