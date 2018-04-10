@@ -27,8 +27,8 @@ mkswap /dev/xvdb1 # swapon /dev/xvdb1 来挂载分区
 # 分区 路径 文件系统 挂载参数(普通的都用defaults) 是否需要备份(一般是不需要,用0)  自检顺序(0不需自检，/应该为1，其他分区为2)
 /dev/xvdb1 /data/                   ext4    defaults        0 2
 /dev/xvdb2 none            swap    sw              0       0
-# mount -a 会自动挂载fstab中的东西，  可以以此检测
-
+# mount -a 会自动挂载fstab中的东西，  可以以此检测:  可以不重启也启动
+# https://serverfault.com/a/174182
 
 
 # 分区扩展 
