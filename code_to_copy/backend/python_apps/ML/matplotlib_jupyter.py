@@ -2,6 +2,9 @@
 #-*- coding:utf8 -*-
 
 
+# TODO: pandas 的 iplot !!!!
+# TODO:  pandas 本身的 plot 就挺好用!!!!
+
 # 知道你可以画什么
 # 1) https://python-graph-gallery.com
 # 2) seanborn本来的gallary
