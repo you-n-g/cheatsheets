@@ -101,6 +101,11 @@ pd.reset_index(drop=True, inplace=True)
 
 # selecting is supported.  loc只支持label来 index, 如果想按下标顺序index， 必须用iloc
 df.loc[BEGIN_ROW:END_ROW, BEGIN_COL:END_COL]  # such as df.loc[1:2, 'InnerCode':'IfWeekEnd']
+# 分两种情况
+# - 如果用loc[], 那么第一维肯定是行，第二维肯定是列.
+# - 如果用loc, 那么只支持 第一维肯定是行，第二维肯定是列.
+
+# 例子们
 # 用 df.loc[A:B]和df[A:B] 是完全不一样的
 # - loc会包含B，否则不包含B
 # df[A] 和 df[A:B] 做的是完全不一样的事情！！ 前者是在列里面选，  后者是在行里面选
@@ -223,6 +228,9 @@ pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
 # NOTE, TODO: 从一列有indexing的值赋值给 另外一个indexing的值， 很可能赋值对应管是按indexing来的！！！  一一对应得转化为list
 #
 # 带index的 Series 之间加减法会按index对应值操作，而不是按位置顺序操作
+
+# pandas 的index是基于 numpy array 而不是series.
+# 所以使用的时候要注意不要想当然地用series支持的操作
 
 # pandas 相关  =========================================================================================
 

@@ -54,7 +54,7 @@ print parser.parse_args('--train_s 20121010'.split())
 
 
 
-# TODO: sub models 
+# TODO: sub models
 # https://docs.python.org/2.7/library/argparse.html#sub-commands
 
 
