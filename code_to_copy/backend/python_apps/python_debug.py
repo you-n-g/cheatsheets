@@ -29,25 +29,43 @@ for line in traceback.format_stack():
 
 # 如果是想输出抓住的异常的traceback
 import sys, traceback
-import StringIO
-output = StringIO.StringIO()
+try:
+    from StringIO import StringIO
+except ImportError as e:
+    from io import StringIO
+output = StringIO()
+import logging
+
+def f():
+    raise Exception
 
 try:
-    raise Exception
+    f()
 except Exception:
-    ex_type, ex, tb = sys.exc_info()
-    traceback.print_tb(tb, file=output)
-    del tb
+    traceback.print_exc(file=output) # may be a better choice in python3
+    # ex_type, ex, tb = sys.exc_info()  # this can get tb object
+    # traceback.print_tb(tb, file=output)
+    # del tb
 
     logging.getLogger("ex")  # TODO: 据说这个可以把exception直接打印到logger里
 
-print output.getvalue()
+print(output.getvalue())
 
 try:
     raise ValueError("I'm not fine")
 except Exception, e:
     print u"Type=%s, Args=%s" % (type(e), e.args)
 # END   traceback
+
+
+# multiple exception
+# https://stackoverflow.com/a/6470452
+# python3
+except (IDontLikeYouException, YouAreBeingMeanException) as e:
+    pass
+# python2
+except (IDontLikeYouException, YouAreBeingMeanException), e:
+    pass
 
 
 # 查看将要调用的方法到底来自哪里

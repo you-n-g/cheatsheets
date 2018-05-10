@@ -174,6 +174,7 @@ df['col_name'].value_counts()
 # processing multi index
 df = pd.read_csv(fname, encoding='gbk', names=['date', 'sector'], sep='\t', index_col=(0, 1))
 df.index.get_level_values(0) # get the values of specific level
+df.loc['第一层索引的某个值']  # 可以直接得到第一层索引特定值的dataframe, 并且去掉了第一层索引
 
 
 # Roling : https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.rolling.html

@@ -52,4 +52,11 @@ tunefs -l /dev/sda1 # 只针对ext2/3/4
 blocks 按 1024 byte 计算 ？？？？ why!!! 这不跟 blockdev 冲突了么？？
 begin end 按 unit 计算 ????
 
+
+
+# 查看磁盘类型： ssd or HDD
+# https://unix.stackexchange.com/a/65602
+lsblk -d -o name,rota   # 列出所有disk的 name和rota属性
+cat /sys/block/sda/queue/rotational   # 列出 sda 的rotational属性
+
 # END 查看信息

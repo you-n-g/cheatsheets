@@ -68,7 +68,7 @@ set nocompatible
 filetype plugin on
 
 " make markdown highlight works
-autocmd BufRead,BufNew *.md,*.markdown set filetype=markdown
+" autocmd BufRead,BufNew *.md,*.markdown set filetype=markdown
 
 
 " 十六进制编辑功能 :call Hexedit()
@@ -368,7 +368,7 @@ let g:airline_theme='dark'
 
 "
 " heavenshell/vim-pydocstring
-nmap <silent> <C-M> <Plug>(pydocstring)
+nmap <silent> <C-N> <Plug>(pydocstring)
 
 
 
@@ -405,3 +405,9 @@ let g:pymode_lint_unmodified = 1  " Check code on every save (every)
 " mileszs/ack.vim
 let g:ackprg = 'ag --vimgrep'
 nnoremap <Leader>a :Ack 
+
+
+
+" global settings
+" 检查按键到底被映射成什么了
+" :verbose nmap <CR>

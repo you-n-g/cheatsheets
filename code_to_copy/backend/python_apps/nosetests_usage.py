@@ -45,3 +45,11 @@ class TestMultiversoTables(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+
+
+# Coverage 的东西也放在这里了
+# pip install coverage
+# nosetests --nocapture  --with-coverage --cover-erase --cover-package=market --cover-html
+# https://www.saltycrane.com/blog/2012/04/test-coverage-nose-and-coveragepy/
