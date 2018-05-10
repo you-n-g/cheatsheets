@@ -4,7 +4,7 @@
 
 # 知道你可以画什么
 # 1) https://python-graph-gallery.com
-# 2) seanborn本来的gallary
+# 2) seaborn本来的gallary
 
 # interactive: https://blog.dominodatalab.com/interactive-dashboards-in-jupyter/
 # you must install this extension https://github.com/jupyter-widgets/ipywidgets

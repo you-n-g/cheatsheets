@@ -148,6 +148,8 @@ au BufReadPost *
     \ if line("'\"") > 0 && line("'\"") <= line("$") && &filetype != "gitcommit" |
         \ execute("normal `\"") |
     \ endif
+" https://stackoverflow.com/a/774599
+" 如果不行一般是因为权限问题: sudo chown user: ~/.viminfo
 
 
 " highlight current line
@@ -312,6 +314,8 @@ au FileType c,cpp,objc,objcpp,python,cs nmap gD :YcmCompleter GoToDeclaration<cr
 " ycm for debug
 " let g:ycm_keep_logfiles = 1
 " let g:ycm_log_level = 'debug'
+" 如果import ycm_core报错ImportError: dynamic module does not define init function (initycm_core)
+" 主要是buiding和loading的python版本不一致导致的(比如装了anaconda后再build), 下面的方法可以解决
 " This is necessary when using ubuntu, otherwise it will report module ycm_core not found ERROR.
 " let g:ycm_server_python_interpreter = '/usr/local/bin/python'
 let g:ycm_server_python_interpreter = '/usr/bin/python'
@@ -400,4 +404,4 @@ let g:pymode_lint_unmodified = 1  " Check code on every save (every)
 " 
 " mileszs/ack.vim
 let g:ackprg = 'ag --vimgrep'
-nnoremap <Leader>a :Ack<cr>
+nnoremap <Leader>a :Ack 

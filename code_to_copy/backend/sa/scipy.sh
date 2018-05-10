@@ -9,6 +9,7 @@ conda search --full-name python
 
 # create a new environment
 conda create -n py36 python=3.6 anaconda
+# 其中anaconda是为了把科学计算相关的东西都装上
 
 
 # show installed envs

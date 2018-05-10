@@ -152,6 +152,31 @@ for w, g in zip(weights, get_gradients(inputs)):
 
 
 
+# 如何在keras中间接一层常数输入
+
+# 难点: tensorflow底层
+# constant必须指定维度，但是组件model时，batch维大小为None
+# 所以只能借由其他的input再加上tf的fill来实现初始化成固定值再和常数运算达到变成常数的效果
+# https://stackoverflow.com/questions/35853483/tensorflow-constant-with-variable-size
+#
+# 实现: 其实更适合用Lambda
+class AddOnehotLayer(Layer):
+    def __init__(self, dim, *args, **kwargs):
+        self.dim = dim
+        super().__init__(*args, **kwargs)
+
+    def call(self, x):
+        onehot = tf.fill(tf.shape(x[:, :self.dim, :self.dim]), 0.) + np.eye(self.dim, dtype=np.float32)[np.newaxis, ...]
+        return tf.concat([x, onehot], axis=-1)
+
+    def compute_output_shape(self, input_shape):
+		# NOTE: 这里一定要加上！！！ 如果你的layer改变了shape， 一定要加上！！！
+        return input_shape[:-1] + (self.dim + input_shape[-1],)
+
+
+
+
+
 
 # Something we can learn
 
@@ -160,3 +185,10 @@ for w, g in zip(weights, get_gradients(inputs)):
 
 # How to print the loss without the regularization term during training?
 # https://github.com/keras-team/keras/issues/2575
+
+
+
+
+
+# how to build custom layerS
+# 如果 创建weight的时候要手动去掉 batch 这一维度
