@@ -151,6 +151,11 @@ data.sort_values(['SecuAbbr', 'date'], inplace=True)
 data['nextRisePct'] = data.groupby(['SecuAbbr'])['risePct'].shift(-1)
 
 
+# 给group编号:
+# https://stackoverflow.com/questions/41594703/pandas-assign-an-index-to-each-group-identified-by-groupby
+df['idx'] = pd.Categorical(df['a'].astype(str) + df['b'].astype(str)).codes
+
+
 
 # left join table:
 all_data = pd.merge(key_score_loss_df, data.loc[:, ('date', 'SecuAbbr', 'nextRisePct')], how='left',

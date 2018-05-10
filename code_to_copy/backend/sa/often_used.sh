@@ -2,7 +2,9 @@
 
 
 # 测试邮件连通性
-echo "XXX" | mail -a "From: XXX@XXX.XXX" -s "XXX" 
+echo "content" | mail -a "From: XXX@XXX.XXX" -s "<subject>"  <mail_address>
+# sudo apt-get install mailutils
+
 
 
 # BEGIN 远程挂载 VVVVVVVVVVVVVVVVVVVVV

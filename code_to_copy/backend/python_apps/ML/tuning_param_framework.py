@@ -120,9 +120,7 @@ def get_task_params(exp_path='exp_results'):
 # BEGIN run_exp.py --------------------------------------------------
 import os
 import papermill as pm
-import copy
 from multiprocessing import Pool
-import numpy as np
 import time
 from get_tasks import get_task_params
 import random
@@ -157,7 +155,7 @@ import logging
 logging.basicConfig(
         filename=os.path.join(RES_DIR, "task.log"),
         level=logging.INFO,
-        format='%(asctime)s %(name)s (PID:%(process)d) [%(levelname)s]:%(message)s', # name 是 logger的name
+        format='%(asctime)s %(name)s (PID:%(process)d) [%(levelname)s]:%(message)s',  # name 是 logger的name
 )
 LOG = logging.getLogger(__file__)
 
@@ -180,7 +178,7 @@ def task_wrapper(*args, **kwargs):
         print("Task has been finished before.")
     else:
         pm.execute_notebook(*args, **kwargs)
-        open(fin_flag_path, 'a').close() # touch to indicate the task has been finished
+        open(fin_flag_path, 'a').close()# # touch to indicate the task has been finished
     return datetime.now() - start
 
 
@@ -194,7 +192,7 @@ if __name__ == '__main__':
 
     parameters = get_task_params(RES_DIR)
     if not user_yes_no_query("Total %d tasks. Concurrency=%d. Continue running?" %
-                            (len(parameters), ARGS.concurrency)):
+                             (len(parameters), ARGS.concurrency)):
         sys.exit()
 
     # check "code_to_copy/backend/python_apps/processing_threading.py" for the latest version and detailed explaination
@@ -223,9 +221,9 @@ if __name__ == '__main__':
             print('Args:\n', args)
         except Exception as e:
             LOG.exception(u"Type=%s, Args=%s.\nRun order=%d.\nTask args:\n%s" %
-                            (type(e), e.args, i, str(args)))
-    pool.close() # TODO: If I put it before r.get(). The print info above will never output the data.
-    pool.join() # TODO: one must call close before call join
+                          (type(e), e.args, i, str(args)))
+    pool.close()  # TODO: If I put it before r.get(). The print info above will never output the data.
+    pool.join()  # TODO: one must call close before call join
 # END   run_exp.py --------------------------------------------------
 
 

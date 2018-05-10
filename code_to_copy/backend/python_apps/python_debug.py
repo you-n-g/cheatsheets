@@ -48,6 +48,7 @@ except Exception:
     # del tb
 
     logging.getLogger("ex")  # TODO: 据说这个可以把exception直接打印到logger里
+    # 另外LOG.exception 在这里也非常好用
 
 print(output.getvalue())
 
@@ -154,6 +155,15 @@ dictLogConfig = {
             'mode': 'a',
             'formatter': 'myFormatter',
         },
+        # Default file handler for all the warning and error
+        "defaultErrFileHandler": {
+            'class': 'logging.FileHandler',
+            'filename': './log/error.log',
+            'mode': 'a',
+            'formatter': 'myFormatter',
+            "level": "WARNING",
+        },
+        # TODO: email handler
     },
     "loggers":{
         "foo.bar":{
@@ -167,7 +177,7 @@ dictLogConfig = {
             "propagate": False,
         },
         "":{
-            "handlers":["consoleHandler"],
+            "handlers":["consoleHandler", "defaultErrFileHandler"],
             "level":"INFO",
         }
     },
@@ -177,10 +187,35 @@ dictLogConfig = {
         }
     }
 }
+
+config = configparser.ConfigParser()
+config.read('config.ini')
+# config.ini 中的内容是
+# [email]
+# mailhost=127.0.0.1
+# mailaddr=340448442@qq.com
+# subject='Error occurred'
+
+if 'email' in config:
+    section = config['email']
+    dictLogConfig['handlers']["defaultErrorEmailHandler"] = {
+        'class': 'logging.handlers.SMTPHandler',
+                'mailhost': section['mailhost'],
+                'fromaddr': section['mailaddr'],
+                'toaddrs': [section['mailaddr']],
+                'subject': section.get('subject', 'Error occurred'),
+                'formatter': 'myFormatter',
+                "level": "ERROR",
+            }
+    dictLogConfig['loggers']['']['handlers'].append('defaultErrorEmailHandler')
+
 logging.config.dictConfig(dictLogConfig)
 logger = logging.getLogger("foo.bar")
 
-# logging坑就坑在新的logger配置不会覆盖旧的logger配置
+
+# Logging之坑！！！！！ NOTE!!!!
+# 1) logging坑就坑在新的logger配置不会覆盖旧的logger配置
+# 2) 如果 level 是0表示NOTSET,  我这里表现为所有的log都不记录！！！
 
 # END   logging
 
@@ -285,3 +320,9 @@ p.strip_dirs().sort_stats("time").print_stats(100)
 # %load_ext line_profiler
 # %lprun -f FUNC1 -f FUNC2 STATEMENT
 # 可以看到 func1 func2 中每一行的开销
+
+
+
+# 在IPython中实时动态地debug某个函数 https://stackoverflow.com/a/12647065
+import ipdb
+ipdb.runcall(runner.run_strategy, strategy, run_len=10000)

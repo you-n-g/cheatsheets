@@ -33,6 +33,9 @@ import seaborn as sns; sns.set(color_codes=True)
 # 如果pandas希望在jupyter里display所有的列，那么用下面的代码
 # https://stackoverflow.com/questions/11361985/output-data-from-all-columns-in-a-dataframe-in-pandas
 pd.set_option('display.max_columns', None)
+# 如果希望显示pandas cell内部的所有内容:
+# https://stackoverflow.com/questions/25351968/how-to-display-full-non-truncated-dataframe-information-in-html-when-convertin
+pd.set_option('display.max_colwidth', -1)
 
 
 import numpy as np

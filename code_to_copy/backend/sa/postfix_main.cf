@@ -5,3 +5,34 @@ home_mailbox = Maildir/
 # IN /etc/aliases
 FROM_USER: TO_USER
 # 改完之后 sudo newaliases , 重启postfix
+#
+
+
+
+
+
+# Postfix 配置QQ邮箱
+# Asure必须用认证方式发邮件: https://blogs.msdn.microsoft.com/mast/2017/11/15/enhanced-azure-security-for-sending-emails-november-2017-update/
+#
+# /etc/postfix/main.cf 中的内容
+relayhost = [smtp.qq.com]:587
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_use_tls = yes  
+smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
+
+
+# /etc/postfix/sasl_passwd 中的内容
+# 其中密码是去qq邮箱里申请获得的, 用pop3那列就行
+# 写完后一定要 sudo postmap /etc/postfix/sasl_passwd 来生成账号数据库
+[smtp.qq.com]:587 340448442@qq.com:qcnfnyrlvouwbhgd
+
+
+# postfix常用命令
+# postqueue -p   # 查看邮件队列
+# sudo postsuper -d ALL  # 删除所有邮件队列
+
+
+
+# 使用时 发送者一定要和认证的账号相同

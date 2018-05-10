@@ -10,6 +10,7 @@ try:
     r = S.post(LOGIN_URL, {}, timeout=SECONDS)
     r = S.get(url, timeout=10)
 except requests.exceptions.Timeout:
+    # requests.exceptions.ReadTimeout is included
     print("Timeout...")
 except requests.exceptions.ConnectionError as e:
     print("ConnectionError...")
