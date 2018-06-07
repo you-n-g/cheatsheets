@@ -19,4 +19,13 @@ for k in XXX_INBOX.keys():
     all_recipients = getaddresses(tos + ccs + resent_tos + resent_ccs)
 
 XXX_INBOX.add(ANOTHER_XXX_INBOX.get_string(k))
-XXX_INBOX.discard(k)              
+XXX_INBOX.discard(k)
+
+
+
+
+# send mail with html with python
+# https://stackoverflow.com/questions/882712/sending-html-email-using-python
+
+# send mail with attachments with python
+# https://stackoverflow.com/questions/3362600/how-to-send-email-attachments

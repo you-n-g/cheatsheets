@@ -15,7 +15,8 @@ FROM_USER: TO_USER
 # Asure必须用认证方式发邮件: https://blogs.msdn.microsoft.com/mast/2017/11/15/enhanced-azure-security-for-sending-emails-november-2017-update/
 #
 # /etc/postfix/main.cf 中的内容
-relayhost = [smtp.qq.com]:587
+# relayhost = [smtp.qq.com]:587
+relayhost = [smtp.gmail.com]:587
 smtp_sasl_auth_enable = yes
 smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
 smtp_sasl_security_options = noanonymous
@@ -29,10 +30,29 @@ smtp_tls_CAfile = /etc/ssl/certs/ca-certificates.crt
 [smtp.qq.com]:587 340448442@qq.com:qcnfnyrlvouwbhgd
 
 
+#
 # postfix常用命令
 # postqueue -p   # 查看邮件队列
 # sudo postsuper -d ALL  # 删除所有邮件队列
+# postconf  查看命令
+
+# message_size_limit = 20480000  # 配置邮件大小限制
+# https://serverfault.com/questions/678638/552-5-3-4-message-size-exceeds-fixed-limit
 
 
 
 # 使用时 发送者一定要和认证的账号相同
+
+
+
+# 使用Gmail发送邮件
+# https://www.howtoforge.com/tutorial/configure-postfix-to-use-gmail-as-a-mail-relay/
+# gmail有一个和qq邮箱非常不一样的地方在于需要开启下面的权限才能发送邮件
+# 1) https://myaccount.google.com/lesssecureapps
+# 2) 需要这个inet_protocols = ipv4 , 否则可能引发"Network is unreachable"的错误
+# https://www.e2enetworks.com/help/knowledge-base/howto-fix-postfixsmtp-network-is-unreachable-error/
+#
+# 使用gmail更方便的地方
+# - 不用指定发件人,  gmail会自动帮你修正发件人
+# - qq邮箱常常会发送邮件失败，邮件可能投递很多次才会成功
+# - gmail的附件大小限制没那么严格

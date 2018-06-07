@@ -54,8 +54,12 @@ print parser.parse_args('--train_s 20121010'.split())
 
 
 
-# TODO: sub models
+# TODO: sub commands
 # https://docs.python.org/2.7/library/argparse.html#sub-commands
+# 对于两者只有一个是required的参数(比如config和其他的参数),
+# sub commands是非常好的选择.
+
+# ArgumentParser.add_mutually_exclusive_group只能实现多个单个argument互斥
 
 
 

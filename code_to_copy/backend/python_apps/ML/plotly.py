@@ -14,7 +14,7 @@ with open(html_path) as f:
     display(HTML(f.read()))
 
 
-# convert matplot to  plotly
+# convert matplot to plotly
 # https://plot.ly/matplotlib/modifying-a-matplotlib-figure/
 # https://plot.ly/matplotlib/
 #
@@ -45,7 +45,7 @@ py.iplot(fig)
 
 
 
-# share x and multiple y
+# share x and multiple subplots
 from plotly import tools
 traces = []
 for sr in info_data['earned_coin']:
@@ -86,3 +86,7 @@ df.iplot(asFigure=True)['data']  # 返回的是一堆trace，即go.scatter的lis
 # https://stackoverflow.com/questions/38105723/prevent-long-x-axis-ticklabels-from-being-cut-off-in-bar-charts-with-plotly-in-r
 fig.layout.margin.b = 250
 fig.layout.margin.r = 250
+
+
+# multiple y axies
+# https://plot.ly/python/multiple-axes/

@@ -252,3 +252,12 @@ done
 # 用户相关
 adduser xiaoyang
 usermod -aG sudo xiaoyang
+
+
+
+# crontab
+
+# debug crontabs 
+# https://stackoverflow.com/questions/4883069/debugging-crontab-jobs
+# 1) add log
+# 2) debug:  >> /tmp/log.crontab  2>&1
