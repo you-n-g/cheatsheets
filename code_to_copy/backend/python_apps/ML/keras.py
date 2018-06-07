@@ -1,5 +1,6 @@
 # coding:utf8
 
+# TODO: 这是一个可以尝试的模板 https://github.com/Ahmkel/Keras-Project-Template
 
 # If we share GPU with others. Use ths to limit the GPU memory usage.
 import tensorflow as tf
@@ -35,12 +36,15 @@ def plot_history(history, keys=['loss', 'acc']):
     print('history.params:\n'), history.params
     print()
     print('history.validation_data[*].shape:\n')
-    for val_data in history.validation_data:
-        print(val_data.shape)
+    if history.validation_data is not None:
+        for val_data in history.validation_data:
+            print(val_data.shape)
     for train_key in keys:
         val_key = 'val_' + train_key
         fontsz = 18
-        minmax = lambda x: (min(x), max(x))
+
+        def minmax(x):
+            return (min(x), max(x))
         fig = plt.figure(figsize=(15, 15))
         plt.plot(history.history[train_key], label='training %s(%f~%f)' % ((train_key,) + minmax(history.history[train_key])))
         if val_key in history.history:
@@ -57,13 +61,15 @@ plot_model(model)
 model.compile(optimizer='adadelta', loss='mean_squared_error')
 
 model_name = 'MODEL_NAME'
-best_path = 'best_model_%s.hdf5' % model_name
-last_path = 'last_model_%s.hdf5' % model_name
+# 这里用pathlib中的Path是不行的
+best_path = 'best_model_{}.hdf5'.format(model_name)
+last_path = 'last_model_{}.hdf5'.format(model_name)
 
 verbose = True
 
 earlyStoper = keras.callbacks.EarlyStopping(monitor='val_loss', verbose=verbose, patience=10)
 # keras.callbacks.EarlyStopping(monitor='loss', min_delta=1e-6, verbose=verbose, patience=10)  # sometime I train to convergence of training data.
+# 如果遇到 TypeError: can't pickle _thread.RLock objects 的错误，请用 save_weights_only=True
 saveLastModel = keras.callbacks.ModelCheckpoint(last_path, monitor='val_loss', verbose=verbose, save_best_only=False)
 saveBestModel = keras.callbacks.ModelCheckpoint(best_path, monitor='val_loss', verbose=verbose, save_best_only=True)
 model.save_weights(best_path)  # Save the initial best model

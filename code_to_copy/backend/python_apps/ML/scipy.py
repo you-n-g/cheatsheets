@@ -111,8 +111,9 @@ df.loc[BEGIN_ROW:END_ROW, BEGIN_COL:END_COL]  # such as df.loc[1:2, 'InnerCode':
 # df[A] 和 df[A:B] 做的是完全不一样的事情！！ 前者是在列里面选，  后者是在行里面选
 # df[A] 和 df.loc[A] 做的是完全不一会的事情！！！ 前者是在列里面选， 后者是在行里面选
 
+
 for index, row in df.iterrows():
-    print row["c1"], row["c2"]
+    print(row["c1"], row["c2"])
 # 如果是想对index进行filter，直接对 df.index 进行计算转化为boolean index就行
 
 
@@ -179,7 +180,35 @@ df['col_name'].value_counts()
 # processing multi index
 df = pd.read_csv(fname, encoding='gbk', names=['date', 'sector'], sep='\t', index_col=(0, 1))
 df.index.get_level_values(0) # get the values of specific level
-df.loc['第一层索引的某个值']  # 可以直接得到第一层索引特定值的dataframe, 并且去掉了第一层索引
+df.loc[<第一层索引的某个值>]  # 可以直接得到第一层索引特定值的dataframe, 并且去掉了第一层索引
+df.loc[(<第一层索引的某个值>, <第二层索引的某个值>)]  # 如果只有两层索引， 那么就将得到一个row
+
+df.loc(axis=0)[<第一层索引的slice>, <第二层索引的slice>]
+# 会完全只看行index，slice相当于只对行的不同层级的索引过滤。
+# 注意 df.loc(axis=0)[a, b] 和 df.loc(axis=0)[a, b:b] 没有区别。
+# 最终得到的结果也不会去除索引
+# NOTE: 如果希望用上面的方式slice， 需要先sort， 比如三层的。
+# fac_hist_perf_df.sort_index(axis=1, level=[0, 1, 2], inplace=True)
+
+
+# 创建多级Index的column:
+# https://datascience.stackexchange.com/a/9463
+fac_hist_perf_df = pd.DataFrame(columns=pd.MultiIndex.from_tuples([(col, tp, wsz)
+                                                                   for col in col_names
+                                                                   for tp in ('return', 'normal_ic', 'rank_ic')
+                                                                   for wsz in WINDOW_SZ]))
+fac_hist_perf_df.sort_index(axis=1, level=[0, 1, 2], inplace=True)
+# 不同级别的 dataframe merge 的时候可能会把多级 column 转化为单级的column。
+# 所以想再加别的列的话， 直接赋值，通过相同的index来merge.
+# 在pandas中的列赋值成series，相当于left join, left_index, right_index都True
+
+# 如果想调整列的顺序，需要用reindex方法， 直接通过loc选似乎顺序不会变化。
+
+# remove duplicated index
+csv[~csv.index.duplicated(keep='first')]
+
+
+
 
 
 # Roling : https://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.rolling.html
@@ -204,6 +233,33 @@ df.to_sql(con=CONN, name=table_name, if_exists='append', index=False)
 # This will create table automatically
 
 
+# datetime相关
+# pandas 的 to_datetime 得到的对象不是 datetime,  和datetime比较时它必须放在左边
+# pandas 的 datetime index也支持用 '2014-04-03' 这种str去索引和slice
+
+
+
+# 各种形变  pivot, stack unstack
+# http://nikgrozev.com/2015/07/01/reshaping-in-pandas-pivot-pivot-table-stack-and-unstack-explained-with-pictures/
+
+# 本质是在 wide format(中间有多列是值) 和 long format(只有一列是值)之间转化
+
+# pivot_table 的本质是选一列作为值， 其他的列作为行列的index和column
+# 和pivot不同的地方
+# - 可以指定多个列作为index或者column，达到multiple level的效果
+# - 可以指定index的层级作为列： 可以直接指定index层级的名字， 或者传入一个array
+# (比如index.get_level_values())
+
+# melt的motivation:
+# 有一个表
+# - 某几列是数据，表示varable， 列名是变量名
+# - 其他的列是index, 用来定位一组数据
+# - 需求是将表变为每一行一个值, 对于每个值, 每行有它的index和变量名
+
+# 对于有多层级index的数据，互反的pivot_table和melt是这样的
+# pivot_data = melt_data.pivot_table(index='date', columns='code', values='score')
+# melt_data = pivot_data.reset_index().melt(id_vars=pivot_data.index.name).sort_index()
+
 
 # 计算相关
 pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
@@ -223,14 +279,16 @@ pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
 
 # bool index 时，如果传入的是带有index的boolean值， 取值是看index + bool的结果
 #
-# pandas 的 to_datetime 得到的对象不是 datetime,  和datetime比较时它必须放在左边
-#
 # NOTE, TODO: 从一列有indexing的值赋值给 另外一个indexing的值， 很可能赋值对应管是按indexing来的！！！  一一对应得转化为list
 #
 # 带index的 Series 之间加减法会按index对应值操作，而不是按位置顺序操作
 
 # pandas 的index是基于 numpy array 而不是series.
 # 所以使用的时候要注意不要想当然地用series支持的操作
+
+
+# Dataframe之间的element-wize操作 基本都是按着
+# index和col的索引对应的，最后的结果类似于outer join的形式.
 
 # pandas 相关  =========================================================================================
 

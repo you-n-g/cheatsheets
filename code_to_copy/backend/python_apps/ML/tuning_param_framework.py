@@ -65,12 +65,12 @@ c.HistoryManager.enabled = False
 # BEGIN get_tasks ---------------------------------------------------
 import os
 import copy
-import numpy as np
 
 # The parameters that will always included in the result path
 # NOTE: So the default parameters should not change for compatibility of the code before
 DEFAULT_PARAMETERS = {
 }
+
 
 def get_result_path(param, exp_path):
     '''
@@ -94,7 +94,7 @@ def get_result_path(param, exp_path):
     # This should be the last
     # This is for distinguishing different version of results for same parameters
     if "VERSION" in param:
-        basename.append('v=%s' % param["VERSION"])
+        basename.append('v={}'.format(param["VERSION"]))
     return os.path.join(exp_path, '-'.join(basename))
 
 
@@ -268,9 +268,8 @@ for cname in GB_ATTRS:
 
 sum_df['exp_n'] = sum_df.groupby(GB_ATTRS)['RES_PATH'].transform('count')
 
-g_sum_df = sum_df.groupby(GB_ATTRS).mean()
 
-
+# XXX read the result from res_path
 # read the pm data
 for i, row in sum_df.iterrows():
     display(sum_df[i:i + 1])
@@ -280,6 +279,7 @@ for i, row in sum_df.iterrows():
     res_nb = pm.read_notebook(res_nb_path)
     res_nb.display_output('XXXX')
 
+g_sum_df = sum_df.groupby(GB_ATTRS).mean()
 
 # Check the affect of every parameters
 for attr in GB_ATTRS:

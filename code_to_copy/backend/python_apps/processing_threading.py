@@ -86,8 +86,22 @@ p.map(f, [1,2,3])
 
 # ipyparallel 的使用方法
 # http://nbviewer.jupyter.org/github/ipython/ipyparallel/blob/master/examples/Index.ipynb
+% ipcluster start -n 40   # 执行程序的目录和 这个目录最好一样，否则可能找不到包
 
+import ipyparallel as ipp
+rc = ipp.Client()
+view = rc.load_balanced_view()
+ares = view.apply_async(...)  # apply_sync(f, *args, **kwargs)
+if ares.ready():
+    res = ares.get()
 
+# 注意事项
+# 个人理解可能这个是把代码打成文本包，发过去调用
+# 优点：
+# - 在interactive 环境下的函数现在也可以是多线程了
+# 缺点
+# - 函数调用的所有全局变量似乎都不能用；比如包需要在函数里重新import才能看到,
+# - 报错依然看不到，得调用get才能看到
 
 
 

@@ -58,4 +58,31 @@ for i, tr in enumerate(traces, 1):
 py.iplot(fig)
 
 
-# 各种各样的线的样式： https://plot.ly/python/line-charts/
+# 各种各样的线的样式 style： https://plot.ly/python/line-charts/
+
+
+
+# pandas的结合，可以直接从Dataframe中画图
+# https://plot.ly/ipython-notebooks/cufflinks/
+# 如果不想在online上画图，那么请先调用offline模式
+import cufflinks as cf
+cf.go_offline()
+
+# cufflinks  是我见过画stack图最好用的工具
+# stack的bar画出来非常方便， stack的Area可能就不太方便了
+
+# layout_update可能会挺方便
+df.iplot(layout_update={'height': 400, 'width': 900, 'title': 'XXX'})
+
+# 直接获得traces
+df.iplot(asFigure=True)['data']  # 返回的是一堆trace，即go.scatter的list
+# 需要注意的是它带了颜色.
+
+
+
+
+# 其他问题
+# 如果出现 xticks 被建材掉， 那么调整layout
+# https://stackoverflow.com/questions/38105723/prevent-long-x-axis-ticklabels-from-being-cut-off-in-bar-charts-with-plotly-in-r
+fig.layout.margin.b = 250
+fig.layout.margin.r = 250

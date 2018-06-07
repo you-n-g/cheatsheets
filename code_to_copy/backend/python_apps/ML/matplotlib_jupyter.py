@@ -38,6 +38,23 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.max_colwidth', -1)
 
 
+# control the font size
+# https://stackoverflow.com/a/39566040
+import matplotlib.pyplot as plt
+
+SMALL_SIZE = 8
+MEDIUM_SIZE = 10
+BIGGER_SIZE = 12
+
+plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
+plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
+plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
+plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+
+
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
@@ -269,7 +286,7 @@ def get_clusters(cluster_set_map):
 # show heatmap with color selected
 # https://seaborn.pydata.org/generated/seaborn.diverging_palette.html#seaborn.diverging_palette
 # h_neg, h_pos 代表正负的颜色
-cmap = sns.diverging_palette(10, 150,sep=20, as_cmap=True, center='light')
+cmap = sns.diverging_palette(10, 150, sep=20, as_cmap=True, center='light')
 sns.heatmap(data, linewidths=1, cmap=cmap)
 plt.show()
 
@@ -409,8 +426,10 @@ plt.subplots_adjust(
 pos2 = ax.get_position()
 pos2.x0 -= 0.02
 pos2.x1 -= 0.02
-pos2.y1 -= 0.05
+pos2.y1 -= 0.05  # 这个是负值的时候， 图片的上边界会往下缩
 ax.set_position(pos2)
+# x0 代表： . y0 代表.
+# x1 代表： . y1 代表.
 
 
 
