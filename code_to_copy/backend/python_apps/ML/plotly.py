@@ -14,7 +14,7 @@ with open(html_path) as f:
     display(HTML(f.read()))
 
 
-# convert matplot to  plotly
+# convert matplot to plotly
 # https://plot.ly/matplotlib/modifying-a-matplotlib-figure/
 # https://plot.ly/matplotlib/
 #
@@ -45,7 +45,7 @@ py.iplot(fig)
 
 
 
-# share x and multiple y
+# share x and multiple subplots
 from plotly import tools
 traces = []
 for sr in info_data['earned_coin']:
@@ -59,3 +59,7 @@ py.iplot(fig)
 
 
 # 各种各样的线的样式： https://plot.ly/python/line-charts/
+
+
+# multiple y axies
+# https://plot.ly/python/multiple-axes/

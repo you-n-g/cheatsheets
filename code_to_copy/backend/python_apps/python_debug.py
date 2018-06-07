@@ -110,6 +110,9 @@ logging.basicConfig(
 
 # 几个比较特殊的 log
 LOG.exception("XXX") # level是ERROR， 但是会把 exception的 stack trace 加上，  所以一定要在 exception handler
+# 上面的level是ERROR的，如果想要warning带有exception信息，请直接加新参数
+# https://stackoverflow.com/a/193153
+logger.warning("something raised an exception:", exc_info=True)
 
 
 # Add multiple handlers dynamically:
@@ -163,7 +166,6 @@ dictLogConfig = {
             'formatter': 'myFormatter',
             "level": "WARNING",
         },
-        # TODO: email handler
     },
     "loggers":{
         "foo.bar":{
@@ -188,6 +190,7 @@ dictLogConfig = {
     }
 }
 
+# TODO: email handler
 config = configparser.ConfigParser()
 config.read('config.ini')
 # config.ini 中的内容是
@@ -198,16 +201,34 @@ config.read('config.ini')
 
 if 'email' in config:
     section = config['email']
-    dictLogConfig['handlers']["defaultErrorEmailHandler"] = {
-        'class': 'logging.handlers.SMTPHandler',
-                'mailhost': section['mailhost'],
-                'fromaddr': section['mailaddr'],
-                'toaddrs': [section['mailaddr']],
-                'subject': section.get('subject', 'Error occurred'),
-                'formatter': 'myFormatter',
-                "level": "ERROR",
-            }
-    dictLogConfig['loggers']['']['handlers'].append('defaultErrorEmailHandler')
+    email_handler_template = {
+            'class': 'logging.handlers.SMTPHandler',
+            'mailhost': section['mailhost'],
+            'fromaddr': section['mailaddr'],
+            'toaddrs': [section['mailaddr']],
+            'subject': section.get('subject', 'Error occurred'),
+            'formatter': 'myFormatter',
+            "level": "INFO",
+        }
+    # 系统中的有的信息必须发消息
+    # - 一般消息
+    # - 没有捕获到的可能导致程序异常退出的信息
+    dictLogConfig['handlers']["EmailHandler"] = email_handler_template.copy()
+    dictLogConfig['loggers']['email']['handlers'].append('EmailHandler')
+
+    # 系统中所有ERROR级别的log信息必须发消息
+    error_handler = email_handler_template.copy()
+    error_handler['level'] = 'ERROR'
+    dictLogConfig['handlers']["DefaultErrEmailHandler"] = error_handler
+    dictLogConfig['loggers']['']['handlers'].append('DefaultErrEmailHandler')
+
+    # 为了信息不重复，所以系统内部会被捕获的异常才log
+    # exception，如果会re-raise的异常不log exception
+    # 原则： 谁捕获并处理异常谁负责记录; 否则最后一层负责记录。
+
+    # NOTE：最外层要记得捕获 KeyboardInterrupt
+
+
 
 logging.config.dictConfig(dictLogConfig)
 logger = logging.getLogger("foo.bar")

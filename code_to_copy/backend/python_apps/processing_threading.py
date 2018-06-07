@@ -96,5 +96,21 @@ p.map(f, [1,2,3])
 
 # BEGIN gevent ---------------------------------------
 # http://sdiehl.github.io/gevent-tutorial/
+# 之前我写爬虫的体验非常不好，程序老是内存爆掉
+# END   gevent ---------------------------------------
 
-# end gevent ---------------------------------------
+
+
+
+
+
+# BEGIN threading -----------------------
+# https://www.geeksforgeeks.org/multithreading-python-set-1/
+# 仿照这边写
+# END   threading -----------------------
+
+
+
+
+# 内存爆掉的启示
+# 其实在主程序中不断调用 gc.collect() 就可以回收内存。
