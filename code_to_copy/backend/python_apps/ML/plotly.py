@@ -58,8 +58,19 @@ for i, tr in enumerate(traces, 1):
 py.iplot(fig)
 
 
+# 如果想调整子图的样式， 请借鉴
+# https://plot.ly/python/subplots/#custom-sized-subplot
+# 大概思路是  fig.layout.xaxis?.XXX 代表调整第几个图的属性
+# XXX常用的结果是
+# domain代表在这个坐标上的占比
+
+
 # 各种各样的线的样式 style： https://plot.ly/python/line-charts/
 
+
+
+# Continuous Error Bars的实现方法:
+# https://plot.ly/python/continuous-error-bars/
 
 
 # pandas的结合，可以直接从Dataframe中画图
@@ -73,16 +84,19 @@ cf.go_offline()
 
 # layout_update可能会挺方便
 df.iplot(layout_update={'height': 400, 'width': 900, 'title': 'XXX'})
+# 或者可以吹剪传入layout
 
 # 直接获得traces
 df.iplot(asFigure=True)['data']  # 返回的是一堆trace，即go.scatter的list
 # 需要注意的是它带了颜色.
 
+# 画 horizontal lines 和 vertical lines 的方法.
+# https://plot.ly/ipython-notebooks/cufflinks/#lines-and-shaded-areas
 
 
 
 # 其他问题
-# 如果出现 xticks 被建材掉， 那么调整layout
+# 如果出现 xticks 被剪裁掉， 那么调整layout
 # https://stackoverflow.com/questions/38105723/prevent-long-x-axis-ticklabels-from-being-cut-off-in-bar-charts-with-plotly-in-r
 fig.layout.margin.b = 250
 fig.layout.margin.r = 250

@@ -34,7 +34,7 @@ source deactivate
 # conda list --explicit > spec-file.txt
 # conda create --name <YOUR ENV> --file spec-file.txt
 
-conda env export > environment.yml
+conda env export --name base > environment.yml
 conda env create -f environment.yml  # create an environment
 conda env update -f environment.yml  # update current envrionment
 

@@ -208,6 +208,9 @@ fac_hist_perf_df.sort_index(axis=1, level=[0, 1, 2], inplace=True)
 csv[~csv.index.duplicated(keep='first')]
 
 
+# 如果希望drop掉一个层级的index，可以用这个  https://stackoverflow.com/a/22233719
+df.columns = df.columns.droplevel()
+
 
 
 
