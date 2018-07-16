@@ -207,7 +207,9 @@ fac_hist_perf_df.sort_index(axis=1, level=[0, 1, 2], inplace=True)
 # remove duplicated index
 csv[~csv.index.duplicated(keep='first')]
 
-
+# 向index添加一层索引
+# https://stackoverflow.com/a/40225796
+# df.columns = pd.MultiIndex.from_product([df.columns, ['C']])
 
 
 

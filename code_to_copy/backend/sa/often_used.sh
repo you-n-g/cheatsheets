@@ -261,3 +261,22 @@ usermod -aG sudo xiaoyang
 # https://stackoverflow.com/questions/4883069/debugging-crontab-jobs
 # 1) add log
 # 2) debug:  >> /tmp/log.crontab  2>&1
+
+
+
+
+
+# Supervisor
+supervisorctl  # 执行命令后输入 help 可以看到相应的可用的服务
+sudo  supervisorctl status # 可用的服务
+# 写完服务之后一定要记得
+sudo  supervisorctl update
+
+# 一个典型的服务如下所示, 只用关心启动的命令
+# https://serversforhackers.com/c/monitoring-processes-with-supervisord
+[program:crawler]
+command=/home/xiaoyang/anaconda3/bin/python main.py --config crawler.yml
+directory=/home/xiaoyang/repos/movingb
+autostart=true
+autorestart=true
+user=xiaoyang
