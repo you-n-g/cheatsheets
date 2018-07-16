@@ -211,6 +211,9 @@ csv[~csv.index.duplicated(keep='first')]
 # 如果希望drop掉一个层级的index，可以用这个  https://stackoverflow.com/a/22233719
 df.columns = df.columns.droplevel()
 
+# 向index添加一层索引
+# https://stackoverflow.com/a/40225796
+# df.columns = pd.MultiIndex.from_product([df.columns, ['C']])
 
 
 
