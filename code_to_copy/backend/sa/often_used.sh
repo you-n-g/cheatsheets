@@ -75,8 +75,15 @@ done
 wait
 echo "all done"
 
-# 这个工具似乎更好用，还可以控制线程池
+# 这个工具似乎更好用，还可以控制线程池，相当于每一行一个命令:  apt-get install parallel
+# 写法1
 seq 1000 | parallel -j 8 --workdir $PWD ./myrun {} # https://stackoverflow.com/questions/5547787/running-shell-script-in-parallel
+
+# 写法2
+for year in `seq 10`
+do
+    echo "COMMAND $year"
+done | parallel -j 8 --workdir $PWD
 
 
 # 同时打开多个窗口
@@ -233,7 +240,7 @@ ARG1=${1:-DEFAULT_ARG1}
 
 # for pairs array
 # https://stackoverflow.com/questions/14370133/is-there-a-way-to-create-key-value-pairs-in-bash-script
-for i in a,b c_s,d ; do 
+for i in a,b c_s,d ; do
   KEY=${i%,*};
   VAL=${i#*,};
   echo $KEY" XX "$VAL;
@@ -263,7 +270,7 @@ usermod -aG sudo xiaoyang
 
 # crontab
 
-# debug crontabs 
+# debug crontabs
 # https://stackoverflow.com/questions/4883069/debugging-crontab-jobs
 # 1) add log
 # 2) debug:  >> /tmp/log.crontab  2>&1
@@ -278,7 +285,7 @@ sudo  supervisorctl status # 可用的服务
 # 写完服务之后一定要记得
 sudo  supervisorctl update
 
-# 一个典型的服务如下所示, 只用关心启动的命令
+# 一个典型的服务如下所示, 只用关心启动的命令.
 # https://serversforhackers.com/c/monitoring-processes-with-supervisord
 [program:crawler]
 command=/home/xiaoyang/anaconda3/bin/python main.py --config crawler.yml
@@ -286,3 +293,4 @@ directory=/home/xiaoyang/repos/movingb
 autostart=true
 autorestart=true
 user=xiaoyang
+environment=PATH="/home/xiaoyang/anaconda3/bin/:%(ENV_PATH)s"  # Path 必须这样设定
