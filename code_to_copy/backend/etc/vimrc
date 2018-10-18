@@ -40,6 +40,7 @@ autocmd FileType c,cpp setlocal shiftwidth=2 tabstop=2
 set number
 set ignorecase
 set smartcase
+set scrolloff=10 " always keep 10 lines visible.
 
 " set tw=80 " gq to format long lines, default to 0, if set 80, it will auto format the line
 

@@ -276,6 +276,14 @@ pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
 # Ignore NA的情况我还不明白
 
 
+# Apply 和transform在groupby之后的区别
+# 当使用groupby，然后再apply或者transform时
+# 1) apply中的x是整个dataframe，transform是每一个列(series)
+# 2) transform的返回值的长度有限制，必须等于group的长度，apply没有这个限制
+# https://stackoverflow.com/questions/27517425/apply-vs-transform-on-a-group-object
+# 举一反三，直接在dataframe上apply或者transfrom时，transform只关注一列元素，apply关注整行元素
+
+
 ## 一些要注意的点
 # 在 slice 上的修改有时候会影响到 原数据的, 在 numpy 也是同样的,  numpy需要用  numpy.copy才能避免
 # - 一般直接看是否有 SettingWithCopyWarning就行, http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
