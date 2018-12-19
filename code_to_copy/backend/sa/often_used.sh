@@ -294,3 +294,12 @@ autostart=true
 autorestart=true
 user=xiaoyang
 environment=PATH="/home/xiaoyang/anaconda3/bin/:%(ENV_PATH)s"  # Path 必须这样设定
+
+
+
+# 设置用户权限
+for p in $FIELS
+do
+    sudo setfacl -m g:limit_group:000  $p
+done
+sudo usermod -aG limit_group $AIAS
