@@ -280,3 +280,5 @@ directory=/home/xiaoyang/repos/movingb
 autostart=true
 autorestart=true
 user=xiaoyang
+stopasgroup=true  # Supervisor 在关闭进程的时候只会关闭command的进程， 不会关闭子进程。 这样可以在执行stop命令时把所有整个组的进程都关闭掉
+# 之前按我的经验，如果把 command变成了一个shell，它不会去对shell启动的子进程发送kill命令

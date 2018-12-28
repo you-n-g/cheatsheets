@@ -69,6 +69,10 @@ except (IDontLikeYouException, YouAreBeingMeanException), e:
     pass
 
 
+# 如何阅读exception
+一个exceptin以 traceback开头，如果有"During"继续衔接，最后到异常名结尾
+由外到内，一层一层excpetion
+
 # 查看将要调用的方法到底来自哪里
 import inspect
 inspect.getmodule(XXX_FUNC)
@@ -113,6 +117,9 @@ LOG.exception("XXX") # level是ERROR， 但是会把 exception的 stack trace �
 # 上面的level是ERROR的，如果想要warning带有exception信息，请直接加新参数
 # https://stackoverflow.com/a/193153
 logger.warning("something raised an exception:", exc_info=True)
+# 这个捕捉到的excpetion不是最后触发的exception
+# - 捕捉到的是当前层级exception栈中的exception
+# - 在某个exception的else或者try中是上一级exception, 只有进入了except中才算下一级
 
 
 # Add multiple handlers dynamically:

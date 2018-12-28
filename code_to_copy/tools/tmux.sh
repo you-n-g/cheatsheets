@@ -34,3 +34,8 @@ tmux join-pane -s ":0.0"  # 带session name 可以是 "[session name]:0.0"
 # trouble shooting
 
 ctrl + q  # 有时候整个pane会卡住，我无法稳定复现，但是这个可以解决
+
+
+
+# 找到特定PID对应的session.  https://stackoverflow.com/a/29444427
+tmux list-panes -a -F "#{pane_pid} #{session_name}:#{window_index}:#{pane_index}" | grep ^<PID>
