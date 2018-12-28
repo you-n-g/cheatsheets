@@ -8,7 +8,7 @@ conda search --full-name python
 
 
 # create a new environment
-conda create -n py36 python=3.6 anaconda
+conda create -y -n py3 python=3 anaconda
 # 其中anaconda是为了把科学计算相关的东西都装上
 
 
@@ -34,7 +34,7 @@ source deactivate
 # conda list --explicit > spec-file.txt
 # conda create --name <YOUR ENV> --file spec-file.txt
 
-conda env export > environment.yml
+conda env export --name base > environment.yml
 conda env create -f environment.yml  # create an environment
 conda env update -f environment.yml  # update current envrionment
 

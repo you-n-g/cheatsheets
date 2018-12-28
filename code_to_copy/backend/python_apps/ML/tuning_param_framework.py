@@ -178,7 +178,7 @@ def task_wrapper(*args, **kwargs):
         print("Task has been finished before.")
     else:
         pm.execute_notebook(*args, **kwargs)
-        open(fin_flag_path, 'a').close()# # touch to indicate the task has been finished
+        open(fin_flag_path, 'a').close()  # touch to indicate the task has been finished
     return datetime.now() - start
 
 

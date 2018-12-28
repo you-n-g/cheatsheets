@@ -207,6 +207,10 @@ fac_hist_perf_df.sort_index(axis=1, level=[0, 1, 2], inplace=True)
 # remove duplicated index
 csv[~csv.index.duplicated(keep='first')]
 
+
+# 如果希望drop掉一个层级的index，可以用这个  https://stackoverflow.com/a/22233719
+df.columns = df.columns.droplevel()
+
 # 向index添加一层索引
 # https://stackoverflow.com/a/40225796
 # df.columns = pd.MultiIndex.from_product([df.columns, ['C']])
@@ -270,6 +274,14 @@ pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
 # adjust=True时(default), 使用这组权重计算平均: (1-alpha)**(n-1), (1-alpha)**(n-2), ..., 1-alpha, 1.
 # adjust=False时， 值就直接这么计算: weighted_average[0] = arg[0]; weighted_average[i] = (1-alpha)*weighted_average[i-1] + alpha*arg[i].
 # Ignore NA的情况我还不明白
+
+
+# Apply 和transform在groupby之后的区别
+# 当使用groupby，然后再apply或者transform时
+# 1) apply中的x是整个dataframe，transform是每一个列(series)
+# 2) transform的返回值的长度有限制，必须等于group的长度，apply没有这个限制
+# https://stackoverflow.com/questions/27517425/apply-vs-transform-on-a-group-object
+# 举一反三，直接在dataframe上apply或者transfrom时，transform只关注一列元素，apply关注整行元素
 
 
 ## 一些要注意的点

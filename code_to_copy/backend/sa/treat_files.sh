@@ -32,6 +32,7 @@ wget -r -p -np -k http://xxx.com/abc/
 
 
 # 从一台服务器rsync到另外一台服务器上 "注意 / 不能错!!!":  如果source不以/结尾， 那么会当成一个新文件放进去；否则会把source和target这两个文件夹同步成一样的。
+# 第一个"/"是关键(关系这个路径是当成文件还是文件夹)，第二个"/"可能无关紧要
 rsync  -avzrP -e ssh /home/deploy/livesites/XXX_SITE  XXX_IP:/home/deploy/livesites/
 # -a archive; -v verbose; -z compress; -r recursive; -P progress
 # 对小文件, -a 会加速很多; 这个命令可以多次运行，每次只传输两个文件之间的差
@@ -39,6 +40,9 @@ rsync  -avzrP -e ssh /home/deploy/livesites/XXX_SITE  XXX_IP:/home/deploy/livesi
 # 利用rsync 拷贝， 同时 exclude 掉一些路径
 # rsync -av --exclude='path1/to/exclude' --exclude='path2/to/exclude' source destination
 # 这个为什么不行！！！  --exclude-from 也不行？？
+
+# rsync不会删除文件！！！！  需要加入 --delete这种参数
+# 如果希望能不覆盖新的文件，可以用 --ignore-existing
 
 
 # 上面的命令有点类似下面的命令，但是下面更灵活；比如可以将一个机器下的压缩包cat到另外一个机器上解压。

@@ -68,6 +68,11 @@ docker export <CONTAINER ID> > /home/export.tar  # 用export导出的镜像只�
 docker import /home/export.tar  REPO:TAG  # 导入只能导成镜像
 
 
+## 根据dockerfile制作镜像
+docker build -f Dockerfiles/Dockerfile.run.tensorflow -t pai.run.tensorflow Dockerfiles/   # -f will use a docker file.   -t will give it a tag
+# docker tag pai.run.tensorflow your_docker_registry/pai.run.tensorflow
+docker push your_docker_registry/pai.run.tensorflow
+
 
 
 

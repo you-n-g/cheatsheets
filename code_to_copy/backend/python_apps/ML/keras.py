@@ -125,8 +125,9 @@ train_a, test_a, train_b, test_b = train_test_split(train_hist_perf, train_facto
 # BUG unable to freeze some layer: https://github.com/fchollet/keras/issues/7504#issuecomment-321502581
 for layer in model.layers:
     if hasattr(layer, 'layer'):
-	layer.layer.trainable = False
+        layer.layer.trainable = False
     layer.trainable = False
+# NOTE !!!!!!!
 # You must recompile to make the trainable attribute to take effect
 
 

@@ -30,6 +30,12 @@ su - $USER
 newgrp <NEW_GROUP>
 
 # 如果修改了用户的组，是无法立即生效的。
+
+
+# 针对某个组或者用户设置权限
+# https://askubuntu.com/a/609201
+# 各种 *acl 命令
+
 # 用户权限管理 ^^^^^^^^^^^^^^^^^^^
 
 
@@ -69,8 +75,15 @@ done
 wait
 echo "all done"
 
-# 这个工具似乎更好用，还可以控制线程池
+# 这个工具似乎更好用，还可以控制线程池，相当于每一行一个命令:  apt-get install parallel
+# 写法1
 seq 1000 | parallel -j 8 --workdir $PWD ./myrun {} # https://stackoverflow.com/questions/5547787/running-shell-script-in-parallel
+
+# 写法2
+for year in `seq 10`
+do
+    echo "COMMAND $year"
+done | parallel -j 8 --workdir $PWD
 
 
 # 同时打开多个窗口
@@ -227,7 +240,7 @@ ARG1=${1:-DEFAULT_ARG1}
 
 # for pairs array
 # https://stackoverflow.com/questions/14370133/is-there-a-way-to-create-key-value-pairs-in-bash-script
-for i in a,b c_s,d ; do 
+for i in a,b c_s,d ; do
   KEY=${i%,*};
   VAL=${i#*,};
   echo $KEY" XX "$VAL;
@@ -257,7 +270,7 @@ usermod -aG sudo xiaoyang
 
 # crontab
 
-# debug crontabs 
+# debug crontabs
 # https://stackoverflow.com/questions/4883069/debugging-crontab-jobs
 # 1) add log
 # 2) debug:  >> /tmp/log.crontab  2>&1
@@ -272,7 +285,7 @@ sudo  supervisorctl status # 可用的服务
 # 写完服务之后一定要记得
 sudo  supervisorctl update
 
-# 一个典型的服务如下所示, 只用关心启动的命令
+# 一个典型的服务如下所示, 只用关心启动的命令.
 # https://serversforhackers.com/c/monitoring-processes-with-supervisord
 [program:crawler]
 command=/home/xiaoyang/anaconda3/bin/python main.py --config crawler.yml
@@ -280,5 +293,15 @@ directory=/home/xiaoyang/repos/movingb
 autostart=true
 autorestart=true
 user=xiaoyang
+environment=PATH="/home/xiaoyang/anaconda3/bin/:%(ENV_PATH)s"  # Path 必须这样设定
 stopasgroup=true  # Supervisor 在关闭进程的时候只会关闭command的进程， 不会关闭子进程。 这样可以在执行stop命令时把所有整个组的进程都关闭掉
 # 之前按我的经验，如果把 command变成了一个shell，它不会去对shell启动的子进程发送kill命令
+
+
+
+# 设置用户权限
+for p in $FIELS
+do
+    sudo setfacl -m g:limit_group:000  $p
+done
+sudo usermod -aG limit_group $AIAS
