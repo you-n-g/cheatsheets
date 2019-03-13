@@ -113,9 +113,9 @@ func! CompileRunGo()
     exec "!go run %"
 endfunc
 
-nnoremap <F11> :set paste!<CR>
+nnoremap <F10> :set paste!<CR>
 
-nnoremap <F10> :set spell!<CR>
+nnoremap <F11> :set spell!<CR>
 
 
 " Because vim-airline 已经可以显示格式问题了，所以不需要它来高粱尾部空格了

@@ -25,6 +25,15 @@ plt.savefig('filename.png', bbox_inches='tight')  # use this instead of plt.show
 #  bbox_inches='tight' 的效果非常赞，它可以让两边边变窄， 周围的文字留全！！！！
 
 
+# 中文显示: 来自Dong Zhou, 还未自己尝试
+# 需要自己下载字体 anaconda3/lib/python3.6/site-packages/matplotlib/mpl-data/fonts/ttf
+plt.rcParams['font.sans-serif'] = 'SimHei'
+plt.rcParams['axes.unicode_minus'] = False
+# 还得删除缓存：https://www.zhihu.com/question/25404709/answer/309784195
+from matplotlib.font_manager import _rebuild
+_rebuild() #reload一下
+
+
 # use seaborn
 import seaborn as sns; sns.set(color_codes=True)
 
@@ -318,6 +327,15 @@ for i, ax in enumerate(g.fig.axes):   ## getting all axes of the fig object
      ax.set_xticklabels(ax.get_xticklabels(), rotation=90)
 
 sns.countplot # https://seaborn.pydata.org/generated/seaborn.countplot.html
+
+
+
+# seaborn通用参数
+plot_kws={
+    "s": 3, # marker的大小
+    'alpha': 0.5, # 50%透明度
+}
+
 
 # seaborn related END    --------------------------------------------------
 

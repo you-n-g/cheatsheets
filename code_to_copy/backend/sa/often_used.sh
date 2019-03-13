@@ -86,6 +86,11 @@ do
 done | parallel -j 8 --workdir $PWD
 
 
+# 等待另外一个进程
+# https://unix.stackexchange.com/questions/427115/listen-for-exit-of-process-given-pid
+timeout $timeout tail --pid=$pid -f /dev/null
+
+
 # 同时打开多个窗口
 xfce4-terminal/gnome-terminal --working-directory="/home/young/" \
     --tab --title CB02  -e 'bash -c "ls / ; exec bash"' \

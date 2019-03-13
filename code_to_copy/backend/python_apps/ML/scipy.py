@@ -202,6 +202,10 @@ fac_hist_perf_df.sort_index(axis=1, level=[0, 1, 2], inplace=True)
 # 所以想再加别的列的话， 直接赋值，通过相同的index来merge.
 # 在pandas中的列赋值成series，相当于left join, left_index, right_index都True
 
+# 也可以直接将nested dict 转化为 dataframe
+pd.Dataframe({(outerKey, innerKey): values for outerKey, innerDict in dictionary.iteritems()
+ for innerKey, values in innerDict.iteritems()})
+
 # 如果想调整列的顺序，需要用reindex方法， 直接通过loc选似乎顺序不会变化。
 
 # remove duplicated index
@@ -284,6 +288,13 @@ pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
 # 举一反三，直接在dataframe上apply或者transfrom时，transform只关注一列元素，apply关注整行元素
 
 
+
+# pandas性能问题
+# fillna如果是一个常数，性能会非常好，如果是一个series, 性能会非常差!!!!!
+# - 比如fillna mean，那么可以先减mean，再fillna(0)会极大地提升性能
+
+
+
 ## 一些要注意的点
 # 在 slice 上的修改有时候会影响到 原数据的, 在 numpy 也是同样的,  numpy需要用  numpy.copy才能避免
 # - 一般直接看是否有 SettingWithCopyWarning就行, http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
@@ -292,6 +303,7 @@ pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
 #   - 看样子是直接loc上赋值的才会修改源数据
 
 # bool index 时，如果传入的是带有index的boolean值， 取值是看index + bool的结果
+# - df[series或者bool index] 会从index中截取， df.loc[:, series]会从columns中获取数据
 #
 # NOTE, TODO: 从一列有indexing的值赋值给 另外一个indexing的值， 很可能赋值对应管是按indexing来的！！！  一一对应得转化为list
 #
@@ -303,6 +315,9 @@ pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
 
 # Dataframe之间的element-wize操作 基本都是按着
 # index和col的索引对应的，最后的结果类似于outer join的形式.
+
+# Pandas的很多操作默认是skipna=True的
+
 
 # pandas 相关  =========================================================================================
 
@@ -393,6 +408,10 @@ from IPython.display import display
 display(df)
 
 
+# 将某个文件中的内容直接再当前的context下运行
+# https://stackoverflow.com/a/42203142
+# 这样可以方便项目管理
+%run -i 'script.py'
 
 
 

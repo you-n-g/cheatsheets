@@ -65,10 +65,11 @@ echo vsftpd hold | sudo dpkg --set-selections # 设置某个包不参与自动�
 
 
 
-
-
-
-
+# python 包管理
+# 仅仅安装二进制包
+# 发布安装包 NOTE: 安装的版本系统和打包的系统版本一定要一致，否则会出错
+python setup.py bdist_egg --exclude-source-files
+esy_install 这个egg文件  # 不是默认就安装了的，我的anaconda里有这个文件
 
 
 
