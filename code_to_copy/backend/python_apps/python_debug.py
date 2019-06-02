@@ -354,3 +354,11 @@ p.strip_dirs().sort_stats("time").print_stats(100)
 # 在IPython中实时动态地debug某个函数 https://stackoverflow.com/a/12647065
 import ipdb
 ipdb.runcall(runner.run_strategy, strategy, run_len=10000)
+
+
+
+
+
+
+# https://github.com/cool-RR/PySnooper
+# 用这个函数可以代替print来debug python

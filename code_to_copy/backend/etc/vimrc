@@ -186,6 +186,14 @@ call dein#add('tpope/vim-surround')
 " :verbose map <LocalLeader>tm  would show all plugins use this mapping
 call dein#add('dhruvasagar/vim-table-mode')
 call dein#add('mileszs/ack.vim')
+
+" colors
+" call dein#add('tomasr/molokai', {'merged': 0})
+" call dein#source('molokai')
+" call dein#add('altercation/vim-colors-solarized', {'merged': 0})
+" call dein#source('vim-colors-solarized')
+call dein#add('morhetz/gruvbox', {'merged': 0})
+call dein#source('gruvbox')
 call dein#end()
 
 filetype plugin indent on
@@ -208,10 +216,19 @@ syntax enable
 " let g:solarized_visibility="low"
 
 " 这几个顺序别乱
-syntax enable
+" set background=dark
+" let g:solarized_termcolors=256
+" silent! colorscheme solarized
+
+
+" let g:molokai_original = 1
+" let g:rehash256 = 1
+" colorscheme molokai
+
+let g:gruvbox_contrast_dark="hard"
+" let g:gruvbox_contrast_dark="soft"
 set background=dark
-let g:solarized_termcolors=256
-silent! colorscheme solarized
+colorscheme gruvbox
 " END color
 
 

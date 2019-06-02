@@ -39,7 +39,10 @@ rsync  -avzrP -e ssh /home/deploy/livesites/XXX_SITE  XXX_IP:/home/deploy/livesi
 
 # 利用rsync 拷贝， 同时 exclude 掉一些路径
 # rsync -av --exclude='path1/to/exclude' --exclude='path2/to/exclude' source destination
-# 这个为什么不行！！！  --exclude-from 也不行？？
+# --exclude-from 代表从指定文件里读取exclude的list
+# 下面这个说明非常详细
+# https://linoxide.com/linux-how-to/linux-rsync-examples-exclude-files-directories/
+# 坑: exclude总是会用相对路径执行
 
 # rsync不会删除文件！！！！  需要加入 --delete这种参数
 # 如果希望能不覆盖新的文件，可以用 --ignore-existing
