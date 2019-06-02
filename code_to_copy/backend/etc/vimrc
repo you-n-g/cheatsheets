@@ -401,6 +401,8 @@ let g:pymode_rope=0  " disable refracting because I don't use it
 let g:pymode_folding=0  " auto folding really makes python coding really slow.
 " lint还是挺有用的，改完代码马上就能检查出一些语法错误，不必等到运行时发现
 let g:pymode_lint_unmodified = 1  " Check code on every save (every)
+" Set this to make wrap works
+let g:pymode_options = 0
 
 
 
