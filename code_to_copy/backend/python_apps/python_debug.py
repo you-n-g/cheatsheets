@@ -327,6 +327,9 @@ import pstats
 p = pstats.Stats('stat_out') # 再重新统计输出了
 
 p.strip_dirs().sort_stats("time").print_stats(100)
+# pycharm 有一个profile viewer可以比较方便地看这个结果 https://stackoverflow.com/a/43616343
+# - Run Profiler 可以直接profiler整个程序(依靠'python profiler'这个plugin)
+# - 优点是任意地方stop都没问题
 
 
 # 支持 control+c 中断输出
@@ -362,3 +365,26 @@ ipdb.runcall(runner.run_strategy, strategy, run_len=10000)
 
 # https://github.com/cool-RR/PySnooper
 # 用这个函数可以代替print来debug python
+
+
+# Pycharm 里面有 Concurrency diagram for "XXX"
+# - 这里可以显示多线程并行图
+
+
+
+
+# gdb 可以debug 多线程的deadlock
+gdb python [pid] with py-bt & info threads
+# https://stackoverflow.com/questions/54766479/logging-multithreading-deadlock-in-python
+# 用gdb debug 多进程
+# https://www.podoliaka.org/2016/04/10/debugging-cpython-gdb/
+# 其中有可能会用到 py-bt的一个库
+# https://stackoverflow.com/questions/41160447/cant-enable-py-bt-for-gdb
+
+
+
+
+
+# Pycharm debug
+# Pycharm有一个特殊的工具，可以attach to process...
+# 可以直接暂停一个正在运行的工具

@@ -100,3 +100,12 @@ xargs --null --max-args=1 < /proc/XXX_PID/environ
 
 # 查看kernel模块的参数
 systool -vm <Module name>
+
+
+
+
+# 系统启动信息
+##  看到这个disabled说明mongo没有开机启动: Loaded: loaded (/lib/systemd/system/mongod.service; disabled; vendor preset: enabled)
+sudo service mongod status # 这里可以看到 mongo的状态
+##  Ubuntu
+sudo systemctl enable mongod.service   # 把 mongo加到自启动中 , 实际上只是create了一个 link

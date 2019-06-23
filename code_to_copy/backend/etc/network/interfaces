@@ -49,3 +49,13 @@ USERCTL=no  # Non-root users are not allowed to control this device.
 DNS1=223.5.5.5
 DNS2=8.8.8.8
 
+
+
+sudo service networking restart # 可以玩重启网络
+# 但是如果之前手动配置过网络，可能会出现网络重启报下面的错误
+# RTNETLINK answers: File exists, 需要先清理一下之前的手工配置
+# https://raspberrypi.stackexchange.com/questions/13895/solving-rtnetlink-answers-file-exists-when-running-ifup
+sudo ip addr flush dev wlan0
+
+# ifup 和 down一般也有这种问题， 可以加上 --force参数强行执行
+# 我感觉我 /run/network/ifstate  的内容可以看出哪些网卡是被我们管理起来的
