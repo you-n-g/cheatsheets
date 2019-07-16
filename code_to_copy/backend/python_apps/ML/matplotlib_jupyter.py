@@ -429,6 +429,7 @@ ax.set_yticklabels(['{:3.2f}%'.format(x*100) for x in vals])
 
 
 # subplots 之间的距离
+# 这个对pandas的plot也有效
 # 省事直接用 fig.tight_layout() https://stackoverflow.com/questions/6541123/improve-subplot-size-spacing-with-many-subplots-in-matplotlib
 # 没用再
 plt.subplots_adjust(
@@ -449,6 +450,17 @@ ax.set_position(pos2)
 # x0 代表： . y0 代表.
 # x1 代表： . y1 代表.
 
+
+# 样式
+df.plot(
+    style=['.'] * 4,  # 每个曲线用什么style
+    markersize=15,  # Marker 的大小
+)
+
+
+ax2.set_frame_on(True)  # 可以让 legend永远在线的下面
+plt.legend().set_visible(False) # 可以让 legend 消失， 但是仅仅针对最后一个子图
+df2.plot(legend=None)  # 可以让所有子图的legend消失
 
 
 # 几种创建 subplots的方法比较
