@@ -162,39 +162,50 @@ if &compatible
   set nocompatible
 endif
 set runtimepath+=~/.dein.vim/repos/github.com/Shougo/dein.vim/
-call dein#begin('~/.dein.vim/')
-call dein#add('Shougo/dein.vim')
-call dein#add('scrooloose/nerdtree')
-call dein#add('majutsushi/tagbar')
-call dein#add('altercation/vim-colors-solarized', {'merged': 0})
-call dein#source('vim-colors-solarized')
-call dein#add('fatih/vim-go')
-call dein#add('Valloric/YouCompleteMe')
-call dein#add('tomtom/tcomment_vim')
-call dein#add('rdnetto/YCM-Generator')
-call dein#add('nvie/vim-flake8')
-call dein#add('jpalardy/vim-slime')
-call dein#add('ctrlpvim/ctrlp.vim')
-call dein#add('vim-airline/vim-airline')
-call dein#add('vim-airline/vim-airline-themes')
-call dein#add('heavenshell/vim-pydocstring')
-call dein#add('tell-k/vim-autopep8')
-call dein#add('python-mode/python-mode')
-call dein#add('tpope/vim-surround')
-" call dein#add('vim-scripts/bash-support.vim')
-" this is confilict with vim-table-mode
-" :verbose map <LocalLeader>tm  would show all plugins use this mapping
-call dein#add('dhruvasagar/vim-table-mode')
-call dein#add('mileszs/ack.vim')
 
-" colors
-" call dein#add('tomasr/molokai', {'merged': 0})
-" call dein#source('molokai')
-" call dein#add('altercation/vim-colors-solarized', {'merged': 0})
-" call dein#source('vim-colors-solarized')
-call dein#add('morhetz/gruvbox', {'merged': 0})
-call dein#source('gruvbox')
-call dein#end()
+if dein#load_state('~/.dein.vim')
+  call dein#begin('~/.dein.vim')
+
+  call dein#add('~/.cache/dein/repos/github.com/Shougo/dein.vim')
+  call dein#add('Shougo/deoplete.nvim')
+  if !has('nvim')
+    call dein#add('roxma/nvim-yarp')
+    call dein#add('roxma/vim-hug-neovim-rpc')
+  endif
+
+  call dein#add('scrooloose/nerdtree')
+  call dein#add('majutsushi/tagbar')
+  call dein#add('altercation/vim-colors-solarized', {'merged': 0})
+  call dein#source('vim-colors-solarized')
+  call dein#add('fatih/vim-go')
+  call dein#add('Valloric/YouCompleteMe')
+  call dein#add('tomtom/tcomment_vim')
+  call dein#add('rdnetto/YCM-Generator')
+  call dein#add('nvie/vim-flake8')
+  call dein#add('jpalardy/vim-slime')
+  call dein#add('ctrlpvim/ctrlp.vim')
+  call dein#add('vim-airline/vim-airline')
+  call dein#add('vim-airline/vim-airline-themes')
+  call dein#add('heavenshell/vim-pydocstring')
+  call dein#add('tell-k/vim-autopep8')
+  call dein#add('python-mode/python-mode')
+  call dein#add('tpope/vim-surround')
+  " call dein#add('vim-scripts/bash-support.vim')
+  " this is confilict with vim-table-mode
+  " :verbose map <LocalLeader>tm  would show all plugins use this mapping
+  call dein#add('dhruvasagar/vim-table-mode')
+  call dein#add('mileszs/ack.vim')
+
+  " colors
+  " call dein#add('tomasr/molokai', {'merged': 0})
+  " call dein#source('molokai')
+  " call dein#add('altercation/vim-colors-solarized', {'merged': 0})
+  " call dein#source('vim-colors-solarized')
+  call dein#add('morhetz/gruvbox', {'merged': 0})
+  call dein#source('gruvbox')
+  call dein#end()
+  call dein#save_state()
+endif
 
 filetype plugin indent on
 syntax enable

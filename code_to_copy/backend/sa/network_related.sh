@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# =======BEGIN config network  查看网络信息
+netstat -nltp
+netstat -na # 查看所有链接， 可以加-p看是哪个程序做的连接
+
+# =======END   config network
 
 
 
