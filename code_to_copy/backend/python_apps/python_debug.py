@@ -108,7 +108,7 @@ logging.basicConfig(
         level=logging.DEBUG,  # be careful that all the subprocess may use the same config
         format='%(asctime)s %(name)s PID:%(process)d [%(levelname)s]:%(message)s', # name 是 logger的name
         # filemode='w', # 加上我就不会append而是覆盖之前的
-) # *只有第一次配置会生效，之后就完全无效了*。
+) # *只有第一次配置会生效，之后就完全无效了*。 因为这个是只针对root设置的。 dictConfig不会有这个问题
 # 难点在于当前的系统已经有logger了，如何做到能并存
 
 
@@ -134,6 +134,10 @@ logger.warning("something raised an exception:", exc_info=True)
 # Handler: 具体的handler，在此设置level, formatter
 
 # logger: logger之间有层级关系，  名字随意取，有从属关系; propagate=True时， message会一直向父节点传;  a是 a.b的parent， 根层级是root(不知对应的名字是"root"还是"")，root logger是必须要设置的;  *主要为了知道message从哪里来的*
+
+# 运行逻辑record首先看当前的Logger的level， 然后过filter， 如果通过，则进入handler阶段，从这个节点逐步向上propagate，调用每层的handler
+# - 导致奇怪的逻辑， 在某个父logger的level即使很高，只要它的子logger有级别低的，那么高级别的父logger还是有可能被调用的;  子logger调用后触发的handler和父logger的level无关, 我可以理解为logger的level只控制这一个点的入口(实际有很多入口)，进入之后怎么传播完全看层级关系和handler的level
+
 LOG = logging.getLogger(__file__) # 不加名字或者 只用用 logging的方法 就是用root; logger没有设定level的自动从parent找
 # 可以被logger 设置handler， level(TODO: 这个level和 handler的level有什么关系)
 

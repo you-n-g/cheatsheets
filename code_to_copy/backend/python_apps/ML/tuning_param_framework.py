@@ -308,3 +308,21 @@ for attr in GB_ATTRS:
 # 该代码时尽量保留原有功能，将其变成一个参数，这样方便调参， 也方便对比修改前后的区别。
 
 # END   jupyter.ipynb -----------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+# BEGIN 辅助工具 ----------------------------------------------
+# Sacred 可以用python代码直接调用， 所以可以先把task以json的形式存在mongo之中
+# omniboard 完胜sacredboard https://vivekratnavel.github.io/omniboard/#/quick-start
+# - npm 需要通过下载binary包安装
+# END   辅助工具 ----------------------------------------------
