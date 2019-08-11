@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding:utf8
 
-
-
 import unittest
 
 
@@ -30,6 +28,10 @@ class TestMultiversoTables(unittest.TestCase):
 
     Useful options:
     --pdb  Drop into debugger on failures or errors
+
+    If you just want to run this program like normal. You don't have to use nosetest.
+    $ python test_file.py TestClass.test_method
+    This will not stop the test from printing the stdout
     '''
 
     def setUp(self):

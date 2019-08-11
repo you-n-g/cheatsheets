@@ -67,6 +67,7 @@ for r in res:
 pool.close()
 # TODO: If I put it before r.get(). The print info above will never output the data.
 # 在并行地分配任务的代码结束后调用它，这样pool在完成所有任务后就会自动关闭了
+# Indicate that no more data will be put on this queue by the current process.
 
 pool.join()
 # one must call close or terminate() before call join. 不然主进程会等子进程结束，子进程会等主进程分配任务
@@ -121,6 +122,11 @@ if ares.ready():
 # BEGIN threading -----------------------
 # https://www.geeksforgeeks.org/multithreading-python-set-1/
 # 仿照这边写
+
+# 坑
+# 用Threading 拿到线程的 return 和 exception比较麻烦，用from multiprocessing.pool import ThreadPool会比较容易
+# https://stackoverflow.com/a/14299004
+
 # END   threading -----------------------
 
 
