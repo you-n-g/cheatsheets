@@ -11,6 +11,7 @@ sys.setdefaultencoding('utf8')
 
 # 模仿这个就能得到相对当前脚本的一个绝对路径
 DIRNAME = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir))  # 注意这得到的是上级目录的绝对路径
+DIRNAME = os.path.abspath(os.path.dirname(__file__))  # 为了拷贝方便
 
 # python3
 # https://docs.python.org/3/library/pathlib.html

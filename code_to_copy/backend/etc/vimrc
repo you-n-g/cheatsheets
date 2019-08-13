@@ -175,8 +175,6 @@ if dein#load_state('~/.dein.vim')
 
   call dein#add('scrooloose/nerdtree')
   call dein#add('majutsushi/tagbar')
-  call dein#add('altercation/vim-colors-solarized', {'merged': 0})
-  call dein#source('vim-colors-solarized')
   call dein#add('fatih/vim-go')
   call dein#add('Valloric/YouCompleteMe')
   call dein#add('tomtom/tcomment_vim')
