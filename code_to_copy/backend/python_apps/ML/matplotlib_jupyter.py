@@ -1,9 +1,14 @@
 #!/usr/bin/env python
 #-*- coding:utf8 -*-
 
+# TODO: pandas 本身的 plot 就挺好用!!!!
 
-# TODO: pandas 的 iplot !!!!
-# TODO:  pandas 本身的 plot 就挺好用!!!!
+
+# 基本框架 BEGIN ----------------------------------------
+# matplotlib的基本的组件的定义:
+# https://matplotlib.org/tutorials/introductory/usage.html
+# 基本框架 END   ----------------------------------------
+
 
 # 知道你可以画什么
 # 1) https://python-graph-gallery.com
@@ -23,6 +28,8 @@ matplotlib.use('Agg')
 # plt.clf()  # 清理之前的内容。好像plt.savefig和plt.show()不一样，似乎有时候不会清理之前的内容
 plt.savefig('filename.png', bbox_inches='tight')  # use this instead of plt.show()
 #  bbox_inches='tight' 的效果非常赞，它可以让两边边变窄， 周围的文字留全！！！！
+
+%matplotlib inline  # 这个可以保证不用 plt.show() 也能出现图
 
 
 # 中文显示: 来自Dong Zhou, 还未自己尝试
@@ -244,6 +251,10 @@ filtered_dataframe = dataframe.iloc[filtered_index]
 import matplotlib.pyplot as plt
 import seaborn as sns; sns.set(color_codes=True)
 
+
+# seaborn 设置figure size
+sns.set(rc={'figure.figsize':(10,10)})
+
 # color是一个字符串表示的 (n,) 的 dataframe, 它有自己的index
 fd_len = filtered_dataframe.shape[0]
 str_colors = ["#%02x%02x%02x" % tuple((np.array(color) * 255).astype(np.int)) for color in sns.color_palette("Blues", fd_len)]
@@ -427,8 +438,9 @@ ax.set_yticklabels(['{:3.2f}%'.format(x*100) for x in vals])
 # example 2): https://matplotlib.org/gallery/lines_bars_and_markers/stackplot_demo.html
 
 
-
+# Subplots篇 BEGIN -------------------------------------------------
 # subplots 之间的距离
+# 这个对pandas的plot也有效
 # 省事直接用 fig.tight_layout() https://stackoverflow.com/questions/6541123/improve-subplot-size-spacing-with-many-subplots-in-matplotlib
 # 没用再
 plt.subplots_adjust(
@@ -436,6 +448,7 @@ plt.subplots_adjust(
     right = 0.9,    # the right side of the subplots of the figure
     bottom = 0.1,   # the bottom of the subplots of the figure
     top = 0.9,      # the top of the subplots of the figure
+    # 上面几个参数有时候越大靠得越近，下面的几个参数一般会按期望来
     wspace = 0.2,   # the amount of width reserved for blank space between subplots
     hspace = 0.2,   # the amount of height reserved for white space between subplots)
 )
@@ -450,13 +463,24 @@ ax.set_position(pos2)
 # x1 代表： . y1 代表.
 
 
+# 样式
+df.plot(
+    style=['.'] * 4,  # 每个曲线用什么style
+    markersize=15,  # Marker 的大小
+)
+
+
+ax2.set_frame_on(True)  # 可以让 legend永远在线的下面
+plt.legend().set_visible(False) # 可以让 legend 消失， 但是仅仅针对最后一个子图
+df2.plot(legend=None)  # 可以让所有子图的legend消失
+
 
 # 几种创建 subplots的方法比较
 
 # 1) 直接plot
 plt.plot(....)  # 只画一张图时最方便
 
-# 2) plt.subplots
+# 2) plt.subplots([row_n, col_n][, figsize=(width, height]))  (最终这个是最常用的)
 # 以array的方式返回 fig 和 一组subplot的 axes
 # 缺点是类似于 plt.legend 和 plt.xticks 这种方法只能作用于最后的一个ax
 # 其实没有这个问题，可以直接通过ax画legened https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.legend.html
@@ -465,6 +489,12 @@ plt.plot(....)  # 只画一张图时最方便
 
 # 3) plt.subplot, 之后plt.xxx 一般就是等于 ax.xxx(也有小部分是找不到的)
 # 似乎最好， 功能最全....
+
+
+# 画完之后可以给该图组集中加一个title
+plt.suptitle(name)
+
+# Subplots篇 END -------------------------------------------------
 
 
 

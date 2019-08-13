@@ -96,10 +96,26 @@ http://stackoverflow.com/questions/132058/showing-the-stack-trace-from-a-running
 
 # BEGIN logging
 
-# 常识
-# level: debug info warning error critical, 只显示 大于等于level的logger
+# 机制
+# - level: debug info warning error critical, 只显示 大于等于level的logger
+#     NOTSET 会从父logger中继承 logging level
+#   - 底层不设置level时，会从顶层继承level
+# - 每次logger会一级一级往上传递，一直到
+#   - 某层propagate=False时停止
+#   - 某层level不够，被丢弃了为止(比如 a.b[INFO] 收到debug log之后，是不会传给  a[DEBUG]的)
+#      - 先从level判断是否要丢弃，filter是之后的操作； 所以 a.b[level=DEBUG, 加上INFO的filter] 是不会阻止 a[debug]获取消息的 https://stackoverflow.com/a/18059462
+# - 同一个logger有多个hanlder，每个handler也可以有自己的logging level
+
+# 设计思路
+# 目标：debug某个模块时，可以统一设置Logging的Level;
+# - 所以创建logger时最好有模块名称作为前缀
+# - 顶层的logger的level更高(要是底层level高也传不过来)
+
 # 默认root logger的 level 一般是 warning, 即只显示 warning error critical
 # 默认是输出到 console 中
+
+# 当前logger的状态
+# https://pypi.org/project/logging_tree/
 
 # config log; 这个是针对root logger 配置的
 import logging
@@ -108,7 +124,7 @@ logging.basicConfig(
         level=logging.DEBUG,  # be careful that all the subprocess may use the same config
         format='%(asctime)s %(name)s PID:%(process)d [%(levelname)s]:%(message)s', # name 是 logger的name
         # filemode='w', # 加上我就不会append而是覆盖之前的
-) # *只有第一次配置会生效，之后就完全无效了*。
+) # *只有第一次配置会生效，之后就完全无效了*。 因为这个是只针对root设置的。 dictConfig不会有这个问题
 # 难点在于当前的系统已经有logger了，如何做到能并存
 
 
@@ -134,6 +150,10 @@ logger.warning("something raised an exception:", exc_info=True)
 # Handler: 具体的handler，在此设置level, formatter
 
 # logger: logger之间有层级关系，  名字随意取，有从属关系; propagate=True时， message会一直向父节点传;  a是 a.b的parent， 根层级是root(不知对应的名字是"root"还是"")，root logger是必须要设置的;  *主要为了知道message从哪里来的*
+
+# 运行逻辑record首先看当前的Logger的level， 然后过filter， 如果通过，则进入handler阶段，从这个节点逐步向上propagate，调用每层的handler
+# - 导致奇怪的逻辑， 在某个父logger的level即使很高，只要它的子logger有级别低的，那么高级别的父logger还是有可能被调用的;  子logger调用后触发的handler和父logger的level无关, 我可以理解为logger的level只控制这一个点的入口(实际有很多入口)，进入之后怎么传播完全看层级关系和handler的level
+
 LOG = logging.getLogger(__file__) # 不加名字或者 只用用 logging的方法 就是用root; logger没有设定level的自动从parent找
 # 可以被logger 设置handler， level(TODO: 这个level和 handler的level有什么关系)
 

@@ -254,13 +254,14 @@ df.to_sql(con=CONN, name=table_name, if_exists='append', index=False)
 
 # 本质是在 wide format(中间有多列是值) 和 long format(只有一列是值)之间转化
 
+# pivot的motivation: 将表的内容变成inde和column，方便选择
 # pivot_table 的本质是选一列作为值， 其他的列作为行列的index和column
 # 和pivot不同的地方
 # - 可以指定多个列作为index或者column，达到multiple level的效果
 # - 可以指定index的层级作为列： 可以直接指定index层级的名字， 或者传入一个array
 # (比如index.get_level_values())
 
-# melt的motivation:
+# melt的motivation: 将index和column吸收到表的内容中
 # 有一个表
 # - 某几列是数据，表示varable， 列名是变量名
 # - 其他的列是index, 用来定位一组数据
@@ -278,7 +279,6 @@ pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
 # adjust=True时(default), 使用这组权重计算平均: (1-alpha)**(n-1), (1-alpha)**(n-2), ..., 1-alpha, 1.
 # adjust=False时， 值就直接这么计算: weighted_average[0] = arg[0]; weighted_average[i] = (1-alpha)*weighted_average[i-1] + alpha*arg[i].
 # Ignore NA的情况我还不明白
-
 
 # Apply 和transform在groupby之后的区别
 # 当使用groupby，然后再apply或者transform时
