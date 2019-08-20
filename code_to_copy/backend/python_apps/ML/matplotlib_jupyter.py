@@ -32,11 +32,12 @@ plt.savefig('filename.png', bbox_inches='tight')  # use this instead of plt.show
 %matplotlib inline  # 这个可以保证不用 plt.show() 也能出现图
 
 
-# 中文显示: 来自Dong Zhou, 还未自己尝试
+# 中文显示:
 # 需要自己下载字体 anaconda3/lib/python3.6/site-packages/matplotlib/mpl-data/fonts/ttf
 plt.rcParams['font.sans-serif'] = 'SimHei'
 plt.rcParams['axes.unicode_minus'] = False
 # 还得删除缓存：https://www.zhihu.com/question/25404709/answer/309784195
+# 这个缓存是用户相关的，只会影响自己的用户
 from matplotlib.font_manager import _rebuild
 _rebuild() #reload一下
 

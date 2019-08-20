@@ -310,3 +310,19 @@ do
     sudo setfacl -m g:limit_group:000  $p
 done
 sudo usermod -aG limit_group $AIAS
+
+
+
+
+
+
+# Tricks BEGIN  ------------------------------------
+
+# sudo 和 su 保留用户的环境变量: 
+sudo -i -u xiaoyang sh -c 'echo "$PATH"'
+sudo su - xiaoyang sh -c 'echo "$PATH"'
+
+# bash读入stdin作为运行脚本，同时还加上参数; - 或者 -- 代表bash这个命令已经处理完所有的bash options，后面可以接filename和arguments了
+echo 'echo $@' | bash -s - -lst
+
+# Tricks END    ------------------------------------
