@@ -71,6 +71,10 @@ plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
+# 如果想一次改变所有的font size;  这个是一个全局性的，会持续生效
+matplotlib.rcParams.update({'font.size': 14})
+
+
 
 import numpy as np
 import matplotlib
@@ -181,9 +185,9 @@ def plot_two_yaxes():
     right_axes = axes.twinx()
     right_axes.grid(False)  # Only the first shows grid.
     for tickset in [axes.xaxis.get_major_ticks(), axes.yaxis.get_major_ticks(),
-		    right_axes.xaxis.get_major_ticks(), right_axes.yaxis.get_major_ticks()]:
+					right_axes.xaxis.get_major_ticks(), right_axes.yaxis.get_major_ticks()]:
 	for tick in tickset:
-	    tick.label.set_fontsize(fontsz)
+		tick.label.set_fontsize(fontsz)
     axes.plot(x, np.exp(x), ls='--',label='exp')
     right_axes.plot(x, np.log(x), ls=':', label='log')
     h1, l1 = axes.get_legend_handles_labels()
@@ -439,6 +443,15 @@ ax.set_yticklabels(['{:3.2f}%'.format(x*100) for x in vals])
 # example 2): https://matplotlib.org/gallery/lines_bars_and_markers/stackplot_demo.html
 
 
+
+# 加文字篇 https://stackoverflow.com/a/25449186
+# ax = df.plot(kind='bar') 时，  可以直接通过这种方式加文字
+for p in ax.patches:
+	ax.annotate("%.4f" % p.get_height(), (p.get_x() * 1.01, p.get_height() * 1.01))
+
+
+
+
 # Subplots篇 BEGIN -------------------------------------------------
 # subplots 之间的距离
 # 这个对pandas的plot也有效
@@ -501,3 +514,16 @@ plt.suptitle(name)
 
 # 非常有用的方法
 plt.gca()  # get current axes
+
+
+
+
+# jupyer内的奇技淫巧
+# 可以直接隐藏代码
+%%HTML
+<script>
+$('.input, .prompt, .output_stderr, .output_error, .output_result').hide();
+</script>
+# 记得留一个按钮回复代码
+%%HTML
+<button onclick="$('.input, .prompt, .output_stderr, .output_error, .output_result').toggle();">Toggle Code</button>

@@ -1,11 +1,15 @@
 #!/usr/bin/env python
 #-*- coding:utf8 -*-
 
-''' TODO 理解这一段话
-NumPy是一个定义了数值数组和矩阵类型和它们的基本运算的语言扩展。
-SciPy是另一种使用NumPy来做高等数学、信号处理、优化、统计和许多其它科学任务的语言扩展。
-Matplotlib是一个帮助绘图的语言扩展。
-'''
+# 基本模板
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns; sns.set(color_codes=True)
+plt.rcParams['font.sans-serif'] = 'SimHei'
+plt.rcParams['axes.unicode_minus'] = False
+%matplotlib inline
+# head -n 12 backend/python_apps/ML/scipy.py
 
 # 我们来搞定科学计算
 
@@ -318,6 +322,11 @@ pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
 
 # Pandas的很多操作默认是skipna=True的
 
+
+## 理解文档中的一些词
+# 对于一些聚合函数
+# 1) axis for the function to be applied on:  代表每次应用这个函数时， 相当于将axis之外的维度固定住，变动这一个axis得到多个值进行聚合， 结果是axis被消除
+# 2) count along a particular level, collapsing into a Series. :  代表按照level依次选取一批值，用函数聚合成一个值， 最后只剩这个level的一系列值。
 
 # pandas 相关  =========================================================================================
 
