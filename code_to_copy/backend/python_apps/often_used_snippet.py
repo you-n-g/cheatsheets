@@ -16,7 +16,7 @@ DIRNAME = os.path.abspath(os.path.dirname(__file__))  # 为了拷贝方便
 # python3
 # https://docs.python.org/3/library/pathlib.html
 from pathlib import Path
-DIRNAME = Path(__file__).parent.absolute()
+DIRNAME = Path(__file__).absolute().parent  #  Path('.') 的parent还是Path('.')， 所以absolute要加在前面
 
 
 # python package加载顺序

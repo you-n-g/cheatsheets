@@ -356,7 +356,10 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-"
+
+nnoremap <silent> <Leader>cf :exe 'CocList -I --input='.expand('<cword>').' grep'<CR>
+
+" 个人经验 <space>c  setLinter ，把pylama 设置成错误提示的工具方便
 " END   for coc ----------------------------------------------------------
 
 
