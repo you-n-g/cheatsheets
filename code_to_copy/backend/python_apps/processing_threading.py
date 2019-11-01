@@ -87,10 +87,10 @@ p.map(f, [1,2,3])
 
 # ipyparallel 的使用方法
 # http://nbviewer.jupyter.org/github/ipython/ipyparallel/blob/master/examples/Index.ipynb
-% ipcluster start -n 40   # 执行程序的目录和 这个目录最好一样，否则可能找不到包
+% ipcluster start -n 40   # 执行程序的目录和 这个目录最好一样，否则可能找不到包 --cluster-id=<cluster_str>
 
 import ipyparallel as ipp
-rc = ipp.Client()
+rc = ipp.Client()  # ipp.Client(cluster_id='us_stock')
 view = rc.load_balanced_view()
 ares = view.apply_async(...)  # apply_sync(f, *args, **kwargs)
 if ares.ready():

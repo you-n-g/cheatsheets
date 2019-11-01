@@ -8,7 +8,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns; sns.set(color_codes=True)
 plt.rcParams['font.sans-serif'] = 'SimHei'
 plt.rcParams['axes.unicode_minus'] = False
-from tqdm import tqdm_notebook as tqdm
+from tqdm.autonotebook import tqdm
+tqdm.pandas()  # for progress_apply
 %matplotlib inline
 # head -n 12 backend/python_apps/ML/scipy.py
 
