@@ -32,8 +32,12 @@ class NewsSpider(CrawlSpider):
         hxs.select("//div[@class='XXX']/text()").extract()
         hxs.select("//div[@class='XXX']/@ATTR").extract() # 提取属性
         hxs.select("//div[@class='XXX']//p").extract() # 不考虑位置地获得所有的p
+        # Tips: chrome 开发者界面中可以 右键点击元素， 然后 copy xpath。 https://stackoverflow.com/a/42194160
         for sel in hxs.select("//div[@class='XXX']"):
             sel.select("//p").extract()
+
+        # NOTE: xpath 坑
+        # 如果有的属性不是完全相等，而是包含， 需要这样才能匹配到： '//table[contains(@class, "infobox")]//img'
         return [item]
 
 # 写pipline
@@ -49,3 +53,5 @@ class XXXPipeline(object):
 
 # Requests-HTML: HTML Parsing for Humans™
 # https://github.com/kennethreitz/requests-html
+
+
