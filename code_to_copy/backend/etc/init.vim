@@ -19,6 +19,7 @@ Plug 'dhruvasagar/vim-table-mode'
 Plug 'mileszs/ack.vim'
 Plug 'morhetz/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'nathanaelkane/vim-indent-guides'
 
 call plug#end()
 
@@ -363,6 +364,9 @@ nnoremap <silent> <Leader>cf :exe 'CocList -I --input='.expand('<cword>').' grep
 " END   for coc ----------------------------------------------------------
 
 
+" BEGIN for vim-indent-guides ----------------------------------------------------------
+let g:indent_guides_enable_on_vim_startup = 1
+" END   for vim-indent-guides ----------------------------------------------------------
 
 
 " global settings
