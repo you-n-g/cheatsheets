@@ -18,3 +18,29 @@
 
 # 坑
 # 似乎用户自己设置的环境变量
+
+# 经典设置
+# ~/.ansible.cfg
+'''
+[defaults]
+inventory = .ansible_hosts
+'''
+
+# ~/.ansible_hosts
+'''
+[server]
+10.0.0.4  # Server01
+
+[clients]
+CPU-Client01   #
+'''
+
+# ansible-playbook run_exp.yaml
+'''
+- hosts: clients
+  tasks:
+  - name: run exp
+    shell: tmux new-session -s session_name -d 'sleep 5'
+    args:
+        chdir: /home/xiaoyang/repos/amc-data/
+'''

@@ -360,6 +360,13 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 nnoremap <silent> <Leader>cf :exe 'CocList -I --input='.expand('<cword>').' grep'<CR>
 
+let g:coc_global_extensions = [
+ \ "coc-python",
+ \ "coc-highlight",
+ \ "coc-lists",
+ \ "coc-json",
+ \ ]
+
 " 个人经验 <space>c  setLinter ，把pylama 设置成错误提示的工具方便
 " END   for coc ----------------------------------------------------------
 
