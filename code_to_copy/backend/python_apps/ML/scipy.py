@@ -12,6 +12,7 @@ from tqdm.autonotebook import tqdm
 tqdm.pandas()  # for progress_apply
 %matplotlib inline
 # head -n 12 backend/python_apps/ML/scipy.py
+# conda install tqdm matplotlib seaborn pandas matplotlib=2.2.3
 
 # 我们来搞定科学计算
 
