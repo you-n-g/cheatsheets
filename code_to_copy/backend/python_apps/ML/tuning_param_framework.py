@@ -23,6 +23,9 @@ c.HistoryManager.enabled = False
 # "ExecutePreprocessor": {
 #   "timeout": -1
 # },
+# 在新版中可能是这样的:
+# ~/.jupyter/jupyter_nbconvert_config.py
+# c.ExecutePreprocessor.timeout = -1
 
 # Otherwise TimeoutError: Cell execution timed out
 

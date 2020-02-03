@@ -368,6 +368,7 @@ p.strip_dirs().sort_stats("time").print_stats(100)
 # Debug 和 Profiling都有
 # https://github.com/jakevdp/PythonDataScienceHandbook/tree/master/notebooks
 # profiling
+# 安装的时候用conda会比用pip更方便
 # %load_ext line_profiler
 # %lprun -f FUNC1 -f FUNC2 STATEMENT
 # 可以看到 func1 func2 中每一行的开销
@@ -377,6 +378,9 @@ p.strip_dirs().sort_stats("time").print_stats(100)
 # 在IPython中实时动态地debug某个函数 https://stackoverflow.com/a/12647065
 import ipdb
 ipdb.runcall(runner.run_strategy, strategy, run_len=10000)
+
+# 这个命令要方便的多!!!!! 直接以debug模式开始整个cell
+%%debug
 
 
 

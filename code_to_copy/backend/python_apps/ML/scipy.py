@@ -9,9 +9,10 @@ import seaborn as sns; sns.set(color_codes=True)
 plt.rcParams['font.sans-serif'] = 'SimHei'
 plt.rcParams['axes.unicode_minus'] = False
 from tqdm.autonotebook import tqdm
-tqdm.pandas()  # for progress_apply
+# tqdm.pandas()  # for progress_apply
 %matplotlib inline
-# head -n 12 backend/python_apps/ML/scipy.py
+%load_ext autoreload
+# !less %
 # conda install tqdm matplotlib seaborn pandas matplotlib=2.2.3
 
 # 我们来搞定科学计算
@@ -380,7 +381,8 @@ np.eye(10)[(1, 1)] # 取index是 1, 1的元素
 # Broadcasting: https://docs.scipy.org/doc/numpy-1.13.0/reference/ufuncs.html#ufuncs-broadcasting
 # 当多个array做element-wize function时，按下面的规则broadcasting
 # - 对齐维度: 确定最大的dimension， 先prepend 长度为1的dimension来对齐所有dimension
-# - 对齐维度长度： 所有维度要么长度相等，要么长度为1.
+# - 对齐维度长度： 所有维度要么长度相等，要么长度为1(相当于将1自动补齐成最大长度).
+# 常见应用： 比如比较column和index的值时，可以(df.index.values.reshape(-1, 1) < df.column.values.reshape(1, -1))
 
 
 
@@ -397,10 +399,9 @@ dill.load_session(filename)
 
 
 
-# Jupyter notebook 相关  --------------------------
+# Jupyter/Ipython notebook 相关 BEGIN --------------------------
 jupyter nbconvert --to=python [YOUR_NOTEBOOK].ipynb  # 会生成 [YOUR_NOTEBOOK].py 文件
-jupyter nbconvert --to notebook --output OUT.ipynb --execute [YOUR_NOTEBOOK].ipynb
-# 如果没有指定 --to nbtebook，默认输出类型是html
+jupyter nbconvert --to notebook --output OUT.ipynb --execute [YOUR_NOTEBOOK].ipynb # 如果没有指定 --to nbtebook，默认输出类型是html
 # 不加output会生成 [YOUR_NOTEBOOK].html 或者 [YOUR_NOTEBOOK].nbconvert.ipynb
 
 # Seems below method does not work
@@ -431,3 +432,23 @@ display(df)
 # 文本最好开始就统一成utf8的
 # - 不然之后计算长度容易出问题
 # - 不然用文本做key后， 之后又改编码会导致之前代码出问题
+
+
+# https://ipython.org/ipython-doc/3/config/extensions/autoreload.html
+# Autoreload -> 方便直接  reload所有的Package
+# %load_ext autoreload
+# %autoreload
+# 全都变成Autoreload也很爽!!!!!  直接看页面里面的aimport吧
+# Pros
+# - 相比于importlib有如下好处(文档写的是把最底层的class和functions直接做了替换)
+#  - 已经在notebook初始化过的类, 不需要对import进来的类名重新赋值，
+#  - importlib会有这种问题: insintance(老对象, 新类) 返回False
+#  - aimport还可以直接自动每次加载最新的代码,  比较方便
+# 其他
+# - import时global的代码是不会再运行一遍的(因为不是函数对象)
+# - 在module里面新定义函数居然是可以的!!! 但是删除之后会把引用指向一个不可调用的 _io.TextIOWrapper
+# 对编程方式的里程碑的革新
+# - 解决了这个gap: 你coding可以只关注一小块，每次验证的时候却需要跑全部代码
+# - 之前的方法: 也可以保存状态， 但是加载新代码极其麻烦，而且为了能方便加载，代码结构会被弄得非常混乱
+
+# Jupyter/Ipython notebook 相关 END   --------------------------

@@ -39,3 +39,12 @@ ctrl + q  # 有时候整个pane会卡住，我无法稳定复现，但是这个�
 
 # 找到特定PID对应的session.  https://stackoverflow.com/a/29444427
 tmux list-panes -a -F "#{pane_pid} #{session_name}:#{window_index}:#{pane_index}" | grep ^<PID>
+
+
+# Environment 变量
+## Tmux控制一套session最小粒度的变量机制，这套变量机制由session environment(每个session独有的变量)和global environment(感觉像是server创建时设置的环境变量)组成
+## **这套变量不会影响已有的window, 只会影响新建的窗口**
+# Environment 相关控制指令
+## update-environment: 从tmux外的 shell环境中拿到变量(所以在tmux内部的任何修改都无法继承)， 在每次create session和 attach session时改变 tmux本身的变量
+### 这个对应的option是一组空格隔开的变量，千万要注意留有空格 set-option -ga update-environment " CONDA_DEFAULT_ENV"
+## setenv 和 showenv:  可以直接修改 environment, 如果想在tmux内部修改environment可以用这个

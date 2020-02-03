@@ -1,6 +1,18 @@
 #!/usr/bin/env python
 #-*- coding:utf8 -*-
 
+
+# BEGIN concurrent.futures — Launching parallel tasks--------
+# 最方便的解决方案
+# https://docs.python.org/3/library/concurrent.futures.html
+# - with语句，不容易出现忘了关进程、线程的错误
+# - 进程线程无缝切换
+
+
+# END   concurrent.futures — Launching parallel tasks--------
+
+
+
 # 关键问题：
 # - 什么时候共享变量
 # - 会不会阻塞
@@ -102,6 +114,7 @@ if ares.ready():
 # - 在interactive 环境下的函数现在也可以是多线程了
 # 缺点
 # - 函数调用的所有全局变量似乎都不能用；比如包需要在函数里重新import才能看到!!!!!!!!!!!!!!!!!!
+# - 开ipp的$cwd和调用ipp的$cwd如果不同，有可能会出错
 # - 报错依然看不到，得调用get才能看到
 # - 通过接口发送过去的函数是可以让最新代码生效， 但是函数间接调用的module里面的函数需要重启服务才能得到最新代码
 
