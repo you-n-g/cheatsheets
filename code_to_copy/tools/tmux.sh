@@ -48,3 +48,7 @@ tmux list-panes -a -F "#{pane_pid} #{session_name}:#{window_index}:#{pane_index}
 ## update-environment: 从tmux外的 shell环境中拿到变量(所以在tmux内部的任何修改都无法继承)， 在每次create session和 attach session时改变 tmux本身的变量
 ### 这个对应的option是一组空格隔开的变量，千万要注意留有空格 set-option -ga update-environment " CONDA_DEFAULT_ENV"
 ## setenv 和 showenv:  可以直接修改 environment, 如果想在tmux内部修改environment可以用这个
+
+# ref
+# https://superuser.com/questions/1423554/how-does-tmux-spawn-multiple-sessions
+# https://stackoverflow.com/questions/20701757/tmux-setting-environment-variables-for-sessions
