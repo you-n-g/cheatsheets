@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns; sns.set(color_codes=True)
 plt.rcParams['font.sans-serif'] = 'SimHei'
 plt.rcParams['axes.unicode_minus'] = False
-from tqdm.autonotebook import tqdm
+from tqdm.auto import tqdm
 # tqdm.pandas()  # for progress_apply
 %matplotlib inline
 %load_ext autoreload
@@ -198,6 +198,9 @@ df.loc(axis=0)[<第一层索引的slice>, <第二层索引的slice>]
 # NOTE: 如果希望用上面的方式slice， 需要先sort， 比如三层的。
 # fac_hist_perf_df.sort_index(axis=1, level=[0, 1, 2], inplace=True)
 
+# 最新发现这样会比较方便
+df.loc[pd.IndexSlice[<第一层>, <第二层>], pd.IndexSlice[<第一层>, <第二层>]]
+
 
 # 创建多级Index的column:
 # https://datascience.stackexchange.com/a/9463
@@ -262,18 +265,20 @@ df.to_sql(con=CONN, name=table_name, if_exists='append', index=False)
 
 # 本质是在 wide format(中间有多列是值) 和 long format(只有一列是值)之间转化
 
-# pivot的motivation: 将表的内容变成inde和column，方便选择
+# pivot的motivation: 将表的内容变成index和column，方便选择
 # pivot_table 的本质是选一列作为值， 其他的列作为行列的index和column
 # 和pivot不同的地方
 # - 可以指定多个列作为index或者column，达到multiple level的效果
 # - 可以指定index的层级作为列： 可以直接指定index层级的名字， 或者传入一个array
 # (比如index.get_level_values())
+# 有点像先set_index(把表的内容放到index中)， 再unstack(把index中的内容放到column中)
 
 # melt的motivation: 将index和column吸收到表的内容中
 # 有一个表
 # - 某几列是数据，表示varable， 列名是变量名
 # - 其他的列是index, 用来定位一组数据
 # - 需求是将表变为每一行一个值, 对于每个值, 每行有它的index和变量名
+# 有点像先stack(把column堆叠到index中), 再reset_index(把index放到表内容中)
 
 # 对于有多层级index的数据，互反的pivot_table和melt是这样的
 # pivot_data = melt_data.pivot_table(index='date', columns='code', values='score')
@@ -450,5 +455,8 @@ display(df)
 # 对编程方式的里程碑的革新
 # - 解决了这个gap: 你coding可以只关注一小块，每次验证的时候却需要跑全部代码
 # - 之前的方法: 也可以保存状态， 但是加载新代码极其麻烦，而且为了能方便加载，代码结构会被弄得非常混乱
+# 坑
+# - 有可能会造成 isinstance出错(重启一下kernel就好了)
+
 
 # Jupyter/Ipython notebook 相关 END   --------------------------

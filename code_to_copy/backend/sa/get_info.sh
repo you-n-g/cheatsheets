@@ -45,7 +45,7 @@ vmstat
 # 针对到IO，精确的进程的
 iotop
 
-# htop: iotop top lsof的合体，  用户体验也非常好
+# htop: iotop(setup(S) 加入IO的columns就行) top lsof(l) environ(e) trace syscall 的合体，  用户体验也非常好
 lsof: 方向选中相关进程，l
 iotop: TODO 看IO怎么实现
 

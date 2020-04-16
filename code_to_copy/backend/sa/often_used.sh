@@ -166,6 +166,11 @@ service ufw stop; ufw disable  # 其实从来没有确认过这个会不会影�
 
 
 # 基本语法篇/常识
+
+## 分号一般是用来分割代码块，常常可以被回车代替; 
+## 单中括号[ ]是 shell中的语法糖， 相当于单句的test
+## if 从句中， 不同的命令可以用  ！ && ||  之类的逻辑运算符连接
+
 if ! grep "^proxy_up" ~/.bashrc ; then
 elif
 else

@@ -61,3 +61,12 @@ assert(re.match('string$', 'string_ENDING') is None)  # limit the ending
 # https://docs.python.org/2/library/re.html#search-vs-match
 m = re.match(r"(?P<first_name>\w+) (?P<last_name>\w+)", "Malcolm Reynolds")
 print(m.groupdict())
+
+
+
+
+# 编程
+# 为你的小功能搭建一个interactive环境: https://stackoverflow.com/a/16717949
+from IPython import embed
+embed()
+# 你的程序调用了很多包，你有可能会改很多包的内容，那么autoreload可以帮你解决这个问题

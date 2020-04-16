@@ -52,3 +52,23 @@ tmux list-panes -a -F "#{pane_pid} #{session_name}:#{window_index}:#{pane_index}
 # ref
 # https://superuser.com/questions/1423554/how-does-tmux-spawn-multiple-sessions
 # https://stackoverflow.com/questions/20701757/tmux-setting-environment-variables-for-sessions
+
+
+
+
+# libtmux
+# apis: https://github.com/tmux-python/libtmux
+# 坑
+# 1. 发送特殊控制键有一点问题, 可以通过下面的方式解决
+# https://github.com/tmux-python/libtmux/issues/88
+# https://github.com/tmux-python/libtmux/issues/13
+#  server.find_where({ "session_name": "server-tmux" }).session.find_where({'window_name': 'jiji'}).select_pane(0).send_keys('C-c', enter=False, suppress_history=False)
+
+
+# 管理服务器
+# 相比ansible
+## libtmux 更容易debug, 更容易配置,  而且和python一起使用更灵活;  使用做开发
+# Ansible的优势
+## ansible更容易一下看出哪个出错了
+## Ansible有机制保证相应的步骤一定是执行成功了, 适合做生产
+## 可以并行地做，tmux只能单个window执行一个task

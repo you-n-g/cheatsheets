@@ -42,10 +42,6 @@ from matplotlib.font_manager import _rebuild
 _rebuild() #reload一下
 
 
-# use seaborn
-import seaborn as sns; sns.set(color_codes=True)
-
-
 
 # 如果pandas希望在jupyter里display所有的列，那么用下面的代码
 # https://stackoverflow.com/questions/11361985/output-data-from-all-columns-in-a-dataframe-in-pandas
@@ -311,9 +307,11 @@ def get_clusters(cluster_set_map):
 # show heatmap with color selected
 # https://seaborn.pydata.org/generated/seaborn.diverging_palette.html#seaborn.diverging_palette
 # h_neg, h_pos 代表正负的颜色
+# jupyter可以通过这种方式获得合适的 sns.choose_diverging_palette()
 cmap = sns.diverging_palette(10, 150, sep=20, as_cmap=True, center='light')
 sns.heatmap(data, linewidths=1, cmap=cmap)
 plt.show()
+# NOTE： 如果想让0对齐到无色，请设置 vmax 和 vmin !!!!!!
 
 
 
@@ -353,6 +351,13 @@ plot_kws={
 }
 
 
+# seaborn 之外的api操作图像
+# seaborn 可以通过 ax做各种操作
+# 常用: set_title, set_xlim, plt.subtitle
+# **kwargs 可以传入各种参数:
+# 常用: s(控制marker的size)
+
+
 # seaborn related END    --------------------------------------------------
 
 
@@ -382,6 +387,7 @@ def share_x_y():
     plt.show()
 
 
+# 搜索 get_x， 这个方法没有下面的方法方便
 def auto_label(bar_ret, axes=None, color='k'):
     if axes is None:
         axes = plt
@@ -446,9 +452,40 @@ ax.set_yticklabels(['{:3.2f}%'.format(x*100) for x in vals])
 
 # 加文字篇 https://stackoverflow.com/a/25449186
 # ax = df.plot(kind='bar') 时，  可以直接通过这种方式加文字
+# 如果是 barh时， 需要把下面的 get_x 换成 get_y， 把 get_height换成get_width.
+# 我理解这里的get_x是图中柱状图根部的位置， height width指的是柱状图本身的形状
 for p in ax.patches:
-	ax.annotate("%.4f" % p.get_height(), (p.get_x() * 1.01, p.get_height() * 1.01))
+	ax.annotate("%.4f" % p.get_height(), (p.get_x() * 1.01, p.get_height() * 1.01)
+# 我觉得这里的 1.01 常常不要也行
 
+# 顺便控制一下bar的高度
+heights = [p.get_height() for p in ax.patches]
+max_h, min_h = max(heights), min(heights)
+delta = max_h - min_h
+pct = 0.8
+margin = delta * (1. - pct) / 2
+ax.set_ylim(max_h + margin, min_h - margin)
+
+ax.invert_yaxis()  # 需要的话， 让它从上往下排列
+
+# 来一版 barh的
+ax = methods_perf.plot(kind='barh')
+for p in ax.patches:
+     ax.annotate("%.4f" % p.get_width(), (p.get_width(), p.get_y()))
+widths = [p.get_width() for p in ax.patches]
+max_w, min_w = max(widths), min(widths)
+delta = max_w - min_w
+pct = 0.8
+margin = delta * (1. - pct) / 2
+ax.set_xlim(min_w - margin, max_w + margin)
+
+
+
+
+# Pandas .plot篇  BEGIN --------------------------------
+# 控制subplots
+df.plot(subplots=True, layout=(3, 3), figsize=(10, 10), sharey=True)
+# Pandas .plot篇  END   --------------------------------
 
 
 

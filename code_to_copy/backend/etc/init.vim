@@ -36,6 +36,18 @@ set scrolloff=10 " always keep 10 lines visible.
 set ignorecase
 set smartcase
 
+" to automatically load the `.nvimrc`
+set exrc
+set secure
+" examples to ignore
+" ignore a directory on top level
+" let g:NERDTreeIgnore += ['^models$']
+" let g:ctrlp_custom_ignore = {
+"   \ 'dir':  '\vmodels$',
+"   \ }
+" list.source.grep.excludePatterns 实在是不会用,  所以workaround方法如下
+" 就是把那些大文件放到别的地方再Link过来，默认coclist grep不会follow link
+
 
 
 " Go to the last cursor location when a file is opened, unless this is a
@@ -368,6 +380,12 @@ let g:coc_global_extensions = [
  \ ]
 
 " 个人经验 <space>c  setLinter ，把pylama 设置成错误提示的工具方便
+
+" other cheetsheet
+" deploy_apps/install_neovim.sh
+
+" DEBUG
+" 各种coc出现 import错误的，首先 :CocCommand python.setInterpreter
 " END   for coc ----------------------------------------------------------
 
 
@@ -382,3 +400,9 @@ let g:indent_guides_start_level = 2
 " 检查按键到底被映射成什么了
 " :verbose nmap <CR>
 
+
+
+
+" Nvim usage cheetsheet
+" terminal mode 可以解决终端乱码的问题， 还可以用  <c-\><c-n> 和 i 在normal
+" model 和terminal model之间切换
