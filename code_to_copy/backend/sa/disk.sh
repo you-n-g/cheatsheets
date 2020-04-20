@@ -60,3 +60,18 @@ lsblk -d -o name,rota   # 列出所有disk的 name和rota属性
 cat /sys/block/sda/queue/rotational   # 列出 sda 的rotational属性
 
 # END 查看信息
+
+
+
+
+
+# BEGIN 清理垃圾文件  -----------------------
+
+ncdu
+# https://www.ostechnix.com/check-disk-space-usage-linux-using-ncdu/
+# 可以快速统计磁盘文件的大小, 还可以把结果存下来
+
+agedu
+# man agedu 可以看看怎么,  -s -w 这两个参数可以用
+
+# END   清理垃圾文件  -----------------------

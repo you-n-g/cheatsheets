@@ -3,6 +3,8 @@
 # =======BEGIN config network  查看网络信息
 netstat -nltp
 netstat -na # 查看所有链接， 可以加-p看是哪个程序做的连接
+# l 表示显示 foreign address 是'0.0.0.0:*' 的连接, a表示显示所有并且会包含l
+
 
 sudo ethtool  eno1  # 可以查看一些网卡的硬件信息， Link detected: yes能看出网卡有没有插网线
 cat /sys/class/net/eno1/carrier  # 同样可以看是否插了网线

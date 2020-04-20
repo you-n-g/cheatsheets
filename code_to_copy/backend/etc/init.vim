@@ -36,6 +36,18 @@ set scrolloff=10 " always keep 10 lines visible.
 set ignorecase
 set smartcase
 
+" to automatically load the `.nvimrc`
+set exrc
+set secure
+" examples to ignore
+" ignore a directory on top level
+" let g:NERDTreeIgnore += ['^models$']
+" let g:ctrlp_custom_ignore = {
+"   \ 'dir':  '\vmodels$',
+"   \ }
+" list.source.grep.excludePatterns 实在是不会用,  所以workaround方法如下
+" 就是把那些大文件放到别的地方再Link过来，默认coclist grep不会follow link
+
 
 
 " Go to the last cursor location when a file is opened, unless this is a
@@ -379,8 +391,12 @@ let g:coc_global_extensions = [
 
 " 各种配置通过这里来设置 
 " 直接编辑 ~/.config/nvim/coc-settings.json 或者  CocConfig
-"
+
+" other cheetsheet
+" deploy_apps/install_neovim.sh
+
 " END   for coc ----------------------------------------------------------
+
 
 
 " BEGIN for vim-indent-guides ----------------------------------------------------------
@@ -394,3 +410,9 @@ let g:indent_guides_start_level = 2
 " 检查按键到底被映射成什么了
 " :verbose nmap <CR>
 
+
+
+
+" Nvim usage cheetsheet
+" terminal mode 可以解决终端乱码的问题， 还可以用  <c-\><c-n> 和 i 在normal
+" model 和terminal model之间切换

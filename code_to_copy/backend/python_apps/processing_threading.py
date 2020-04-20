@@ -1,6 +1,19 @@
 #!/usr/bin/env python
 #-*- coding:utf8 -*-
 
+# BEGIN joblib - Embarrassingly parallel for loops
+# 优势
+# - 用cloudpickle 解决了很多pickle不能做的事情
+# - 有特殊的接口可以高效地share numpy array
+# - joblib还可以用并行地生产和消费模式，prefetch模式
+
+# [ ] 是否可以和 autoreload 完美结合
+
+# ref: https://joblib.readthedocs.io/en/latest/parallel.html#serialization-and-processes
+
+# END   joblib - Embarrassingly parallel for loops
+
+
 
 # BEGIN concurrent.futures — Launching parallel tasks--------
 # 最方便的解决方案
@@ -8,6 +21,11 @@
 # - with语句，不容易出现忘了关进程、线程的错误
 # - 进程线程无缝切换
 
+# 容易出错的地方
+# - 如果要向子进程传输奇怪的数据，会比较麻烦(lightgbm, pandas 都出过类似的问题)
+#   - 可能将task存放在磁盘上会比较好
+#   - to_dict再 pd.DataFrame 也可以
+# - future_object.result() , 而不是get!!!
 
 # END   concurrent.futures — Launching parallel tasks--------
 
