@@ -97,52 +97,6 @@ http://stackoverflow.com/questions/132058/showing-the-stack-trace-from-a-running
 
 
 
-
-
-
-#========================================= debug functions ===================
-
-
-# young_utils.py
-
-#!/usr/bin/env python
-#-*- coding:utf8 -*-
-
-import os
-import time
-
-def check_value(LOG, var_name, local_dict):
-    '''
-    from young_utils import check_value
-    check_value(LOG, 'XXXXX', locals())
-    '''
-    template = """
-
-XXXXXXXX  Young want to see #%s# | BEGIN  XXXXXXXX
-                %%(%s)s
-                type:%%(type_of_%s)s
-XXXXXXXX  Young want to see #%s# | END    XXXXXXXX
-
-"""
-    local_dict['type_of_%s' % var_name] = type(local_dict[var_name])
-    LOG.error((template % ((var_name,) * 4)) % local_dict)
-
-
-
-
-def lock_program(LOG, lock_name):
-    '''
-    from young_utils import lock_program
-    lock_program(LOG, 'XXXXX')
-    '''
-    lock_file = os.path.join('/tmp/', "%s_lock" % lock_name)
-    with open(lock_file, 'w') as f:
-        pass
-    while os.path.exists(lock_file):
-        LOG.error('%s Locked' % lock_name)
-        time.sleep(5)
-
-
 # https://github.com/cool-RR/PySnooper
 # 用这个函数可以代替print来debug python: Never use print for debugging again
 # [ ] 在jupyter中是否有用
@@ -182,10 +136,11 @@ python -m cProfile [-s time] [-o stat_out] myscript.py
 import pstats
 p = pstats.Stats('stat_out') # 再重新统计输出了
 
-p.strip_dirs().sort_stats("time").print_stats(100)
+p.strip_dirs().sort_stats("cumtime").print_stats(100)
 # pycharm 有一个profile viewer可以比较方便地看这个结果 https://stackoverflow.com/a/43616343
 # - Run Profiler 可以直接profiler整个程序(依靠'python profiler'这个plugin)
 # - 优点是任意地方stop都没问题
+# - strip_dirs 是为了显示方便
 
 
 # 支持 control+c 中断输出
@@ -209,12 +164,17 @@ p.strip_dirs().sort_stats("time").print_stats(100)
 # %lprun -f FUNC1 -f FUNC2 STATEMENT
 # 可以看到 func1 func2 中每一行的开销
 
-# 别忘了还有内置的 %prun !!!!!!!!  可以直接 %%prun profile整个cell .
-# 同时还有一系列的其他profile工具:
-# [ ] https://towardsdatascience.com/speed-up-jupyter-notebooks-20716cbe2025
-
 # 在ipython之外还可以用下面的命令调优 https://github.com/rkern/line_profiler
 # kernprof -l script_to_profile.py
+
+
+# 别忘了还有内置的 %prun !!!!!!!!  可以直接 %%prun profile整个cell .
+# 存储pstats.Stats信息可以  %%prun -D stats_out  或者   p = %prun -r <statement>
+# 同时还有一系列的其他profile工具:
+# [ ] https://towardsdatascience.com/speed-up-jupyter-notebooks-20716cbe2025
+# pip install snakeviz  && snakeviz -s -H `hostname` stats_out    # 可以达到可视化的效果, 强烈推荐!!!!!!!
+# 当某个函数调内某一层调用同一个函数多次， 不知道是那次调用耗时比较多时，需要用line_profile区分
+
 
 
 # 在IPython中实时动态地debug某个函数 https://stackoverflow.com/a/12647065
