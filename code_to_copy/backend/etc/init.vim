@@ -255,6 +255,9 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
+" disable python2 provider
+let g:loaded_python_provider=0
+
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
@@ -368,6 +371,15 @@ let g:coc_global_extensions = [
  \ ]
 
 " 个人经验 <space>c  setLinter ，把pylama 设置成错误提示的工具方便
+
+" DEBUG相关
+" 当解析pylama解析包失败时(找不到包), 先确认环境有没有弄错
+" <space>c -> python.setInterpreter 
+" 如果上述命令出错了，很可能是python插件没有加载:  <space>e 来加载插件
+
+" 各种配置通过这里来设置 
+" 直接编辑 ~/.config/nvim/coc-settings.json 或者  CocConfig
+"
 " END   for coc ----------------------------------------------------------
 
 
