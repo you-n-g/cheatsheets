@@ -21,6 +21,15 @@ Plug 'morhetz/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nathanaelkane/vim-indent-guides'
 
+" 这里需要依赖 https://github.com/ryanoasis/nerd-fonts, 需要在本地安装字体
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'mhinz/vim-startify'
+Plug 'vim-ctrlspace/vim-ctrlspace'
+
+" Plug 'wellle/tmux-complete.vim'  #
+" 好是好，但是我tmux窗口太多了，会引起性能问题
+
 call plug#end()
 
 
@@ -62,6 +71,13 @@ au BufReadPost *
 
 " highlight current line
 set cursorline
+
+
+" Buffer related
+" :bd XXX 可以关闭buffer, 关闭buffer，
+" c+^ 是可以在最近的两个buffer之间切换的
+nnoremap gb :ls<CR>:b<Space>
+
 
 
 let g:gruvbox_contrast_dark="hard"
@@ -385,15 +401,20 @@ let g:coc_global_extensions = [
 " 个人经验 <space>c  setLinter ，把pylama 设置成错误提示的工具方便
 
 " DEBUG相关
-" 当解析pylama解析包失败时(找不到包), 先确认环境有没有弄错
+" 当出现下面情况都先确认环境有没有弄错
+" - 解析pylama解析包失败时(找不到包, 比如import时提示无法解析)
+" - 做代码跳转时，提示版本太老
 " <space>c -> python.setInterpreter 
 " 如果上述命令出错了，很可能是python插件没有加载:  <space>e 来加载插件
+" 会频繁出现上面问题的原因是它会因为新项目不知道default interpreter是什么
+" - https://github.com/neoclide/coc-python/issues/55
 
 " 各种配置通过这里来设置 
 " 直接编辑 ~/.config/nvim/coc-settings.json 或者  CocConfig
 
 " other cheetsheet
 " deploy_apps/install_neovim.sh
+
 
 " END   for coc ----------------------------------------------------------
 
@@ -406,13 +427,44 @@ let g:indent_guides_start_level = 2
 " END   for vim-indent-guides ----------------------------------------------------------
 
 
-" global settings
-" 检查按键到底被映射成什么了
-" :verbose nmap <CR>
+" 'vim-ctrlspace/vim-ctrlspace'
+set nocompatible
+set hidden
+set encoding=utf-8
+hi link CtrlSpaceNormal   PMenu
+hi link CtrlSpaceSelected PMenuSel
+hi link CtrlSpaceSearch   Search
+hi link CtrlSpaceStatus   StatusLine
+" visual mode is not useful for me at all
+nnoremap <silent>Q :CtrlSpace<CR>
+set showtabline=0
+" 好用的:  l可以快速列出所有的list
 
 
 
 
 " Nvim usage cheetsheet
+
+
+" 目录
+" - 设计理念
+" - 查看当前设置
+" - 坑
+
+
+" ========== 设计理念 ==========
+" buffer, window, tab的设计理念
+" A buffer is the in-memory text of a file
+" A window is a viewport on a buffer.
+" A tab page is a collection of windows.
+
+
+" ========== 查看当前设置 ==========
+" global settings
+" 检查按键到底被映射成什么了
+" :verbose nmap <CR>
+
+
+" ========== 坑 ==========
 " terminal mode 可以解决终端乱码的问题， 还可以用  <c-\><c-n> 和 i 在normal
 " model 和terminal model之间切换

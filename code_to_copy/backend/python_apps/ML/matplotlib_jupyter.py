@@ -3,10 +3,25 @@
 
 # TODO: pandas 本身的 plot 就挺好用!!!!
 
+# Catalog
+# - 基本框架
+# - 重要的配置
+# - 知道你可以画什么/gallary
+# - pandas
+# - seaborn
+
 
 # 基本框架 BEGIN ----------------------------------------
 # matplotlib的基本的组件的定义:
 # https://matplotlib.org/tutorials/introductory/usage.html
+
+# 有哪些组件 & 每个组件怎么拿到
+# lines: matplotlib.lines.Line2D
+# - ax.lines
+
+# patches
+# - ax.patches
+
 # 基本框架 END   ----------------------------------------
 
 
@@ -485,6 +500,14 @@ ax.set_xlim(min_w - margin, max_w + margin)
 # Pandas .plot篇  BEGIN --------------------------------
 # 控制subplots
 df.plot(subplots=True, layout=(3, 3), figsize=(10, 10), sharey=True)
+
+# 多个subplots 怎么共享legand
+fig, axes = plt.subplots(2, 3, figsize=(30, 10))
+for i, (idx, df) in enumerate(metrics_hists_runs.groupby(axis=1, level=1)):
+     df.droplevel(axis=1, level=1).plot(title=idx, ax=axes[i // 3, i % 3], legend=False)
+ax = axes[0, 0]
+lines, line_labels = ax.get_legend_handles_labels()  # 这里只画出第一个图的legend，假设这些对其他的图也适用
+fig.legend(lines, labels=line_labels, loc="center left", borderaxespad=0.1, title="parameters")
 # Pandas .plot篇  END   --------------------------------
 
 
@@ -492,7 +515,9 @@ df.plot(subplots=True, layout=(3, 3), figsize=(10, 10), sharey=True)
 # Subplots篇 BEGIN -------------------------------------------------
 # subplots 之间的距离
 # 这个对pandas的plot也有效
-# 省事直接用 fig.tight_layout() https://stackoverflow.com/questions/6541123/improve-subplot-size-spacing-with-many-subplots-in-matplotlib
+# 省事直接用这个 https://stackoverflow.com/questions/6541123/improve-subplot-size-spacing-with-many-subplots-in-matplotlib
+fig.tight_layout()
+
 # 没用再
 plt.subplots_adjust(
     left = 0.125,  # the left side of the subplots of the figure

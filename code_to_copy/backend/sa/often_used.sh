@@ -1,6 +1,10 @@
 #!/bin/bash
 
 
+# 其他cheatsheet
+# https://github.com/skywind3000/awesome-cheatsheets/blob/master/languages/bash.sh
+
+
 # 测试邮件连通性
 echo "content" | mail -a "From: XXX@XXX.XXX" -s "<subject>"  <mail_address>
 # sudo apt-get install mailutils
