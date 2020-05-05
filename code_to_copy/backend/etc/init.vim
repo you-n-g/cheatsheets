@@ -26,6 +26,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'mhinz/vim-startify'
 Plug 'vim-ctrlspace/vim-ctrlspace'
+Plug 'liuchengxu/vim-which-key'
 
 " Plug 'wellle/tmux-complete.vim'  #
 " 好是好，但是我tmux窗口太多了，会引起性能问题
@@ -41,6 +42,7 @@ set tabstop=4
 set shiftwidth=4
 autocmd FileType c,cpp setlocal shiftwidth=2 tabstop=2
 set number
+set relativenumber
 set scrolloff=10 " always keep 10 lines visible.
 set ignorecase
 set smartcase
@@ -378,10 +380,17 @@ nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
 " Show commands
 nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+
+" ctags的默认参数是这个
+" config/coc/extensions/node_modules/coc-python/resources/ctagOptions
+" --extras参数出问题要么改参数成 extra，要么装能兼容版本的ctags deploy_apps/install_ctags.sh
+" 如果太慢了，可以用 --verbose debug看看慢在哪里，可以在ctagOptions里面加上exclude
+" 但是必须用恰好是文件夹名字，不然无法跳过,  --exclude=mlruns --exclude=models
 " Find symbol of current document
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
 nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+
 " Do default action for next item.
 nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
@@ -389,7 +398,8 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-nnoremap <silent> <Leader>cf :exe 'CocList -I --input='.expand('<cword>').' grep'<CR>
+nnoremap <silent> <Leader>gc :exe 'CocList -I --input='.expand('<cword>').' grep'<CR>
+nnoremap <silent> <Leader>gr :exe 'CocList -I grep'<CR>
 
 let g:coc_global_extensions = [
  \ "coc-python",
@@ -408,9 +418,15 @@ let g:coc_global_extensions = [
 " 如果上述命令出错了，很可能是python插件没有加载:  <space>e 来加载插件
 " 会频繁出现上面问题的原因是它会因为新项目不知道default interpreter是什么
 " - https://github.com/neoclide/coc-python/issues/55
+"
+" 如果出现运行特别慢的情况，那么可能是因为数据和代码存在一起了,
+" 数据小文件特别多，建议把数据单独放到外面。不然得一个一个插件单独地配置XXX_ignore
 
 " 各种配置通过这里来设置 
 " 直接编辑 ~/.config/nvim/coc-settings.json 或者  CocConfig
+
+
+" 好用的地方:  grep, gr; 看上面的定义，IDE常用的地方上面都有
 
 " other cheetsheet
 " deploy_apps/install_neovim.sh
@@ -439,6 +455,52 @@ hi link CtrlSpaceStatus   StatusLine
 nnoremap <silent>Q :CtrlSpace<CR>
 set showtabline=0
 " 好用的:  l可以快速列出所有的list
+
+
+" Plug 'liuchengxu/vim-which-key'
+" nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+set timeoutlen=500 " By default timeoutlen is 1000 ms
+let g:mapleader = "\<Space>"
+let g:maplocalleader = ','
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
+
+
+
+" BEGIN for mhinz/vim-startify ----------------------------------------------------------
+let g:ascii_yang = [
+      \'____  ________________________  _____________   __________',
+      \'__  |/ /___  _/__    |_  __ \ \/ /__    |__  | / /_  ____/',
+      \'__    / __  / __  /| |  / / /_  /__  /| |_   |/ /_  / __  ',
+      \'_    | __/ /  _  ___ / /_/ /_  / _  ___ |  /|  / / /_/ /  ',
+      \'/_/|_| /___/  /_/  |_\____/ /_/  /_/  |_/_/ |_/  \____/   ',
+      \]
+
+ let g:ascii_art = [
+       \'                           O                                         ',
+       \'                                 O           O O                     ',
+       \'                                       O     |_|                     ',
+       \'                                           <(+ +)>                   ',
+       \'                                            ( u )                    ',
+       \'                                               \\                    ',
+       \'                                                \\                   ',
+       \'                                                 \\               )  ',
+       \'                                                  \\             /   ',
+       \'                                                   \\___________/    ',
+       \'                                                   /|          /|    ',
+       \'                                                  //||      ( /||    ',
+       \'                                                 // ||______//_||    ',
+       \'                                                //  ||     // W||    ',
+       \'                                               //   ||    //   ||    ',
+       \'                                               \\   ||    \\   ||    ',
+       \'                                                \\  ||     \\  ||    ',
+       \'                                                //  ||     //  ||    ',
+       \'                                               /_\ /__\   /_\ /__\   ',
+       \]
+
+ let g:startify_custom_header =
+       \ 'startify#pad(g:ascii_yang + startify#fortune#boxed() + g:ascii_art)'
+" END   for mhinz/vim-startify ----------------------------------------------------------
 
 
 
