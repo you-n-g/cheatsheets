@@ -1,6 +1,10 @@
 #!/bin/bash
 
 
+# Cheatsheet catalog
+# - 语法篇
+
+
 # 其他cheatsheet
 # https://github.com/skywind3000/awesome-cheatsheets/blob/master/languages/bash.sh
 
@@ -360,3 +364,15 @@ sudo su - xiaoyang sh -c 'echo "$PATH"'
 echo 'echo $@' | bash -s - -lst
 
 # Tricks END    ------------------------------------
+
+
+
+
+
+
+
+# 语法篇BEGIN --------------------------------------
+# EOF的用法
+# https://stackoverflow.com/a/30728472
+# 有双引号时(如"EOF"), 里面的内容一定不转义
+# 语法篇END   --------------------------------------

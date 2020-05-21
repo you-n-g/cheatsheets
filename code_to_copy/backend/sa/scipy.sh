@@ -1,5 +1,9 @@
 #!/bin/sh
 
+
+# 目录
+# - 基本概念
+
 # ref
 # https://conda.io/docs/user-guide/tasks/manage-python.html
 # conda特别慢，它到底在干什么。

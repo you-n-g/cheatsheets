@@ -9,6 +9,7 @@
 # - 知道你可以画什么/gallary
 # - pandas
 # - seaborn
+# - 未解之谜
 
 
 # 基本框架 BEGIN ----------------------------------------
@@ -28,11 +29,6 @@
 # 知道你可以画什么
 # 1) https://python-graph-gallery.com
 # 2) seaborn本来的gallary
-
-# interactive: https://blog.dominodatalab.com/interactive-dashboards-in-jupyter/
-# you must install this extension https://github.com/jupyter-widgets/ipywidgets
-# 可能会遇到这个错误  Widget Javascript not detected.  It may not be installed or enabled properly
-# 最终没有解决
 
 
 # https://stackoverflow.com/questions/37604289/tkinter-tclerror-no-display-name-and-no-display-environment-variable
@@ -373,6 +369,19 @@ plot_kws={
 # 常用: s(控制marker的size)
 
 
+
+# 坑
+# matplotlib版本太高会导出seaborn画出的热力图有一半的残影
+# - matplotlib=2.2.3
+
+# sns.pairplot 传入的dataframe如果包含的值不仅仅是float，它不会报错！！！！
+# 特征
+# 分布图看着是错的
+# df.dtypes 可以看到object
+# 解决方法
+# df.astype(np.float, errors='ignore') 是没用的, 中间遇到一列失败就会就会停止转化类型
+# 必须这样执行 for col in df.columns: df[col] = df[col].astype(np.float, errors='ignore')
+
 # seaborn related END    --------------------------------------------------
 
 
@@ -589,3 +598,12 @@ $('.input, .prompt, .output_stderr, .output_error, .output_result').hide();
 # 记得留一个按钮回复代码
 %%HTML
 <button onclick="$('.input, .prompt, .output_stderr, .output_error, .output_result').toggle();">Toggle Code</button>
+
+
+
+# ------------------ 未解之谜 --------------------
+# interactive: https://blog.dominodatalab.com/interactive-dashboards-in-jupyter/
+# you must install this extension https://github.com/jupyter-widgets/ipywidgets
+# 可能会遇到这个错误  Widget Javascript not detected.  It may not be installed or enabled properly
+# 最终没有解决
+

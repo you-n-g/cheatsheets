@@ -79,8 +79,7 @@ set cursorline
 " :bd XXX 可以关闭buffer, 关闭buffer，
 " c+^ 是可以在最近的两个buffer之间切换的
 nnoremap gb :ls<CR>:b<Space>
-
-
+nnoremap <silent> <Leader>rc  :<C-u>source $MYVIMRC<CR>
 
 let g:gruvbox_contrast_dark="hard"
 " let g:gruvbox_contrast_dark="soft"
@@ -133,6 +132,7 @@ nnoremap <F11> :set spell!<CR>
 " ctrlp.vim
 " https://github.com/kien/ctrlp.vim
 let g:ctrlp_working_path_mode = 'wa'
+nnoremap <silent> <leader>cp  :<C-u>CtrlPClearCache<CR>
 
 
 
@@ -229,6 +229,9 @@ nmap <silent> <C-N> <Plug>(pydocstring)
 " python-mode
 " 这个插件遇到过保存失败,导致运行脚本跑的不是最新代码！！！！
 " help PymodeDoc
+" 现在暂时将pymode关闭，每次的弹窗还得管真是比较烦人, 应该都可以被coc.nvim代替
+" TODO: 但是不知道coc.nvim会不会受到 pymode的参数的影响，所以下面先不删除
+let g:pymode_python = 'disable'
 " this plugin will auto folder all the code, please use `:help zo` to find the code
 let g:pymode_lint_ignore = ["E0100", "E501", "E402"]
 " E402 module level import not at top of file
@@ -377,9 +380,13 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
 " Manage extensions
-nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
 " Show commands
-nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent> <space>lc  :<C-u>CocList commands<cr>
+" Show list comands
+nnoremap <silent> <space>ll  :<C-u>CocList<cr>
+" Show list vim comands
+nnoremap <silent> <space>lv  :<C-u>CocList vimcommands<cr>
 
 " ctags的默认参数是这个
 " config/coc/extensions/node_modules/coc-python/resources/ctagOptions
@@ -398,14 +405,15 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-nnoremap <silent> <Leader>gc :exe 'CocList -I --input='.expand('<cword>').' grep'<CR>
-nnoremap <silent> <Leader>gr :exe 'CocList -I grep'<CR>
+nnoremap <silent> <Leader>gc :exe 'CocList -I --input='.expand('<cword>').' grep --ignore-case'<CR>
+nnoremap <silent> <Leader>gr :exe 'CocList -I grep --ignore-case'<CR>
 
 let g:coc_global_extensions = [
  \ "coc-python",
  \ "coc-highlight",
  \ "coc-lists",
  \ "coc-json",
+ \ "coc-explorer"
  \ ]
 
 " 个人经验 <space>c  setLinter ，把pylama 设置成错误提示的工具方便
@@ -430,6 +438,40 @@ let g:coc_global_extensions = [
 
 " other cheetsheet
 " deploy_apps/install_neovim.sh
+
+
+
+" coc-explorer -------------------
+let g:coc_explorer_global_presets = {
+\   '.vim': {
+\      'root-uri': '~/.vim',
+\   },
+\   'floating': {
+\      'position': 'floating',
+\   },
+\   'floatingLeftside': {
+\      'position': 'floating',
+\      'floating-position': 'left-center',
+\      'floating-width': 50,
+\   },
+\   'floatingRightside': {
+\      'position': 'floating',
+\      'floating-position': 'left-center',
+\      'floating-width': 50,
+\   },
+\   'simplify': {
+\     'file.child.template': '[selection | clip | 1] [indent][icon | 1] [filename omitCenter 1]'
+\   }
+\ }
+
+" Use preset argument to open it
+nmap <leader>ee :CocCommand explorer --sources=buffer+,file+ --preset floatingLeftside<CR>
+" nmap <leader>ed :CocCommand explorer --preset .vim<CR>
+nmap <leader>ec :CocCommand explorer --sources=buffer+,file+<CR>
+
+" List all presets
+" nmap <leader>el :CocList explPresets
+
 
 
 " END   for coc ----------------------------------------------------------
@@ -489,8 +531,8 @@ let g:ascii_yang = [
        \'                                                   \\___________/    ',
        \'                                                   /|          /|    ',
        \'                                                  //||      ( /|| =3 ',
-       \'                                                 // ||______//_||    ',
-       \'                                                //  ||     // ❤||    ',
+       \'                                                 //-||------//ω||    ',
+       \'                                                //  ||     //  ||    ',
        \'                                                \\  ||     \\  ||    ',
        \'                                                /_\ /_\    /_\ /_\   ',
        \]
@@ -516,6 +558,7 @@ let g:ascii_yang = [
 " A buffer is the in-memory text of a file
 " A window is a viewport on a buffer.
 " A tab page is a collection of windows.
+" 所以之前每次开tab而不是buffer，感觉tagbar和nerdtree总是要重复打开很烦;
 
 
 " ========== 查看当前设置 ==========

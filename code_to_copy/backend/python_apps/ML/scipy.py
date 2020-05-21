@@ -13,7 +13,6 @@ from tqdm.auto import tqdm
 %matplotlib inline
 %load_ext autoreload
 # !less %
-# conda install tqdm matplotlib seaborn pandas matplotlib=2.2.3
 
 # 我们来搞定科学计算
 
@@ -293,12 +292,19 @@ pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
 # adjust=False时， 值就直接这么计算: weighted_average[0] = arg[0]; weighted_average[i] = (1-alpha)*weighted_average[i-1] + alpha*arg[i].
 # Ignore NA的情况我还不明白
 
-# Apply 和transform在groupby之后的区别
-# 当使用groupby，然后再apply或者transform时
-# 1) apply中的x是整个dataframe，transform是每一个列(series)
-# 2) transform的返回值的长度有限制，必须等于group的长度，apply没有这个限制
-# https://stackoverflow.com/questions/27517425/apply-vs-transform-on-a-group-object
-# 举一反三，直接在dataframe上apply或者transfrom时，transform只关注一列元素，apply关注整行元素
+# apply 和transform在groupby之后的区别
+# - 假设他们会用f(x): .. return res 处理数据
+# - 分组后得到的是一个子dataframe `sub_df`
+# 设计motivation:
+# - apply允许你对sub_df做任意处理，然后把group的key加成最外层的index 拼接所有数据
+# - transform希望你将sub_df的每一列做完变换后原shape返回，最后得到的结果和原格式一样
+#   - 比较适合做完变换之后和原值进行比较
+# f输入输出的区别
+# - 1) Input差别： apply中的x是sub_df，transform的x是sub_df每一个列(series)
+# - 2) Output的差别: transform的返回值要么是scalar，否则会有长度限制，必须等于sub_df每一列的长度，apply没有这个限制
+# - https://stackoverflow.com/questions/27517425/apply-vs-transform-on-a-group-object
+# 其他
+# - 当group axis=1时，行列关系就反过来了
 
 
 
