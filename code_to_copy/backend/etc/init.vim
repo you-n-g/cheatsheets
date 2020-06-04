@@ -7,16 +7,15 @@ Plug 'tomtom/tcomment_vim'
 " Plug 'ycm-core/YouCompleteMe', { 'do': './install.py' }
 " Plug 'rdnetto/YCM-Generator'
 Plug 'nvie/vim-flake8'
-Plug 'jpalardy/vim-slime'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'heavenshell/vim-pydocstring'
+Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 Plug 'tell-k/vim-autopep8'
 Plug 'python-mode/python-mode', {'branch': 'develop'}
 Plug 'tpope/vim-surround'
 Plug 'dhruvasagar/vim-table-mode'
-Plug 'mileszs/ack.vim'
+" Plug 'mileszs/ack.vim'  # 已经被nvim 替代
 Plug 'morhetz/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nathanaelkane/vim-indent-guides'
@@ -28,8 +27,17 @@ Plug 'mhinz/vim-startify'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'liuchengxu/vim-which-key'
 
+Plug 'vim-vdebug/vdebug'   " 等待确认这个插件没有问题,
+" 希望这个插件可以代替vscode
+
 " Plug 'wellle/tmux-complete.vim'  #
 " 好是好，但是我tmux窗口太多了，会引起性能问题
+
+Plug 'jpalardy/vim-slime' " , { 'for': 'python' } 加上这个之后会导致只对python有用
+Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
+
+Plug 'jupyter-vim/jupyter-vim'
+Plug 'goerz/jupytext.vim'
 
 call plug#end()
 
@@ -74,6 +82,9 @@ au BufReadPost *
 " highlight current line
 set cursorline
 
+" 这个得在前面， 不然会对后面的定义有影响, 配合 vim-which-key
+let g:mapleader = "\<Space>"
+let g:maplocalleader = ','
 
 " Buffer related
 " :bd XXX 可以关闭buffer, 关闭buffer，
@@ -131,8 +142,12 @@ nnoremap <F11> :set spell!<CR>
 "
 " ctrlp.vim
 " https://github.com/kien/ctrlp.vim
-let g:ctrlp_working_path_mode = 'wa'
-nnoremap <silent> <leader>cp  :<C-u>CtrlPClearCache<CR>
+" let g:ctrlp_working_path_mode = 'wa'
+" nnoremap <silent> <leader>cp  :<C-u>CtrlPClearCache<CR>
+nmap <silent> <C-P>  :<C-u>CocList files<CR>
+let g:ctrlp_map = ''
+let g:ctrlp_cmd = ''
+
 
 
 
@@ -202,7 +217,7 @@ au FileType go nmap <Leader>gd <Plug>(go-doc)
 
 
 "
-" vim-slime
+" vim-slime  &  vim-ipython-cell
 " https://github.com/jpalardy/vim-slime
 " NOTICE: slime代表着一种边写脚本边搞bash的习惯！一种新的思维方式
 " ":i.j" means the ith window, jth pane
@@ -213,15 +228,51 @@ let g:slime_target = "tmux"
 let g:slime_python_ipython = 1
 
 
+" always send text to the top-right pane in the current tmux tab without asking
+let g:slime_default_config = {
+            \ 'socket_name': get(split($TMUX, ','), 0),
+            \ 'target_pane': '{top-right}' }
+let g:slime_dont_ask_default = 1
+
+"------------------------------------------------------------------------------
+" ipython-cell configuration
+"------------------------------------------------------------------------------
+" Keyboard mappings. <Leader> is \ (backslash) by default
+
+" map [c and ]c to jump to the previous and next cell header
+
+
+let g:which_key_map['p'] = {
+    \ 'name' : 'IPython Cell',
+    \'s' : ['SlimeSend1 ipython --matplotlib', 'start ipython with matplotlib'],
+    \'r' : ['IPythonCellRun', 'IPythonCellRun'],
+    \'R' : ['IPythonCellRunTime', 'IPythonCellRunTime'],
+    \'c' : ['IPythonCellExecuteCellVerbose', 'Execute Cell'],
+    \'C' : ['IPythonCellExecuteCellVerboseJump', 'Execute Cell Jump'],
+    \'l' : ['IPythonCellClear', 'IPythonCellClear'],
+    \'x' : ['IPythonCellClose', 'IPythonCellClose'],
+    \'h' : ['SlimeLineSend', 'Send line or selected'],
+    \'p' : ['IPythonCellPrevCommand', 'Previous Command'],
+    \'Q' : ['IPythonCellRestart', 'restart ipython'],
+    \'d' : ['SlimeSend1 %debug', 'debug mode'],
+    \'q' : ['SlimeSend1 exit', 'exit'],
+    \'k' : ['IPythonCellPrevCell', 'Prev Cell'],
+    \'j' : ['IPythonCellNextCell', 'Next Cell']
+    \ }
+
+
 
 "
+" vim-airline
+let g:airline#extensions#tabline#enabled = 1
 " vim-airline-themes
 let g:airline_theme='dark'
 
 
 "
 " heavenshell/vim-pydocstring
-nmap <silent> <C-N> <Plug>(pydocstring)
+" Docstring的详细格式解析: https://stackoverflow.com/a/24385103
+nmap <silent> <leader>d <Plug>(pydocstring)
 
 
 
@@ -262,8 +313,8 @@ let g:pymode_options = 0
 
 "
 " mileszs/ack.vim
-let g:ackprg = 'ag --vimgrep'
-nnoremap <Leader>a :Ack
+" let g:ackprg = 'ag --vimgrep'
+" nnoremap <Leader>a :Ack
 
 
 
@@ -350,6 +401,7 @@ augroup mygroup
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
+" # 这个地方可以和coc-snippet结合起来用,  直接将选中的code转化为 snippet
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
@@ -399,11 +451,11 @@ nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 
 " Do default action for next item.
-nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+nnoremap <silent> <space>lj  :<C-u>CocNext<CR>
 " Do default action for previous item.
-nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+nnoremap <silent> <space>lk  :<C-u>CocPrev<CR>
 " Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+nnoremap <silent> <space>lp  :<C-u>CocListResume<CR>
 
 nnoremap <silent> <Leader>gc :exe 'CocList -I --input='.expand('<cword>').' grep --ignore-case'<CR>
 nnoremap <silent> <Leader>gr :exe 'CocList -I grep --ignore-case'<CR>
@@ -413,7 +465,8 @@ let g:coc_global_extensions = [
  \ "coc-highlight",
  \ "coc-lists",
  \ "coc-json",
- \ "coc-explorer"
+ \ "coc-explorer",
+ \ "coc-snippets"
  \ ]
 
 " 个人经验 <space>c  setLinter ，把pylama 设置成错误提示的工具方便
@@ -426,6 +479,9 @@ let g:coc_global_extensions = [
 " 如果上述命令出错了，很可能是python插件没有加载:  <space>e 来加载插件
 " 会频繁出现上面问题的原因是它会因为新项目不知道default interpreter是什么
 " - https://github.com/neoclide/coc-python/issues/55
+"
+" Jedi error: Cannot call write after a stream was destroyed
+" pip search jedi, 看看你安装的是不是最新版
 "
 " 如果出现运行特别慢的情况，那么可能是因为数据和代码存在一起了,
 " 数据小文件特别多，建议把数据单独放到外面。不然得一个一个插件单独地配置XXX_ignore
@@ -473,6 +529,22 @@ nmap <leader>ec :CocCommand explorer --sources=buffer+,file+<CR>
 " nmap <leader>el :CocList explPresets
 
 
+" coc-snippet ------------------------
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
 
 " END   for coc ----------------------------------------------------------
 
@@ -495,18 +567,23 @@ hi link CtrlSpaceSearch   Search
 hi link CtrlSpaceStatus   StatusLine
 " visual mode is not useful for me at all
 nnoremap <silent>Q :CtrlSpace<CR>
-set showtabline=0
-" 好用的:  l可以快速列出所有的list
+" set showtabline=0
+" 好用的: 
+" - l可以快速列出所有的tab级别的内容
+" 坑:
+" - workspace进去默认是一个向上的箭头，表示load;
+"   按下s后，会变成向下的箭头代表save，箭头非常不明显
 
 
 " Plug 'liuchengxu/vim-which-key'
-" nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
-set timeoutlen=500 " By default timeoutlen is 1000 ms
-let g:mapleader = "\<Space>"
-let g:maplocalleader = ','
-nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
-nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
 
+set timeoutlen=500 " By default timeoutlen is 1000 ms
+call which_key#register('<Space>', "g:which_key_map")
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
+nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
+vnoremap <silent> <localleader> :<c-u>WhichKeyVisual ','<CR>
+let g:which_key_map =  {}
 
 
 " BEGIN for mhinz/vim-startify ----------------------------------------------------------
@@ -543,6 +620,27 @@ let g:ascii_yang = [
 
 
 
+" BEGIN for 'vim-vdebug/vdebug' ---------------------------------------------------
+"
+" TODO: 
+" 调整mapping, 和 which-key 兼容
+" 安装pydbgp:   pip install komodo-python3-dbgp
+" pydbgp  -d  localhost:9000 a.py
+" END   for 'vim-vdebug/vdebug' ---------------------------------------------------
+
+
+
+" jupyter-vim
+" let g:which_key_map['j'] = {
+"     \ 'name' : 'jupyter-vim',
+"     \'c' : ['JupyterSendCell', 'run current cell'],
+"     \ }
+let g:jupyter_mapkeys=0
+nmap <leader>je  :<C-u>JupyterSendCell<CR>
+nmap <leader>jc  :<C-u>JupyterSendCount<CR>
+vmap <leader>jc  :<C-u>'<,'>JupyterSendRange<CR>
+nmap <leader>js  :<C-u>JupyterConnect 
+nmap <leader>jr  :<C-u>JupyterSendCode 
 
 " Nvim usage cheetsheet
 
@@ -550,6 +648,7 @@ let g:ascii_yang = [
 " 目录
 " - 设计理念
 " - 查看当前设置
+" - Moving
 " - 坑
 
 
@@ -565,6 +664,12 @@ let g:ascii_yang = [
 " global settings
 " 检查按键到底被映射成什么了
 " :verbose nmap <CR>
+
+
+" ========== 查看当前设置 ==========
+" Moving: http://vimdoc.sourceforge.net/htmldoc/motion.html
+" help diw daw 等等
+
 
 
 " ========== 坑 ==========

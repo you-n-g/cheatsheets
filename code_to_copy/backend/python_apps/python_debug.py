@@ -12,6 +12,8 @@ pdb.set_trace()
 (Pdb) p a  # 即打印a
 
 # TODO 优化的版本是 ipdb， 把上面的 pdb都换成ipdb
+
+# 一个比较舒服的技巧是退回到相应的出错层级运行embed
 # END   PDB
 
 

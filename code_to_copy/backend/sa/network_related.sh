@@ -160,6 +160,9 @@ ssh -L LOCAL_ADDRESS:LOCAL_PORT:REMOTE_ADDRESS:REMOTE_PORT XXX_USER@XXX_HOST
 # remote port forwarding
 # -R 其实相当于反过来， TODO 还需具体实施 
 
+# 跳板机可以用 -w 登录
+# https://tufora.com/tutorials/linux/security/ssh-configuration-for-jump-host
+
 # 所以配合polipo也可以在远方开一个http_proxy(本来只有那边本地访问), 然后再ssh -L 转到本地来
 
 

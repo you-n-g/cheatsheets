@@ -466,4 +466,22 @@ display(df)
 #   - 在父类和子类在同一个 .py 文件中时，曾经稳定多次复现
 
 
+
+# 可以用vim写代码送到 jupyter notebook kernel
+%connect_info  # 利用这里得到的结果，可以用 `jupyter console` 直接和相应的kernel链接
+# 写完的使用jupyter  notebook的代码存在.py文件后， 可以直接用jupyter run XXX 运行
+# 最后如果硬要转化成ipynb
+# - 可以通过ipynb-py-convert, 写的时候多注意用 # %%
+# - 也可以用python2jupyter
+
+# TODO:  和前端交互现在有困难: 无法和前端做交互
+# 想方便地将代码发送到前端， 可以用 %recall
+
+
+
+# 有用的magic fucntions: 
+# 可以把文件输入都放到ipynb中  %notebook out.ipynb
+
+
+
 # Jupyter/Ipython notebook 相关 END   --------------------------
