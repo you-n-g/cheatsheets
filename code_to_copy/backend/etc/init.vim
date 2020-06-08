@@ -12,7 +12,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 Plug 'tell-k/vim-autopep8'
-Plug 'python-mode/python-mode', {'branch': 'develop'}
+" Plug 'python-mode/python-mode', {'branch': 'develop'}
 Plug 'tpope/vim-surround'
 Plug 'dhruvasagar/vim-table-mode'
 " Plug 'mileszs/ack.vim'  # 已经被nvim 替代
@@ -37,7 +37,8 @@ Plug 'jpalardy/vim-slime' " , { 'for': 'python' } 加上这个之后会导致只
 Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
 
 Plug 'jupyter-vim/jupyter-vim'
-Plug 'goerz/jupytext.vim'
+Plug 'goerz/jupytext.vim' " `pip install jupytext` is required
+Plug 'unblevable/quick-scope'
 
 call plug#end()
 
@@ -137,6 +138,18 @@ nnoremap <F11> :set spell!<CR>
 " The plugins I always need -------------------------
 " https://github.com/neovim/neovim/wiki/Related-projects#plugins
 "
+
+" Plug 'liuchengxu/vim-which-key'
+" I should before any key define based on vim-which-key
+
+set timeoutlen=500 " By default timeoutlen is 1000 ms
+call which_key#register('<Space>', "g:which_key_map")
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
+nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
+vnoremap <silent> <localleader> :<c-u>WhichKeyVisual ','<CR>
+let g:which_key_map =  {}
+
 
 
 "
@@ -282,17 +295,17 @@ nmap <silent> <leader>d <Plug>(pydocstring)
 " help PymodeDoc
 " 现在暂时将pymode关闭，每次的弹窗还得管真是比较烦人, 应该都可以被coc.nvim代替
 " TODO: 但是不知道coc.nvim会不会受到 pymode的参数的影响，所以下面先不删除
-let g:pymode_python = 'disable'
-" this plugin will auto folder all the code, please use `:help zo` to find the code
-let g:pymode_lint_ignore = ["E0100", "E501", "E402"]
-" E402 module level import not at top of file
-let g:pymode_doc=0  " This will conflict with coc
-let g:pymode_rope=0  " disable refracting because I don't use it
-let g:pymode_folding=0  " auto folding really makes python coding really slow.
-" lint还是挺有用的，改完代码马上就能检查出一些语法错误，不必等到运行时发现
-let g:pymode_lint_unmodified = 1  " Check code on every save (every)
-" Set this to make wrap works
-let g:pymode_options = 0
+" let g:pymode_python = 'disable'
+" " this plugin will auto folder all the code, please use `:help zo` to find the code
+" let g:pymode_lint_ignore = ["E0100", "E501", "E402"]
+" " E402 module level import not at top of file
+" let g:pymode_doc=0  " This will conflict with coc
+" let g:pymode_rope=0  " disable refracting because I don't use it
+" let g:pymode_folding=0  " auto folding really makes python coding really slow.
+" " lint还是挺有用的，改完代码马上就能检查出一些语法错误，不必等到运行时发现
+" let g:pymode_lint_unmodified = 1  " Check code on every save (every)
+" " Set this to make wrap works
+" let g:pymode_options = 0
 
 
 
@@ -460,6 +473,12 @@ nnoremap <silent> <space>lp  :<C-u>CocListResume<CR>
 nnoremap <silent> <Leader>gc :exe 'CocList -I --input='.expand('<cword>').' grep --ignore-case'<CR>
 nnoremap <silent> <Leader>gr :exe 'CocList -I grep --ignore-case'<CR>
 
+
+let g:which_key_map['l'] = {
+    \ 'name' : 'coc-list',
+    \'o' : [':CocList -I --auto-preview --ignore-case --input=outlines lines', 'Outlines'],
+    \ }
+
 let g:coc_global_extensions = [
  \ "coc-python",
  \ "coc-highlight",
@@ -470,30 +489,6 @@ let g:coc_global_extensions = [
  \ ]
 
 " 个人经验 <space>c  setLinter ，把pylama 设置成错误提示的工具方便
-
-" DEBUG相关
-" 当出现下面情况都先确认环境有没有弄错
-" - 解析pylama解析包失败时(找不到包, 比如import时提示无法解析)
-" - 做代码跳转时，提示版本太老
-" <space>c -> python.setInterpreter 
-" 如果上述命令出错了，很可能是python插件没有加载:  <space>e 来加载插件
-" 会频繁出现上面问题的原因是它会因为新项目不知道default interpreter是什么
-" - https://github.com/neoclide/coc-python/issues/55
-"
-" Jedi error: Cannot call write after a stream was destroyed
-" pip search jedi, 看看你安装的是不是最新版
-"
-" 如果出现运行特别慢的情况，那么可能是因为数据和代码存在一起了,
-" 数据小文件特别多，建议把数据单独放到外面。不然得一个一个插件单独地配置XXX_ignore
-
-" 各种配置通过这里来设置 
-" 直接编辑 ~/.config/nvim/coc-settings.json 或者  CocConfig
-
-
-" 好用的地方:  grep, gr; 看上面的定义，IDE常用的地方上面都有
-
-" other cheetsheet
-" deploy_apps/install_neovim.sh
 
 
 
@@ -546,6 +541,32 @@ let g:coc_snippet_prev = '<c-k>'
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 
+
+" DEBUG相关
+" 当出现下面情况都先确认环境有没有弄错
+" - 解析pylama解析包失败时(找不到包, 比如import时提示无法解析)
+" - 做代码跳转时，提示版本太老
+" <space>c -> python.setInterpreter 
+" 如果上述命令出错了，很可能是python插件没有加载:  <space>e 来加载插件
+" 会频繁出现上面问题的原因是它会因为新项目不知道default interpreter是什么
+" - https://github.com/neoclide/coc-python/issues/55
+"
+" Jedi error: Cannot call write after a stream was destroyed
+" pip search jedi, 看看你安装的是不是最新版
+"
+" Coc does not install extension if file with same name exists
+" 一直尝试安装一个不需要的插件，有可能之前安装后没卸干净 ~/.config/coc/extensions/package.json
+
+" 如果出现运行特别慢的情况，那么可能是因为数据和代码存在一起了,
+" 数据小文件特别多，建议把数据单独放到外面。不然得一个一个插件单独地配置XXX_ignore
+
+" 各种配置通过这里来设置 
+" 直接编辑 ~/.config/nvim/coc-settings.json 或者  CocConfig
+
+
+" 好用的地方:  grep, gr; 看上面的定义，IDE常用的地方上面都有
+
+
 " END   for coc ----------------------------------------------------------
 
 
@@ -574,16 +595,6 @@ nnoremap <silent>Q :CtrlSpace<CR>
 " - workspace进去默认是一个向上的箭头，表示load;
 "   按下s后，会变成向下的箭头代表save，箭头非常不明显
 
-
-" Plug 'liuchengxu/vim-which-key'
-
-set timeoutlen=500 " By default timeoutlen is 1000 ms
-call which_key#register('<Space>', "g:which_key_map")
-nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
-vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
-nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
-vnoremap <silent> <localleader> :<c-u>WhichKeyVisual ','<CR>
-let g:which_key_map =  {}
 
 
 " BEGIN for mhinz/vim-startify ----------------------------------------------------------
@@ -631,16 +642,27 @@ let g:ascii_yang = [
 
 
 " jupyter-vim
-" let g:which_key_map['j'] = {
-"     \ 'name' : 'jupyter-vim',
-"     \'c' : ['JupyterSendCell', 'run current cell'],
-"     \ }
+let g:which_key_map['j'] = {
+    \ 'name' : 'jupyter-vim',
+    \'e' : ['JupyterSendCell', 'JupyterSendCell'],
+    \ }
 let g:jupyter_mapkeys=0
-nmap <leader>je  :<C-u>JupyterSendCell<CR>
 nmap <leader>jc  :<C-u>JupyterSendCount<CR>
 vmap <leader>jc  :<C-u>'<,'>JupyterSendRange<CR>
 nmap <leader>js  :<C-u>JupyterConnect 
 nmap <leader>jr  :<C-u>JupyterSendCode 
+nmap <leader>jn  <esc>}o# %%<esc>o
+nmap <leader>jw  :<C-u>JupyterSendCode expand("<cword>")<CR>
+nmap <leader>jl  :<C-u>JupyterSendCode "clear"<CR>
+nmap <leader>jp  :<C-u>JupyterSendCode @"<CR>
+
+
+
+
+" BEGIN 'unblevable/quick-scope' ----------------------------------------------------------
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+" END   'unblevable/quick-scope'----------------------------------------------------------
+
 
 " Nvim usage cheetsheet
 
@@ -675,3 +697,8 @@ nmap <leader>jr  :<C-u>JupyterSendCode
 " ========== 坑 ==========
 " terminal mode 可以解决终端乱码的问题， 还可以用  <c-\><c-n> 和 i 在normal
 " model 和terminal model之间切换
+
+
+
+" other cheetsheet
+" deploy_apps/install_neovim.sh
