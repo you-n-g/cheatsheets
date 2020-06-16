@@ -39,6 +39,7 @@ Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
 Plug 'jupyter-vim/jupyter-vim'
 Plug 'goerz/jupytext.vim' " `pip install jupytext` is required
 Plug 'unblevable/quick-scope'
+Plug 'tpope/vim-repeat'
 
 call plug#end()
 
@@ -146,8 +147,8 @@ set timeoutlen=500 " By default timeoutlen is 1000 ms
 call which_key#register('<Space>', "g:which_key_map")
 nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
 vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
-nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
-vnoremap <silent> <localleader> :<c-u>WhichKeyVisual ','<CR>
+" nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
+" vnoremap <silent> <localleader> :<c-u>WhichKeyVisual ','<CR>
 let g:which_key_map =  {}
 
 
@@ -477,6 +478,7 @@ nnoremap <silent> <Leader>gr :exe 'CocList -I grep --ignore-case'<CR>
 let g:which_key_map['l'] = {
     \ 'name' : 'coc-list',
     \'o' : [':CocList -I --auto-preview --ignore-case --input=outlines lines', 'Outlines'],
+    \'i' : [':CocList -I --auto-preview --ignore-case lines', 'Search in this file'],
     \ }
 
 let g:coc_global_extensions = [
@@ -485,9 +487,11 @@ let g:coc_global_extensions = [
  \ "coc-lists",
  \ "coc-json",
  \ "coc-explorer",
- \ "coc-snippets"
+ \ "coc-snippets",
  \ ]
+ " \ "coc-marketplace"
 
+"  coc-marketplace",
 " 个人经验 <space>c  setLinter ，把pylama 设置成错误提示的工具方便
 
 
@@ -516,9 +520,12 @@ let g:coc_explorer_global_presets = {
 \ }
 
 " Use preset argument to open it
-nmap <leader>ee :CocCommand explorer --sources=buffer+,file+ --preset floatingLeftside<CR>
-" nmap <leader>ed :CocCommand explorer --preset .vim<CR>
-nmap <leader>ec :CocCommand explorer --sources=buffer+,file+<CR>
+let g:which_key_map['e'] = {
+    \ 'name' : 'coc-list',
+    \'f' : [':CocCommand explorer --sources=buffer+,file+ --preset floatingLeftside', 'Float Explorer'],
+    \'c' : [':CocCommand explorer --sources=buffer+,file+', 'Side Explorer'],
+    \'e' : [':CocCommand explorer --sources=buffer+,file+ --preset floating', 'Full Explorer'],
+    \ }
 
 " List all presets
 " nmap <leader>el :CocList explPresets
@@ -556,6 +563,7 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 "
 " Coc does not install extension if file with same name exists
 " 一直尝试安装一个不需要的插件，有可能之前安装后没卸干净 ~/.config/coc/extensions/package.json
+" 实在不行,最后从一个好的电脑上找到了~/.config/coc/ ， 然后拷贝了过来
 
 " 如果出现运行特别慢的情况，那么可能是因为数据和代码存在一起了,
 " 数据小文件特别多，建议把数据单独放到外面。不然得一个一个插件单独地配置XXX_ignore
@@ -644,23 +652,32 @@ let g:ascii_yang = [
 " jupyter-vim
 let g:which_key_map['j'] = {
     \ 'name' : 'jupyter-vim',
-    \'e' : ['JupyterSendCell', 'JupyterSendCell'],
+    \'e' : ['JupyterSendCell', 'Jupyter Send Cell'],
+    \'d' : ['JupyterDisconnect', 'Jupyter Disconnect'],
     \ }
 let g:jupyter_mapkeys=0
 nmap <leader>jc  :<C-u>JupyterSendCount<CR>
 vmap <leader>jc  :<C-u>'<,'>JupyterSendRange<CR>
+" 注意只有disconnect之后才能再次connect
 nmap <leader>js  :<C-u>JupyterConnect 
 nmap <leader>jr  :<C-u>JupyterSendCode 
-nmap <leader>jn  <esc>}o# %%<esc>o
+nmap <leader>jn  <esc>}o<CR># %%<esc>o
 nmap <leader>jw  :<C-u>JupyterSendCode expand("<cword>")<CR>
 nmap <leader>jl  :<C-u>JupyterSendCode "clear"<CR>
 nmap <leader>jp  :<C-u>JupyterSendCode @"<CR>
+
+nmap <Plug>RunCellAndJump <leader>je/# %%<CR>:noh<CR>
+nmap <leader>jE <Plug>RunCellAndJump
+" 依赖vim-repeat 才能
+silent! call repeat#set("\<Plug>RunCellAndJump", v:count)
 
 
 
 
 " BEGIN 'unblevable/quick-scope' ----------------------------------------------------------
-let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+" let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+let g:qs_buftype_blacklist = ['nofile']  " in case it change the color of some pop text
+
 " END   'unblevable/quick-scope'----------------------------------------------------------
 
 
@@ -697,7 +714,9 @@ let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 " ========== 坑 ==========
 " terminal mode 可以解决终端乱码的问题， 还可以用  <c-\><c-n> 和 i 在normal
 " model 和terminal model之间切换
-
+"
+" https://github.com/neoclide/coc.nvim/issues/2010
+" CocInstall 会产生空的文件
 
 
 " other cheetsheet
