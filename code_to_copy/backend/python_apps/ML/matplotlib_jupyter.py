@@ -5,31 +5,46 @@
 
 # Catalog
 # - 基本框架
-# - 重要的配置
+#   - 如何获取你想要的东西
 # - 知道你可以画什么/gallary
+# - 重要的配置
 # - pandas
 # - seaborn
+# - jupyter相关
+# - 样式相关
+#   - 大小和布局
+#   - 内容图形样式
+#   - 字体相关
 # - 未解之谜
 
 
-# 基本框架 BEGIN ----------------------------------------
+# # Outlines: 基本框架 BEGIN ----------------------------------------
 # matplotlib的基本的组件的定义:
 # https://matplotlib.org/tutorials/introductory/usage.html
 
-# 有哪些组件 & 每个组件怎么拿到
+# ## Outlines: 如何获取你想要的东西
+# 有哪些组件 & 构造组件有什么通用的参数 & 每个组件怎么拿到
+
 # lines: matplotlib.lines.Line2D
-# - ax.lines
+ax.lines
 
 # patches
-# - ax.patches
+ax.patches
+
+# axes
+# 像fig.add_subplot, plt.subplot 都可以加参数传到构造axes
+# 可传的参数包含 sharex, sharey
+plt.gca()  # get current axes
 
 # 基本框架 END   ----------------------------------------
 
 
-# 知道你可以画什么
+# # Outlines: 知道你可以画什么
 # 1) https://python-graph-gallery.com
 # 2) seaborn本来的gallary
 
+
+# # Outlines:  重要的配置
 
 # https://stackoverflow.com/questions/37604289/tkinter-tclerror-no-display-name-and-no-display-environment-variable
 # 在terminal里画图会报错 _tkinter.TclError: no display name and no $DISPLAY environment variable
@@ -61,25 +76,6 @@ pd.set_option('display.max_columns', None)
 # https://stackoverflow.com/questions/25351968/how-to-display-full-non-truncated-dataframe-information-in-html-when-convertin
 pd.set_option('display.max_colwidth', -1)
 
-
-# control the font size
-# https://stackoverflow.com/a/39566040
-import matplotlib.pyplot as plt
-
-SMALL_SIZE = 8
-MEDIUM_SIZE = 10
-BIGGER_SIZE = 12
-
-plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
-plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
-plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
-plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
-plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
-
-# 如果想一次改变所有的font size;  这个是一个全局性的，会持续生效
-matplotlib.rcParams.update({'font.size': 14})
 
 
 
@@ -247,7 +243,7 @@ def plot_three_yaxes():
     plt.show()
 
 
-# seaborn related BEGIN --------------------------------------------------
+# # Outlines:seaborn related BEGIN --------------------------------------------------
 
 # 可以用seaborn来画heatmap， 但是最后得自己加上plot.show()
 ## DOC: http://seaborn.pydata.org/generated/seaborn.clustermap.html
@@ -506,8 +502,9 @@ ax.set_xlim(min_w - margin, max_w + margin)
 
 
 
-# Pandas .plot篇  BEGIN --------------------------------
-# 控制subplots
+# # Outlines: Pandas .plot篇  BEGIN --------------------------------
+
+# ## Outlines: 控制
 df.plot(subplots=True, layout=(3, 3), figsize=(10, 10), sharey=True)
 
 # 多个subplots 怎么共享legand
@@ -517,9 +514,23 @@ for i, (idx, df) in enumerate(metrics_hists_runs.groupby(axis=1, level=1)):
 ax = axes[0, 0]
 lines, line_labels = ax.get_legend_handles_labels()  # 这里只画出第一个图的legend，假设这些对其他的图也适用
 fig.legend(lines, labels=line_labels, loc="center left", borderaxespad=0.1, title="parameters")
+
+
+# ## Outlines: 样式
+df.plot(
+    style=['.'] * 4,  # 每个曲线用什么style
+    markersize=15,  # Marker 的大小
+)
+
+df2.plot(legend=None)  # 可以让所有子图的legend消失
+
 # Pandas .plot篇  END   --------------------------------
 
 
+
+# # Outlines: 样式相关
+
+# ## Outlines: 大小和布局
 
 # Subplots篇 BEGIN -------------------------------------------------
 # subplots 之间的距离
@@ -548,17 +559,6 @@ ax.set_position(pos2)
 # x1 代表： . y1 代表.
 
 
-# 样式
-df.plot(
-    style=['.'] * 4,  # 每个曲线用什么style
-    markersize=15,  # Marker 的大小
-)
-
-
-ax2.set_frame_on(True)  # 可以让 legend永远在线的下面
-plt.legend().set_visible(False) # 可以让 legend 消失， 但是仅仅针对最后一个子图
-df2.plot(legend=None)  # 可以让所有子图的legend消失
-
 
 # 几种创建 subplots的方法比较
 
@@ -579,15 +579,57 @@ plt.plot(....)  # 只画一张图时最方便
 # 画完之后可以给该图组集中加一个title
 plt.suptitle(name)
 
+
+
+# 如何调整 subplots 的大小
+# 同时示范如何共享 x, y 轴;
+# - 当一组垂直的图共享x轴时, 会自动只保留最下面的
+# https://www.delftstack.com/howto/matplotlib/how-to-make-different-subplot-sizes-in-matplotlib/#gridspec-method
+from matplotlib import gridspec
+fig = plt.figure()
+spec = gridspec.GridSpec(1, 2, width_ratios=[2, 1])
+ax = None
+for s in spec:
+    ax = fig.add_subplot(s, sharex=ax, sharey=ax)
+    ax.plot(range(5), range(5, 10))
+
 # Subplots篇 END -------------------------------------------------
 
 
+# ## Outlines: 内容图形样式
 
-# 非常有用的方法
-plt.gca()  # get current axes
+# axes
+axes.get_xaxis().set_visible(False)
+
+# Legend
+ax2.set_frame_on(True)  # 可以让 legend永远在线的下面
+plt.legend().set_visible(False) # 可以让 legend 消失， 但是仅仅针对最后一个子图
+
+# ## Outlines: 字体相关
+
+# control the font size
+# https://stackoverflow.com/a/39566040
+import matplotlib.pyplot as plt
+
+SMALL_SIZE = 8
+MEDIUM_SIZE = 10
+BIGGER_SIZE = 12
+
+plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
+plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
+plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
+plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
+plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
+plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+
+# 如果想一次改变所有的font size;  这个是一个全局性的，会持续生效
+matplotlib.rcParams.update({'font.size': 14})
 
 
 
+
+# # Outlines: jupyter相关
 
 # jupyer内的奇技淫巧
 # 可以直接隐藏代码
@@ -601,7 +643,7 @@ $('.input, .prompt, .output_stderr, .output_error, .output_result').hide();
 
 
 
-# ------------------ 未解之谜 --------------------
+# # Outlines: ------------------ 未解之谜 --------------------
 # interactive: https://blog.dominodatalab.com/interactive-dashboards-in-jupyter/
 # you must install this extension https://github.com/jupyter-widgets/ipywidgets
 # 可能会遇到这个错误  Widget Javascript not detected.  It may not be installed or enabled properly

@@ -133,6 +133,55 @@ endfunc
 nnoremap <F11> :set spell!<CR>
 
 
+" syntax highlight related
+" The colors come from 
+" https://stackoverflow.com/questions/16014361/how-to-set-a-custom-color-to-folded-highlighting-in-vimrc-for-use-with-putty 
+" https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg
+
+augroup PythonOutlines
+    au! 
+    " this is for simple words highlight syntax
+    " autocmd FileType python syntax match Outlines1 /\(^# # Outlines:\)\@=.*/
+    " autocmd FileType python syntax match Outlines2 /\(^# ## Outlines:\)\@=.*/
+    " autocmd FileType python hi Outlines1 cterm=bold ctermbg=blue guibg=LightYellow
+    " autocmd FileType python hi Outlines2 cterm=bold ctermbg=darkblue guibg=LightYellow
+
+    " Below is for line hightlight
+    if $TERM =~ "256"
+        autocmd FileType python hi Outlines1 cterm=bold ctermbg=017 ctermfg=White
+        autocmd FileType python hi Outlines2 cterm=bold ctermbg=019 ctermfg=White
+        autocmd FileType python hi cellDelimiterHi ctermbg=233 ctermfg=DarkGray
+    else
+        autocmd FileType python hi Outlines1 cterm=bold ctermbg=darkblue ctermfg=White
+        autocmd FileType python hi Outlines2 cterm=bold ctermbg=blue ctermfg=White
+        autocmd FileType python hi cellDelimiterHi ctermbg=Black ctermfg=DarkGray
+    endif
+
+    autocmd FileType python sign define cellLine linehl=cellDelimiterHi
+    autocmd FileType python sign define O1 linehl=Outlines1
+    autocmd FileType python sign define O2 linehl=Outlines2
+
+    function! HighlightCellDelimiter()
+      execute "sign unplace * group=cellsDelimiter file=".expand("%")
+      execute "sign unplace * group=otl1 file=".expand("%")
+      execute "sign unplace * group=otl2 file=".expand("%")
+
+      for l:lnum in range(line("w0"), line("w$"))
+        if getline(l:lnum) =~ "^# %%"
+          execute "sign place ".l:lnum." line=".l:lnum." name=cellLine group=cellsDelimiter file=".expand("%")
+        elseif getline(l:lnum) =~ "^# # Outlines:"
+          execute "sign place ".l:lnum." line=".l:lnum." name=O1 group=otl1 file=".expand("%")
+        elseif getline(l:lnum) =~ "^# ## Outlines:"
+          execute "sign place ".l:lnum." line=".l:lnum." name=O2 group=otl2 file=".expand("%")
+        endif
+      endfor
+    endfunction
+
+    autocmd! CursorMoved *.py call HighlightCellDelimiter()
+augroup END
+
+
+
 
 
 "
@@ -568,9 +617,13 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " 如果出现运行特别慢的情况，那么可能是因为数据和代码存在一起了,
 " 数据小文件特别多，建议把数据单独放到外面。不然得一个一个插件单独地配置XXX_ignore
 
+" 如果pylint import找不到module: 是因为pylint无法解析sys.path.append语句
+" 可以在 `${workspaceFolder}/.env` 中直接设置`PYTHONPATH`
+" - https://github.com/neoclide/coc-python
+" - https://code.visualstudio.com/docs/python/environments#_use-of-the-pythonpath-variable
+
 " 各种配置通过这里来设置 
 " 直接编辑 ~/.config/nvim/coc-settings.json 或者  CocConfig
-
 
 " 好用的地方:  grep, gr; 看上面的定义，IDE常用的地方上面都有
 
@@ -635,6 +688,7 @@ let g:ascii_yang = [
 
  let g:startify_custom_header =
        \ 'startify#pad(g:ascii_yang + startify#fortune#boxed() + g:ascii_art)'
+ let g:startify_change_to_dir = 0
 " END   for mhinz/vim-startify ----------------------------------------------------------
 
 
@@ -667,16 +721,18 @@ nmap <leader>jl  :<C-u>JupyterSendCode "clear"<CR>
 nmap <leader>jp  :<C-u>JupyterSendCode @"<CR>
 
 nmap <Plug>RunCellAndJump <leader>je/# %%<CR>:noh<CR>
+\:silent! call repeat#set("\<Plug>RunCellAndJump", v:count)<CR>
 nmap <leader>jE <Plug>RunCellAndJump
 " 依赖vim-repeat 才能
-silent! call repeat#set("\<Plug>RunCellAndJump", v:count)
+" config come from http://vimcasts.org/episodes/creating-repeatable-mappings-with-repeat-vim/
+
 
 
 
 
 " BEGIN 'unblevable/quick-scope' ----------------------------------------------------------
 " let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
-let g:qs_buftype_blacklist = ['nofile']  " in case it change the color of some pop text
+let g:qs_buftype_blacklist = ['nofile', 'terminal']  " in case it change the color of some pop text
 
 " END   'unblevable/quick-scope'----------------------------------------------------------
 
@@ -688,7 +744,9 @@ let g:qs_buftype_blacklist = ['nofile']  " in case it change the color of some p
 " - 设计理念
 " - 查看当前设置
 " - Moving
+" - 其他
 " - 坑
+" - TODO
 
 
 " ========== 设计理念 ==========
@@ -705,18 +763,30 @@ let g:qs_buftype_blacklist = ['nofile']  " in case it change the color of some p
 " :verbose nmap <CR>
 
 
-" ========== 查看当前设置 ==========
+" ========== Moving ==========
 " Moving: http://vimdoc.sourceforge.net/htmldoc/motion.html
 " help diw daw 等等
 
+
+" ========== 其他 ==========
+" 匹配: 正向预查，反向预查，环视
 
 
 " ========== 坑 ==========
 " terminal mode 可以解决终端乱码的问题， 还可以用  <c-\><c-n> 和 i 在normal
 " model 和terminal model之间切换
 "
-" https://github.com/neoclide/coc.nvim/issues/2010
 " CocInstall 会产生空的文件
+" https://github.com/neoclide/coc.nvim/issues/2010
+"
+" ctrlspace load workspace非常慢
+" https://github.com/vim-ctrlspace/vim-ctrlspace/issues/6
+
+
+" ========== TODO ==========
+" Highlight 整行
+" - https://vi.stackexchange.com/questions/15505/highlight-whole-todo-comment-line
+" - https://stackoverflow.com/questions/2150220/how-do-i-make-vim-syntax-highlight-a-whole-line
 
 
 " other cheetsheet
