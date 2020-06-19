@@ -40,6 +40,8 @@ Plug 'jupyter-vim/jupyter-vim'
 Plug 'goerz/jupytext.vim' " `pip install jupytext` is required
 Plug 'unblevable/quick-scope'
 Plug 'tpope/vim-repeat'
+Plug 'jiangmiao/auto-pairs'
+
 
 call plug#end()
 
@@ -291,7 +293,7 @@ let g:slime_target = "tmux"
 let g:slime_python_ipython = 1
 
 
-" always send text to the top-right pane in the current tmux tab without asking
+" always send text to the pane in the current tmux tab without asking
 let g:slime_default_config = {
             \ 'socket_name': get(split($TMUX, ','), 0),
             \ 'target_pane': '{top-right}' }
@@ -302,23 +304,20 @@ let g:slime_dont_ask_default = 1
 "------------------------------------------------------------------------------
 " Keyboard mappings. <Leader> is \ (backslash) by default
 
-" map [c and ]c to jump to the previous and next cell header
-
-
 let g:which_key_map['p'] = {
     \ 'name' : 'IPython Cell',
-    \'s' : ['SlimeSend1 ipython --matplotlib', 'start ipython with matplotlib'],
+    \'s' : [':SlimeSend1 ipython --matplotlib', 'start ipython with matplotlib'],
     \'r' : ['IPythonCellRun', 'IPythonCellRun'],
     \'R' : ['IPythonCellRunTime', 'IPythonCellRunTime'],
-    \'c' : ['IPythonCellExecuteCellVerbose', 'Execute Cell'],
-    \'C' : ['IPythonCellExecuteCellVerboseJump', 'Execute Cell Jump'],
+    \'e' : ['IPythonCellExecuteCellVerbose', 'Execute Cell'],
+    \'E' : ['IPythonCellExecuteCellVerboseJump', 'Execute Cell Jump'],
     \'l' : ['IPythonCellClear', 'IPythonCellClear'],
     \'x' : ['IPythonCellClose', 'IPythonCellClose'],
-    \'h' : ['SlimeLineSend', 'Send line or selected'],
+    \'c' : [':SlimeSend', 'Send line or selected'],
     \'p' : ['IPythonCellPrevCommand', 'Previous Command'],
     \'Q' : ['IPythonCellRestart', 'restart ipython'],
-    \'d' : ['SlimeSend1 %debug', 'debug mode'],
-    \'q' : ['SlimeSend1 exit', 'exit'],
+    \'d' : [':SlimeSend1 %debug', 'debug mode'],
+    \'q' : [':SlimeSend1 exit', 'exit'],
     \'k' : ['IPythonCellPrevCell', 'Prev Cell'],
     \'j' : ['IPythonCellNextCell', 'Next Cell']
     \ }
@@ -336,7 +335,7 @@ let g:airline_theme='dark'
 " heavenshell/vim-pydocstring
 " Docstring的详细格式解析: https://stackoverflow.com/a/24385103
 nmap <silent> <leader>d <Plug>(pydocstring)
-
+let g:pydocstring_formatter='numpy'
 
 
 "
@@ -655,6 +654,9 @@ nnoremap <silent>Q :CtrlSpace<CR>
 " 坑:
 " - workspace进去默认是一个向上的箭头，表示load;
 "   按下s后，会变成向下的箭头代表save，箭头非常不明显
+" - 想disable 文件搜索，但是一直没有成功
+"   - let g:CtrlSpaceIgnoredFiles = '*'
+"   - let g:CtrlSpaceGlobCommand = 'echo "disabled"'
 
 
 
@@ -746,6 +748,7 @@ let g:qs_buftype_blacklist = ['nofile', 'terminal']  " in case it change the col
 " - Moving
 " - 其他
 " - 坑
+" - script
 " - TODO
 
 
@@ -781,6 +784,11 @@ let g:qs_buftype_blacklist = ['nofile', 'terminal']  " in case it change the col
 "
 " ctrlspace load workspace非常慢
 " https://github.com/vim-ctrlspace/vim-ctrlspace/issues/6
+
+
+" ========== script ==========
+" vim script cheatsheet https://devhints.io/vimscript
+" help script
 
 
 " ========== TODO ==========

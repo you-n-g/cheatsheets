@@ -15,6 +15,7 @@
 #   - 大小和布局
 #   - 内容图形样式
 #   - 字体相关
+# - 常用的代码片段
 # - 未解之谜
 
 
@@ -407,16 +408,6 @@ def share_x_y():
     plt.show()
 
 
-# 搜索 get_x， 这个方法没有下面的方法方便
-def auto_label(bar_ret, axes=None, color='k'):
-    if axes is None:
-        axes = plt
-    for rect in bar_ret:
-        height = rect.get_height()
-        axes.text(rect.get_x() + rect.get_width()/2., 1.01 * height,
-                '%.03f' % height,
-                ha='center', va='bottom', rotation='vertical', color=color)
-
 # Plot multiple bar
 def plot_multi_bars():
     '''
@@ -468,36 +459,6 @@ ax.set_yticklabels(['{:3.2f}%'.format(x*100) for x in vals])
 # example 1): https://python-graph-gallery.com/251-stacked-area-chart-with-seaborn-style/
 # example 2): https://matplotlib.org/gallery/lines_bars_and_markers/stackplot_demo.html
 
-
-
-# 加文字篇 https://stackoverflow.com/a/25449186
-# ax = df.plot(kind='bar') 时，  可以直接通过这种方式加文字
-# 如果是 barh时， 需要把下面的 get_x 换成 get_y， 把 get_height换成get_width.
-# 我理解这里的get_x是图中柱状图根部的位置， height width指的是柱状图本身的形状
-for p in ax.patches:
-	ax.annotate("%.4f" % p.get_height(), (p.get_x() * 1.01, p.get_height() * 1.01)
-# 我觉得这里的 1.01 常常不要也行
-
-# 顺便控制一下bar的高度
-heights = [p.get_height() for p in ax.patches]
-max_h, min_h = max(heights), min(heights)
-delta = max_h - min_h
-pct = 0.8
-margin = delta * (1. - pct) / 2
-ax.set_ylim(max_h + margin, min_h - margin)
-
-ax.invert_yaxis()  # 需要的话， 让它从上往下排列
-
-# 来一版 barh的
-ax = methods_perf.plot(kind='barh')
-for p in ax.patches:
-     ax.annotate("%.4f" % p.get_width(), (p.get_width(), p.get_y()))
-widths = [p.get_width() for p in ax.patches]
-max_w, min_w = max(widths), min(widths)
-delta = max_w - min_w
-pct = 0.8
-margin = delta * (1. - pct) / 2
-ax.set_xlim(min_w - margin, max_w + margin)
 
 
 
@@ -640,6 +601,42 @@ $('.input, .prompt, .output_stderr, .output_error, .output_result').hide();
 # 记得留一个按钮回复代码
 %%HTML
 <button onclick="$('.input, .prompt, .output_stderr, .output_error, .output_result').toggle();">Toggle Code</button>
+
+
+# %% [markdown]
+# # Outlines: 常用的代码片段
+
+
+
+
+# 加文字篇 https://stackoverflow.com/a/25449186
+# ax = df.plot(kind='bar') 时，  可以直接通过这种方式加文字
+# 如果是 barh时， 需要把下面的 get_x 换成 get_y， 把 get_height换成get_width.
+# 我理解这里的get_x是图中柱状图根部的位置， height width指的是柱状图本身的形状
+for p in ax.patches:
+	ax.annotate("%.4f" % p.get_height(), (p.get_x() * 1.01, p.get_height() * 1.01)
+# 我觉得这里的 1.01 常常不要也行
+
+# 顺便控制一下bar的高度
+heights = [p.get_height() for p in ax.patches]
+max_h, min_h = max(heights), min(heights)
+delta = max_h - min_h
+pct = 0.8
+margin = delta * (1. - pct) / 2
+ax.set_ylim(max_h + margin, min_h - margin)
+
+ax.invert_yaxis()  # 需要的话， 让它从上往下排列
+
+# 来一版 barh的
+ax = methods_perf.plot(kind='barh')
+for p in ax.patches:
+     ax.annotate("%.4f" % p.get_width(), (p.get_width(), p.get_y()))
+widths = [p.get_width() for p in ax.patches]
+max_w, min_w = max(widths), min(widths)
+delta = max_w - min_w
+pct = 0.8
+margin = delta * (1. - pct) / 2
+ax.set_xlim(min_w - margin, max_w + margin)
 
 
 
