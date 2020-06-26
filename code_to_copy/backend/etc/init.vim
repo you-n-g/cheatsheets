@@ -143,25 +143,25 @@ nnoremap <F11> :set spell!<CR>
 augroup PythonOutlines
     au! 
     " this is for simple words highlight syntax
-    " autocmd FileType python syntax match Outlines1 /\(^# # Outlines:\)\@=.*/
-    " autocmd FileType python syntax match Outlines2 /\(^# ## Outlines:\)\@=.*/
-    " autocmd FileType python hi Outlines1 cterm=bold ctermbg=blue guibg=LightYellow
-    " autocmd FileType python hi Outlines2 cterm=bold ctermbg=darkblue guibg=LightYellow
+    " autocmd FileType python,sh syntax match Outlines1 /\(^# # Outlines:\)\@=.*/
+    " autocmd FileType python,sh syntax match Outlines2 /\(^# ## Outlines:\)\@=.*/
+    " autocmd FileType python,sh hi Outlines1 cterm=bold ctermbg=blue guibg=LightYellow
+    " autocmd FileType python,sh hi Outlines2 cterm=bold ctermbg=darkblue guibg=LightYellow
 
     " Below is for line hightlight
     if $TERM =~ "256"
-        autocmd FileType python hi Outlines1 cterm=bold ctermbg=017 ctermfg=White
-        autocmd FileType python hi Outlines2 cterm=bold ctermbg=019 ctermfg=White
-        autocmd FileType python hi cellDelimiterHi ctermbg=233 ctermfg=DarkGray
+        autocmd FileType python,sh hi Outlines1 cterm=bold ctermbg=017 ctermfg=White
+        autocmd FileType python,sh hi Outlines2 cterm=bold ctermbg=019 ctermfg=White
+        autocmd FileType python,sh hi cellDelimiterHi ctermbg=233 ctermfg=DarkGray
     else
-        autocmd FileType python hi Outlines1 cterm=bold ctermbg=darkblue ctermfg=White
-        autocmd FileType python hi Outlines2 cterm=bold ctermbg=blue ctermfg=White
-        autocmd FileType python hi cellDelimiterHi ctermbg=Black ctermfg=DarkGray
+        autocmd FileType python,sh hi Outlines1 cterm=bold ctermbg=darkblue ctermfg=White
+        autocmd FileType python,sh hi Outlines2 cterm=bold ctermbg=blue ctermfg=White
+        autocmd FileType python,sh hi cellDelimiterHi ctermbg=Black ctermfg=DarkGray
     endif
 
-    autocmd FileType python sign define cellLine linehl=cellDelimiterHi
-    autocmd FileType python sign define O1 linehl=Outlines1
-    autocmd FileType python sign define O2 linehl=Outlines2
+    autocmd FileType python,sh sign define cellLine linehl=cellDelimiterHi
+    autocmd FileType python,sh sign define O1 linehl=Outlines1
+    autocmd FileType python,sh sign define O2 linehl=Outlines2
 
     function! HighlightCellDelimiter()
       execute "sign unplace * group=cellsDelimiter file=".expand("%")
@@ -179,9 +179,19 @@ augroup PythonOutlines
       endfor
     endfunction
 
-    autocmd! CursorMoved *.py call HighlightCellDelimiter()
+    autocmd! CursorMoved *.py,*.sh call HighlightCellDelimiter()
 augroup END
 
+
+
+" 快速替换
+nnoremap <expr> <plug>HighlightReplace '/\<'.expand('<cword>').'\><CR>``:%s/\<'.expand('<cword>').'\>/'.expand('<cword>').'/g<left><left>'
+nmap <leader>rp <plug>HighlightReplace
+
+
+" 个人喜欢的快速移动
+" - 在insert mode下快速到行尾
+inoremap <C-e> <C-o>$
 
 
 
@@ -220,7 +230,7 @@ let g:ctrlp_cmd = ''
 " vimwiki http://www.vim.org/scripts/script.php?script_id=2226
 "
 " map tb :VimwikiTable
-map t<space> <Plug>VimwikiToggleListItem
+" map t<space> <Plug>VimwikiToggleListItem
 let g:vimwiki_hl_headers = 1
 " let g:vimwiki_conceallevel = 0
 
@@ -529,6 +539,45 @@ let g:which_key_map['l'] = {
     \'i' : [':CocList -I --auto-preview --ignore-case lines', 'Search in this file'],
     \ }
 
+
+" scroll the popup
+" comes from https://github.com/neoclide/coc.nvim/issues/1405
+" I think this is still experimental
+function! s:coc_float_scroll(forward) abort
+  let float = coc#util#get_float()
+  if !float | return '' | endif
+  let buf = nvim_win_get_buf(float)
+  let buf_height = nvim_buf_line_count(buf)
+  let win_height = nvim_win_get_height(float)
+  if buf_height < win_height | return '' | endif
+  let pos = nvim_win_get_cursor(float)
+  if a:forward
+    if pos[0] == 1
+      let pos[0] += 3 * win_height / 4
+    elseif pos[0] + win_height / 2 + 1 < buf_height
+      let pos[0] += win_height / 2 + 1
+    endif
+    let pos[0] = pos[0] < buf_height ? pos[0] : buf_height
+  else
+    if pos[0] == buf_height
+      let pos[0] -= 3 * win_height / 4
+    elseif pos[0] - win_height / 2 + 1  > 1
+      let pos[0] -= win_height / 2 + 1
+    endif
+    let pos[0] = pos[0] > 1 ? pos[0] : 1
+  endif
+  call nvim_win_set_cursor(float, pos)
+  return ''
+endfunction
+
+nnoremap <silent><expr> <down> coc#util#has_float() ? coc#util#float_scroll(1) : "\<down>"
+nnoremap <silent><expr> <up> coc#util#has_float() ? coc#util#float_scroll(0) : "\<up>"
+inoremap <silent><expr> <down> coc#util#has_float() ? <SID>coc_float_scroll(1) : "\<down>"
+inoremap <silent><expr> <up> coc#util#has_float() ? <SID>coc_float_scroll(0) : "\<up>"
+vnoremap <silent><expr> <down> coc#util#has_float() ? <SID>coc_float_scroll(1) : "\<down>"
+vnoremap <silent><expr> <up> coc#util#has_float() ? <SID>coc_float_scroll(0) : "\<up>"
+
+
 let g:coc_global_extensions = [
  \ "coc-python",
  \ "coc-highlight",
@@ -595,6 +644,14 @@ let g:coc_snippet_prev = '<c-k>'
 " Use <C-j> for both expand and jump (make expand higher priority.)
 imap <C-j> <Plug>(coc-snippets-expand-jump)
 
+
+" coc-list ------------------------------
+" 这里感觉和文档写的不太一样
+" - 默认 list.source.files.command 用 rg
+" - 默认参数是 ["--color", "never", "--files"]
+" - 所以要做修改需在这些默认值之后操作
+"    - 比如想要follow the link就得这么操作: list.source.files.args": ["-L", "--color", "never", "--files"]
+" https://github.com/neoclide/coc-lists/issues/69
 
 
 " DEBUG相关
@@ -700,7 +757,8 @@ let g:ascii_yang = [
 " TODO: 
 " 调整mapping, 和 which-key 兼容
 " 安装pydbgp:   pip install komodo-python3-dbgp
-" pydbgp  -d  localhost:9000 a.py
+" 1) :VdebugStart
+" 2) pydbgp  -d  localhost:9000 a.py
 " END   for 'vim-vdebug/vdebug' ---------------------------------------------------
 
 
@@ -739,6 +797,13 @@ let g:qs_buftype_blacklist = ['nofile', 'terminal']  " in case it change the col
 " END   'unblevable/quick-scope'----------------------------------------------------------
 
 
+
+" BEGIN 'jiangmiao/auto-pairs'----------------------------------------------------------
+" alt + p 可以控制 pair 的开关
+" alt + e 可以在将行中间补全的括号自动放到末尾
+" END   'jiangmiao/auto-pairs'----------------------------------------------------------
+
+
 " Nvim usage cheetsheet
 
 
@@ -758,6 +823,12 @@ let g:qs_buftype_blacklist = ['nofile', 'terminal']  " in case it change the col
 " A window is a viewport on a buffer.
 " A tab page is a collection of windows.
 " 所以之前每次开tab而不是buffer，感觉tagbar和nerdtree总是要重复打开很烦;
+
+" map的设计逻辑; 各种map的区别
+" - 有没有re代表会不会map后再次被map
+" - 前缀代表它在什么模式下生效
+" - 它可以映射成一段直接输入，也能映射成一个将会被解析成字符串的表达式
+"   - :help <expr>  " 如果想让map映射到一个可解释的字符串
 
 
 " ========== 查看当前设置 ==========

@@ -568,21 +568,22 @@ plt.legend().set_visible(False) # 可以让 legend 消失， 但是仅仅针对�
 
 # ## Outlines: 字体相关
 
+# 下面的两个方法都能持续的修改字体大小, 第一种方法会覆盖第二种方法
+
 # control the font size
 # https://stackoverflow.com/a/39566040
+# 为了能直接用，就全改成bigger size了
 import matplotlib.pyplot as plt
 
-SMALL_SIZE = 8
-MEDIUM_SIZE = 10
-BIGGER_SIZE = 12
-
-plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
-plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
-plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
-plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
-plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
+def change_fs(font_size):
+    font_size = font_size
+    plt.rc('font', size=font_size)          # controls default text sizes
+    plt.rc('axes', titlesize=font_size)     # fontsize of the axes title
+    plt.rc('axes', labelsize=font_size)    # fontsize of the x and y labels
+    plt.rc('xtick', labelsize=font_size)    # fontsize of the tick labels
+    plt.rc('ytick', labelsize=font_size)    # fontsize of the tick labels
+    plt.rc('legend', fontsize=font_size)    # legend fontsize
+    plt.rc('figure', titlesize=font_size)  # fontsize of the figure title
 
 # 如果想一次改变所有的font size;  这个是一个全局性的，会持续生效
 matplotlib.rcParams.update({'font.size': 14})

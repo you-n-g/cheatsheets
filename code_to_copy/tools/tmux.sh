@@ -72,3 +72,13 @@ tmux list-panes -a -F "#{pane_pid} #{session_name}:#{window_index}:#{pane_index}
 ## ansible更容易一下看出哪个出错了
 ## Ansible有机制保证相应的步骤一定是执行成功了, 适合做生产
 ## 可以并行地做，tmux只能单个window执行一个task
+
+
+
+
+# 一些概念
+# key-table: 
+# - 设计目的是为了定义连续的命令
+# - 实现方式是让你输入一个key后， 触发进入另外一个 key-table， 几个key-table串起来就可以达到等价于连续前缀的效果
+# - https://stackoverflow.com/a/53418329
+

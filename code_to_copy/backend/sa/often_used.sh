@@ -57,6 +57,9 @@ mount -t tmpfs -o size=1024m tmpfs /mnt/ram
 set -x # 设置允许的时候会把命令写出来， 而且会在命令前面输出+
 
 ## = must used instead of ==
+# 第一行是为了防止代码直接被贴到 console里面跑的情况; else里面的数值既可以处理跑脚本的情况，也可以处理source的情况
+# 如果想区分 source 和 跑脚本的情况， 请参考下面
+# https://unix.stackexchange.com/questions/4650/determining-path-to-sourced-shell-script
 if [ $0 = "-bash" ]; then
     DIR=`pwd`
 else

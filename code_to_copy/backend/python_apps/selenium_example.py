@@ -1,21 +1,40 @@
+'''
+最后有用的(还没有验证那些是必须的)
+大概率没用的: xserver-xorg-hwe-16.04 xserver-xorg
+sudo apt-get install lightdm   # 然后启动 lightdm 就自动启动xserver了
+确保你本地有安装 XQuartz 之类的软件(MobaXterm就可以)
+启动Xserver， 设置display
+- https://unix.stackexchange.com/questions/561468/empty-screen-launching-chromium-browser-over-x11-from-ubuntu-16-to-osx-xquartz
+    - 这里我理解是直接用本地的 XServer + X11Forwarding 出错时，可能用这个比较有效。
+    - 更建议的方法是直接用 vncserver在服务器上启动X Server，然后本地vnc可以随时连上去看服务器的X App
+'''
 # conda install selenium
 # sudo apt-get install chromium-chromedriver
 # sudo apt-get install ttf-wqy-microhei ttf-wqy-zenhei xfonts-wqy
 
-from selenium import webdriver
 
 from tqdm.autonotebook import tqdm
 from pathlib import Path
 
 
+from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 chrome_options = Options()
 # chrome_options.add_argument('--no-sandbox')
 # chrome_options.add_argument('--disable-dev-shm-usage')
-chrome_options.add_argument('--proxy-server=127.0.0.1:6489')
+chrome_options.add_argument('--proxy-server=127.0.0.1:6489')  # 这里可以设置代理
+# headless 
+# https://www.cnblogs.com/yimiaoyikan/p/10225849.html
+# - chrome的无界面状态，不用打开GUI, 少了真实的加载css,js和渲染页面的工作, 性能要高很多
+# - 这里还列出了一些连接远程端口调试相关的东西
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--start-maximized')
+option.add_argument("user-data-dir=selenium")
+# 这里我可以设置存储用户信息，保存用户session
+# - https://stackoverflow.com/a/48665557
 browser = webdriver.Chrome(options=chrome_options)
+# browser.page_source #  to get the entire page txt
+
 
 
 # 获得中国地级市
