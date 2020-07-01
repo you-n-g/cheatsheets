@@ -1,3 +1,15 @@
+# BEGIN loguru
+
+# 启动的状态
+# https://github.com/Delgan/loguru/issues/51
+# 默认add了sys.stderr， id为0
+logger.remove(0)
+logger.add("其他的东西")
+
+
+# END   loguru
+
+
 # BEGIN logging
 
 # 机制
@@ -79,10 +91,10 @@ import logging.config
 dictLogConfig = {
     "version": 1,
     "handlers":{
-        "consoleHandler":{
+        "consoleHandler": {
             "class":"logging.StreamHandler",
             "formatter":"myFormatter",
-            }
+        },
         "fileHandler": {
             'class': 'logging.FileHandler',
             'filename': './log/assets.log',
@@ -165,8 +177,24 @@ logging.config.dictConfig(dictLogConfig)
 logger = logging.getLogger("foo.bar")
 
 
+''' 个人找到最简单的 logger setting
+version: 1
+handlers:
+    consoleHandler:
+        class: "logging.StreamHandler"
+loggers:
+    "":
+        level: "INFO"
+        handlers:
+            - consoleHandler
+'''
+
+
+
 # Logging之坑！！！！！ NOTE!!!!
 # 1) logging坑就坑在新的logger配置不会覆盖旧的logger配置
 # 2) 如果 level 是0表示NOTSET,  我这里表现为所有的log都不记录！！！
+# 3) 默认dictConfig没有任何handler, 所以即使设置对了 log level， 也不会出消息
+#    - basicConfig 似乎没有这个问题
 
 # END   logging

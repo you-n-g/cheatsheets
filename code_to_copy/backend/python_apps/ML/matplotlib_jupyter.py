@@ -526,7 +526,7 @@ ax.set_position(pos2)
 # 1) 直接plot
 plt.plot(....)  # 只画一张图时最方便
 
-# 2) plt.subplots([row_n, col_n][, figsize=(width, height]))  (最终这个是最常用的)
+# 2) plt.subplots([row_n, col_n][, figsize=(width, height])[, sharex=True, sharey=True])  (最终这个是最常用的)
 # 以array的方式返回 fig 和 一组subplot的 axes
 # 缺点是类似于 plt.legend 和 plt.xticks 这种方法只能作用于最后的一个ax
 # 其实没有这个问题，可以直接通过ax画legened https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.legend.html
@@ -534,7 +534,13 @@ plt.plot(....)  # 只画一张图时最方便
 
 
 # 3) plt.subplot, 之后plt.xxx 一般就是等于 ax.xxx(也有小部分是找不到的)
-# 似乎最好， 功能最全....
+grb = score_topk_df.groupby(level='method', axis=1)
+fig = plt.figure(figsize=(5 * grb.ngroups, 3))  # 注意这里是小写的， 大写的会有问题!!!!
+for i, (method, gdf) in enumerate(grb, 1):
+    ax = plt.subplot(1, grb.ngroups, i)
+    gdf.droplevel(axis=1, level='method').cumsum().plot(title=method, ax=ax)
+# 优点是方便调用创建 subplot的函数，可以单独传参， 比如sharex (搜一下就知道了)
+# - 目前还没找到需要控制那么精细的
 
 
 # 画完之后可以给该图组集中加一个title

@@ -174,6 +174,8 @@ p.strip_dirs().sort_stats("cumtime").print_stats(100)
 # 存储pstats.Stats信息可以  %%prun -D stats_out  或者   p = %prun -r <statement>
 # 同时还有一系列的其他profile工具:
 # [ ] https://towardsdatascience.com/speed-up-jupyter-notebooks-20716cbe2025
+
+# 我自己觉得最好用的
 # pip install snakeviz  && snakeviz -s -H `hostname` stats_out    # 可以达到可视化的效果, 强烈推荐!!!!!!!
 # 当某个函数调内某一层调用同一个函数多次， 不知道是那次调用耗时比较多时，需要用line_profile区分
 

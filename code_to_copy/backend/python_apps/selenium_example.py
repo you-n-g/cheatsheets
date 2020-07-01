@@ -7,6 +7,13 @@ sudo apt-get install lightdm   # 然后启动 lightdm 就自动启动xserver了
 - https://unix.stackexchange.com/questions/561468/empty-screen-launching-chromium-browser-over-x11-from-ubuntu-16-to-osx-xquartz
     - 这里我理解是直接用本地的 XServer + X11Forwarding 出错时，可能用这个比较有效。
     - 更建议的方法是直接用 vncserver在服务器上启动X Server，然后本地vnc可以随时连上去看服务器的X App
+
+如果google的账户登录不了，出现了: this browser or app may not be secure
+- https://stackoverflow.com/a/59607923
+
+
+TODO:
+    - 把页面加载完成了才获取元素放到默认example里: https://stackoverflow.com/a/26567563
 '''
 # conda install selenium
 # sudo apt-get install chromium-chromedriver

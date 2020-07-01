@@ -41,7 +41,7 @@ Plug 'goerz/jupytext.vim' " `pip install jupytext` is required
 Plug 'unblevable/quick-scope'
 Plug 'tpope/vim-repeat'
 Plug 'jiangmiao/auto-pairs'
-
+Plug 'kshenoy/vim-signature'
 
 call plug#end()
 
@@ -95,6 +95,14 @@ let g:maplocalleader = ','
 " c+^ 是可以在最近的两个buffer之间切换的
 nnoremap gb :ls<CR>:b<Space>
 nnoremap <silent> <Leader>rc  :<C-u>source $MYVIMRC<CR>
+
+
+" for quick-scope: the color setting must be before the colorscheme
+augroup qs_colors
+  autocmd!
+  autocmd ColorScheme * highlight QuickScopePrimary guifg='#afff5f' gui=underline ctermfg=107 cterm=underline
+  autocmd ColorScheme * highlight QuickScopeSecondary guifg='#5fffff' gui=underline ctermfg=68 cterm=underline
+augroup END
 
 let g:gruvbox_contrast_dark="hard"
 " let g:gruvbox_contrast_dark="soft"
@@ -186,7 +194,12 @@ augroup END
 
 " 快速替换
 nnoremap <expr> <plug>HighlightReplace '/\<'.expand('<cword>').'\><CR>``:%s/\<'.expand('<cword>').'\>/'.expand('<cword>').'/g<left><left>'
+" 这里蕴含了单引号字符串包含单引号的技巧(''代表', 后来发现不用了)
+" - https://vi.stackexchange.com/a/9046
+" - :h literal-string
+vnoremap <expr> <plug>VHighlightReplace '/\<'.expand('<cword>').'\><CR>``:s/\<'.expand('<cword>').'\>/'.expand('<cword>').'/g<left><left>'
 nmap <leader>rp <plug>HighlightReplace
+vmap <leader>rp <plug>VHighlightReplace
 
 
 " 个人喜欢的快速移动
@@ -211,6 +224,7 @@ vnoremap <silent> <leader>      :<c-u>WhichKeyVisual '<Space>'<CR>
 " nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
 " vnoremap <silent> <localleader> :<c-u>WhichKeyVisual ','<CR>
 let g:which_key_map =  {}
+" 我理解这里的所有的map命令 CMD 最后都会变成 :CMD<CR>
 
 
 
@@ -327,10 +341,14 @@ let g:which_key_map['p'] = {
     \'p' : ['IPythonCellPrevCommand', 'Previous Command'],
     \'Q' : ['IPythonCellRestart', 'restart ipython'],
     \'d' : [':SlimeSend1 %debug', 'debug mode'],
+    \'t' : [':SlimeSend1 %load_ext autotime', 'debug mode'],
     \'q' : [':SlimeSend1 exit', 'exit'],
     \'k' : ['IPythonCellPrevCell', 'Prev Cell'],
     \'j' : ['IPythonCellNextCell', 'Next Cell']
     \ }
+
+" TODO: Combine the ipython cel and jupyter-vim
+" - https://vi.stackexchange.com/a/18946
 
 
 
@@ -626,6 +644,10 @@ let g:which_key_map['e'] = {
 
 " List all presets
 " nmap <leader>el :CocList explPresets
+
+" BUG
+" 有tagbar(或许是别的窗口)的时候，coc-explorer  打开文件会有问题
+
 
 
 " coc-snippet ------------------------
