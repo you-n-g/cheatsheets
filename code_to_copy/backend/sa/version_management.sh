@@ -3,6 +3,13 @@
 
 # BEGIN 常用基本操作 VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
 
+# PR相关
+# https://stackoverflow.com/questions/34100048/github-create-empty-branch
+# 创建空分支,  就可以对着空的分支做PR
+
+
+
+
 # 基本操作主要参考  http://rogerdudler.github.io/git-guide/
 
 

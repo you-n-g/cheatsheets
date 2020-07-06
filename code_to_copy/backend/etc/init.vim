@@ -42,6 +42,7 @@ Plug 'unblevable/quick-scope'
 Plug 'tpope/vim-repeat'
 Plug 'jiangmiao/auto-pairs'
 Plug 'kshenoy/vim-signature'
+Plug 'airblade/vim-gitgutter'
 
 call plug#end()
 
@@ -193,13 +194,21 @@ augroup END
 
 
 " 快速替换
-nnoremap <expr> <plug>HighlightReplace '/\<'.expand('<cword>').'\><CR>``:%s/\<'.expand('<cword>').'\>/'.expand('<cword>').'/g<left><left>'
+" TODO: 这个highlight 是个啥鬼.... 好像根本不需要是不是....
+" - 可能我只是想写一个替换highlight的快捷键，结果弄错了
+nnoremap <expr> <plug>HighlightReplaceW '/\<'.expand('<cword>').'\><CR>``:%s/\<'.expand('<cword>').'\>/'.expand('<cword>').'/g<left><left>'
 " 这里蕴含了单引号字符串包含单引号的技巧(''代表', 后来发现不用了)
 " - https://vi.stackexchange.com/a/9046
 " - :h literal-string
-vnoremap <expr> <plug>VHighlightReplace '/\<'.expand('<cword>').'\><CR>``:s/\<'.expand('<cword>').'\>/'.expand('<cword>').'/g<left><left>'
-nmap <leader>rp <plug>HighlightReplace
-vmap <leader>rp <plug>VHighlightReplace
+vnoremap <expr> <plug>VHighlightReplaceW '/\<'.expand('<cword>').'\><CR>``:s/\<'.expand('<cword>').'\>/'.expand('<cword>').'/g<left><left>'
+nmap <leader>rp <plug>HighlightReplaceW
+vmap <leader>rp <plug>VHighlightReplaceW
+
+" 这是不用分词符版本的
+nnoremap <expr> <plug>HighlightReplace ':%s/'.expand('<cword>').'/'.expand('<cword>').'/g<left><left>'
+vnoremap <expr> <plug>VHighlightReplace ':s/'.expand('<cword>').'/'.expand('<cword>').'/g<left><left>'
+nmap <leader>rP <plug>HighlightReplace
+vmap <leader>rP <plug>VHighlightReplace
 
 
 " 个人喜欢的快速移动
@@ -626,7 +635,7 @@ let g:coc_explorer_global_presets = {
 \   },
 \   'floatingRightside': {
 \      'position': 'floating',
-\      'floating-position': 'left-center',
+\      'floating-position': 'right-center',
 \      'floating-width': 50,
 \   },
 \   'simplify': {
@@ -637,7 +646,7 @@ let g:coc_explorer_global_presets = {
 " Use preset argument to open it
 let g:which_key_map['e'] = {
     \ 'name' : 'coc-list',
-    \'f' : [':CocCommand explorer --sources=buffer+,file+ --preset floatingLeftside', 'Float Explorer'],
+    \'f' : [':CocCommand explorer --sources=buffer+,file+ --preset floatingRightside', 'Float Explorer'],
     \'c' : [':CocCommand explorer --sources=buffer+,file+', 'Side Explorer'],
     \'e' : [':CocCommand explorer --sources=buffer+,file+ --preset floating', 'Full Explorer'],
     \ }
@@ -824,6 +833,15 @@ let g:qs_buftype_blacklist = ['nofile', 'terminal']  " in case it change the col
 " alt + p 可以控制 pair 的开关
 " alt + e 可以在将行中间补全的括号自动放到末尾
 " END   'jiangmiao/auto-pairs'----------------------------------------------------------
+
+
+" BEGIN 'airblade/vim-gitgutter' ------------------------------------------------------
+let g:which_key_map['h'] = {
+    \ 'name' : 'GitGutter(Hank)',
+    \'[' : ['<Plug>(GitGutterPrevHunk)', 'PrevHunk'],
+    \']' : ['<Plug>(GitGutterNextHunk)', 'NextHunk']
+    \ }
+" END   'airblade/vim-gitgutter' ------------------------------------------------------
 
 
 " Nvim usage cheetsheet

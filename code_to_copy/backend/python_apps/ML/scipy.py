@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 #-*- coding:utf8 -*-
 
+# Outlines
+# - pandas
+
+
 # 基本模板
 import numpy as np
 import pandas as pd
@@ -91,7 +95,8 @@ from scipy.stats.mstats import rankdata
 np.argsort
 
 
-
+# %% [markdown]
+# # Outlines: pandas
 # pandas 相关  =========================================================================================
 # pandas中，一张表是 pandas.core.frame.DataFrame, 一行或一列数据是pandas.core.series.Series
 # 用pandas可以让数据本身包含很多信息，不用单独再对行列再进行描述
@@ -312,6 +317,15 @@ pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
 # fillna如果是一个常数，性能会非常好，如果是一个series, 性能会非常差!!!!!
 # - 比如fillna mean，那么可以先减mean，再fillna(0)会极大地提升性能
 
+
+# pandas 的resample
+# 个人理解: 
+# - 当rule是'M', 'A', 'Q'这种单个时期时，拿月做例子， resample的bin划分左右端是 上一个月的最后一天， 这一个月的最后一天；
+# - closed=left  则每个区间包含 [上一个月的最后一天， 这一个月的最后一天)
+# - closed=right 则每个区间包含 (上一个月的最后一天， 这一个月的最后一天]  (默认值)
+# - 当rule是X个M时，我理解是从当前取整的时间开始的这个M的**闭区间**为分割点，之后每X个M再出现一个分割点。 所以第一个分割点就变成一个月了!!!
+# 解决方法如下,   但是这个地方会有一个问题， 每六个月的最后一天被划分到下六个月了
+df.resample('6M', closed='left')
 
 
 ## 一些要注意的点

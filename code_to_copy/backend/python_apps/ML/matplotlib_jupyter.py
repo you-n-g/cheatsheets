@@ -583,15 +583,16 @@ import matplotlib.pyplot as plt
 
 def change_fs(font_size):
     font_size = font_size
-    plt.rc('font', size=font_size)          # controls default text sizes
-    plt.rc('axes', titlesize=font_size)     # fontsize of the axes title
-    plt.rc('axes', labelsize=font_size)    # fontsize of the x and y labels
-    plt.rc('xtick', labelsize=font_size)    # fontsize of the tick labels
-    plt.rc('ytick', labelsize=font_size)    # fontsize of the tick labels
-    plt.rc('legend', fontsize=font_size)    # legend fontsize
-    plt.rc('figure', titlesize=font_size)  # fontsize of the figure title
+    plt.rc('font', size=font_size)        # controls default text sizes
+    plt.rc('axes', titlesize=font_size)   # fontsize of the axes title
+    plt.rc('axes', labelsize=font_size)   # fontsize of the x and y labels
+    plt.rc('xtick', labelsize=font_size)  # fontsize of the tick labels
+    plt.rc('ytick', labelsize=font_size)  # fontsize of the tick labels
+    plt.rc('legend', fontsize=font_size)  # legend fontsize
+    plt.rc('figure', titlesize=font_size) # fontsize of the figure title
 
 # 如果想一次改变所有的font size;  这个是一个全局性的，会持续生效
+# 这个不能改变坐标轴的大小
 matplotlib.rcParams.update({'font.size': 14})
 
 
