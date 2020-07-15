@@ -3,6 +3,7 @@
 
 # Outlines
 # - pandas
+#   - pandas cheatsheets
 
 
 # 基本模板
@@ -356,6 +357,10 @@ df.resample('6M', closed='left')
 # 对于一些聚合函数
 # 1) axis for the function to be applied on:  代表每次应用这个函数时， 相当于将axis之外的维度固定住，变动这一个axis得到多个值进行聚合， 结果是axis被消除
 # 2) count along a particular level, collapsing into a Series. :  代表按照level依次选取一批值，用函数聚合成一个值， 最后只剩这个level的一系列值。
+
+# %% [markdown]
+# ## Outlines: pandas cheatsheets
+# https://github.com/kailashahirwar/cheatsheets-ai
 
 # pandas 相关  =========================================================================================
 

@@ -17,6 +17,7 @@
 #   - 字体相关
 # - 常用的代码片段
 # - 未解之谜
+# - Cheatsheets
 
 
 # # Outlines: 基本框架 BEGIN ----------------------------------------
@@ -36,6 +37,15 @@ ax.patches
 # 像fig.add_subplot, plt.subplot 都可以加参数传到构造axes
 # 可传的参数包含 sharex, sharey
 plt.gca()  # get current axes
+
+
+# tick labels
+xticklabels = ax.get_xticklabels()
+for label in xticklabels:
+    text = label.get_text()
+    # 根据你取到的内容设置成想要的内容
+    label.set_text(text[:7])
+ax.set_xticklabels(xticklabels)
 
 # 基本框架 END   ----------------------------------------
 
@@ -339,6 +349,7 @@ sns.barplot(x='type', y=iname, data=df) # 需要画误差线时用这个工具 h
 # x will be a attribute to describe the x class
 # y will be the value in that class。
 # ci default value is 'sd', the stand variable will be there
+# 画barh柱状图见 pandas的barh
 
 sns.tsplot # 用来画时间轴
 
@@ -484,6 +495,15 @@ df.plot(
 )
 
 df2.plot(legend=None)  # 可以让所有子图的legend消失
+
+
+
+# https://stackoverflow.com/a/11927922
+# barplot给颜色
+df.plot(kind='barh', color=color) # color是一个和元素数一样的array color = np.where(is_new, 'r', 'b')
+# 如果想要给legend，没有找到比较好的方法，只有用seaborn了
+df = feai_topk.to_frame('Feature Importance').assign(**{'版本': np.where(is_new, '新因子', '旧因子')})
+sns.barplot(data=df.reset_index(), x='Feature Importance', y='index', orient='h', hue='版本', dodge=False, hue_order=['新因子', '旧因子'])
 
 # Pandas .plot篇  END   --------------------------------
 
@@ -653,4 +673,9 @@ ax.set_xlim(min_w - margin, max_w + margin)
 # you must install this extension https://github.com/jupyter-widgets/ipywidgets
 # 可能会遇到这个错误  Widget Javascript not detected.  It may not be installed or enabled properly
 # 最终没有解决
+
+
+# %% [markdown]
+# # Outlines: Cheatsheets
+# https://github.com/matplotlib/cheatsheets
 

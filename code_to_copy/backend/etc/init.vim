@@ -463,7 +463,9 @@ inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use `[c` and `]c` to navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
+\:silent! call repeat#set("\<Plug>(coc-diagnostic-prev)", v:count)<CR>
 nmap <silent> ]c <Plug>(coc-diagnostic-next)
+\:silent! call repeat#set("\<Plug>(coc-diagnostic-next)", v:count)<CR>
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -836,11 +838,18 @@ let g:qs_buftype_blacklist = ['nofile', 'terminal']  " in case it change the col
 
 
 " BEGIN 'airblade/vim-gitgutter' ------------------------------------------------------
-let g:which_key_map['h'] = {
-    \ 'name' : 'GitGutter(Hank)',
-    \'[' : ['<Plug>(GitGutterPrevHunk)', 'PrevHunk'],
-    \']' : ['<Plug>(GitGutterNextHunk)', 'NextHunk']
-    \ }
+" let g:which_key_map['h'] = {
+"     \ 'name' : 'GitGutter(Hank)',
+"     \'[' : ['<Plug>(GitGutterPrevHunk)', 'PrevHunk'],
+"     \']' : ['<Plug>(GitGutterNextHunk)', 'NextHunk']
+"     \ }
+
+nmap <silent> <leader>h[ <Plug>(GitGutterPrevHunk)
+\:silent! call repeat#set("\<Plug>(GitGutterPrevHunk)", v:count)<CR>
+
+nmap <silent> <leader>h] <Plug>(GitGutterNextHunk)
+\:silent! call repeat#set("\<Plug>(GitGutterNextHunk)", v:count)<CR>
+
 " END   'airblade/vim-gitgutter' ------------------------------------------------------
 
 

@@ -7,7 +7,6 @@
 logger.remove(0)
 logger.add("其他的东西")
 
-
 # 如果你想对logger做一点封装， 又希望代码提示在上层
 logger.opt(depth=2).log(level, f"Time {name}: {time.time() - start} s")
 
