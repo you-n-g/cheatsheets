@@ -39,13 +39,25 @@ ax.patches
 plt.gca()  # get current axes
 
 
+# axes name
+ax.xaxis.set_label_text("x轴名称")
+
+
 # tick labels
+
+## 都清除
+ax.xaxis.set_ticks([])
+
+## 设置成指定值
 xticklabels = ax.get_xticklabels()
 for label in xticklabels:
     text = label.get_text()
     # 根据你取到的内容设置成想要的内容
     label.set_text(text[:7])
 ax.set_xticklabels(xticklabels)
+
+## 方向
+plt.xticks(rotation=45, fontsize=fontsize)
 
 # 基本框架 END   ----------------------------------------
 
@@ -666,6 +678,13 @@ pct = 0.8
 margin = delta * (1. - pct) / 2
 ax.set_xlim(min_w - margin, max_w + margin)
 
+
+
+
+# 给图里标注点:  xytext是文本左下角的点
+plt.annotate("Text Content", xy=(<x>, <y>), xytext=(<x>, <y> + 1000),
+     arrowprops=dict(facecolor='black', shrink=0.05, headwidth=20, width=7))
+# 还可以加的参数, rotation=90 可以让文字旋转
 
 
 # # Outlines: ------------------ 未解之谜 --------------------

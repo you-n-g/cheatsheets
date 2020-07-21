@@ -339,7 +339,6 @@ let g:slime_dont_ask_default = 1
 
 let g:which_key_map['p'] = {
     \ 'name' : 'IPython Cell',
-    \'s' : [':SlimeSend1 ipython --matplotlib', 'start ipython with matplotlib'],
     \'r' : ['IPythonCellRun', 'IPythonCellRun'],
     \'R' : ['IPythonCellRunTime', 'IPythonCellRunTime'],
     \'e' : ['IPythonCellExecuteCellVerbose', 'Execute Cell'],
@@ -355,6 +354,10 @@ let g:which_key_map['p'] = {
     \'k' : ['IPythonCellPrevCell', 'Prev Cell'],
     \'j' : ['IPythonCellNextCell', 'Next Cell']
     \ }
+" \'s' : [':SlimeSend1 ipython --matplotlib', 'start ipython with matplotlib'],
+" \'b' : ['SlimeSend0 "b ".expand("%:p").":".line("$")', 'Send file break point'],
+
+nmap <leader>psb :SlimeSend0 "b ".expand("%:p").":".line(".")."\n"<CR>
 
 " TODO: Combine the ipython cel and jupyter-vim
 " - https://vi.stackexchange.com/a/18946
@@ -714,6 +717,10 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " 各种配置通过这里来设置 
 " 直接编辑 ~/.config/nvim/coc-settings.json 或者  CocConfig
 
+" coc-java不能识别classpath
+" https://github.com/neoclide/coc-java/issues/93
+
+"
 " 好用的地方:  grep, gr; 看上面的定义，IDE常用的地方上面都有
 
 
@@ -860,6 +867,8 @@ nmap <silent> <leader>h] <Plug>(GitGutterNextHunk)
 " - 设计理念
 " - 查看当前设置
 " - Moving
+" - Mode相关
+" - experssion
 " - 其他
 " - 坑
 " - script
@@ -890,6 +899,14 @@ nmap <silent> <leader>h] <Plug>(GitGutterNextHunk)
 " Moving: http://vimdoc.sourceforge.net/htmldoc/motion.html
 " help diw daw 等等
 
+" ========= Mode相关 =========
+" Command line mode or insert mode:
+" 可以直接 <C-R><寄存器>, 插入寄存器的内容
+" https://vim.fandom.com/wiki/Pasting_registers
+
+
+" ========= Expression =========
+" echo expand("%:p").":".line("$")
 
 " ========== 其他 ==========
 " 匹配: 正向预查，反向预查，环视

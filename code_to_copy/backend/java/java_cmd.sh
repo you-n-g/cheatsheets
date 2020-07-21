@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+# # Outlines: 
+# 对jar包的各种操作
+
+
+
+
+# # Outlines: Jar 包相关
+
+jar tf jar-file
+
 
 # 查看状态
 jps  # 查看当前运行的程序 Java Virtual Machine Process Status Tool
