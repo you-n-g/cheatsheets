@@ -1,8 +1,12 @@
 #!/bin/bash
 
+# # Outlines:
+# - 
+
 
 # Cheatsheet catalog
 # - 语法篇
+# - find篇
 
 
 # 其他cheatsheet
@@ -308,6 +312,9 @@ for ((train=2006, test=2012; test < 2017; train++, test++ )) ; do
 done
 
 
+# 一般shell软件分 带-的参数，  和不带-的参数。  为了消除歧义，一般 -- 代表带-的参数的结束
+
+
 # 用户相关
 adduser xiaoyang
 usermod -aG sudo xiaoyang
@@ -379,3 +386,22 @@ echo 'echo $@' | bash -s - -lst
 # https://stackoverflow.com/a/30728472
 # 有双引号时(如"EOF"), 里面的内容一定不转义
 # 语法篇END   --------------------------------------
+
+
+# find BEGIN --------------------------------------
+
+# find的运行方式
+# 由 logic(-o), \( \), test (比如-name), action(比如 -print) 和 global options(比如depth之类的) 组成
+# action都是返回true
+# find会拿每一个文件过这个表达式，  触发相应的action, 和普通编程语言的 and/or 逻辑一样
+# -prune 相当于直接返回true,  一般会接 -o 让后面的表达式部分无法执行
+# 如果整个表达式中(任何地方)没有 -prune 之外的 action, 最后find会自动变成  `\( 跟个表达式 \)` -print
+# - 这个会导致一个奇怪的行为
+#    - `find .  -name '*.md' -prune` 会打印 "*.md" 文件
+#    - 但是如果后面加上一个 -o -print 就会打印相反的文件了
+
+# 学习 https://stackoverflow.com/questions/1489277/how-to-use-prune-option-of-find-in-sh
+# 下面那句话只是跑成功了， 我还没有细想过其准确性
+find . -maxdepth 1 -mindepth 1 \(  -name v2  -o  -name README.md -o -name r.hd5 -prune -o -exec mv {} v2 \;  \)
+
+# find END   --------------------------------------

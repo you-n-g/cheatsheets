@@ -13,7 +13,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 Plug 'tell-k/vim-autopep8'
 " Plug 'python-mode/python-mode', {'branch': 'develop'}
-Plug 'tpope/vim-surround'
+" Plug 'tpope/vim-surround'  " This plugin is replaced by vim-
 Plug 'dhruvasagar/vim-table-mode'
 " Plug 'mileszs/ack.vim'  # 已经被nvim 替代
 Plug 'morhetz/gruvbox'
@@ -44,6 +44,12 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'kshenoy/vim-signature'
 Plug 'airblade/vim-gitgutter'
 
+Plug 'wellle/context.vim'
+Plug 'machakann/vim-sandwich'
+
+Plug 'ludovicchabant/vim-gutentags'  " 自动生成更新ctags
+" tags围绕tag stack进行,  ctrl+t pop操作， ctrl+] push操作(如果找得到顺便jump一下)
+
 call plug#end()
 
 
@@ -71,7 +77,7 @@ set secure
 "   \ }
 " list.source.grep.excludePatterns 实在是不会用,  所以workaround方法如下
 " 就是把那些大文件放到别的地方再Link过来，默认coclist grep不会follow link
-
+" list.source.files.excludePatterns  和  list.source.grep.excludePatterns 看起来像是coclist file和grep的ignore
 
 
 " Go to the last cursor location when a file is opened, unless this is a
@@ -216,6 +222,13 @@ vmap <leader>rP <plug>VHighlightReplace
 inoremap <C-e> <C-o>$
 
 
+" 禁止vim存储特定名字的文件(防止按错)
+" https://stackoverflow.com/a/6211489
+" TODO: [] 也加上...
+autocmd BufWritePre [:;"'\[\]]*
+\   try | echoerr 'Forbidden file name: ' . expand('<afile>') | endtry
+" 如果实在想存可一这么操作
+" :noa w '
 
 
 "
@@ -617,6 +630,8 @@ let g:coc_global_extensions = [
  \ "coc-json",
  \ "coc-explorer",
  \ "coc-snippets",
+ \ "coc-marketplace",
+ \ "coc-java"
  \ ]
  " \ "coc-marketplace"
 
@@ -719,6 +734,11 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 " coc-java不能识别classpath
 " https://github.com/neoclide/coc-java/issues/93
+" 项目目录下的  .classpath 可以修复这个问题
+" -       <classpathentry combineaccessrules="false" kind="src" path="/jpf-core"/>
+" +       <classpathentry combineaccessrules="false" exported="true" kind="src" path="/jpf-core"/>
+" +       <classpathentry kind="lib" path="/home/zhenyue/Develops/jpf/jpf-core/build/jpf.jar"/>
+
 
 "
 " 好用的地方:  grep, gr; 看上面的定义，IDE常用的地方上面都有
@@ -860,8 +880,30 @@ nmap <silent> <leader>h] <Plug>(GitGutterNextHunk)
 " END   'airblade/vim-gitgutter' ------------------------------------------------------
 
 
-" Nvim usage cheetsheet
+" BEGIN 'wellle/context.vim' ------------------------------------------------------
+let g:context_enabled = 1
 
+" 和neovim一起这样用会有bug
+" https://github.com/wellle/context.vim/issues/23
+let g:context_nvim_no_redraw = 1 
+
+" END   'wellle/context.vim' ------------------------------------------------------
+
+
+" BEGIN  'machakann/vim-sandwich' -----------------------------------------
+" 命令格式
+" - {operator}{text obj selection}{surrounding}
+" - 如果处于 visual-mode下，{text obj selection} 不用选择
+" {operator}: 加了 sa sr sd， 用起来和 d v 之类的operator等价
+" {text obj selection}: iw, aw 之类的都可以用
+" {surrounding}
+" - b变成了surrouding的通配符，之前的 di" , da' 之类的都可以变成 dab
+" - 最后输入surronding时， i可以输入复杂的， t可以输入tag
+" END    'machakann/vim-sandwich' -----------------------------------------
+
+
+
+" Nvim usage cheetsheet
 
 " 目录
 " - 设计理念
@@ -897,6 +939,7 @@ nmap <silent> <leader>h] <Plug>(GitGutterNextHunk)
 
 " ========== Moving ==========
 " Moving: http://vimdoc.sourceforge.net/htmldoc/motion.html
+" # Text object selection: 在v或者operation之后 指定文本范围
 " help diw daw 等等
 
 " ========= Mode相关 =========

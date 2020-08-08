@@ -18,6 +18,7 @@
 # - 常用的代码片段
 # - 未解之谜
 # - Cheatsheets
+# - 其他库
 
 
 # # Outlines: 基本框架 BEGIN ----------------------------------------
@@ -58,6 +59,9 @@ ax.set_xticklabels(xticklabels)
 
 ## 方向
 plt.xticks(rotation=45, fontsize=fontsize)
+
+## 在上面还是下面
+ax.xaxis.tick_top()
 
 # 基本框架 END   ----------------------------------------
 
@@ -216,6 +220,12 @@ def plot_two_yaxes():
 		tick.label.set_fontsize(fontsz)
     axes.plot(x, np.exp(x), ls='--',label='exp')
     right_axes.plot(x, np.log(x), ls=':', label='log')
+
+    # 如果是pandas 可以尝试
+    # df[col].plot(ax=right_ax, label='std', color='green')
+    # 有可能会出现两个legend, 可以通过这个改动: ax.legend().set_visible(False)
+
+
     h1, l1 = axes.get_legend_handles_labels()
     h2, l2 = right_axes.get_legend_handles_labels()
 
@@ -604,6 +614,12 @@ axes.get_xaxis().set_visible(False)
 ax2.set_frame_on(True)  # 可以让 legend永远在线的下面
 plt.legend().set_visible(False) # 可以让 legend 消失， 但是仅仅针对最后一个子图
 
+
+# 不同图像本身
+## histgram
+# linewidth 可以控制每个柱状图的边界, 这样就有可能画密一点
+# series.plot(kind='hist', linewidth=0.1)
+
 # ## Outlines: 字体相关
 
 # 下面的两个方法都能持续的修改字体大小, 第一种方法会覆盖第二种方法
@@ -698,3 +714,10 @@ plt.annotate("Text Content", xy=(<x>, <y>), xytext=(<x>, <y> + 1000),
 # # Outlines: Cheatsheets
 # https://github.com/matplotlib/cheatsheets
 
+
+# # Outlines: 其他库
+# 百度开源的库 
+# - github: https://github.com/pyecharts/pyecharts
+# - treemap:  https://echarts.apache.org/examples/zh/#chart-type-tree
+
+# squarify: 专门画 treemap的

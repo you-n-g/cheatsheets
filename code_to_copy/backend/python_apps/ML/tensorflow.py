@@ -23,3 +23,7 @@ tf.reset_default_graph()  # 训练完成后我重新设置网络，就不怕名�
 # placeholder : 可以向图中输入数据， 使用feed_dict传输数据
 # Operation
 # - init_op = tf.global_variables_initializer()  # 这个是用于初始化的operation
+
+
+# 测试tensorflow gpu计算的benchmark
+# https://github.com/tensorflow/benchmarks/tree/master/scripts/tf_cnn_benchmarks

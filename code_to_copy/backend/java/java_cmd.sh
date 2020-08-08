@@ -30,3 +30,14 @@ mvn dependency:copy-dependencies -DoutputDirectory=libs  # 会把所有的依赖
 # 内存相关
 -Xmx2048m # 设置大可分配内存
 
+
+
+# # Outlines: debug 相关
+# jvmtop:  
+# 可以profiling 正在运行的Java程序
+# TODO:  https://stackoverflow.com/a/34887281
+
+# runhprof:
+# https://stackoverflow.com/a/10724971
+
+

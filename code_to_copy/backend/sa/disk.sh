@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 
-
+# 目录
+# - 分区管理
+# - 查看信息
+# - 清理垃圾文件
+# - 其他
 
 
 # BEGIN 分区管理 ==================================
@@ -78,3 +82,26 @@ agedu
 # ssh 127.0.0.1 -L 0.0.0.0:48475:127.0.0.1:48474  # 做个端口转发 想让别人也能访问
 
 # END   清理垃圾文件  -----------------------
+
+
+
+
+# BEGIN 其他 ------------------------------
+
+
+# NFS相关
+
+# https://linoxide.com/linux-how-to/nfs-device-busy/
+# 强行umount 再mount
+# - 刚刚开机的就出现disk is buzy的问题解决了
+# - 但是之前一直buzy的
+# sudo umount -f -l /nfs_data1 && sudo mount -a
+
+# 如何用file cache/cachefilesd 加速nfs
+# https://askubuntu.com/questions/4572/how-can-i-cache-nfs-shares-on-a-local-disk 
+# https://www.cyberciti.biz/faq/centos-redhat-install-configure-cachefilesd-for-nfs/
+
+
+
+
+# END   其他 ------------------------------
