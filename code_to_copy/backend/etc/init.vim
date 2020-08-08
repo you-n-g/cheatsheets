@@ -717,8 +717,16 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " 各种配置通过这里来设置 
 " 直接编辑 ~/.config/nvim/coc-settings.json 或者  CocConfig
 
+" 还不能解决的问题
 " coc-java不能识别classpath
 " https://github.com/neoclide/coc-java/issues/93
+"
+" 当 ~/.config/coc/ 这个文件在nfs上的时候，会出现所有插件都变成单文件的问题；
+" 解决方法是
+" sudo mkdir /mnt/xiaoyang && sudo chown xiaoyang: /mnt/xiaoyang  && mv ~/.config/coc/ /mnt/xiaoyang &&  cd ~/.config &&  && ln -s /mnt/xiaoyang/coc .
+" 更新coc文件
+" cd ~/.config && unlink coc && sudo mv /mnt/xiaoyang/coc .
+
 
 "
 " 好用的地方:  grep, gr; 看上面的定义，IDE常用的地方上面都有
