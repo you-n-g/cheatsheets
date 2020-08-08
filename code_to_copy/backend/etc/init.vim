@@ -732,12 +732,23 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " 各种配置通过这里来设置 
 " 直接编辑 ~/.config/nvim/coc-settings.json 或者  CocConfig
 
+" 还不能解决的问题
 " coc-java不能识别classpath
 " https://github.com/neoclide/coc-java/issues/93
 " 项目目录下的  .classpath 可以修复这个问题
 " -       <classpathentry combineaccessrules="false" kind="src" path="/jpf-core"/>
 " +       <classpathentry combineaccessrules="false" exported="true" kind="src" path="/jpf-core"/>
 " +       <classpathentry kind="lib" path="/home/zhenyue/Develops/jpf/jpf-core/build/jpf.jar"/>
+
+"
+" 当 ~/.config/coc/ 这个文件在nfs上的时候，会出现所有插件都变成单文件的问题；
+" 解决方法1)
+" 1. sudo mkdir /mnt/xiaoyang && sudo chown xiaoyang: /mnt/xiaoyang  && mv ~/.config/coc/ /mnt/xiaoyang &&  cd ~/.config &&  && ln -s /mnt/xiaoyang/coc .
+" 2. 更新coc文件
+" 3. cd ~/.config && unlink coc && sudo mv /mnt/xiaoyang/coc .
+" 解决方法2)
+" mkdir ~/.config/coc/extensions/node_modules/coc-marketplace/ 后再创建插件
+
 
 
 "
