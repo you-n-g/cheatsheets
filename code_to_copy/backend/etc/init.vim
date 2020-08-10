@@ -56,6 +56,13 @@ set shiftwidth=4
 autocmd FileType c,cpp setlocal shiftwidth=2 tabstop=2
 set number
 set relativenumber
+" augroup FIX_COC_EXP
+"     autocmd!
+"     " coc-explorer好像 relativenumber 显示有问题
+"     " autocmd FileType * setlocal relativenumber
+"     autocmd FileType coc-explorer setlocal norelativenumber
+"     autocmd FileType coc-explorer setlocal nonumber
+" augroup END
 set scrolloff=10 " always keep 10 lines visible.
 set ignorecase
 set smartcase
@@ -700,6 +707,7 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " - https://github.com/neoclide/coc-python/issues/55
 "
 " Jedi error: Cannot call write after a stream was destroyed
+" 包括其他的错误，只要错误信息中涉及到了jedi，更新jedi常常都有用
 " pip search jedi, 看看你安装的是不是最新版
 "
 " Coc does not install extension if file with same name exists

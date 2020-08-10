@@ -11,6 +11,9 @@
 # conda比较慢的地方在于它需要根据你当前的环境解析 装什么样的包和依赖能满足你当前的需求; pip就直接安装你当前的包和依赖，不管你当前系统的状态
 # 把所有相关的包的约束汇总起来是一个NP问题
 
+
+# # Outlines: conda相关
+
 # search
 conda search --full-name python
 
@@ -50,6 +53,9 @@ conda create --name new_name --clone old_name
 conda remove --name old_name --all
 
 
-
 # 有时候 conda的包依赖于 .so文件，现在找.so文件似乎有bug
 # https://stackoverflow.com/a/46833531
+
+
+# # Outlines: pip相关
+# 换成国内的源: https://mirrors.tuna.tsinghua.edu.cn/help/pypi/
