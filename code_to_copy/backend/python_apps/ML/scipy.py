@@ -317,6 +317,9 @@ pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
 # pandas性能问题
 # fillna如果是一个常数，性能会非常好，如果是一个series, 性能会非常差!!!!!
 # - 比如fillna mean，那么可以先减mean，再fillna(0)会极大地提升性能
+# 
+# [  ] 我的猜想: 有时候loc不一定很慢, 可能是iloc调用时不会拷贝数据， loc调用时一定会拷贝数据
+# - 需要高性能时尽量用df操作，避免底层拷贝(我感觉dataframe到np.array会自动拷贝数据，尽量让这种事情只发生一次)!!!
 
 
 # pandas 的resample
@@ -358,7 +361,7 @@ df.resample('6M', closed='left')
 # 1) axis for the function to be applied on:  代表每次应用这个函数时， 相当于将axis之外的维度固定住，变动这一个axis得到多个值进行聚合， 结果是axis被消除
 # 2) count along a particular level, collapsing into a Series. :  代表按照level依次选取一批值，用函数聚合成一个值， 最后只剩这个level的一系列值。
 
-# %% [markdown]
+
 # ## Outlines: pandas cheatsheets
 # https://github.com/kailashahirwar/cheatsheets-ai
 
@@ -480,6 +483,8 @@ display(df)
 # 对编程方式的里程碑的革新
 # - 解决了这个gap: 你coding可以只关注一小块，每次验证的时候却需要跑全部代码
 # - 之前的方法: 也可以保存状态， 但是加载新代码极其麻烦，而且为了能方便加载，代码结构会被弄得非常混乱
+# DEBUG:
+# - 如果发现无法加载新代码， 可能是因为新代码的.py文件中有语法错误
 # 坑
 # - 有可能会造成 改变了方法的类和父类之间失去了继承关系, isinstance出错, 子类中调用super()出错 (重启一下kernel就好了)
 #   - 在父类和子类在同一个 .py 文件中时，曾经稳定多次复现
