@@ -32,12 +32,21 @@ mvn dependency:copy-dependencies -DoutputDirectory=libs  # 会把所有的依赖
 
 
 
-# # Outlines: debug 相关
+# # Outlines: debug && profiler 相关
+
+# ## Outlines: Debug
+# 见init.vim 中的 coc-java-debug && viminspector
+
+# ## Outlines: profiler
+
+# runhprof:
+# java 自带的agent， 我没有太看懂
+# https://stackoverflow.com/a/10724971
+
+# async-profiler:
+# 这个我跑出来了，还画出图来了: 感觉还是不错的
+# https://github.com/jvm-profiling-tools/async-profiler
+
 # jvmtop:  
 # 可以profiling 正在运行的Java程序
 # TODO:  https://stackoverflow.com/a/34887281
-
-# runhprof:
-# https://stackoverflow.com/a/10724971
-
-

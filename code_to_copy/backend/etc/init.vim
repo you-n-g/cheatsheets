@@ -50,6 +50,10 @@ Plug 'machakann/vim-sandwich'
 Plug 'ludovicchabant/vim-gutentags'  " 自动生成更新ctags
 " tags围绕tag stack进行,  ctrl+t pop操作， ctrl+] push操作(如果找得到顺便jump一下)
 
+Plug 'puremourning/vimspector'
+
+Plug 'kana/vim-submode'
+
 call plug#end()
 
 
@@ -75,9 +79,15 @@ set secure
 " let g:ctrlp_custom_ignore = {
 "   \ 'dir':  '\vmodels$',
 "   \ }
+
+" coc-lists相关的都可以用 project下的 .ignore
+" 文件代替，当做它是.gitignore用????
+
+" list.source.files.excludePatterns 是coclist file的ignore
+" 这个在deployment里面有自己动设置参数的脚本
+"
 " list.source.grep.excludePatterns 实在是不会用,  所以workaround方法如下
 " 就是把那些大文件放到别的地方再Link过来，默认coclist grep不会follow link
-" list.source.files.excludePatterns  和  list.source.grep.excludePatterns 看起来像是coclist file和grep的ignore
 
 
 " Go to the last cursor location when a file is opened, unless this is a
@@ -217,6 +227,13 @@ nmap <leader>rP <plug>HighlightReplace
 vmap <leader>rP <plug>VHighlightReplace
 
 
+" 只替换当前行 replace row
+nnoremap <expr> <plug>HighlightReplaceRow ':s/\<'.expand('<cword>').'\>/'.expand('<cword>').'/g<left><left>'
+vnoremap <expr> <plug>VHighlightReplaceRow ':s/\<'.expand('<cword>').'\>/'.expand('<cword>').'/g<left><left>'
+nmap <leader>rr <plug>HighlightReplaceRow
+vmap <leader>rP <plug>VHighlightReplaceRow
+
+
 " 个人喜欢的快速移动
 " - 在insert mode下快速到行尾
 inoremap <C-e> <C-o>$
@@ -229,6 +246,7 @@ autocmd BufWritePre [:;"'\[\]]*
 \   try | echoerr 'Forbidden file name: ' . expand('<afile>') | endtry
 " 如果实在想存可一这么操作
 " :noa w '
+
 
 
 "
@@ -255,7 +273,7 @@ let g:which_key_map =  {}
 " https://github.com/kien/ctrlp.vim
 " let g:ctrlp_working_path_mode = 'wa'
 " nnoremap <silent> <leader>cp  :<C-u>CtrlPClearCache<CR>
-nmap <silent> <C-P>  :<C-u>CocList files<CR>
+nnoremap <silent> <C-P>  :<C-u>CocList files<CR>
 let g:ctrlp_map = ''
 let g:ctrlp_cmd = ''
 
@@ -370,7 +388,7 @@ let g:which_key_map['p'] = {
 " \'s' : [':SlimeSend1 ipython --matplotlib', 'start ipython with matplotlib'],
 " \'b' : ['SlimeSend0 "b ".expand("%:p").":".line("$")', 'Send file break point'],
 
-nmap <leader>psb :SlimeSend0 "b ".expand("%:p").":".line(".")."\n"<CR>
+nnoremap <leader>psb :SlimeSend0 "b ".expand("%:p").":".line(".")."\n"<CR>
 
 " TODO: Combine the ipython cel and jupyter-vim
 " - https://vi.stackexchange.com/a/18946
@@ -387,7 +405,7 @@ let g:airline_theme='dark'
 "
 " heavenshell/vim-pydocstring
 " Docstring的详细格式解析: https://stackoverflow.com/a/24385103
-nmap <silent> <leader>d <Plug>(pydocstring)
+nnoremap <silent> <leader>d <Plug>(pydocstring)
 let g:pydocstring_formatter='numpy'
 
 
@@ -705,6 +723,23 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " https://github.com/neoclide/coc-lists/issues/69
 
 
+" coc java 相关 ------------------------
+
+" coc-java不能识别classpath
+" https://github.com/neoclide/coc-java/issues/93
+" 项目目录下的  .classpath 可以修复这个问题
+" -       <classpathentry combineaccessrules="false" kind="src" path="/jpf-core"/>
+" +       <classpathentry combineaccessrules="false" exported="true" kind="src" path="/jpf-core"/>
+" +       <classpathentry kind="lib" path="/home/zhenyue/Develops/jpf/jpf-core/build/jpf.jar"/>
+
+" coc-java-debug minimal setting
+" 安装: coc-java-debug,  Vimspector, 在项目中配置.vimspector.json,
+" vimspector快捷键设置， 启动java时加参数 -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=5005,suspend=y 
+" vimspector设置断点，链接jvm
+
+
+
+
 " DEBUG相关
 " 当出现下面情况都先确认环境有没有弄错
 " - 解析pylama解析包失败时(找不到包, 比如import时提示无法解析)
@@ -732,14 +767,8 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " 各种配置通过这里来设置 
 " 直接编辑 ~/.config/nvim/coc-settings.json 或者  CocConfig
 
-" 还不能解决的问题
-" coc-java不能识别classpath
-" https://github.com/neoclide/coc-java/issues/93
-" 项目目录下的  .classpath 可以修复这个问题
-" -       <classpathentry combineaccessrules="false" kind="src" path="/jpf-core"/>
-" +       <classpathentry combineaccessrules="false" exported="true" kind="src" path="/jpf-core"/>
-" +       <classpathentry kind="lib" path="/home/zhenyue/Develops/jpf/jpf-core/build/jpf.jar"/>
 
+" 还不能解决的问题
 "
 " 当 ~/.config/coc/ 这个文件在nfs上的时候，会出现所有插件都变成单文件的问题；
 " 解决方法1)
@@ -898,6 +927,9 @@ let g:context_enabled = 1
 " https://github.com/wellle/context.vim/issues/23
 let g:context_nvim_no_redraw = 1 
 
+" 和 vimspector 一起用会出现之前的context留下残影的问题
+" :ContextToggle  可以解决这个问题(似乎也没有解决...)
+
 " END   'wellle/context.vim' ------------------------------------------------------
 
 
@@ -914,6 +946,63 @@ let g:context_nvim_no_redraw = 1
 
 
 
+" BEGIN  'puremourning/vimspector' -----------------------------------------
+let g:which_key_map['v'] = {
+    \ 'name' : 'vimspector',
+    \'c' : ['vimspector#Continue()', 'continue'],
+    \'S' : ['vimspector#Stop()', 'stop'],
+    \'p' : ['vimspector#Pause()', 'pause'],
+    \'b' : ['vimspector#ToggleBreakpoint()', 'break point toggle'],
+    \'o' : ['vimspector#StepOver()', 'step over'],
+    \'i' : ['vimspector#StepInto()', 'step into'],
+    \'O' : ['vimspector#StepOut()', 'step out'],
+    \ }
+nnoremap <leader>vB  :vimspector#AddFunctionBreakpoint('')<left><left>
+" END    'puremourning/vimspector' -----------------------------------------
+
+
+
+
+
+" BEGIN  'kana/vim-submode' -----------------------------------------
+
+" :help window-resize
+" 来自这里:
+" https://ddrscott.github.io/blog/2016/making-a-window-submode/
+
+" A message will appear in the message line when you're in a submode
+" and stay there until the mode has existed.
+let g:submode_always_show_submode = 1
+let g:submode_timeoutlen = 1000
+
+" We're taking over the default <C-w> setting. Don't worry we'll do
+" our best to put back the default functionality.
+call submode#enter_with('window', 'n', '', '<C-w>')
+
+" Note: <C-c> will also get you out to the mode without this mapping.
+" Note: <C-[> also behaves as <ESC>
+call submode#leave_with('window', 'n', '', '<ESC>')
+
+" Go through every letter
+for key in ['a','b','c','d','e','f','g','h','i','j','k','l','m',
+\           'n','o','p','q','r','s','t','u','v','w','x','y','z']
+  " maps lowercase, uppercase and <C-key>
+  call submode#map('window', 'n', '', key, '<C-w>' . key)
+  call submode#map('window', 'n', '', toupper(key), '<C-w>' . toupper(key))
+  call submode#map('window', 'n', '', '<C-' . key . '>', '<C-w>' . '<C-'.key . '>')
+endfor
+
+" Go through symbols. Sadly, '|', not supported in submode plugin.
+" '|' can be achieve ":vertical res"
+for key in ['=','_','+','-','<','>']
+  call submode#map('window', 'n', '', key, '<C-w>' . key)
+endfor
+
+" END    'kana/vim-submode' -----------------------------------------
+
+
+
+
 " Nvim usage cheetsheet
 
 " 目录
@@ -925,6 +1014,7 @@ let g:context_nvim_no_redraw = 1
 " - 其他
 " - 坑
 " - script
+" - 其他可能有用的插件
 " - TODO
 
 
@@ -982,10 +1072,15 @@ let g:context_nvim_no_redraw = 1
 " help script
 
 
+" ====== 其他可能有用的插件 ======
+" 'mg979/vim-visual-multi'
+
+
 " ========== TODO ==========
 " Highlight 整行
 " - https://vi.stackexchange.com/questions/15505/highlight-whole-todo-comment-line
 " - https://stackoverflow.com/questions/2150220/how-do-i-make-vim-syntax-highlight-a-whole-line
+
 
 
 " other cheetsheet
