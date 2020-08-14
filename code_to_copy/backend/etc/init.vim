@@ -51,8 +51,11 @@ Plug 'ludovicchabant/vim-gutentags'  " 自动生成更新ctags
 " tags围绕tag stack进行,  ctrl+t pop操作， ctrl+] push操作(如果找得到顺便jump一下)
 
 Plug 'puremourning/vimspector'
-
 Plug 'kana/vim-submode'
+
+" NOTE: 还没看具体教程
+" Plug 'terryma/vim-multiple-cursors'
+Plug 'mg979/vim-visual-multi'
 
 call plug#end()
 

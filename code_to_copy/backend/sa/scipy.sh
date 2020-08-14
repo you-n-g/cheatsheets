@@ -48,7 +48,9 @@ source deactivate
 conda env export --name base > environment.yml
 conda env create -f environment.yml  # create an environment
 conda env update -f environment.yml  # update current envrionment
-# conda 无法复制环境，只能通过这种折中的方式达到复制的目的 conda remove --name old_name --all
+
+# conda 无法重命名环境，只能通过这种折中的方式达到重命名的目的
+# FIXME: 而且这里无法复制 python setup.py develop 安装的包
 conda create --name new_name --clone old_name
 conda remove --name old_name --all
 
