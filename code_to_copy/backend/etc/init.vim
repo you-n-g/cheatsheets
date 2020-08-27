@@ -415,11 +415,16 @@ let g:airline_theme='dark'
 "
 " heavenshell/vim-pydocstring
 " Docstring的详细格式解析: https://stackoverflow.com/a/24385103
-nnoremap <silent> <leader>d <Plug>(pydocstring)
+" nnoremap <silent> <leader>d <Plug>(pydocstring)
+nnoremap <silent> <leader>d :Pydocstring<cr>
+vnoremap <silent> <leader>d :Pydocstring<cr>
 let g:pydocstring_formatter='numpy'
-
-
+" FAQ:
+" 如果你安装nvim的Python环境和后续Python环境不一样，可能还是得手动安装一下
+" pip install doq
 "
+
+
 " python-mode
 " 这个插件遇到过保存失败,导致运行脚本跑的不是最新代码！！！！
 " help PymodeDoc
@@ -730,6 +735,7 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " - 默认参数是 ["--color", "never", "--files"]
 " - 所以要做修改需在这些默认值之后操作
 "    - 比如想要follow the link就得这么操作: list.source.files.args": ["-L", "--color", "never", "--files"]
+" - NOTE: rg的默认会读入.gitignore
 " https://github.com/neoclide/coc-lists/issues/69
 
 
@@ -1014,6 +1020,22 @@ endfor
 
 
 
+" END    'mg979/vim-visual-multi' -----------------------------------------
+" 不记得了就多复习 vim -Nu ~/.vim/plugged/vim-visual-multi/tutorialrc
+"
+" 反vimer直觉的
+" <c-v> 才是那个每行都有差异的粘贴， p会粘贴一样的东西
+" v选择编辑的操作会出错，得用extend模式代替v
+"
+" 优势
+" - 和用macro记录改一波再应用到别的位置作对比，
+"   用我可以同时看到改这些是怎么变化的
+" - 快速替换一些word和标点
+" - 将一堆赋值替换成 tuple
+" BEGIN  'mg979/vim-visual-multi' -----------------------------------------
+
+
+
 " Nvim usage cheetsheet
 
 " 目录
@@ -1082,9 +1104,6 @@ endfor
 " vim script cheatsheet https://devhints.io/vimscript
 " help script
 
-
-" ====== 其他可能有用的插件 ======
-" 'mg979/vim-visual-multi'
 
 
 " ========== TODO ==========
