@@ -1,6 +1,6 @@
 # Introduction
 A collection of cheatsheets of 
 - a **data-mining** researcher who
-  - likes **neovim**
-  - loves **Python**
-  - and enjoy **DevOps** tricks
+  - writes **Python**
+  - with **neovim**
+  - and enjoys **DevOps** tricks

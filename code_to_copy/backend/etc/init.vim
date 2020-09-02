@@ -8,7 +8,7 @@ Plug 'nvie/vim-flake8'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
+" Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 Plug 'tell-k/vim-autopep8'
 Plug 'dhruvasagar/vim-table-mode'
 Plug 'morhetz/gruvbox'
@@ -22,7 +22,7 @@ Plug 'mhinz/vim-startify'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 Plug 'liuchengxu/vim-which-key'
 
-Plug 'vim-vdebug/vdebug'   " 等待确认这个插件没有问题,
+" Plug 'vim-vdebug/vdebug'   " 等待确认这个插件没有问题,
 " 希望这个插件可以代替vscode
 
 " Plug 'wellle/tmux-complete.vim'  #
@@ -52,6 +52,7 @@ Plug 'kana/vim-submode'
 " Plug 'terryma/vim-multiple-cursors'
 Plug 'mg979/vim-visual-multi'
 
+Plug 'kkoomen/vim-doge'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
@@ -65,6 +66,7 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 autocmd FileType c,cpp setlocal shiftwidth=2 tabstop=2
+set textwidth=120
 set number
 set relativenumber
 " augroup FIX_COC_EXP
@@ -413,11 +415,12 @@ let g:airline_theme='dark'
 
 "
 " heavenshell/vim-pydocstring
+" 已经被  doge 淘汰了
 " Docstring的详细格式解析: https://stackoverflow.com/a/24385103
 " nnoremap <silent> <leader>d <Plug>(pydocstring)
-nnoremap <silent> <leader>d :Pydocstring<cr>
-vnoremap <silent> <leader>d :Pydocstring<cr>
-let g:pydocstring_formatter='numpy'
+" nnoremap <silent> <leader>d :Pydocstring<cr>
+" vnoremap <silent> <leader>d :Pydocstring<cr>
+" let g:pydocstring_formatter='numpy'
 " FAQ:
 " 如果你安装nvim的Python环境和后续Python环境不一样，可能还是得手动安装一下
 " pip install doq
@@ -515,6 +518,7 @@ nmap <leader>cas  <Plug>(coc-codeaction-selected)
 
 " Remap for do codeAction of current line
 nmap <leader>cac  <Plug>(coc-codeaction)
+
 " Fix autofix problem of current line
 nmap <leader>cqf  <Plug>(coc-fix-current)
 
@@ -623,11 +627,16 @@ let g:coc_global_extensions = [
  \ "coc-snippets",
  \ "coc-marketplace",
  \ "coc-java",
+ \ "coc-java-debug",
  \ "coc-marketplace"
  \ ]
 
-"  coc-marketplace",
 " 个人经验 <space>c  setLinter ，把pylama 设置成错误提示的工具方便
+
+
+" coc-python -------------------
+" 如果想用black，那么可以尝试 CocLocalConfig中加入这个
+" "python.formatting.provider": "black"
 
 
 
@@ -710,9 +719,9 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " +       <classpathentry kind="lib" path="/home/zhenyue/Develops/jpf/jpf-core/build/jpf.jar"/>
 
 " coc-java-debug minimal setting
-" 安装: coc-java-debug,  Vimspector, 在项目中配置.vimspector.json,
-" vimspector快捷键设置， 启动java时加参数 -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=5005,suspend=y 
-" vimspector设置断点，链接jvm
+" - 安装: coc-java-debug,  Vimspector, 在项目中配置`.vimspector.json`(配置见项目页)
+" - vimspector快捷键设置， 启动java时加参数 -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=5005,suspend=y 
+" - vimspector设置断点， 通过 <leader>lc java.debug.vimspector.start 链接jvm
 
 
 
@@ -729,25 +738,17 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " Jedi error: Cannot call write after a stream was destroyed
 " 包括其他的错误，只要错误信息中涉及到了jedi，更新jedi常常都有用
 " pip search jedi, 看看你安装的是不是最新版
-"
-" Coc does not install extension if file with same name exists
-" 一直尝试安装一个不需要的插件，有可能之前安装后没卸干净 ~/.config/coc/extensions/package.json
-" 实在不行,最后从一个好的电脑上找到了~/.config/coc/ ， 然后拷贝了过来
-
+" 
 " 如果出现运行特别慢的情况，那么可能是因为数据和代码存在一起了,
 " 数据小文件特别多，建议把数据单独放到外面。不然得一个一个插件单独地配置XXX_ignore
-
+"
 " 如果pylint import找不到module: 是因为pylint无法解析sys.path.append语句
-" 可以在 `${workspaceFolder}/.env` 中直接设置`PYTHONPATH`
+" 1) 可以在 `${workspaceFolder}/.env` 中直接设置`PYTHONPATH`
 " - https://github.com/neoclide/coc-python
 " - https://code.visualstudio.com/docs/python/environments#_use-of-the-pythonpath-variable
-
-" 各种配置通过这里来设置 
-" 直接编辑 ~/.config/nvim/coc-settings.json 或者  CocConfig
-
-
-" 还不能解决的问题
+" 2) 用 python setup.py develop
 "
+" Coc does not install extension if file with same name exists
 " 当 ~/.config/coc/ 这个文件在nfs上的时候，会出现所有插件都变成单文件的问题；
 " 解决方法1)
 " 1. sudo mkdir /mnt/xiaoyang && sudo chown xiaoyang: /mnt/xiaoyang  && mv ~/.config/coc/ /mnt/xiaoyang &&  cd ~/.config &&  && ln -s /mnt/xiaoyang/coc .
@@ -757,8 +758,18 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " mkdir ~/.config/coc/extensions/node_modules/coc-marketplace/ 后再创建插件
 
 
+" 各种配置通过这里来设置 
+" 直接编辑 ~/.config/nvim/coc-settings.json 或者  CocConfig
+" 每个插件的所有配置都可以通过插件项目中的 `package.json` 来找到
+" 注意事项
+" - 很多类似于  "python.formatting.yapfArgs" ("type": "array")的选项，
+"   你要想想它执行的时候类似于subprocess的shell=False, 你的"'{}'"可能会出错
 
-"
+
+" 还不能解决的问题
+
+
+
 " 好用的地方:  grep, gr; 看上面的定义，IDE常用的地方上面都有
 
 
@@ -928,9 +939,10 @@ let g:context_nvim_no_redraw = 1
 let g:which_key_map['v'] = {
     \ 'name' : 'vimspector',
     \'c' : ['vimspector#Continue()', 'continue'],
+    \'C' : ['vimspector#ClearBreakpoints()', 'clear all breakpoints'],
     \'S' : ['vimspector#Stop()', 'stop'],
     \'p' : ['vimspector#Pause()', 'pause'],
-    \'b' : ['vimspector#ToggleBreakpoint()', 'break point toggle'],
+    \'b' : ['vimspector#ToggleBreakpoint()', 'breakpoint toggle'],
     \'o' : ['vimspector#StepOver()', 'step over'],
     \'i' : ['vimspector#StepInto()', 'step into'],
     \'O' : ['vimspector#StepOut()', 'step out'],
@@ -987,6 +999,7 @@ endfor
 " 反vimer直觉的
 " <c-v> 才是那个每行都有差异的粘贴， p会粘贴一样的东西
 " v选择编辑的操作会出错，得用extend模式代替v
+" s不是删除然后立马插入，而是进入到一个selecting模式
 "
 " 优势
 " - 和用macro记录改一波再应用到别的位置作对比，
@@ -1002,6 +1015,12 @@ let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 nnoremap <silent> <Leader>fc :exe 'Ag '.expand('<cword>')<CR>
 nnoremap <silent> <Leader>fg :Ag<CR>
 " END   'junegunn/fzf.vim' -----------------------------------------
+
+
+" BEGIN 'kkoomen/vim-doge' -----------------------------------------
+let g:doge_doc_standard_python = 'numpy'
+" END   'kkoomen/vim-doge' -----------------------------------------
+
 
 
 " Nvim usage cheetsheet
