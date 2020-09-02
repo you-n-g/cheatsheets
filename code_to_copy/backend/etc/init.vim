@@ -4,18 +4,13 @@ Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
 Plug 'fatih/vim-go'
 Plug 'tomtom/tcomment_vim'
-" Plug 'ycm-core/YouCompleteMe', { 'do': './install.py' }
-" Plug 'rdnetto/YCM-Generator'
 Plug 'nvie/vim-flake8'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'heavenshell/vim-pydocstring', { 'do': 'make install' }
 Plug 'tell-k/vim-autopep8'
-" Plug 'python-mode/python-mode', {'branch': 'develop'}
-" Plug 'tpope/vim-surround'  " This plugin is replaced by vim-
 Plug 'dhruvasagar/vim-table-mode'
-" Plug 'mileszs/ack.vim'  # 已经被nvim 替代
 Plug 'morhetz/gruvbox'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'nathanaelkane/vim-indent-guides'
@@ -427,48 +422,6 @@ let g:pydocstring_formatter='numpy'
 " 如果你安装nvim的Python环境和后续Python环境不一样，可能还是得手动安装一下
 " pip install doq
 "
-
-
-" python-mode
-" 这个插件遇到过保存失败,导致运行脚本跑的不是最新代码！！！！
-" help PymodeDoc
-" 现在暂时将pymode关闭，每次的弹窗还得管真是比较烦人, 应该都可以被coc.nvim代替
-" TODO: 但是不知道coc.nvim会不会受到 pymode的参数的影响，所以下面先不删除
-" let g:pymode_python = 'disable'
-" " this plugin will auto folder all the code, please use `:help zo` to find the code
-" let g:pymode_lint_ignore = ["E0100", "E501", "E402"]
-" " E402 module level import not at top of file
-" let g:pymode_doc=0  " This will conflict with coc
-" let g:pymode_rope=0  " disable refracting because I don't use it
-" let g:pymode_folding=0  " auto folding really makes python coding really slow.
-" " lint还是挺有用的，改完代码马上就能检查出一些语法错误，不必等到运行时发现
-" let g:pymode_lint_unmodified = 1  " Check code on every save (every)
-" " Set this to make wrap works
-" let g:pymode_options = 0
-
-
-
-
-
-"
-" vim-surround
-" https://github.com/tpope/vim-surround
-"
-
-
-
-
-"
-" bash-support
-" https://www.tecmint.com/use-vim-as-bash-ide-using-bash-support-in-linux/
-"
-
-"
-" mileszs/ack.vim
-" let g:ackprg = 'ag --vimgrep'
-" nnoremap <Leader>a :Ack
-
-
 
 
 " BEGIN for coc ----------------------------------------------------------
