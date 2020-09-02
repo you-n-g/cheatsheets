@@ -1014,6 +1014,7 @@ endfor
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 nnoremap <silent> <Leader>fc :exe 'Ag '.expand('<cword>')<CR>
 nnoremap <silent> <Leader>fg :Ag<CR>
+inoremap <expr> <c-x><c-f> fzf#vim#complete#path('fd')
 " END   'junegunn/fzf.vim' -----------------------------------------
 
 

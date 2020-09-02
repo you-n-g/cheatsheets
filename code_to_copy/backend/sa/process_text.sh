@@ -39,3 +39,7 @@ ack <STH> -w  # 可以直接按work匹配
 
 # ## Outlines: Miscellaneous
 XXX | sort -k N  # 按第n列排序， 比如看日志时按时间排序！！！
+
+tr '\n' ' ' # 把字符换成空格
+tr -d '\n' # 把换行删掉
+

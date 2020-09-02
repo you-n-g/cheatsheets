@@ -22,7 +22,7 @@ t # 创建swap分区时需要指定 system id??
 # fdisk不能创建2TB以上的分区
 
 # 2) 创建文件系统
-mkfs.ext4 /dev/xvdb1 # 注意是分区
+mkfs.ext4 /dev/xvdb1 # 注意是分区,   这个我后来试过其实不需要是分区也可以有用
 mkswap /dev/xvdb1 # swapon /dev/xvdb1 来挂载分区
 
 
