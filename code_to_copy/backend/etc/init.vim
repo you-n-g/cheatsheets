@@ -58,6 +58,8 @@ Plug 'kana/vim-submode'
 Plug 'mg979/vim-visual-multi'
 
 Plug 'kkoomen/vim-doge'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -286,7 +288,8 @@ let g:which_key_map =  {}
 " https://github.com/kien/ctrlp.vim
 " let g:ctrlp_working_path_mode = 'wa'
 " nnoremap <silent> <leader>cp  :<C-u>CtrlPClearCache<CR>
-nnoremap <silent> <C-P>  :<C-u>CocList files<CR>
+" nnoremap <silent> <C-P>  :<C-u>CocList files<CR>
+nnoremap <silent> <C-P>  :<C-u>Files<CR>
 let g:ctrlp_map = ''
 let g:ctrlp_cmd = ''
 
@@ -544,8 +547,8 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nmap <leader>rn <Plug>(coc-rename)
 
 " Remap for format selected region
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>cf  <Plug>(coc-format-selected)
+nmap <leader>cf  <Plug>(coc-format-selected)
 
 augroup mygroup
   autocmd!
@@ -557,13 +560,14 @@ augroup end
 
 " # 这个地方可以和coc-snippet结合起来用,  直接将选中的code转化为 snippet
 " Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+xmap <leader>cas  <Plug>(coc-codeaction-selected)
+nmap <leader>cas  <Plug>(coc-codeaction-selected)
 
 " Remap for do codeAction of current line
-nmap <leader>la  <Plug>(coc-codeaction)
+nmap <leader>cac  <Plug>(coc-codeaction)
+
 " Fix autofix problem of current line
-nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <leader>cqf  <Plug>(coc-fix-current)
 
 " Use <tab> for select selections ranges, needs server support, like: coc-tsserver, coc-python
 nmap <silent> <TAB> <Plug>(coc-range-select)
@@ -584,7 +588,7 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Using CocList
 " Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <space>la  :<C-u>CocList diagnostics<cr>
 " Manage extensions
 " nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
 " Show commands
@@ -600,9 +604,9 @@ nnoremap <silent> <space>lv  :<C-u>CocList vimcommands<cr>
 " 如果太慢了，可以用 --verbose debug看看慢在哪里，可以在ctagOptions里面加上exclude
 " 但是必须用恰好是文件夹名字，不然无法跳过,  --exclude=mlruns --exclude=models
 " Find symbol of current document
-nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+nnoremap <silent> <space>lo  :<C-u>CocList outline<cr>
 " Search workspace symbols
-nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <space>ls  :<C-u>CocList -I symbols<cr>
 
 " Do default action for next item.
 nnoremap <silent> <space>lj  :<C-u>CocNext<CR>
@@ -611,13 +615,14 @@ nnoremap <silent> <space>lk  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>lp  :<C-u>CocListResume<CR>
 
+" TODO: 这个迟早会修复
 nnoremap <silent> <Leader>gc :exe 'CocList -I --input='.expand('<cword>').' grep --ignore-case'<CR>
 nnoremap <silent> <Leader>gr :exe 'CocList -I grep --ignore-case'<CR>
 
 
 let g:which_key_map['l'] = {
     \ 'name' : 'coc-list',
-    \'o' : [':CocList -I --auto-preview --ignore-case --input=outlines lines', 'Outlines'],
+    \'O' : [':CocList -I --auto-preview --ignore-case --input=outlines lines', 'Outlines'],
     \'i' : [':CocList -I --auto-preview --ignore-case lines', 'Search in this file'],
     \ }
 
@@ -668,9 +673,11 @@ let g:coc_global_extensions = [
  \ "coc-explorer",
  \ "coc-snippets",
  \ "coc-marketplace",
- \ "coc-java"
+ \ "coc-java",
+ \ "coc-java-debug",
+ \ "coc-marketplace"
  \ ]
-" \ "coc-java-debug"
+
 " 个人经验 <space>c  setLinter ，把pylama 设置成错误提示的工具方便
 
 
@@ -742,8 +749,11 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 " - 默认参数是 ["--color", "never", "--files"]
 " - 所以要做修改需在这些默认值之后操作
 "    - 比如想要follow the link就得这么操作: list.source.files.args": ["-L", "--color", "never", "--files"]
+"    - https://github.com/neoclide/coc-lists/issues/69
 " - NOTE: rg的默认会读入.gitignore
-" https://github.com/neoclide/coc-lists/issues/69
+" - 对于floating window的看法: https://github.com/neoclide/coc-lists/issues/61
+" 未来有可能的代替品
+" - https://github.com/liuchengxu/vim-clap
 
 
 " coc java 相关 ------------------------
@@ -1030,7 +1040,7 @@ endfor
 
 
 
-" END    'mg979/vim-visual-multi' -----------------------------------------
+" BEGIN 'mg979/vim-visual-multi' -----------------------------------------
 " 不记得了就多复习 vim -Nu ~/.vim/plugged/vim-visual-multi/tutorialrc
 "
 " 反vimer直觉的
@@ -1043,18 +1053,20 @@ endfor
 "   用我可以同时看到改这些是怎么变化的
 " - 快速替换一些word和标点
 " - 将一堆赋值替换成 tuple
-" BEGIN  'mg979/vim-visual-multi' -----------------------------------------
+" END   'mg979/vim-visual-multi' -----------------------------------------
+
+
+
+" BEGIN 'junegunn/fzf.vim' -----------------------------------------
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
+nnoremap <silent> <Leader>fc :exe 'Ag '.expand('<cword>')<CR>
+nnoremap <silent> <Leader>fg :Ag<CR>
+" END   'junegunn/fzf.vim' -----------------------------------------
 
 
 " BEGIN 'kkoomen/vim-doge' -----------------------------------------
 let g:doge_doc_standard_python = 'numpy'
 " END   'kkoomen/vim-doge' -----------------------------------------
-
-
-
-" BEGIN 'antoinemadec/coc-fzf' -----------------------------------------
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-" END   'antoinemadec/coc-fzf' -----------------------------------------
 
 
 
