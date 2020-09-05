@@ -24,8 +24,8 @@ sed -i '$ a 10.0.0.23:/datadrive01/shared_nfs/ /data/nfs_5T/ nfs    auto  0  0' 
 
 
 
-# ## Outlines: awk
-awk -f  # awk会根据自己认识的类型过滤文件， 所以提供了先看文件列表的方式
+# ## Outlines: ack
+ack -f  # ack会根据自己认识的类型过滤文件， 所以提供了先看文件列表的方式
 ack <STH> --pager="less -R"  # 可以在less中有高亮地看结果
 ack <STH> -w  # 可以直接按work匹配
 
@@ -35,6 +35,10 @@ ack <STH> -w  # 可以直接按work匹配
 # cheatsheets
 # https://kapeli.com/cheat_sheets/Ack.docset/Contents/Resources/Documents/index
 
+
+# ## Outlines: ag
+# TODO: 据说ag比ack快很多倍
+ag -g '.*'   # 这个应该等于ack -f
 
 
 # ## Outlines: Miscellaneous

@@ -557,7 +557,7 @@ nnoremap <silent> <space>lv  :<C-u>CocList vimcommands<cr>
 " 如果太慢了，可以用 --verbose debug看看慢在哪里，可以在ctagOptions里面加上exclude
 " 但是必须用恰好是文件夹名字，不然无法跳过,  --exclude=mlruns --exclude=models
 " Find symbol of current document
-nnoremap <silent> <space>lo  :<C-u>CocList outline<cr>
+nnoremap <silent> <space>lO  :<C-u>CocList outline<cr>
 " Search workspace symbols
 nnoremap <silent> <space>ls  :<C-u>CocList -I symbols<cr>
 
@@ -568,14 +568,15 @@ nnoremap <silent> <space>lk  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>lp  :<C-u>CocListResume<CR>
 
-" TODO: 这个迟早会修复
+" TODO: 这个应该会被 fzf 代替
 nnoremap <silent> <Leader>gc :exe 'CocList -I --input='.expand('<cword>').' grep --ignore-case'<CR>
 nnoremap <silent> <Leader>gr :exe 'CocList -I grep --ignore-case'<CR>
 
 
+" TODO: 上面的一堆命令终究将纳入到下面的 which_key_map 中
 let g:which_key_map['l'] = {
     \ 'name' : 'coc-list',
-    \'O' : [':CocList -I --auto-preview --ignore-case --input=outlines lines', 'Outlines'],
+    \'o' : [':CocList -I --auto-preview --ignore-case --input=outlines lines', 'Outlines'],
     \'i' : [':CocList -I --auto-preview --ignore-case lines', 'Search in this file'],
     \ }
 
@@ -626,6 +627,7 @@ let g:coc_global_extensions = [
  \ "coc-explorer",
  \ "coc-snippets",
  \ "coc-marketplace",
+ \ "coc-sh",
  \ "coc-java",
  \ "coc-java-debug",
  \ "coc-marketplace"
@@ -1012,9 +1014,22 @@ endfor
 
 " BEGIN 'junegunn/fzf.vim' -----------------------------------------
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
+
+" https://github.com/junegunn/fzf.vim/issues/346
+command! -bang -nargs=* Agc call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
+
 nnoremap <silent> <Leader>fc :exe 'Ag '.expand('<cword>')<CR>
-nnoremap <silent> <Leader>fg :Ag<CR>
+nnoremap <silent> <Leader>fC :exe 'Agc '.expand('<cword>')<CR>
 inoremap <expr> <c-x><c-f> fzf#vim#complete#path('fd')
+
+let g:which_key_map['f'] = {
+    \ 'name' : 'fzf',
+    \'g' : ['Ag', 'Ag'],
+    \'G' : ['Agc', 'Ag without filename'],
+    \'l' : ['BLines', 'Lines in the current buffer'],
+    \'L' : ['Lines', 'Lines in loaded buffer'],
+    \'o' : [':Lines Outlines', 'Outlines']
+    \ }
 " END   'junegunn/fzf.vim' -----------------------------------------
 
 
@@ -1064,6 +1079,7 @@ let g:doge_doc_standard_python = 'numpy'
 " # Text object selection: 在v或者operation之后 指定文本范围
 " help diw daw 等等
 
+
 " ========= Mode相关 =========
 " Command line mode or insert mode:
 " 可以直接 <C-R><寄存器>, 插入寄存器的内容
@@ -1072,6 +1088,7 @@ let g:doge_doc_standard_python = 'numpy'
 
 " ========= Expression =========
 " echo expand("%:p").":".line("$")
+
 
 " ========== 其他 ==========
 " 匹配: 正向预查，反向预查，环视
@@ -1086,6 +1103,11 @@ let g:doge_doc_standard_python = 'numpy'
 "
 " ctrlspace load workspace非常慢
 " https://github.com/vim-ctrlspace/vim-ctrlspace/issues/6
+
+
+" ========== 其他可能有用的插件 ==========
+" git blame: https://github.com/APZelos/blamer.nvim
+" FZF Redo: https://github.com/junegunn/fzf.vim/pull/941
 
 
 " ========== script ==========
