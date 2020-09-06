@@ -949,7 +949,7 @@ let g:which_key_map['v'] = {
     \'i' : ['vimspector#StepInto()', 'step into'],
     \'O' : ['vimspector#StepOut()', 'step out'],
     \ }
-nnoremap <leader>vB  :vimspector#AddFunctionBreakpoint('')<left><left>
+nnoremap <leader>vB  :call vimspector#ToggleBreakpoint({'condition':''})<left><left><left>
 " END    'puremourning/vimspector' -----------------------------------------
 
 
@@ -1002,12 +1002,17 @@ endfor
 " <c-v> 才是那个每行都有差异的粘贴， p会粘贴一样的东西
 " v选择编辑的操作会出错，得用extend模式代替v
 " s不是删除然后立马插入，而是进入到一个selecting模式
+" 选取了多行后 \\c 可以创建多个normal模式的光标，\\a可以创建多个extend模式的光标
 "
 " 优势
 " - 和用macro记录改一波再应用到别的位置作对比，
 "   用我可以同时看到改这些是怎么变化的
 " - 快速替换一些word和标点
 " - 将一堆赋值替换成 tuple
+"
+" BUG
+" - 后来好像 <C-v> <C-up>等等ctrl开头的功能好像不管用了。。。后面发现是tmux的问题
+"
 " END   'mg979/vim-visual-multi' -----------------------------------------
 
 
@@ -1028,6 +1033,7 @@ let g:which_key_map['f'] = {
     \'G' : ['Agc', 'Ag without filename'],
     \'l' : ['BLines', 'Lines in the current buffer'],
     \'L' : ['Lines', 'Lines in loaded buffer'],
+    \'m' : ['Marks', 'Marks'],
     \'o' : [':Lines Outlines', 'Outlines']
     \ }
 " END   'junegunn/fzf.vim' -----------------------------------------
