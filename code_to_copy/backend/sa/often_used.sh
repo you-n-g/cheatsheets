@@ -399,6 +399,7 @@ echo 'echo $@' | bash -s - -lst
 ## - https://cnbin.github.io/blog/2015/06/28/bash-zhong-de-te-shu-fu-hao-1/
 
 ## if 从句中， 不同的命令可以用  ！ && ||  之类的逻辑运算符连接
+## - [  ] 本质是test，也算命令的一种， 可以和其他命令用逻辑运算链接
 
 # 语法篇END   --------------------------------------
 
