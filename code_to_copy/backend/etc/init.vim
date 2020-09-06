@@ -1021,10 +1021,14 @@ endfor
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 
 " https://github.com/junegunn/fzf.vim/issues/346
+" not include the name of the file
 command! -bang -nargs=* Agc call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
 
 nnoremap <silent> <Leader>fc :exe 'Ag '.expand('<cword>')<CR>
-nnoremap <silent> <Leader>fC :exe 'Agc '.expand('<cword>')<CR>
+" No name
+nnoremap <silent> <Leader>fCn :exe 'Agc '.expand('<cword>')<CR>
+nnoremap <silent> <Leader>fCl :exe 'BLines '.expand('<cword>')<CR>
+nnoremap <silent> <Leader>fCL :exe 'Lines '.expand('<cword>')<CR>
 inoremap <expr> <c-x><c-f> fzf#vim#complete#path('fd')
 
 let g:which_key_map['f'] = {
@@ -1036,6 +1040,7 @@ let g:which_key_map['f'] = {
     \'m' : ['Marks', 'Marks'],
     \'o' : [':Lines Outlines', 'Outlines']
     \ }
+" 这里可以通过tab选多个，回车后变成quick fix
 " END   'junegunn/fzf.vim' -----------------------------------------
 
 
