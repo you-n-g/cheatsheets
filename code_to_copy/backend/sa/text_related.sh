@@ -7,6 +7,8 @@
 awk '{print $2}'
 # cheatsheets: https://coolshell.cn/articles/9070.html
 
+awk '{$1="";print}'   # 打印除了第一列的内容
+# https://stackoverflow.com/a/7157814
 
 
 # ## Outlines: sed
@@ -22,6 +24,9 @@ sed -i '$ a 10.0.0.23:/datadrive01/shared_nfs/ /data/nfs_5T/ nfs    auto  0  0' 
 # sed 每次处理一行，先选择， 后接命令
 # cheatsheets: https://coolshell.cn/articles/9104.html
 
+# ## Outlines: grep
+
+grep -P # 似乎这样我用正则表达式问题会比较少
 
 
 # ## Outlines: ack

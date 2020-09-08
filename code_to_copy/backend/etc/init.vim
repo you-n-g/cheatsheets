@@ -83,6 +83,12 @@ set smartcase
 " to automatically load the `.nvimrc`
 set exrc
 set secure
+
+
+" for filename completion in commands like COMMAND=/file/name
+" http://superuser.com/questions/598270/getting-rid-of-characters-when-doing-gf-in-vim
+set isfname-==
+
 " examples to ignore
 " ignore a directory on top level
 " let g:NERDTreeIgnore += ['^models$']
