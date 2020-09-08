@@ -249,6 +249,8 @@ vnoremap <expr> <plug>VHighlightReplaceRow ':s/\<'.expand('<cword>').'\>/'.expan
 nmap <leader>rr <plug>HighlightReplaceRow
 vmap <leader>rP <plug>VHighlightReplaceRow
 
+" switch recent buffer in insert mode(C-o可以保持不离开insert mode)
+inoremap <C-^> <C-o><C-^>
 
 " 个人喜欢的快速移动
 " - 在insert mode下快速到行尾
