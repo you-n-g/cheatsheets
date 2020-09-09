@@ -374,6 +374,7 @@ au FileType go nmap <Leader>gd <Plug>(go-doc)
 let g:slime_target = "tmux"
 " 这个一定要和ipython一起用，否则可能出现换行出问题
 let g:slime_python_ipython = 1
+" TODO: fix the toggle
 
 
 " always send text to the pane in the current tmux tab without asking
@@ -552,8 +553,6 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 nnoremap <silent> <space>la  :<C-u>CocList diagnostics<cr>
 " Manage extensions
 " nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-" Show commands
-nnoremap <silent> <space>lc  :<C-u>CocList commands<cr>
 " Show list comands
 nnoremap <silent> <space>ll  :<C-u>CocList<cr>
 " Show list vim comands
@@ -586,6 +585,7 @@ let g:which_key_map['l'] = {
     \ 'name' : 'coc-list',
     \'o' : [':CocList -I --auto-preview --ignore-case --input=outlines lines', 'Outlines'],
     \'i' : [':CocList -I --auto-preview --ignore-case lines', 'Search in this file'],
+    \'c' : [':CocList commands', 'commands'],
     \ }
 
 
@@ -647,6 +647,7 @@ let g:coc_global_extensions = [
 " coc-python -------------------
 " 如果想用black，那么可以尝试 CocLocalConfig中加入这个
 " "python.formatting.provider": "black"
+" python.execInTerminal 还是比较好用的
 
 
 
@@ -850,9 +851,18 @@ let g:ascii_yang = [
        \'                                                /_\ /_\    /_\ /_\   ',
        \]
 
- let g:startify_custom_header =
+let g:startify_custom_header =
        \ 'startify#pad(g:ascii_yang + startify#fortune#boxed() + g:ascii_art)'
- let g:startify_change_to_dir = 0
+let g:startify_change_to_dir = 0
+
+let g:startify_lists = [
+      \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+      \ { 'type': 'files',     'header': ['   MRU']            },
+      \ { 'type': 'sessions',  'header': ['   Sessions']       },
+      \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+      \ { 'type': 'commands',  'header': ['   Commands']       },
+      \ ]
+
 " END   for mhinz/vim-startify ----------------------------------------------------------
 
 
