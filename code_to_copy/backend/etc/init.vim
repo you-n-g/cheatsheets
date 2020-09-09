@@ -720,13 +720,19 @@ imap <C-j> <Plug>(coc-snippets-expand-jump)
 
 
 " coc java 相关 ------------------------
+"
+" coc-java 一直启动失败[java exited with code: 13](https://github.com/neoclide/coc-java/issues/20)
+" 设置 "java.home":
+" 
 
 " coc-java不能识别classpath
+" 1)
 " https://github.com/neoclide/coc-java/issues/93
 " 项目目录下的  .classpath 可以修复这个问题
 " -       <classpathentry combineaccessrules="false" kind="src" path="/jpf-core"/>
 " +       <classpathentry combineaccessrules="false" exported="true" kind="src" path="/jpf-core"/>
 " +       <classpathentry kind="lib" path="/home/zhenyue/Develops/jpf/jpf-core/build/jpf.jar"/>
+" 2) 如果用的是gradle, `java.import.gradle.enabled": true,` 可能就能使之生效
 
 " coc-java-debug minimal setting
 " - 安装: coc-java-debug,  Vimspector, 在项目中配置`.vimspector.json`(配置见项目页)
