@@ -1,4 +1,14 @@
 
+# 目录
+# - 查看操作
+
+# # Outlines: git
+# ## Outlines: 查看操作
+git log -p <filename>  # 找到这个文件的所有历史 patch
+
+
+
+# TODO: 继续merge
 
 
 # BEGIN 常用基本操作 VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
@@ -249,6 +259,9 @@ git branch [branch name] :: 可以查看branch或者新建分支指针, 不加�
 github使用篇
 	* key能放在个人面版里或者repo的admin页面里
 	* 设置git的默认branch在repo的admin页面里!!
+
+
+# # Outlines: mercurial
 
 # VVVVVVVVVVVVVVVVVVV mercurial VVVVVVVVVVVVVVVVVVVVV
 
