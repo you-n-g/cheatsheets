@@ -72,14 +72,17 @@ cat /sys/block/sda/queue/rotational   # 列出 sda 的rotational属性
 # BEGIN 清理垃圾文件  -----------------------
 
 ncdu
+# -x :  不跨越文件系统的边界
 # https://www.ostechnix.com/check-disk-space-usage-linux-using-ncdu/
 # 可以快速统计磁盘文件的大小, 还可以把结果存下来
 
 agedu
 # man agedu 可以看看怎么,  -s -w 这两个参数可以用
 # agedu -s /  --cross-fs # scan, 如果不加--cross-fs 不会跨文件系统扫描(间接地限制不会垮硬盘扫描)
-# agedu  -f agedu.dat -w
+# agedu  -f agedu.dat -w --address 0.0.0.0:5432
 # ssh 127.0.0.1 -L 0.0.0.0:48475:127.0.0.1:48474  # 做个端口转发 想让别人也能访问
+# 问题
+# 曾经一直遇到:  403 Forbidden 的问题无法解决
 
 # END   清理垃圾文件  -----------------------
 
