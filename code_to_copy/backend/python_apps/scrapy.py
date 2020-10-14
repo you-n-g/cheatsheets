@@ -5,8 +5,19 @@
 scrapy shell http://XXX.XXX
 scrapy crawl --output XXX_FILE --nolog   XXXspider
 
+# xpath 来一组
+# scrapy shell https://github.com/microsoft/qlib
+# - 还可以接 `-c CODEste -q
+# xpath 来一组
+# scrapy shell https://github.com/microsoft/qlib
+# - 还可以接 `-c CODE` 的` 的
+response.selector.xpath('//*[@href="/microsoft/qlib/stargazers" and contains(@class, "js-social-count")]').extract()
+
 
 # 写爬虫
+
+# 下面的代码有点过期了,我猜测需要改的有
+# HtmlXPathSelector -> from scrapy.selector import Selector
 
 from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
