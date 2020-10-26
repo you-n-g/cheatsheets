@@ -14,7 +14,7 @@
 # END   joblib - Embarrassingly parallel for loops
 
 
-
+# # Outlines: concurrent.futures
 # BEGIN concurrent.futures — Launching parallel tasks--------
 # 最方便的解决方案
 # https://docs.python.org/3/library/concurrent.futures.html
@@ -35,8 +35,7 @@
 # - 什么时候共享变量
 # - 会不会阻塞
 
-
-# multiprocessing
+# # Outlines: multiprocessing
 # https://docs.python.org/2/library/multiprocessing.html
 
 ## process 之间传递数据
@@ -75,6 +74,7 @@ Manager()
 
 
 # https://docs.python.org/3/library/multiprocessing.html
+# - 想单独运行一个子进程: https://stackoverflow.com/a/2046630
 
 # For fast implementing
 from multiprocessing import Pool
@@ -103,6 +103,7 @@ pool.join()
 # one must call close or terminate() before call join. 不然主进程会等子进程结束，子进程会等主进程分配任务
 
 
+
 # 在Interactive script中，parallel运行子程序会出错 https://stackoverflow.com/questions/34086112/python-multiprocessing-pool-stuck
 # 因为它的原理是先fork，然后子程序再从当前的 python file来import 需要运行的程序. 所以要注意加__main__，解释器本身没有python file ， 无法被import
 
@@ -115,6 +116,8 @@ p.map(f, [1,2,3])
 
 # IPython需要用更复杂的并行处理的程序  http://ipython.org/ipython-doc/dev/parallel/
 
+
+# # Outlines: ipyparallel
 # ipyparallel 的使用方法
 # http://nbviewer.jupyter.org/github/ipython/ipyparallel/blob/master/examples/Index.ipynb
 % ipcluster start -n 40   # 执行程序的目录和 这个目录最好一样，否则可能找不到包 --cluster-id=<cluster_str>
@@ -147,6 +150,7 @@ if ares.ready():
 
 
 
+# # Outlines: gevent
 # BEGIN gevent ---------------------------------------
 # http://sdiehl.github.io/gevent-tutorial/
 # 之前我写爬虫的体验非常不好，程序老是内存爆掉
@@ -155,8 +159,7 @@ if ares.ready():
 
 
 
-
-
+# # Outlines: threading
 # BEGIN threading -----------------------
 # https://www.geeksforgeeks.org/multithreading-python-set-1/
 # 仿照这边写

@@ -1,5 +1,9 @@
-#!/usr/bin/env python
-# coding:utf8
+'''
+TODO: 
+    现在最新的已经切到 pytest了
+
+# pytest -s --pdb
+'''
 
 import unittest
 
@@ -17,6 +21,8 @@ def tearDownModule():
 class TestMultiversoTables(unittest.TestCase):
     '''
     Use the commands below to run test
+
+    # nosetest 
     $ nosetests
     If you want to suppress the tensorflow output. Otherwise the logging info will appear in the stdout
     $ nosetests --nologcapture
@@ -28,6 +34,7 @@ class TestMultiversoTables(unittest.TestCase):
 
     Useful options:
     --pdb  Drop into debugger on failures or errors
+
 
     If you just want to run this program like normal. You don't have to use nosetest.
     $ python test_file.py TestClass.test_method
