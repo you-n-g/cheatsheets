@@ -79,4 +79,12 @@ public class JavaDebug {
     // 基础中的基础
     str.length(); //是一个method ，区别于普通数组的 length是属性
     str.charAt(); //你不能对string直接用[]， 因为java中没有运算符重载
+
+
+    // Downcasting
+    // if (anim instanceof Cat) {
+    if (anim instanceof Dog) {
+        Dog dog = (Dog) anim;
+        dog.bark();
+    }
 }

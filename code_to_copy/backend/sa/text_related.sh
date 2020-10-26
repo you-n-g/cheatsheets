@@ -70,6 +70,7 @@ XXX | sort -k N  # 按第n列排序， 比如看日志时按时间排序！！�
 tr '\n' ' ' # 把字符换成空格
 tr -d '\n' # 把换行删掉
 
+# ts 依赖这个
 # sudo apt-get install -y moreutils
 # 这个可以处理stream
 tail -f -n 20 XXXX.log | ts '[%Y-%m-%d %H:%M:%S]'
