@@ -57,6 +57,8 @@ rg --type-list
 # 类型的修改不会持续，每次都需要添加; 下面是临时创建一个只搜 py,md,ipynb的rg
 rg --type-add 'src:include:py,md' --type-add 'src:*.ipynb' -t src  XXXX
 
+rg '[\p{Han}]'  # 可以搜索特定语言(不限rg): https://www.coder.work/article/6293564
+
 # 优势
 # - 默认支持的文件类型多
 
