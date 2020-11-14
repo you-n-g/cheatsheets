@@ -119,7 +119,10 @@ tail -f *.log
 
 
 
-#================================== profiler and tuning ===================
+# # Outlines: ================================== profiler and tuning ===================
+
+# 可能有用的工具包
+# https://github.com/AhmadIbrahiim/awesome-python#debugging-tools
 
 # 一般思路
 ## 先 prun/cProfile 看卡在哪个函数
@@ -167,7 +170,9 @@ p.strip_dirs().sort_stats("cumtime").print_stats(100)
 # 可以看到 func1 func2 中每一行的开销
 
 # 在ipython之外还可以用下面的命令调优 https://github.com/rkern/line_profiler
-# kernprof -l script_to_profile.py
+# kernprof -l <script_to_profile>.py
+# python -m line_profiler <script_to_profile>.py.lprof
+# 这个会自动在我 __builtins__ 中加一 @profile 装饰器
 
 
 # 别忘了还有内置的 %prun !!!!!!!!  可以直接 %%prun profile整个cell .
@@ -176,8 +181,23 @@ p.strip_dirs().sort_stats("cumtime").print_stats(100)
 # [ ] https://towardsdatascience.com/speed-up-jupyter-notebooks-20716cbe2025
 
 # 我自己觉得最好用的
+# 1. 找到耗时函数
+# 1.1 snakeviz
 # pip install snakeviz  && snakeviz -s -H `hostname` stats_out    # 可以达到可视化的效果, 强烈推荐!!!!!!!
-# 当某个函数调内某一层调用同一个函数多次， 不知道是那次调用耗时比较多时，需要用line_profile区分
+# - 这个server是绑定地址的，如果绑定了hostname，那么127.0.0.1是无法访问的
+# 1.2 pip install py-spy
+# 好处在于
+# - 显示调用关系会从文件哪行命令被执行的角度分析(类似于traceback), 而 snakeviz只会显示调用的是哪个函数
+#   - 人一般会更关注是哪行导致的性能问题， snakeviz缺了函数是被哪行调用的信息
+#     - 同一个函数被多次调用, 各种魔法函数不知道会去哪里会让人很晕
+#   - 配合 goto define 体验会很好
+# - 显示路径更全，不容易看晕;
+# - 生成的图显示性能更高
+# 2. 总体思路
+# - 先用 py-spy 看调用层级，找到耗时的调用
+# - 当某个函数调内某一层调用同一个函数多次， 不知道是那次调用耗时比较多时，需要用line_profile区分
+
+# TODO: vprof 有可能有用
 
 
 
