@@ -46,6 +46,7 @@ rsync  -avzrP -e ssh /home/deploy/livesites/XXX_SITE  XXX_IP:/home/deploy/livesi
 # https://linoxide.com/linux-how-to/linux-rsync-examples-exclude-files-directories/
 # 坑: 
 # - exclude总是会用相对路径执行
+# - 如果用jump host 来代理加速拷贝文件， 有时候速度会变慢; 通过jump host 做端口转发，再scp  127.0.0.1 能速度正常
 
 # rsync不会删除文件！！！！  需要加入 --delete这种参数
 # 如果希望能不覆盖新的文件，可以用 --ignore-existing
