@@ -27,6 +27,14 @@
 #   - to_dict再 pd.DataFrame 也可以
 # - future_object.result() , 而不是get!!!
 
+
+# # snippets
+# ## 如果希望进程执行完一个task后后立即释放所有内存(用子进程实现)
+# ## https://stackoverflow.com/a/15492488
+with concurrent.futures.ProcessPoolExecutor(max_workers=1) as executor:
+    result = executor.submit(func, *args, **kwargs).result()
+
+
 # END   concurrent.futures — Launching parallel tasks--------
 
 
