@@ -425,3 +425,13 @@ eval $ARGUMENTS
 find . -maxdepth 1 -mindepth 1 \(  -name v2  -o  -name README.md -o -name r.hd5 -prune -o -exec mv {} v2 \;  \)
 
 # find END   --------------------------------------
+
+
+
+# 快捷键篇 BEGIN  ---------------------------------
+
+# zsh
+# 扩展wildcard: 按 tab 就可以
+
+
+# 快捷键篇 END    ---------------------------------
