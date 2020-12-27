@@ -173,6 +173,7 @@ p.strip_dirs().sort_stats("cumtime").print_stats(100)
 # kernprof -l <script_to_profile>.py
 # python -m line_profiler <script_to_profile>.py.lprof
 # 这个会自动在我 __builtins__ 中加一 @profile 装饰器
+# - cons: 这个在有test的时候会失效
 
 
 # 别忘了还有内置的 %prun !!!!!!!!  可以直接 %%prun profile整个cell .

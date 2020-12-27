@@ -41,9 +41,14 @@ rsync  -avzrP -e ssh /home/deploy/livesites/XXX_SITE  XXX_IP:/home/deploy/livesi
 
 # 利用rsync 拷贝， 同时 exclude 掉一些路径
 # rsync -av --exclude='path1/to/exclude' --exclude='path2/to/exclude' source destination
-# --exclude-from 代表从指定文件里读取exclude的list
+# --exclude-from 代表从指定文件里读取exclude的list:
+#   - 注意里面要写的是pattern，看起来像wildcard
 # 下面这个说明非常详细
 # https://linoxide.com/linux-how-to/linux-rsync-examples-exclude-files-directories/
+# - rsync的 --include-from 比你想象中的更复杂: https://askubuntu.com/a/558830
+#   - 估计坑在:  相对路径 & += 是必须了解的
+#   - 建议用 --files-from
+
 # 坑: 
 # - exclude总是会用相对路径执行
 # - 如果用jump host 来代理加速拷贝文件， 有时候速度会变慢; 通过jump host 做端口转发，再scp  127.0.0.1 能速度正常

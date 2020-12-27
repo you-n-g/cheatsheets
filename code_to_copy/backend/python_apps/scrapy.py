@@ -16,8 +16,12 @@ response.selector.xpath('//*[@href="/microsoft/qlib/stargazers" and contains(@cl
 
 # 写爬虫
 
-# 下面的代码有点过期了,我猜测需要改的有
-# HtmlXPathSelector -> from scrapy.selector import Selector
+# NOTE: 下面的代码有点过期了, 新版的代码应该这么写
+# from scrapy.selector import Selector
+# resp = requests.get("http://web.stanford.edu/class/cs224w/")
+# slc = Selector(resp)
+# slc.xpath("//a/@href").extract()
+
 
 from scrapy.contrib.spiders import CrawlSpider, Rule
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor

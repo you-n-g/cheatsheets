@@ -1,5 +1,5 @@
 '''
-TODO: 
+TODO:
     现在最新的已经切到 pytest了
 
 # pytest -s --pdb
@@ -22,7 +22,7 @@ class TestMultiversoTables(unittest.TestCase):
     '''
     Use the commands below to run test
 
-    # nosetest 
+    # nosetest
     $ nosetests
     If you want to suppress the tensorflow output. Otherwise the logging info will appear in the stdout
     $ nosetests --nologcapture
@@ -31,6 +31,9 @@ class TestMultiversoTables(unittest.TestCase):
 
     If you only want to test one case you can specify the file and the method
     $ nosetests test/test_file.py:TestClass.test_method
+
+    If you want to profilin, please refer to https://stackoverflow.com/a/35563122/443311
+    - py-spy is also a good option
 
     Useful options:
     --pdb  Drop into debugger on failures or errors
@@ -54,6 +57,7 @@ class TestMultiversoTables(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+    # verbosity=100 # 可以看到很多类似的结果
 
 
 

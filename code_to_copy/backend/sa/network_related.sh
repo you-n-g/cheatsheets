@@ -23,6 +23,8 @@ route del/add default gw 192.168.1.1
 
 # 重启网卡，在ubuntu上会读取 /etc/network/interfaces, 所以修改后用这个命令生效比较好
 sudo ifdown eth0 && sudo ifup eth0 # ifup is a script,  include check config and using DHCP
+# ifdown和ifup其实是一个脚本, 如果手动配置过需要清除之前的信息， 见 backend/etc/network/interfaces
+# - 如果想强行配置可以用 `ifconfig eth0 down` 这种命令处理一下
 
 dhclient eth0 # 如果上面有问题，则用这个获取ip地址
 
