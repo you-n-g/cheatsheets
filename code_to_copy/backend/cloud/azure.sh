@@ -6,6 +6,8 @@ az cloud set -n AzureChinaCloud  # if az is for China, please switch to China Cl
 az account list
 
 az account set --subscription "e033d461-1923-44a7-872b-78f1d35a86dd"
+# - 这个也是必要的，不然后面那些在具体sub下操作的命令都无法生效
+# - 另外要检查你的账号是不是真的有权限(后来只有SC-*账号有权限了)
 
 az extension list-available
 
