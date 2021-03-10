@@ -34,6 +34,11 @@ source activate py36
 # deactive
 source deactivate
 
+# upgrade specific package
+# https://stackoverflow.com/questions/63552265/conda-how-can-i-update-just-the-packages-i-specify-in-my-command
+echo "update_dependencies: False" > ~/.condarc
+conda update XXX
+
 
 # set default environment: https://stackoverflow.com/questions/28436769/how-to-change-default-anaconda-python-environment
 # Add some command to conda
