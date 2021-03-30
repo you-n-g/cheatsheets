@@ -69,6 +69,7 @@ git branch -f branch-name XXX_COMMIT # 可以直接将已经有的branch 设置�
 # 操作分支指针
 git reset --hard COMMIT_NAME # 我会但是会改变当前的branch指针和head指向的分支指针;
 # 如果加了 --hard， working directory, staged通杀; 默认是--mixed 清除index，保留working directory(所以相当于当前文件保留，但是只改变分支指针的指向); reset 不会删除commit;
+git checkout -B XXXXX # 如果需求只是把分支缓一缓，那么可以checkout到某个commit后，再用这个命令重新设置分支 (试了之后如果是直接改变HEAD指向的分支的， 还是hard更方便)
 
 
 # 操作 cached/staged/index # 可以 git ls-files 看index里有什么

@@ -24,7 +24,7 @@ logger.opt(depth=2).log(level, f"Time {name}: {time.time() - start} s")
 #   - 某层propagate=False时停止
 #   - 某层level不够，被丢弃了为止(比如 a.b[INFO] 收到debug log之后，是不会传给  a[DEBUG]的)
 #      - 先从level判断是否要丢弃，filter是之后的操作； 所以 a.b[level=DEBUG, 加上INFO的filter] 是不会阻止 a[debug]获取消息的 https://stackoverflow.com/a/18059462
-# - 同一个logger有多个hanlder，每个handler也可以有自己的logging level
+# - 同一个logger有多个handler，每个handler也可以有自己的logging level
 
 # 设计思路
 # 目标：debug某个模块时，可以统一设置Logging的Level;
