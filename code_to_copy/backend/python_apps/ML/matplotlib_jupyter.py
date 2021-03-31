@@ -49,7 +49,7 @@ ax.xaxis.set_label_text("x轴名称")
 ## 都清除
 ax.xaxis.set_ticks([])
 
-## 设置成指定值
+## 设置成指定值 (特别是heatmap改日期很管用)
 xticklabels = ax.get_xticklabels()
 for label in xticklabels:
     text = label.get_text()
@@ -716,7 +716,7 @@ plt.annotate("Text Content", xy=(<x>, <y>), xytext=(<x>, <y> + 1000),
 
 
 # # Outlines: 其他库
-# 百度开源的库 
+# 百度开源的库
 # - github: https://github.com/pyecharts/pyecharts
 # - treemap:  https://echarts.apache.org/examples/zh/#chart-type-tree
 
