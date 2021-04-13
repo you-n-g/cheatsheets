@@ -317,13 +317,13 @@ pd.DataFrame({'B': [0, 1, 2, np.nan, 4]}).ewm()
 # pandas性能问题
 # fillna如果是一个常数，性能会非常好，如果是一个series, 性能会非常差!!!!!
 # - 比如fillna mean，那么可以先减mean，再fillna(0)会极大地提升性能
-# 
+#
 # [  ] 我的猜想: 有时候loc不一定很慢, 可能是iloc调用时不会拷贝数据， loc调用时一定会拷贝数据
 # - 需要高性能时尽量用df操作，避免底层拷贝(我感觉dataframe到np.array会自动拷贝数据，尽量让这种事情只发生一次)!!!
 
 
 # pandas 的resample
-# 个人理解: 
+# 个人理解:
 # - 当rule是'M', 'A', 'Q'这种单个时期时，拿月做例子， resample的bin划分左右端是 上一个月的最后一天， 这一个月的最后一天；
 # - closed=left  则每个区间包含 [上一个月的最后一天， 这一个月的最后一天)
 # - closed=right 则每个区间包含 (上一个月的最后一天， 这一个月的最后一天]  (默认值)
@@ -493,17 +493,21 @@ display(df)
 
 # 可以用vim写代码送到 jupyter notebook kernel
 %connect_info  # 利用这里得到的结果，可以用 `jupyter console` 直接和相应的kernel链接
+
+# 路线1) 直接写 py代码，  最后转成noteobok
 # 写完的使用jupyter  notebook的代码存在.py文件后， 可以直接用jupyter run XXX 运行
 # 最后如果硬要转化成ipynb
 # - 可以通过ipynb-py-convert, 写的时候多注意用 # %%
 # - 也可以用python2jupyter
 
-# TODO:  和前端交互现在有困难: 无法和前端做交互
-# 想方便地将代码发送到前端， 可以用 %recall
+# 路线2) jupyter notebook开启后， 用 qtconsole 看结果， 用vim + jupytext辅助 编辑文件， 用 "jupyter-vim/jupyter-vim" 发送结果
+
+# 路线3) 同上， 不同的是 直接用 vim-slime 发送&看结果， embed解决无法识别 %cpaste 的问题
+# - 这个的优点是可以不用在电脑上预装
+# - conda install -c conda-forge jupyter_console
 
 
-
-# 有用的magic fucntions: 
+# 有用的magic fucntions:
 # 可以把文件输入都放到ipynb中  %notebook out.ipynb
 
 
