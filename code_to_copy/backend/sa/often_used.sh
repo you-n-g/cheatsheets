@@ -328,6 +328,7 @@ usermod -aG sudo xiaoyang
 
 
 
+
 # Supervisor
 supervisorctl  # 执行命令后输入 help 可以看到相应的可用的服务
 sudo  supervisorctl status # 可用的服务

@@ -2,6 +2,7 @@
 #-*- coding:utf8 -*-
 
 
+# # Outlines: debugging
 
 # BEGIN PDB
 # https://docs.python.org/2/library/pdb.html
@@ -21,6 +22,20 @@ pdb.set_trace()
 # https://pypi.python.org/pypi/rpdb/
 import rpdb; rpdb.set_trace()
 # rpdb的异常显示有问题
+
+
+
+# 在IPython中实时动态地debug某个函数 https://stackoverflow.com/a/12647065
+import ipdb
+ipdb.runcall(runner.run_strategy, strategy, run_len=10000)
+
+# 这个命令要方便的多!!!!! 直接以debug模式开始整个cell
+%%debug
+
+
+
+# Profling 和 tuning 中很多工具也可以放到 trace中
+
 
 
 # BEGIN traceback
@@ -202,13 +217,21 @@ p.strip_dirs().sort_stats("cumtime").print_stats(100)
 
 
 
-# 在IPython中实时动态地debug某个函数 https://stackoverflow.com/a/12647065
-import ipdb
-ipdb.runcall(runner.run_strategy, strategy, run_len=10000)
+# ## Outlines: memory profiling
 
-# 这个命令要方便的多!!!!! 直接以debug模式开始整个cell
-%%debug
+# 释放一个object: 下面的函数可能有用
+# https://stackoverflow.com/questions/11891755/find-all-references-to-an-object-in-python
+import gc
+gc.collect()
+sys.getrefcount(x)
+gc.get_referrers()
+gc.get_objects()
 
+# memory_profiler
+# - https://github.com/pythonprofilers/memory_profiler
+mprof attach <pid>  # 可以统计特程序的的内存使用情况
+mprof plot --output <XXX>  <mprofile>.dat
+# NOTE: 注意这个不一定能正确处理多进程的问题
 
 
 
@@ -232,10 +255,18 @@ gdb python [pid] with py-bt & info threads
 
 
 
-
-
 # Pycharm debug
 # Pycharm有一个特殊的工具，可以attach to process...
 # 可以直接暂停一个正在运行的工具
+
+
+
+# 可能出问题的地方
+# - 思路:
+#     - 先改成单进程， 进入单进程debug模式
+#     - 如果单进程不出错，则重点关注一下单进程多进程的区别
+# - 单进程&多进程区别:
+#     - 多进程都是要经过pickle的， 注意是否干扰了pickle的过程(例如 Serializable)。
+
 
 #  END    多进程/线程DEBUG经验  -------------------------

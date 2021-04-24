@@ -32,9 +32,9 @@ wget -r -p -np -k http://xxx.com/abc/
 
 
 # 从一台服务器rsync到另外一台服务器上 "注意 / 不能错!!!":  如果source不以/结尾， 那么会当成一个新文件放进去；否则会把source和target这两个文件夹同步成一样的。
-# 第一个"/"是关键(关系这个路径是当成文件还是文件夹)，第二个"/"可能无关紧要
+# 第一个"/"是关键(关系这个路径是当成文件还是文件夹)，第二个"/"可能无关紧要(我的经验是第二个都会当成文件夹???)
 # - 当用了 --files-from 就会例外，程序会按你在--files-from文件中写的路径做改变
-#   - 我感觉逻辑像是会把文件名一个一个接上你的 from path
+# - 我感觉逻辑像是会把文件名一个一个接上你的 from path
 rsync  -avzrP -e ssh /home/deploy/livesites/XXX_SITE  XXX_IP:/home/deploy/livesites/
 # -a archive; -v verbose; -z compress; -r recursive; -P progress
 # 对小文件, -a 会加速很多(不依赖z来压缩); 这个命令可以多次运行，每次只传输两个文件之间的差

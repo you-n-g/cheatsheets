@@ -112,7 +112,14 @@ do
 done
 
 
+# 网络相关
 
 az vm open-port -g Fin-Cluster -n GPU-Client02 --port 3389-3389 --priority 100
 
 az vm open-port -g Fin-Cluster -n QlibServer --port 3389-3389 --priority 100
+
+
+# 看一个特定 network security group
+az network nsg rule list -g Fin-Cluster02  --nsg-name "security_port"
+
+az network nsg rule create -g Fin-Cluster02  --nsg-name "security_port"   --destination-port-ranges "5444"  -n "weiturui" --source-address-prefixes  139.219.14.69 --priority "1001"

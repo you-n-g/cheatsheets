@@ -59,6 +59,9 @@ rg --type-add 'src:include:py,md' --type-add 'src:*.ipynb' -t src  XXXX
 
 rg '[\p{Han}]'  # 可以搜索特定语言(不限rg): https://www.coder.work/article/6293564
 
+# 有用的参数
+# -M 120  # 不打印超过120长度的内容
+
 # 优势
 # - 默认支持的文件类型多
 
