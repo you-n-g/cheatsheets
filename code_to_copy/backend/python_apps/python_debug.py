@@ -231,6 +231,7 @@ gc.get_objects()
 # - https://github.com/pythonprofilers/memory_profiler
 mprof attach <pid>  # 可以统计特程序的的内存使用情况
 mprof plot --output <XXX>  <mprofile>.dat
+# NOTE: 注意这个不一定能正确处理多进程的问题
 
 
 
