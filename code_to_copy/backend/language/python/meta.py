@@ -53,27 +53,44 @@ print("Start defining D")
 
 class D(C):
     # D will not use C's meta class
+    # 不知道为什么 Python这里要这么设计， 当metaclass是函数的时候就不能继承
     pass
 
 
-print("Start defining E")
+print("Start defining E: 这里主要是看一眼meta class一般的用法和命名")
 
 
 class MyMeta(type):
     def __new__(cls, clsname, bases, attrs):
         # cls 就类似于静态方法
+        # - 比较奇妙的地方是它虽然是静态方法，但是不需要静态方法装饰器
         print("创建class之前可以做点什么", clsname, bases, attrs)
         return type.__new__(cls, clsname, bases, attrs)
 
     def __init__(self, clsname, bases, attrs):
         print("创建class之后可以做点什么", clsname, bases, attrs)
 
+    def __call__(self, *args, **kwargs):
+        print("在meta class创建出来实例初始化instance时会调用 `__call__`", *args, **kwargs)
+
 
 class E(metaclass=MyMeta):
     # 你就想想 MyMeta 会被当成函数调用
     pass
 
+
 print(E)
+
+print("Start defining F")
+
+
+class F(E):
+    # NOTE: 当 metaclass 是类的时候，它会被继承
+    pass
+
+print(F)
+
+F()  # 看看 __call__ 什么时候被用到
 
 
 print("Start main")
