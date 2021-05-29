@@ -1,1 +1,6 @@
 00 6    * * *   root    ntpdate 210.72.145.44
+
+# 开机启动
+# 第一个是 new-session
+@reboot tmux new-session -s daemon -n <app_name> -d "sleep 0.1 && cd /home/xiaoyang/apps/v2ray && ./v2ray"
+@reboot tmux new-window -t daemon -n <app_name> "sleep 0.1 && cd /home/xiaoyang/apps/v2ray && ./v2ray"

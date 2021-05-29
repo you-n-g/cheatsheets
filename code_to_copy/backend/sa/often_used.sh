@@ -324,7 +324,8 @@ usermod -aG sudo xiaoyang
 # 1) add log
 # 2) debug:  >> /tmp/log.crontab  2>&1
 
-
+# 其他和crontab有关的
+# code_to_copy/backend/sa/crontab
 
 
 

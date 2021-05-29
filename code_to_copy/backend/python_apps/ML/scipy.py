@@ -233,7 +233,7 @@ df.columns = df.columns.droplevel()
 
 # 向index添加一层索引
 # https://stackoverflow.com/a/40225796
-# df.columns = pd.MultiIndex.from_product([df.columns, ['C']])
+df.columns = pd.MultiIndex.from_product([df.columns, ['C']])
 
 
 
