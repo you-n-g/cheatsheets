@@ -4,6 +4,8 @@
 # Outlines
 # - pandas
 #   - pandas cheatsheets
+# - numpy
+# - Interpretor/Jupyter
 
 
 # 基本模板
@@ -384,6 +386,9 @@ from sklearn.metrics import confusion_matrix, classification_report
 
 
 
+# %% [markdown]
+# # Outlines: numpy
+
 
 # 坑!!!!!
 # TODO: indexing, https://docs.scipy.org/doc/numpy-1.13.0/reference/arrays.indexing.html
@@ -418,6 +423,13 @@ np.eye(10)[(1, 1)] # 取index是 1, 1的元素
 # 常见应用： 比如比较column和index的值时，可以(df.index.values.reshape(-1, 1) < df.column.values.reshape(1, -1))
 
 
+# np.nan 的bug
+# - bool(np.nan) is True
+# - np.nan < > ==  等等都是 False;  所以依靠
+
+
+# %% [markdown]
+# # Outlines: Interpretor/Jupyter
 
 
 # 存储整个环境变量

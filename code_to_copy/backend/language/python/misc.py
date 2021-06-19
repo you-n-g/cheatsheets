@@ -13,3 +13,21 @@ class B(A):
 
 print(B.f)  # <bound method A.f of <class '__main__.B'>>
 B.f()       # <class '__main__.B'> () {}
+
+
+# %% [markdown]
+# # Outlines: exceptions
+
+
+
+try:
+    __import__("time").sleep(20)
+except Exception:
+    print("Exception")
+except KeyboardInterrupt:
+    print("KeyboardInterrupt Exception")
+
+# Exception 并没有包含所有的exception
+print(KeyboardInterrupt.__base__)  # <class 'BaseException'>
+print(Exception.__base__)  # <class 'BaseException'>
+print(ValueError.__base__)  # <class 'Exception'>

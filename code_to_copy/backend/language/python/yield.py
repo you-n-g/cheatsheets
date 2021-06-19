@@ -3,10 +3,15 @@
 
 def test_yield():
     yield range(10)
+    return "Return value for yield from"
 
 
 def test_yield_from():
-    yield from range(10)
+    res = yield from test_yield()
+    # return value of `yield from` & `yield` are very different.
+    # The yield will return the value
+    print(res)
+    return res  # This value can't be returned
 
 
 # # Outlines: send
