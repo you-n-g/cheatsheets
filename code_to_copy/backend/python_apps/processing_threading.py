@@ -87,22 +87,26 @@ Manager()
 # For fast implementing
 from multiprocessing import Pool
 
-def worker(x):
-    return x*x
-pool = Pool(5)
-res = []
-for kwargs in [{'x': 1}, {'x': 2}, {'x': 3}]:
-    res.append(pool.apply_async(worker, [], kwargs))
 
-# get result and prevent the main process from exiting
-for r in res:
-    try:
-        print 'task ended:', r.get()
-        # 子进程如果出现异常，会在r.get()这里reraise异常. 导致父进程挂掉，子进程无法继续执行
-        # TODO: 如果在另外一个进程里core dumped，会在r.get()这一步卡住
-    except Exception, e:
-        print u"Type=%s, Args=%s" % (type(e), e.args)
-pool.close()
+def worker(x):
+    return x * x
+
+
+if __name__ == "__main__":
+    pool = Pool(5)
+    res = []
+    for kwargs in [{'x': 1}, {'x': 2}, {'x': 3}]:
+        res.append(pool.apply_async(worker, [], kwargs))
+
+    # get result and prevent the main process from exiting
+    for r in res:
+        try:
+            print('task ended:', r.get())
+            # 子进程如果出现异常，会在r.get()这里reraise异常. 导致父进程挂掉，子进程无法继续执行
+            # TODO: 如果在另外一个进程里core dumped，会在r.get()这一步卡住
+        except Exception as e:
+            print(u"Type=%s, Args=%s" % (type(e), e.args))
+    pool.close()
 # TODO: If I put it before r.get(). The print info above will never output the data.
 # 在并行地分配任务的代码结束后调用它，这样pool在完成所有任务后就会自动关闭了
 # Indicate that no more data will be put on this queue by the current process.
