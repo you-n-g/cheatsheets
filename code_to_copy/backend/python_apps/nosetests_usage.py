@@ -23,6 +23,8 @@ class TestMultiversoTables(unittest.TestCase):
     Use the commands below to run test
 
     # nosetest
+    pip install nose
+
     $ nosetests
     If you want to suppress the tensorflow output. Otherwise the logging info will appear in the stdout
     $ nosetests --nologcapture
