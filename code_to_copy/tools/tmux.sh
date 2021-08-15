@@ -28,7 +28,8 @@ tmux splitw -h -t sgx:1  # 把目标窗口的当前pane 分左右两边
 
 # 把另外一个pane弄到当前window新建的一个pane
 tmux join-pane -s ":0.0"  # 带session name 可以是 "[session name]:0.0"
-
+join-pane -t {last}  # 这个非常好用， 一般手动输入pane的 session name, window name 很麻烦，但是通过选择器来决定这个
+                     # join关系一切就变得更简单了
 
 
 # trouble shooting
