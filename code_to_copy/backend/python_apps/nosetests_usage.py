@@ -39,6 +39,7 @@ class TestMultiversoTables(unittest.TestCase):
 
     Useful options:
     --pdb  Drop into debugger on failures or errors
+    You can install this to enable --ipdb and --ipdb-failures https://github.com/flavioamieiro/nose-ipdb
 
 
     If you just want to run this program like normal. You don't have to use nosetest.

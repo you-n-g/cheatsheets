@@ -23,13 +23,24 @@ class A:
         print("haha")
 
     def __getattribute__(self, *args, **kwargs):
-        print(f"call __getattribute__ first: {args} {kwargs}")
-        # 这里会调用 __getattr__
+        print(f"call __getattribute__ first(无论找不找得到，先进这里再说): {args} {kwargs}")
+        # __getattr__ 的调用得从这里触发
         return super().__getattribute__(*args, **kwargs)
 
     def __getattr__(self, *args, **kwargs):
-        print(f"call __getattr__ second: {args} {kwargs}")
+        print(f"call __getattr__ second(只有找不到属性才会来这里): {args} {kwargs}")
         return super().__getattr__(*args, **kwargs)
+
+class C:
+    def __getattribute__(self, name: str):
+        # 这里主要想展示这里 返回的的方法不会自动 bind self
+        def f(st):
+            print(st)
+        return f
+
+    def __add__(self, other):
+        # https://stackoverflow.com/a/27301202
+        print("__add__ 这种magic function调用会绕过 __getattribute__")
 
 
 if __name__ == "__main__":
@@ -47,3 +58,8 @@ if __name__ == "__main__":
     print("给你看看带上 `__get__` 的效果")
     print(a.bar)
     print(a.bar())
+
+
+    C().any_method("good")
+
+    C() + 3

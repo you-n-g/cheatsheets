@@ -1,3 +1,5 @@
+from functools import partial
+
 def module_meta(*args, **kwargs):
     print("module_meta", args, kwargs)
     return type(*args, **kwargs)
@@ -15,6 +17,8 @@ def f(*args, **kwargs):
 print("Start defining A")
 
 
+# metaclass 和 meta是有区别的!!!!!
+# [  ] https://stackoverflow.com/a/63448680 (还没)
 class A(metaclass=f):
     # __metaclass__ = f   # this will not work in Python3
 
@@ -37,7 +41,10 @@ def g(*args, **kwargs):
     print(args, kwargs)
 
     # type其实只用前面几个位置参数
-    # TypeError: __init_subclass__() takes no keyword arguments
+    # - kwargs会传给 __init_subclass__, 如果赋值错了会遇到下面的错误
+    #   - TypeError: __init_subclass__() takes no keyword arguments
+
+    print(args[2]) # 这个才是 method list
     return type(*args)
 
 
@@ -60,18 +67,28 @@ class D(C):
 print("Start defining E: 这里主要是看一眼meta class一般的用法和命名")
 
 
+def foo(self, x):
+    print("call foo")
+
+
 class MyMeta(type):
     def __new__(cls, clsname, bases, attrs):
         # cls 就类似于静态方法
         # - 比较奇妙的地方是它虽然是静态方法，但是不需要静态方法装饰器
         print("创建class之前可以做点什么", clsname, bases, attrs)
-        return type.__new__(cls, clsname, bases, attrs)
+
+        attrs["foo"] = foo
+
+        return super(MyMeta, cls).__new__(cls, clsname, bases, attrs)
 
     def __init__(self, clsname, bases, attrs):
         print("创建class之后可以做点什么", clsname, bases, attrs)
 
     def __call__(self, *args, **kwargs):
-        print("在meta class创建出来实例初始化instance时会调用 `__call__`", *args, **kwargs)
+        # 比如 E("test") 会调用 <class '__main__.E'> ('test',) {}
+        print("在meta class创建出来实例初始化instance时会调用 `__call__`", self, args, kwargs)
+        # 到这一行时还没有初始化， 到下面一行才会初始化
+        return super().__call__(*args, **kwargs)
 
 
 class E(metaclass=MyMeta):
@@ -90,7 +107,16 @@ class F(E):
 
 print(F)
 
-F()  # 看看 __call__ 什么时候被用到
+def func_meta(*args, **kwargs):
+    # 这里的方法能不能 bounded我觉得是看 method 是否是有 __get__ 方法，
+    # - patial让这个方法失去了 __get__ 方法 所以我导致最后无法被bound
+    args[2]["foo"] = foo
+    args[2]["foo_partial"] = partial(foo, x=3)
+    return type(*args)
+
+
+class G(metaclass=func_meta):
+    pass
 
 
 print("Start main")
@@ -112,5 +138,26 @@ if __name__ == "__main__":
 
     d = D()
 
+
+    print("show 一下用类做meta class会让method 变成 bounded")
+    e = E()
+    print(dir(e))
+    print(e.foo)   # 这里是bounded method
+    print(e.foo("ha"))
+    print(e.__gt__)
+
+
+    print("子类也会受到影响")
+    f = F()  # 看看 __call__ 什么时候被用到
+    print(f.foo)   # 这里是bounded method
+    print(f.foo("ha"))
+
+    print("Func method 也是有用的")
+    g = G()
+    print(g.foo)   # 这里是bounded method
+    print(g.foo_partial)   # 这里是bounded method
+    # print(g.foo())  # 这里会返回 type error
+
     # Meta class的最常见用法
     # 用于根据特定信息生成 class; 比如API化的class
+
