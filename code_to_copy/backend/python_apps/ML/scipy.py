@@ -515,6 +515,7 @@ display(df)
 # - 也可以用python2jupyter
 
 # 路线2) jupyter notebook开启后， 用 qtconsole 看结果， 用vim + jupytext辅助 编辑文件， 用 "jupyter-vim/jupyter-vim" 发送结果
+# - jupyter notebook 尽量直接打开 `.py` 文件， 这样各方操作比较一致
 
 # 路线3) 同上， 不同的是 直接用 vim-slime 发送&看结果， embed解决无法识别 %cpaste 的问题
 # - 这个的优点是可以不用在电脑上预装

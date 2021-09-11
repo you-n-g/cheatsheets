@@ -24,6 +24,10 @@ import rpdb; rpdb.set_trace()
 # rpdb的异常显示有问题
 
 
+# TOOD:
+# web-pdb 似乎更好
+# https://github.com/romanvm/python-web-pdb
+
 
 # 在IPython中实时动态地debug某个函数 https://stackoverflow.com/a/12647065
 import ipdb
