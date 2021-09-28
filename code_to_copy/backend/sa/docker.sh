@@ -60,6 +60,8 @@ docker pull XXX_host:5000/XXX_IMAGE
 
 ## 制作镜像
 docker commit -m "MESSAGE" -a "AUTHOR"  CONTAINER REPO:TAG
+# - 如果想挂载volume到已有的镜像，建议commit一次  https://stackoverflow.com/a/33956387
+# - REPO:TAG 可以直接换成镜像名字
 docker save IMAGE > /tmp/mynewimage.tar   # save Image
 docker load < /tmp/mynewimage.tar  # load image
 

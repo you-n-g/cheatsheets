@@ -22,9 +22,12 @@ collectl [-scd]
 # http://blog.sina.com.cn/s/blog_51d2a47a0101380o.html : 说明了vmstat, ps 和 top的CPU占用的关系
 # vmstat 的100%-idle == ps的cpu占用/cpu核心数 == top的cpu占用/cpu核心数/物理cpu数目;
 # 根据/proc/cpuinfo看概念： [源](http://www.cnblogs.com/emanlee/p/3587571.html)
-# - 物理CPU数指装了几个CPU,即 "physical id"
+# - 列出每个逻辑处理核心的信息
+# - 物理CPU数指装了几个CPU(对应到物理插槽),即 "physical id" 代表所属物理CPU的ID
 # - cpu核心数指每个物理CPU的核心数量，即 "cpu cores"
+#   - core id 代表所属物理核的id
 # - 逻辑核数，即 "processor" 不同的数量, TODO : 因为超线程技术 区别于 物理CPU数 * CPU核心数????
+#   - siblings： 单个CPU支持的逻辑核数
 # top的 CPU占用指 单位时间内 进程使用的CPU时间/单位时间 [来源](http://www.sosolinux.com/thread-463-1-1.html)
 # troobleshooting
 # iostat vmstat mpstat 第一次结果是 立马出来，这一般说明这个样本是从开机到现在的性能数据

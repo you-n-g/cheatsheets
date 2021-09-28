@@ -30,13 +30,13 @@ chrome_options = Options()
 # chrome_options.add_argument('--no-sandbox')
 # chrome_options.add_argument('--disable-dev-shm-usage')
 chrome_options.add_argument('--proxy-server=127.0.0.1:6489')  # 这里可以设置代理
-# headless 
+# headless
 # https://www.cnblogs.com/yimiaoyikan/p/10225849.html
 # - chrome的无界面状态，不用打开GUI, 少了真实的加载css,js和渲染页面的工作, 性能要高很多
 # - 这里还列出了一些连接远程端口调试相关的东西
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--start-maximized')
-option.add_argument("user-data-dir=selenium")
+chrome_options.add_argument("user-data-dir=selenium")
 # 这里我可以设置存储用户信息，保存用户session
 # - https://stackoverflow.com/a/48665557
 browser = webdriver.Chrome(options=chrome_options)

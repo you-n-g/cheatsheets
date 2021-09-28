@@ -647,9 +647,17 @@ matplotlib.rcParams.update({'font.size': 14})
 <script>
 $('.input, .prompt, .output_stderr, .output_error, .output_result').hide();
 </script>
-# 记得留一个按钮回复代码
+# 记得留一个按钮恢复代码
 %%HTML
 <button onclick="$('.input, .prompt, .output_stderr, .output_error, .output_result').toggle();">Toggle Code</button>
+
+
+# FAQ:
+# 如果一直 `Starting buffering for` and `Restoring connection`, 之前的问题是v2ray连接出问题了
+# - 可以通过直接访问普通网站 & 和 本地的ssh -D  对比来定位问题
+# - 后来又切了切，在要不要通过 ChinaAzure 中转做了点切换，它又好了
+
+# https://stackoverflow.com/questions/52397069vimwiki backlink/python-jupyter-notebook-wont-run-code-keeps-reconnecting
 
 
 # %% [markdown]
