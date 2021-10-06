@@ -34,7 +34,7 @@ class TestMultiversoTables(unittest.TestCase):
     If you only want to test one case you can specify the file and the method
     $ nosetests test/test_file.py:TestClass.test_method
 
-    If you want to profilin, please refer to https://stackoverflow.com/a/35563122/443311
+    If you want to profiling, please refer to https://stackoverflow.com/a/35563122/443311
     - py-spy is also a good option
 
     Useful options:
@@ -45,6 +45,25 @@ class TestMultiversoTables(unittest.TestCase):
     If you just want to run this program like normal. You don't have to use nosetest.
     $ python test_file.py TestClass.test_method
     This will not stop the test from printing the stdout
+
+
+    # pytests
+    pip install pytest
+
+    $ python -m pytest .
+        or
+    $ pytest
+
+    $ pytest --pdb  test/test_file.py:TestClass.test_method
+    $ pytest -s ...  #  -s shortcut for --capture=no   #  https://stackoverflow.com/a/14414325
+
+    ## TODO
+    [ ] how to hide stdout and std error
+    [ ] how to add profiling
+
+    ## 个人体验
+    - nosetests好像会错过某些tests, 没找到recursive的选项; pytests 没有这个问题
+    - pytest 的测试输出看起来更好看
     '''
 
     def setUp(self):
