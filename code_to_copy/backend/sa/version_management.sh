@@ -74,7 +74,7 @@ git checkout -B XXXXX # 如果需求只是把分支缓一缓，那么可以check
 
 # 操作 cached/staged/index # 可以 git ls-files 看index里有什么
 git rm --cached <filename>  # 从 Index 删除文件， 其他都不管； 如果以前就有，新的commit中就不会有这个文件， 有点像hg forget； 如果这个文件是最新commit之后加上的，则直接在index删除
-git reset HEAD filename  # 效果是 将 index中文件恢复到 HEAD状态(即to be committed的会被消除， 但是文件不会被标记成下次删除)，  不管working directory
+git reset HEAD filename  # 效果是 将 index中文件恢复到 HEAD状态(即to be committed的会被消除， 但是文件不会被标记成下次删除/unstage)，  不管working directory
 # - rm --cached 表示在index中删除文件;   reset表示在index中重置文件成某个版本
 
 

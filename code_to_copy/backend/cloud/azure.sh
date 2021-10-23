@@ -8,6 +8,7 @@ az account list
 az account set --subscription "e033d461-1923-44a7-872b-78f1d35a86dd"
 # - 这个也是必要的，不然后面那些在具体sub下操作的命令都无法生效
 # - 另外要检查你的账号是不是真的有权限(后来只有SC-*账号有权限了)
+# - NOTE: 我感觉切换账号的时候，有可能这一步会导致出现问题 !!!!!!
 
 az extension list-available
 

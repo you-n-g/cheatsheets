@@ -625,12 +625,22 @@ import matplotlib.pyplot as plt
 def change_fs(font_size):
     font_size = font_size
     plt.rc('font', size=font_size)        # controls default text sizes
-    plt.rc('axes', titlesize=font_size)   # fontsize of the axes title
-    plt.rc('axes', labelsize=font_size)   # fontsize of the x and y labels
-    plt.rc('xtick', labelsize=font_size)  # fontsize of the tick labels
-    plt.rc('ytick', labelsize=font_size)  # fontsize of the tick labels
+    plt.rc('axes', titlesize=font_size)   # fontsize of the axes title  # TODO: doesn't work
+    plt.rc('axes', labelsize=font_size)   # fontsize of the x and y labels  # TODO: doesn't work
+    plt.rc('xtick', labelsize=font_size)  # fontsize of the tick labels  # TODO: doesn't work
+    plt.rc('ytick', labelsize=font_size)  # fontsize of the tick labels  # TODO: doesn't work
     plt.rc('legend', fontsize=font_size)  # legend fontsize
     plt.rc('figure', titlesize=font_size) # fontsize of the figure title
+
+# 其他改字体的方法
+plt.yticks(fontsize=24)
+plt.xticks(fontsize=24)
+
+# https://stackoverflow.com/a/45710899
+ax = plt.gca()
+ax.tick_params(axis = 'both', which = 'major', labelsize = 24)
+ax.tick_params(axis = 'both', which = 'minor', labelsize = 16)
+
 
 # 如果想一次改变所有的font size;  这个是一个全局性的，会持续生效
 # 这个不能改变坐标轴的大小
@@ -671,7 +681,7 @@ $('.input, .prompt, .output_stderr, .output_error, .output_result').hide();
 # 如果是 barh时， 需要把下面的 get_x 换成 get_y， 把 get_height换成get_width.
 # 我理解这里的get_x是图中柱状图根部的位置， height width指的是柱状图本身的形状
 for p in ax.patches:
-	ax.annotate("%.4f" % p.get_height(), (p.get_x() * 1.01, p.get_height() * 1.01)
+	ax.annotate("%.4f" % p.get_height(), p.get_x() * 1.01, p.get_height() * 1.01)
 # 我觉得这里的 1.01 常常不要也行
 
 # 顺便控制一下bar的高度
