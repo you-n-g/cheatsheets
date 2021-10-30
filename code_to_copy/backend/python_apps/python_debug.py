@@ -233,8 +233,13 @@ gc.get_objects()
 
 # memory_profiler
 # - https://github.com/pythonprofilers/memory_profiler
+# - pip install -U memory_profiler
 mprof attach <pid>  # 可以统计特程序的的内存使用情况
 mprof plot --output <XXX>  <mprofile>.dat
+
+# 这样可以紧接着profile刚刚跑的程序
+BACK_PID=$!
+mprof attach $BACK_PID
 # NOTE: 注意这个不一定能正确处理多进程的问题
 
 

@@ -4,3 +4,14 @@
 # 第一个是 new-session
 @reboot tmux new-session -s daemon -n <app_name> -d "sleep 0.1 && cd /home/xiaoyang/apps/v2ray && ./v2ray"
 @reboot tmux new-window -t daemon -n <app_name> "sleep 0.1 && cd /home/xiaoyang/apps/v2ray && ./v2ray"
+
+
+
+# 注意事项
+# - 不知道为什么 reboot调用tmux 会把shell设置为sh， 非常奇怪...; 所以开机需要 设置tmux的option
+#     - 可以试试： 
+#         - [启动时设置一下shell 或者 改一改 ~/.tmux.conf 来设置tmux](https://unix.stackexchange.com/a/78520)
+# - 这些命令也需要设置成能支持 zsh的
+# - 有时候直接调用anaconda 环境中的pyton路径不够， 还是需要在脚本中激活一下
+#     - . "/home/xiaoyang/miniconda3/etc/profile.d/conda.sh"
+#     - conda activate online_V07_gpu 
