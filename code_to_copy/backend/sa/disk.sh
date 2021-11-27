@@ -79,11 +79,12 @@ ncdu
 agedu
 # man agedu 可以看看怎么,  -s -w 这两个参数可以用
 # agedu -s /  --cross-fs # scan, 如果不加--cross-fs 不会跨文件系统扫描(间接地限制不会垮硬盘扫描)
-# agedu  -f agedu.dat -w --address 0.0.0.0:5432
-# - 这边我发现address设置成 0.0.0.0 就会 403 Forbidden, 改成127.0.0.1 然后再端口转发就没问题了
-# ssh 127.0.0.1 -L 0.0.0.0:48475:127.0.0.1:48474  # 做个端口转发 想让别人也能访问
+# agedu --auth none -f agedu.dat -w --address 0.0.0.0:5432
+# - 如果不加 `--auth none` 这边我发现address设置成 0.0.0.0 就会 403 Forbidden, 改成127.0.0.1 然后再端口转发就没问题了
+#    - ssh 127.0.0.1 -L 0.0.0.0:48475:127.0.0.1:48474  # 做个端口转发 想让别人也能访问
 # 问题
 # 曾经一直遇到:  403 Forbidden 的问题无法解决
+# - 后来发现其它内置了 authentication 的机制，可以 --auth none 关掉
 
 # END   清理垃圾文件  -----------------------
 

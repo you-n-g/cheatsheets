@@ -43,6 +43,7 @@ docker cp <containerId>:/file/path/within/container /host/path/target
 docker inspect -f '{{.Id}}' XXX_SHORT_ID_or_XXX_NAME # inspect the full id
 docker rm `docker ps -q -a`  # 删除所有的容器，相应有删除所有的镜像； docker ps 和 images 都支持 -q 参数来只显示 容易/镜像id
 
+sudo docker image rm `sudo docker image list -q -a`
 
 
 # container 联网篇
