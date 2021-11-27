@@ -57,6 +57,7 @@ class TestMultiversoTables(unittest.TestCase):
     $ pytest --pdb  test/test_file.py:TestClass.test_method
     $ pytest -s ...  #  -s shortcut for --capture=no   #  https://stackoverflow.com/a/14414325
     $ pytest -x ...  # 一出错就停下， 不用等
+    $ pytest -s test_dataset.py::TestDataset::testTSDataset  # 跑特定的test来debug，中间可以插入embed方便调试
 
     ## TODO
     [ ] how to hide stdout and std error
