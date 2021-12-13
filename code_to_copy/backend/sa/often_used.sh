@@ -180,12 +180,18 @@ service ufw stop; ufw disable  # 其实从来没有确认过这个会不会影�
 
 
 
+
+# 语法篇BEGIN --------------------------------------
 # 基本语法篇/常识
 
 if ! grep "^proxy_up" ~/.bashrc ; then
 elif
 else
 fi
+
+# 坑
+# - else 在某些版本中是必须的(不是很确定) : 曾经遇到过一次写了if elif 不带 else， 结果在某台机器上没用......
+# - 函数的定义 `foo () {` 才是通用的， 那些带function关键字 或者省去括号的都是一些特殊的shell才支持的
 
 if [ ! $? -eq 0 ]; then
 # 参见 ./WritingShellScripts.wiki
@@ -314,6 +320,44 @@ done
 # 一般shell软件分 带-的参数，  和不带-的参数。  为了消除歧义，一般 -- 代表带-的参数的结束
 
 
+
+# EOF的用法
+# https://stackoverflow.com/a/30728472
+# 有双引号时(如"EOF"), 里面的内容一定不转义
+
+# 符号的解释
+## 单分号
+## - 一般是用来分割代码块(解决一行要执行多个命令的问题)，常常可以被回车代替; 
+## - 分号前面不需要空格分隔
+## 双分号
+## - 终止case项
+## 冒号
+## - 等价于 NOP/true/什么都不干但是返回true,
+## - `while :` 等于不断循环
+## - `then :` 代表这支什么都不干
+## 单中括号[ ]是 shell中的语法糖， 相当于单句的test
+## - 中括号的内部需要空格分隔
+## Ref
+## - https://cnbin.github.io/blog/2015/06/28/bash-zhong-de-te-shu-fu-hao-1/
+
+## if 从句中， 不同的命令可以用  ！ -a -o  之类的逻辑运算符连接
+## - [  ] 本质是test，也算命令的一种， 可以和其他命令用逻辑运算链接
+
+
+# 把带空格的 ARGUMENTS 当成多个分开的arguments
+eval $ARGUMENTS
+
+
+
+# 读懂报错信息
+# unexpected EOF while looking for matching `"' 
+# - 这里的重点是 " ， 而不是 `'
+
+# 语法篇END   --------------------------------------
+
+
+
+
 # 用户相关
 adduser xiaoyang
 usermod -aG sudo xiaoyang
@@ -377,40 +421,6 @@ echo 'echo $@' | bash -s - -lst
 # Tricks END    ------------------------------------
 
 
-
-
-
-
-
-# 语法篇BEGIN --------------------------------------
-
-# EOF的用法
-# https://stackoverflow.com/a/30728472
-# 有双引号时(如"EOF"), 里面的内容一定不转义
-
-# 符号的解释
-## 单分号
-## - 一般是用来分割代码块(解决一行要执行多个命令的问题)，常常可以被回车代替; 
-## - 分号前面不需要空格分隔
-## 双分号
-## - 终止case项
-## 冒号
-## - 等价于 NOP/true/什么都不干但是返回true,
-## - `while :` 等于不断循环
-## - `then :` 代表这支什么都不干
-## 单中括号[ ]是 shell中的语法糖， 相当于单句的test
-## - 中括号的内部需要空格分隔
-## Ref
-## - https://cnbin.github.io/blog/2015/06/28/bash-zhong-de-te-shu-fu-hao-1/
-
-## if 从句中， 不同的命令可以用  ！ -a -o  之类的逻辑运算符连接
-## - [  ] 本质是test，也算命令的一种， 可以和其他命令用逻辑运算链接
-
-
-# 把带空格的 ARGUMENTS 当成多个分开的arguments
-eval $ARGUMENTS
-
-# 语法篇END   --------------------------------------
 
 
 # find BEGIN --------------------------------------
