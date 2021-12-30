@@ -58,7 +58,8 @@ mount -t tmpfs -o size=1024m tmpfs /mnt/ram
 
 
 # 一些常常需要的变量
-set -x # 设置允许的时候会把命令写出来， 而且会在命令前面输出+
+set -x  # 设置允许的时候会把命令写出来， 而且会在命令前面输出+
+set -e  # 如果有命令跑出错了，那么自动报错退出
 
 ## = must used instead of ==
 # 第一行是为了防止代码直接被贴到 console里面跑的情况; else里面的数值既可以处理跑脚本的情况，也可以处理source的情况
