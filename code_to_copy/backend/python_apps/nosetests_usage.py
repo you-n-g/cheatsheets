@@ -59,6 +59,9 @@ class TestMultiversoTables(unittest.TestCase):
     $ pytest -x ...  # 一出错就停下， 不用等
     $ pytest -s test_dataset.py::TestDataset::testTSDataset  # 跑特定的test来debug，中间可以插入embed方便调试
 
+    # 其他可能会用到的参数
+    # --disable-warnings : 有时候warning太多
+
     ## TODO
     [ ] how to hide stdout and std error
     [ ] how to add profiling

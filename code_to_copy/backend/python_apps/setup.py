@@ -13,6 +13,11 @@ install_requires = ["pyqlib @ https://github.com/microsoft/qlib/tarball/neutrade
 
 
 # Tips
-# 有个问题的是 setup.py develop 会装 pre-release 版本，有的时候会装到一些不是很稳定的依赖
+# 尽量避免使用 `python setup.py develop`, 而是使用 `pip install -e .` :  https://stackoverflow.com/q/30306099
+# - 有个问题的是 setup.py develop 会装你的dependancy的 pre-release 版本，有的时候会装到一些不是很稳定的依赖
+# - `pip install -e .` 不同点
+#   - egg-info 是相对你项目的路径
+#   - 使用wheel安装 ?
+#   - 安装dependancies是使用 pip ， 而不是 easy_install
 
 
