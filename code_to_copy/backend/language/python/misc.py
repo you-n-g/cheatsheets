@@ -21,7 +21,7 @@ B.f()       # <class '__main__.B'> () {}
 
 
 try:
-    __import__("time").sleep(20)
+    __import__("time").sleep(2)
 except Exception:
     print("Exception")
 except KeyboardInterrupt:
@@ -31,3 +31,24 @@ except KeyboardInterrupt:
 print(KeyboardInterrupt.__base__)  # <class 'BaseException'>
 print(Exception.__base__)  # <class 'BaseException'>
 print(ValueError.__base__)  # <class 'Exception'>
+
+
+
+
+# %% [markdown]
+# # Outlines: functions and closure
+
+
+outer_val = 100
+outer_val2 = 100
+
+
+from functools import partial
+
+r = partial(lambda x=outer_val: x + outer_val2)
+
+print(f"Original value: {r()=}")
+outer_val += 100
+print(f"arguments' default value is fixed during definition: {r()=}")
+outer_val2 += 100
+print(f"Function's values depend on closure: {r()=}")
