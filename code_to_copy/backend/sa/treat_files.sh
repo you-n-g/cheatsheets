@@ -51,6 +51,9 @@ rsync  -avzrP -e ssh /home/deploy/livesites/XXX_SITE  XXX_IP:/home/deploy/livesi
 #   - 估计坑在:  相对路径 & += 是必须了解的
 #   - 建议用 --files-from :   我这边好像多一层少一层路径都没问题。。。
 
+# 有用的trick
+# - 控制rsync深度: https://unix.stackexchange.com/questions/178362/rsync-recursively-with-a-certain-depth-of-subfolders
+
 # 坑: 
 # - exclude总是会用相对路径执行
 # - 如果用jump host 来代理加速拷贝文件， 有时候速度会变慢; 通过jump host 做端口转发，再scp  127.0.0.1 能速度正常
