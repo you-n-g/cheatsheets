@@ -335,11 +335,19 @@ df.resample('6M', closed='left')
 
 
 ## 一些要注意的点
-# 在 slice 上的修改有时候会影响到 原数据的, 在 numpy 也是同样的,  numpy需要用  numpy.copy才能避免
-# - 一般直接看是否有 SettingWithCopyWarning就行, http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
-# - 会直接修改源数据的: a.loc[a[0] < 5, 'idx'] = False
-# - 不会直接修改源数据的：a.loc[a[0] < 5]['idx'] = False
-#   - 看样子是直接loc上赋值的才会修改源数据
+# 原理
+# - 拿到了 view，在源df上赋值
+#    - 如果没有修改原来df的结构，会影响view的值
+#    - 如果修改了原来df的结构，view就不会影响了
+#       - 赋值原来df时，修改了col的类型，导致新分配了column
+#       - dataframe是由整个 np.array转过来的，修改其中一列会导致整个array都打散成column，就断开了和所有原来df衍生的view的关系
+# - 有pandas 在调用了多次 __getitem__后，自己也无法判断拿到的是view还是copy，当用户接着修改后， 只要跟它有可能是view，它就会统一地报 SettingWithCopyWarning 错误
+#   -  我猜测pandas认为用户的意图是修改原来的df (这时需要它是view)， 但是panads无法判断它是不是view，所以只要它可能是view(单实际上可能copy)，那pandas就会警告你可能你在对一个copy 赋值而不会影响原df
+# 例子:
+# - 在 slice 上的修改有时候会影响到 原数据(有时候不会)
+#   - 一般直接看是否有 SettingWithCopyWarning就行, http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy
+#   - 会直接修改源数据的: a.loc[a[0] < 5, 'idx'] = False
+#   - 不会直接修改源数据的：a.loc[a[0] < 5]['idx'] = False
 
 # bool index 时，如果传入的是带有index的boolean值， 取值是看index + bool的结果
 # - df[series或者bool index] 会从index中截取， df.loc[:, series]会从columns中获取数据
