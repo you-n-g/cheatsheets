@@ -248,6 +248,10 @@ wait $BACK_PID
 kill $MONI_PID
 # NOTE: 注意这个不一定能正确处理多进程的问题
 
+# @profile 来做line_profile也很常用:
+# 我理解它就是看这个函数每一行结束后到底站多少内存
+# - 当出现循环时， `Mem usage` 应该是取最大的，    `Increment` 应该是累计的
+
 
 
 
