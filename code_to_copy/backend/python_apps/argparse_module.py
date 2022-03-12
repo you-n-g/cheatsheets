@@ -8,6 +8,9 @@ NOTICE:
 '''
 
 import argparse
+
+
+# # Outlines: special case
 parser = argparse.ArgumentParser(
     formatter_class=argparse.RawDescriptionHelpFormatter,
     description='''
@@ -17,41 +20,61 @@ parser = argparse.ArgumentParser(
 from datetime import datetime
 get_date = lambda x: datetime.strptime(x, "%Y%m%d").date()
 parser.add_argument('--train_s', type=get_date, help='datetime args', required=True)
-parser.add_argument('--exist-then-true', action='store_true', help='the exist_then_true will be True if present, otherwise False')
+print(parser.parse_args('--train_s 20121010'.split()))
 
-# Add position argument
-# If there is no  -- or -, it will be position variable. You can give it the new name by metavar
 
+# # Outlines: boolean
+parser2 = argparse.ArgumentParser()
+parser2.add_argument('--exist-then-true', action='store_true', help='the exist_then_true will be True if present, otherwise False')
+print(parser2.parse_args())
+print(parser2.parse_args("--exist-then-true".split()))
+# 变量名中的`-` 会被换成 `_`
+
+
+# %% [markdown]
+# # Outlines: 多重变量
+parser3 = argparse.ArgumentParser()
 
 # multi args
-parser.add_argument('--file', action='append')
+parser3.add_argument('--file', action='append')
+parser3.add_argument('--file_with_default', action='append', default=[1,2,3])
+
+print(parser3.parse_args("".split()))  # 没有默认值且没有传参时， 默认为None
+print(parser3.parse_args("--file f1".split()))  # 传了参数就变成 list
+print(parser3.parse_args("--file_with_default fwd".split())) # 有默认值时，直接往默认值上传参
 
 
-parser.add_argument('--multi_arg', nargs='*')
+# # Outlines: 我训练模型常常会用的多次 kwargs update (方便设置默认dict)
+class DictUpdate(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        items = getattr(namespace, self.dest, {})
+        if items is None: items = {}
+        if isinstance(values, str):
+            values = eval(values)
+        items.update(values)
+        setattr(namespace, self.dest, items)
 
-parser.add_argument('--multi_arg_with_default', nargs='*', default=[1,2,3])
-
-parser.add_argument('default_args', nargs='*')
-
-# ARGS = parser.parse_args()
-# print args
-
-
-print('# None will be returned for file')
-print(parser.parse_args('--train_s 20121010'.split()))
-
-print('# list will be return even if there is only one args')
-print(parser.parse_args('--train_s 20121010 --file file1'.split()))
-print(parser.parse_args('--train_s 20121010 --file file1 --file file2'.split()))
-
-print('# It will return a list even if there is no args. None will be returned if no appearance and no default value')
-print(parser.parse_args('--multi_arg --train_s 20121010 default_args'.split()))
+parser4 = argparse.ArgumentParser()
+parser4.add_argument('--kwargs', action=DictUpdate)
+parser4.add_argument('--kwargs_wd', action=DictUpdate, default={})
+print(parser4.parse_args("".split()))
+print(parser4.parse_args(["--kwargs", "{1: 2}", "--kwargs", "{3: 4}"]))
 
 
-print('# If default value is specified, None will not be returned')
-print(parser.parse_args('--train_s 20121010'.split()))
+# # Outlines: 多重变量
 
+parser5 = argparse.ArgumentParser()
+parser5.add_argument('--multi_arg', nargs='*')
+parser5.add_argument('--multi_arg_with_default',  nargs='*', default=[1,2,3])
+parser5.add_argument('default_args', nargs='*')
 
+print('''For normal multi args, it will be none of no arguments provided.
+For default args, it will return a list even if no arguments provided.''')
+print(parser5.parse_args(''.split()))
+print(parser5.parse_args('--multi_arg default_args'.split()))
+print("The arguments will comsumed by normal arguments.")
+print(parser5.parse_args('--multi_arg 1 2 3 4'.split()))
+print(parser5.parse_args('1  2  3'.split()))
 
 
 # TODO: sub commands

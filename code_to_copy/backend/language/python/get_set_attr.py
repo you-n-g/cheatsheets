@@ -43,6 +43,14 @@ class C:
         print("__add__ 这种magic function调用会绕过 __getattribute__")
 
 
+# %% [markdown]
+# # Outlines: 看看 setattr 是怎么工作的
+
+class SA:
+    def __setattr__(self, __name, __value) -> None:
+        print(f"in __setattr__ , {__name=}, {__value=}")
+        return super().__setattr__(__name, __value)
+
 if __name__ == "__main__":
 
     print("展示一般调用方法对应的入口 & 内部调用顺序")
@@ -63,3 +71,13 @@ if __name__ == "__main__":
     C().any_method("good")
 
     C() + 3
+
+    # Ad hoc:  探索一些 python不成体系的性质
+    # - 这些未来可以变成成体系的结果
+    print("看看 setattr 是怎么工作的")
+    sa = SA()
+    print(sa.__dict__)
+    sa.__dict__ = {"b": 5}   #  注意这里会进入到 __setattr__
+    print(sa.__dict__)
+    sa.__dict__.update({"c": 6})  # 注意这里就不会进入  __setattr__
+    print(sa.__dict__)

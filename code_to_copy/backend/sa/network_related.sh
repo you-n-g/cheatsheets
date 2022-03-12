@@ -182,3 +182,18 @@ nmap -sTU -p PORT HOST  # 扫描指定服务器的的指定端口的TCP和UDP协
 # [DHCP server](http://www.tuicool.com/articles/AzEbii)
 sudo apt-get install isc-dhcp-server -y
 
+
+
+# BEGIN nc VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+# - sudo apt install netcat
+
+# 看UDP端口的连接性https://serverfault.com/a/733921
+# - Server端
+nc -ul 4500
+# - Client端
+nc -u <server> 4500
+# - client输入什么回车后， server端输出什么
+
+# END   nc ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
