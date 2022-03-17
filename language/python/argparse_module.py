@@ -22,6 +22,9 @@ get_date = lambda x: datetime.strptime(x, "%Y%m%d").date()
 parser.add_argument('--train_s', type=get_date, help='datetime args', required=True)
 print(parser.parse_args('--train_s 20121010'.split()))
 
+args = parser.parse_args('--train_s 20121010'.split())
+getattr(args, "test_attr", "test")  # some time we want to be compatible
+
 
 # # Outlines: boolean
 parser2 = argparse.ArgumentParser()
