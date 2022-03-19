@@ -14,14 +14,9 @@ Currently, only following cheatsheets are runnable
 - TODO
 
 
-
 # Catalog principle
 The cheatsheests are categoried by scenarios.
 - Because cheatsheets are often seeked when we are focusing on a specific scenario, putting them together will improve the *rate of hit cheatsheets*
-
-
-## Issues to be solved for better catalog.
-
-What's the boundary bettween APP and SA? (some tools in for SA are also some appps)
-- Small applications and tools which is only (or maininly) for helping the system run better or performing some regular maintanance tasks will be included in SA
-- Otherwise, they will be included in the APPs
+- What's the boundary bettween APP and SA? (some tools in for SA are also some appps)
+    - Small applications and tools which is only (or maininly) for helping the system run better or performing some regular maintanance tasks will be included in SA
+    - Otherwise, they will be included in the APPs

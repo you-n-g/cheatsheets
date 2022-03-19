@@ -317,24 +317,6 @@ done
 # https://stackoverflow.com/a/30728472
 # 有双引号时(如"EOF"), 里面的内容一定不转义
 
-# 符号的解释
-## 单分号
-## - 一般是用来分割代码块(解决一行要执行多个命令的问题)，常常可以被回车代替; 
-## - 分号前面不需要空格分隔
-## 双分号
-## - 终止case项
-## 冒号
-## - 等价于 NOP/true/什么都不干但是返回true,
-## - `while :` 等于不断循环
-## - `then :` 代表这支什么都不干
-## 单中括号[ ]是 shell中的语法糖， 相当于单句的test
-## - 中括号的内部需要空格分隔
-## Ref
-## - https://cnbin.github.io/blog/2015/06/28/bash-zhong-de-te-shu-fu-hao-1/
-
-## if 从句中， 不同的命令可以用  ！ -a -o  之类的逻辑运算符连接
-## - [  ] 本质是test，也算命令的一种， 可以和其他命令用逻辑运算链接
-
 
 # 把带空格的 ARGUMENTS 当成多个分开的arguments
 eval $ARGUMENTS

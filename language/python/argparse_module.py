@@ -20,10 +20,13 @@ parser = argparse.ArgumentParser(
 from datetime import datetime
 get_date = lambda x: datetime.strptime(x, "%Y%m%d").date()
 parser.add_argument('--train_s', type=get_date, help='datetime args', required=True)
-print(parser.parse_args('--train_s 20121010'.split()))
+parser.add_argument('--multi_arg', nargs='*')
 
 args = parser.parse_args('--train_s 20121010'.split())
 getattr(args, "test_attr", "test")  # some time we want to be compatible
+print(args)
+# NOTE: 默认操作是 override，只要action 没有变化，就都是override
+print(parser.parse_args('--train_s 20121010 --train_s 20220202 --multi_arg good haha xixi --multi_arg override'.split()))
 
 
 # # Outlines: boolean
