@@ -20,17 +20,26 @@ f() {
         echo "[$i]"
     done
 
-    echo '"$@" 常常是我们想要的， 引号包住的在一起， 该分开的分开'
+    echo '"$@" 常常是我们想要的， 引号包住的在一起， 该分开的分开(称之为 preserves the breaks between them, even if some of the arguments themselves contain spaces.)'
     for i in "$@"
     do
         echo "[$i]"
     done
 
-    echo '"$*" 会把各个段都合并成一个'
+    echo '"$*" 会把各个段都合并成一个字符串传进来'
     for i in "$*"
     do
         echo "[$i]"
     done
+
+    echo '还可以把一些没关系的参数摘出去'
+    echo 把第一个参数提出来 "[$1]"
+    shift # 这个可以再跳过一个参数
+    for i in "${@:2}"
+    do
+        echo "[$i]"
+    done
+    
     
     # 可以对参数做一些判断
     if [[ "$@" == *"batch_size"* ]]; then
@@ -102,3 +111,23 @@ fi
 if [[ $DEBUG -eq 0 ]] ; then  # 而且对单括号的兼容性也不错
     echo True eq
 fi
+
+
+
+# # Outlines: 语法的差别
+
+test_case () {
+    case $1 in
+        "good"|"bad")
+            echo "case (1)"
+            ;;
+        "good"|"mid")
+            echo "case (2)"
+            ;;
+    esac
+}
+
+test_case 1
+test_case good #  Only match the first occurrence
+test_case mid  #
+test_case bad  # 
