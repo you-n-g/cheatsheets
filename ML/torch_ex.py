@@ -1,3 +1,65 @@
+import torch
+
+# # Outlines: Datatype conversion related
+
+t = torch.rand(300, 300)
+t.std().item()  #  only non-tensor values can be accepted by some functions
+
+
+# # Outlines: model examples
+
+lm = torch.nn.Linear(300, 1)
+
+lm.train()
+lm(t).mean().backward()
+
+lm.weight.grad
+
+
+list(lm.named_modules())
+
+import torch.nn as nn
+from collections import OrderedDict
+from functools import partial
+
+class NN(nn.Module):
+    def __init__(self) -> None:
+        super().__init__()
+        self.layers = nn.Sequential(nn.Linear(10, 10), nn.Linear(10, 5))
+
+        # save activations by registering forward hook
+        self.activation = OrderedDict()
+        for name, m in self.named_modules():
+            if type(m) == nn.Linear:
+                # partial to assign the layer name to each hook
+                m.register_forward_hook(partial(self._save_activation, name))
+
+    def _save_activation(self, name, mod, inp, out):
+        self.activation[name] = out.cpu()
+
+    # TODO: forward
+
+foo_nn = NN()
+
+
+print(list(foo_nn.named_modules()))
+
+
+# TODO: save all the activations  https://gist.github.com/Tushar-N/680633ec18f5cb4b47933da7d10902af
+# 根据经验，如果想查看 weight, grad, activation 的分布， 还是用tensorboard 性能更好
+# 还可以用正则表达式筛一筛，专门看weight 或者 grad: layers\d?\.\d+\.weight$
+""" 这里是记录 weight, grad, activation 的方法 (问题表象是最后 prediction都一样了， 没有梯度了)
+writer = SummaryWriter(comment=R.get_recorder().name)
+for k, t in self.dnn_model.named_parameters():
+    writer.add_histogram(f"{k}", t, step)
+    writer.add_histogram(f"{k}.grad", t.grad, step)
+if hasattr(self.dnn_model, "activation"):
+    for k, a in self.dnn_model.activation.items():
+        writer.add_histogram(f"{k}.a", a, step)
+"""
+
+
+
 # # Outlines: performance related
 
 import time
@@ -12,10 +74,9 @@ def timing():
     print(f"{time.time() - start}s elapsed")
 
 
-import torch
 from torch.utils.data import DataLoader, TensorDataset
 
-epoch_n = 50
+epoch_n = 10
 n = 100_000
 fea_n = 300
 batch_size = 1024
@@ -62,5 +123,4 @@ with timing():
 # Reference
 # - https://discuss.pytorch.org/t/dataloader-much-slower-than-manual-batching/27014
 # - https://pytorch.org/docs/stable/data.html
-
 
