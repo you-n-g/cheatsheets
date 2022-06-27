@@ -3,6 +3,10 @@ TODO:
     现在最新的已经切到 pytest了
 
 # pytest -s --pdb
+
+NOTE:
+- 其实 直接定义成 `def test_xxx` 的函数可以非常简单地做一些测试
+
 '''
 
 import unittest
