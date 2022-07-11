@@ -607,6 +607,10 @@ axes.get_xaxis().set_visible(False)
 ax2.set_frame_on(True)  # 可以让 legend永远在线的下面
 plt.legend().set_visible(False) # 可以让 legend 消失， 但是仅仅针对最后一个子图
 
+# https://stackoverflow.com/questions/4700614/how-to-put-the-legend-outside-the-plot
+plt.legend(bbox_to_anchor=(1.04,1), loc="upper left")
+# - 调整legend的 loc 位置这个点的坐标;  figure左下角是 (0, 0) ， 右上角是 (1, 1)
+
 
 # 不同图像本身
 ## histgram
