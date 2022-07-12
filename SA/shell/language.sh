@@ -80,6 +80,7 @@ echo "$a"
 ## if 从句中， 不同的命令可以用  ！ -a -o  之类的逻辑运算符连接
 ## - [  ] 本质是test，也算命令的一种， 可以和其他命令用逻辑运算链接
 DEBUG=0
+TEST_STR=foo
 
 # if [ $DEBUG eq 0 ] ; then  # this is wrong
 # if [ $DEBUG eq 0 ] ; then  # this is wrong
@@ -91,6 +92,12 @@ fi
 # if [ $DEBUG < 10 ] ; then   #  这里会得到 `10: No such file or directory` 这个错误， 可以看出它完全是把解释成 shell在用
 #     echo True
 # fi
+
+if test $TEST_STR = foo
+then
+    echo "test works for ="
+fi
+
 
 if [ "abc" = *"b"* ] ; then  #  单括号很自然就没有用啦; sh 不支持通配符
     echo "String compare works single"
