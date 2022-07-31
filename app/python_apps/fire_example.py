@@ -17,6 +17,15 @@ class BaseRun:
         """
         print(f"{self.a=}, {b=}")
 
+    def test_list(self, x):
+        """
+        following cases will work for list
+        - python app/python_apps/fire_example.py test_list good,bad
+        - python app/python_apps/fire_example.py test_list '"go-od","bad"'
+        - python app/python_apps/fire_example.py test_list '["go-od","bad"]'
+        """
+        print(x)
+
 
 if __name__ == "__main__":
     fire.Fire(BaseRun)

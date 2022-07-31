@@ -1,3 +1,5 @@
+import copy
+import numpy as np
 import torch
 
 # # Outlines: Datatype conversion related
@@ -5,18 +7,67 @@ import torch
 t = torch.rand(300, 300)
 t.std().item()  #  only non-tensor values can be accepted by some functions
 
+t2 = torch.rand(300, 300)
+
 
 # # Outlines: model examples
 
 lm = torch.nn.Linear(300, 1)
+init_param = copy.deepcopy(lm.state_dict())
+
+list(lm.named_modules())
 
 lm.train()
 lm(t).mean().backward()
+lm.weight.grad
+
+lm(t2).mean().backward()
+lm.weight.grad
+
+bk2 = lm.weight.grad.detach().cpu().clone()
+
+lm.weight.grad.zero_()
 
 lm.weight.grad
 
+lm(torch.cat([t, t2])).mean().backward()
 
-list(lm.named_modules())
+bk_cat = lm.weight.grad.detach().cpu().clone()
+
+
+# 不知道 torch哪里的问题， 这里会有一些误差，所以这里又平方了一下才能保证 isclose  为0
+assert np.isclose((bk_cat * 2 - bk2).detach().cpu().numpy() ** 2, 0,).all() is True
+
+# 可以看到，eval和train来回切换，也不会影响之前积累的梯度
+lm.eval()
+lm.weight.grad
+
+lm.train()
+lm.weight.grad
+
+#
+optim = torch.optim.SGD(lm.parameters(), lr=0.1)
+
+optim.step()
+lm.weight.grad  # step不会清理梯度
+s1w = lm.weight.detach().cpu().clone()
+lm.load_state_dict(init_param)
+
+lm.weight
+
+lm.zero_grad()
+
+((lm(t).mean() + lm(t2).mean()) / 2).backward()
+
+lm.weight.grad
+
+optim.step()
+
+
+
+assert np.isclose((lm.weight - s1w).detach().cpu().numpy() ** 2, 0).reshape(-1).all()
+
+
 
 import torch.nn as nn
 from collections import OrderedDict
