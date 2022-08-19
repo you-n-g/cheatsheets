@@ -1,6 +1,65 @@
 import copy
 import numpy as np
 import torch
+import torch.nn as nn
+
+# %% [markdown]
+# # Outlines: 试试各个loss
+
+
+# test cosine loss
+data = [3, 4]
+a = nn.Parameter(torch.Tensor(data), requires_grad=True)
+b = nn.Parameter(torch.Tensor(data), requires_grad=True)
+
+loss = nn.CosineSimilarity(-1)(a, b)
+
+loss.backward()
+
+a.grad
+b.grad
+
+# handcrafted loss
+a = nn.Parameter(torch.Tensor(data), requires_grad=True)
+b = nn.Parameter(torch.Tensor(data), requires_grad=True)
+loss = a @ b / torch.norm(a, p=2) / torch.norm(b, p=2)
+
+loss.backward()
+
+a.grad
+
+b.grad
+
+
+
+# test the direction of loss
+c = nn.Parameter(torch.Tensor(data), requires_grad=True)
+c.grad
+# (c / torch.norm(c, p=2))[0].backward()
+# (c / torch.norm(c, p=2))[1].backward()
+(c / torch.norm(c, p=2)).sum().backward()
+c.grad @ c  # the vectors are perpendicular
+
+
+
+# test the magnitude of loss
+a = nn.Parameter(torch.Tensor([3, 4]), requires_grad=True)
+b = nn.Parameter(torch.Tensor([4, 3]), requires_grad=True)
+
+loss = nn.CosineSimilarity(-1)(a, b)
+loss.backward()
+
+a.grad
+b.grad
+
+a = nn.Parameter(torch.Tensor([3, 4]), requires_grad=True)
+b = nn.Parameter(torch.Tensor([5, 0]), requires_grad=True)
+
+loss = nn.CosineSimilarity(-1)(a, b)
+loss.backward()
+
+a.grad
+b.grad
 
 # # Outlines: Datatype conversion related
 
@@ -36,7 +95,7 @@ bk_cat = lm.weight.grad.detach().cpu().clone()
 
 
 # 不知道 torch哪里的问题， 这里会有一些误差，所以这里又平方了一下才能保证 isclose  为0
-assert np.isclose((bk_cat * 2 - bk2).detach().cpu().numpy() ** 2, 0,).all() is True
+assert np.isclose((bk_cat * 2 - bk2).detach().cpu().numpy() ** 2, 0,).all()
 
 # 可以看到，eval和train来回切换，也不会影响之前积累的梯度
 lm.eval()
@@ -57,7 +116,13 @@ lm.weight
 
 lm.zero_grad()
 
-((lm(t).mean() + lm(t2).mean()) / 2).backward()
+m1 = lm(t).mean()
+m2 = lm(t2).mean()
+
+m1.retain_grad()
+m2.retain_grad()
+
+((m1 + m2) / 2).backward()
 
 lm.weight.grad
 

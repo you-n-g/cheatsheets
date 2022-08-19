@@ -59,6 +59,14 @@ echo $a
 echo "$a"
 
 
+g() {
+    python -c "print(__import__('os').environ.get('good'))"
+}
+
+g
+good="set it when calling" g
+
+
 # # Outlines: 一些符号的区别
 
 # 符号的解释
