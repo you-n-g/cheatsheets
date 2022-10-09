@@ -1,4 +1,6 @@
 #!/bin/sh
+set -x
+
 if [ $0 = "-bash" -o $0 = "-zsh" -o $0 = "zsh"  ]; then
     DIR=`pwd`
 else
@@ -8,6 +10,8 @@ fi
 sh $DIR/getopts_ex.sh -a hahah
 
 sh $DIR/getopts_ex.sh
+
+sh $DIR/getopts_ex.sh test
 
 
 

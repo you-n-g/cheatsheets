@@ -282,8 +282,13 @@ dataframe = pd.DataFrame(data=feature_array,
 # We can filter the rows. Filtered_index can be an boolean array or integer array
 filtered_dataframe = dataframe.iloc[filtered_index]
 
+# vscode 有时候拷贝图片会有问题， 背景色设置成黑的更方便， https://gist.github.com/mwaskom/7be0963cc57f6c89f7b2
 import matplotlib.pyplot as plt
 import seaborn as sns; sns.set(color_codes=True)
+
+
+sns.set(style="ticks", context="talk")
+plt.style.use("dark_background")
 
 
 # seaborn 设置figure size
