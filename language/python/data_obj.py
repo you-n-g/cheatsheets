@@ -1,5 +1,12 @@
+"""
+This file is designed for showing the usage of some class to manage meaningful data.
+What is meaningful data?
+- Data typed
+- Info
+"""
 from dataclasses import dataclass, fields
 from typing import NamedTuple, Optional, TypedDict
+from pprint import pprint
 
 
 # # Outlines: TypedDict
@@ -88,12 +95,18 @@ from pathlib import Path
 DIRNAME = Path(__file__).absolute().resolve().parent
 import os
 
-from pydantic import BaseModel, BaseSettings
+from pydantic import BaseModel, BaseSettings, Extra
 
 # ## Outlines: normal nested
 
 class Nested(BaseSettings):
     text: str = "hello"
+    good_boy: str = "james"
+
+    # class Config:
+    #     env_nested_delimiter = '_'
+    # class Config:
+    #     extra = Extra.allow
 
 class MyConfig(BaseSettings):
     top_level: str = "foo"
@@ -102,11 +115,16 @@ class MyConfig(BaseSettings):
     class Config:
         # env_prefix = "MY_"  # the prefix can't be mixed with the `env_nested_delimiter`
         env_nested_delimiter = '_'
+        # env_nested_delimiter = '__'
+        # extra = Extra.ignore
+        # extra = Extra.allow
 
 
 # ## Outlines: read from env
 os.environ["TOP_LEVEL"] = "env_bar"
 os.environ["NESTED_TEXT"] = "env_world"
+# os.environ["NESTED__GOOD_BOY"] = "env_boy"
+
 
 config = MyConfig()
 
@@ -115,6 +133,7 @@ print(config)
 assert config.top_level == "env_bar"
 assert config.nested.text == "env_world"
 
+# exit()
 
 del os.environ["TOP_LEVEL"]
 del os.environ["NESTED_TEXT"]
@@ -137,3 +156,37 @@ os.environ["NESTED_TEXT"] = "env_world"
 config = MyConfig(_env_file=_env_file)
 assert config.top_level == "file_bar"
 assert config.nested.text == "env_world"  # the nested setting can't read _env_file recursively
+
+
+# ## Outlines: test extra
+# pydantic can't handle when nested delimiter appear in the naming.
+# - Following code can't will raise validation error
+# os.environ["NESTED_GOOD_BOY"] = "env_boy"
+# config = MyConfig(_env_file=_env_file)
+# print(config)
+# assert config.top_level == "file_bar"
+# assert config.nested.text == "env_world"  # the nested setting can't read _env_file recursively
+
+
+# ## Outlines: BUG setting..
+
+# The following code will raise error...if we use `good_boy` instead of `good_boy`
+# - related issue https://github.com/pydantic/pydantic/issues/4599
+from pydantic import BaseSettings
+
+
+class Nested(BaseSettings):
+    good_boy: str = "james"
+
+
+class MyConfig(BaseSettings):
+    nested: Nested = Nested()
+
+    class Config:
+        # env_prefix = "MY_"  # the prefix can't be mixed with the `env_nested_delimiter`
+        env_nested_delimiter = '__'
+
+
+os.environ["NESTED__GOOD_BOY"] = "env_boy"
+config = MyConfig()
+print(config)
