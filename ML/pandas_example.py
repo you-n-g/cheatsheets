@@ -49,3 +49,35 @@ view = df.loc[:, ["f", "h"]]  # 中copy 没有影响
 print(view)
 df['h'] = 100
 print(view)
+
+
+
+# %% [markdown]
+# # Outlines: Memroy related
+
+import os, psutil
+process = psutil.Process(os.getpid())
+
+def get_mem_mb():
+    return process.memory_info().rss / 2 ** 20
+print(get_mem_mb())
+
+data = pd.DataFrame(np.random.rand(1000 * 1000, 1000))
+
+print(get_mem_mb())
+
+del data
+
+print(get_mem_mb())
+
+data = pd.DataFrame(np.random.rand(1000 * 1000, 1000))
+
+print(get_mem_mb())
+
+data.drop(columns=data.columns, axis=1, inplace=True)
+
+print(get_mem_mb())
+data = pd.DataFrame(np.random.rand(1000 * 1000, 1000))
+
+
+print(data.info(memory_usage="deep"))

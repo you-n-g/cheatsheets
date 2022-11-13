@@ -61,6 +61,42 @@ loss.backward()
 a.grad
 b.grad
 
+# Check the value range of BCE loss
+
+
+
+# # Outlines: special operators
+import torch.nn.functional as F
+
+
+# ## Outlines: gumble softmax
+
+logits = nn.Parameter(torch.Tensor([1, 2, 3, 4]), requires_grad=True)
+
+out_oh = F.gumbel_softmax(logits, tau=1, hard=True)
+
+emb = nn.Embedding(4, 10)
+
+print(emb.weight.sum(axis=1))  # 看看哪个数值最大
+
+loss = (out_oh @ emb.weight).sum()
+loss.backward()
+
+assert logits.grad is not None
+
+# ## Outlines: cnn1d
+input = torch.randn(1024, 32)
+m = nn.Conv1d(in_channels=32, out_channels=32, kernel_size=1, groups=32, bias=True)
+delta = (m(input.reshape(1024, 32, 1)).squeeze() - (input * m.weight.squeeze() + m.bias)).abs().mean().item()
+
+assert np.isclose(delta, 0, atol=1e-6)
+
+input.unsqueeze(dim=-1).unsqueeze(dim=-1).shape
+input.unsqueeze(dim=-1).unsqueeze(dim=-1).squeeze(-1).shape
+input.unsqueeze(dim=-1).unsqueeze(dim=-1).squeeze(0).shape
+
+
+
 # # Outlines: Datatype conversion related
 
 t = torch.rand(300, 300)
