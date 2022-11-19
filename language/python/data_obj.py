@@ -170,11 +170,12 @@ assert config.nested.text == "env_world"  # the nested setting can't read _env_f
 
 # ## Outlines: BUG setting..
 
-# The following code will raise error...if we use `good_boy` instead of `good_boy`
+# The following code will raise error...if we use `GOOD_BOY` instead of `good_boy`
 # - related issue https://github.com/pydantic/pydantic/issues/4599
-from pydantic import BaseSettings
+from pydantic import BaseSettings, BaseModel
 
 
+# Version1:  all lower case
 class Nested(BaseSettings):
     good_boy: str = "james"
 
@@ -190,3 +191,78 @@ class MyConfig(BaseSettings):
 os.environ["NESTED__GOOD_BOY"] = "env_boy"
 config = MyConfig()
 print(config)
+
+# Version 2: case sensitive works
+class Nested(BaseSettings):
+    GOOD_BOY: str = "james"
+
+
+class MyConfig(BaseSettings):
+    nested: Nested = Nested()
+
+    class Config:
+        # env_prefix = "MY_"  # the prefix can't be mixed with the `env_nested_delimiter`
+        env_nested_delimiter = '__'
+        case_sensitive = True
+
+
+os.environ["nested__GOOD_BOY"] = "env_boy_v02"
+config = MyConfig()
+print(config)
+del os.environ["nested__GOOD_BOY"]   # this will override
+
+
+# Version3:  BaseModel does not solve this issue...
+class Nested(BaseModel):
+    GOOD_BOY: str = "james"
+
+class MyConfig(BaseSettings):
+    nested: Nested = Nested()
+
+
+    class Config:
+        # env_prefix = "MY_"  # the prefix can't be mixed with the `env_nested_delimiter`
+        env_nested_delimiter = '__'
+
+
+os.environ["NESTED__GOOD_BOY"] = "env_boy_v03"
+config = MyConfig()
+print(config)
+
+
+# Version4: maybe we should use BaseModel for the nested setting
+class Nested(BaseModel):
+    good_boy: str = "james"
+
+
+class MyConfig(BaseSettings):
+    nested: Nested = Nested()
+
+    class Config:
+        # env_prefix = "MY_"  # the prefix can't be mixed with the `env_nested_delimiter`
+        env_nested_delimiter = '__'
+
+
+os.environ["NESTED__GOOD_BOY"] = "env_boy_v04"
+config = MyConfig()
+print(config)
+
+
+# Version final:
+# - BaseModel for nested setting is a more standard implementation
+# - all environments are automatically converted to lower case, so the varaiable name should align with it.
+class Nested(BaseModel):
+    good_boy: str = "james"
+
+
+class MyConfig(BaseSettings):
+    nested: Nested = Nested()
+
+    class Config:
+        # env_prefix = "MY_"  # the prefix can't be mixed with the `env_nested_delimiter`
+        env_nested_delimiter = '__'
+
+os.environ["NESTED__GOOD_BOY"] = "env_boy"
+config = MyConfig()
+print(config)
+

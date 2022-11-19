@@ -95,6 +95,50 @@ input.unsqueeze(dim=-1).unsqueeze(dim=-1).shape
 input.unsqueeze(dim=-1).unsqueeze(dim=-1).squeeze(-1).shape
 input.unsqueeze(dim=-1).unsqueeze(dim=-1).squeeze(0).shape
 
+# ## Outlines:  complext gradient: torch.autograd.grad
+
+a = torch.tensor([1., 2.], requires_grad = True).view(-1, 1)
+# torch.autograd.grad(outputs=a.sum(), inputs=a)
+
+torch.autograd.grad(outputs=[a.sum(), a.sum()], inputs=[a, a])
+# return  [sum(<scaler 对 ipt_tensor 的梯度> for scaler in outputs)
+#            for ipt_tensor in inputs]
+
+torch.autograd.grad(outputs=a.sum(), inputs=[a, a])  # output could not be a list
+torch.autograd.grad(outputs=a.sum(), inputs=a)[0]  # input could not be a list as well. But it still returns a tuple
+
+
+# Test backward
+a_orig = torch.tensor([1., 2.], requires_grad = True)
+a = a_orig.view(-1, 1)
+
+ipt_raw = torch.tensor([1., 2.])
+_ipt_orig = ipt_raw.requires_grad_()
+ipt_orig = _ipt_orig.requires_grad_()
+ipt = ipt_orig.view(-1, 1)
+a_orig.grad
+ipt_orig.grad
+(ipt * a).sum().backward()
+a_orig.grad
+ipt_orig.grad
+
+
+gr = torch.autograd.grad(outputs=(ipt * a).sum(), inputs=ipt_orig, create_graph=True)
+
+gr[0].squeeze().sum().backward()
+ipt.grad
+a.requires_grad  # 虽然这里是 True， 但是也会出现下面的 warning
+a.grad
+# view 做完reshape后，也不是 leaf node
+# The .grad attribute of a Tensor that is not a leaf Tensor is being accessed . Its .grad attribute won't be populated during autograd.backward(). If you indeed want the .grad field to be populated for a non-leaf Tensor, use .retain_grad() on the non-leaf Tensor. If you access the non-leaf Tensor by mistake, make sure you access the leaf Tensor instead. See github.com/pytorch/pytorch/pull/30531 for more i nformations. (Triggered internally at  /opt/conda/conda-bld/pytorch_1659484806139/work/build/aten/src/ATen/core/TensorBody.h:477.) return self._grad
+
+a_orig.grad
+ipt_orig.grad
+
+(ipt_orig * a_orig).sum().backward()
+ipt_raw.grad   #  这里看到这里梯度会累计下去，  而且最初没设置 requires_grad_  的tensor也会累计梯度
+ipt_raw.grad.zero_()  # 手动清理梯度
+ipt_orig.grad
 
 
 # # Outlines: Datatype conversion related
