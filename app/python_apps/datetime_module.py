@@ -18,7 +18,7 @@ datetime.datetime.fromtimestamp(1521365700) # from int timestamp to datetime
 # pendulum:  is much slower than datetime
 # https://github.com/sdispater/pendulum
 import pendulum
-dt.pendulum.parse('2018-03-11T13:23:16.365083')  # 这种会自动当成utc时间来解析
+dt = pendulum.parse('2018-03-11T13:23:16.365083')  # 这种会自动当成utc时间来解析
 print(dt.format('%Y-%m-%d'))
 # 加了时区之后会当成本地时间来解析
 
