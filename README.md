@@ -4,6 +4,7 @@ A collection of cheatsheets of
   - write code with **Python**
   - in **neovim**
   - and enjoys **DevOps** tricks
+
 Part of the cheatsheets which can be reguarded as a part of configurations/dot-files & auto-deployment are moved to [deploy](https://github.com/you-n-g/deploy)
 
 
