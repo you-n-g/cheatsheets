@@ -81,3 +81,57 @@ data = pd.DataFrame(np.random.rand(1000 * 1000, 1000))
 
 
 print(data.info(memory_usage="deep"))
+
+
+# # Outlines: general api
+
+# ## Outlines: read data
+
+# The recognition of NA comes in a very early stage.
+# If we don't want that some cells are recognized as NaN, we should use na_values & keep_default_na to control the NA recognition of reading data
+
+import io
+st = """
+good,1,2,3
+TRUE,4,{},5
+NA,4,,5
+"""
+
+na_cand = [
+    "",
+    "#N/A",
+    "#N/A N/A",
+    "#NA",
+    "-1.#IND",
+    "-1.#QNAN",
+    "-NaN",
+    "-nan",
+    "1.#IND",
+    "1.#QNAN",
+    "<NA>",
+    "N/A",
+    "NULL",
+    "NaN",
+    "n/a",
+    "nan",
+    "null",
+]
+
+for na_st in na_cand:
+    st_new = st.format(na_st)
+    df1 = pd.read_csv(
+        io.StringIO(st_new),
+        header=None,
+        dtype={0: str},
+        na_values={
+            0: na_cand,
+            1: pd._libs.parsers.STR_NA_VALUES,
+            2: pd._libs.parsers.STR_NA_VALUES,
+            3: pd._libs.parsers.STR_NA_VALUES,
+        },
+        keep_default_na=False,
+    )
+    print(df1)
+
+type(df1.iloc[1, 0])
+type(df1.iloc[2, 0])
