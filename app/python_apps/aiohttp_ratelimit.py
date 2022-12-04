@@ -46,11 +46,11 @@ def cancel_all_async_tasks(loop):
 
 
 class AsyncApi:
-    limiter = AsyncioBucketTimeRateLimiter(max_size=10, recovery_time=5.0, rest_time=0.5)
 
-    def __init__(self):
+    def __init__(self, max_size=10, recovery_time=5.0, rest_time=0.5):
         self._loop = asyncio.new_event_loop()
         events.set_event_loop(self.loop)
+        self.limiter = AsyncioBucketTimeRateLimiter(max_size=max_size, recovery_time=recovery_time, rest_time=rest_time)
         self.limiter.activate()
 
     def __del__(self):
@@ -73,12 +73,15 @@ class AsyncApi:
     def loop(self):
         return self._loop
 
-    @limiter
-    async def get_data(self, url: str, name: str):
-        print(f"{datetime.now()} - Start get_data {name}...")
-        async with aiohttp_client.get(url) as response:
-            html = await response.text()
-        print(f"{datetime.now()} - Done get_data {name} - {html[:15]}...")
+    @property
+    def get_data(self):
+        @self.limiter
+        async def _get_data(url: str, name: str):
+            print(f"{datetime.now()} - Start get_data {name}...")
+            async with aiohttp_client.get(url) as response:
+                html = await response.text()
+            print(f"{datetime.now()} - Done get_data {name} - {html[:15]}...")
+        return _get_data
 
 
 def main():
