@@ -83,6 +83,16 @@ class AsyncApi:
             print(f"{datetime.now()} - Done get_data {name} - {html[:15]}...")
         return _get_data
 
+    @staticmethod
+    async def get_data_limiter(url: str, name: str, limiter: AsyncioBucketTimeRateLimiter):
+        @limiter
+        async def _get_data():
+            print(f"{datetime.now()} - Start get_data {name}...")
+            async with aiohttp_client.get(url) as response:
+                html = await response.text()
+            print(f"{datetime.now()} - Done get_data {name} - {html[:15]}...")
+        return await _get_data()
+
 
 def main():
     api = AsyncApi()
@@ -96,8 +106,9 @@ def main():
     api.run_until_complete(async_tasks(cors))
     print("start second!")
     cors = []
+    limiter = AsyncioBucketTimeRateLimiter(max_size=5, recovery_time=5, rest_time=0.5)
     for i in range(task_num, task_num + task_num):
-        cor = api.get_data(url, f"task_{i}")
+        cor = api.get_data_limiter(url, f"task_{i}", limiter)
         cors.append(cor)
     api.run_until_complete(async_tasks(cors))
 
