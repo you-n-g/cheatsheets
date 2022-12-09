@@ -1,6 +1,6 @@
 # A demo case of async request get with rate limit.
 # pip install aiohttp aiohttp-client-manager bucketratelimiter tqdm
-from typing import Tuple, Any, Union, List, Coroutine
+from typing import List, Coroutine, Dict
 
 import asyncio
 from asyncio import events, coroutines
@@ -12,12 +12,12 @@ import aiohttp_client
 from tqdm.asyncio import tqdm
 
 
-async def async_tasks(cors: List[Coroutine]) -> List:
-    results = []
+async def async_tasks(cors: List[Coroutine]) -> Dict:
+    results = {}
     with tqdm(total=len(cors)) as pbar:
         for next_to_complete in asyncio.as_completed(cors):
-            answer = await next_to_complete
-            results.append(answer)
+            name, answer = await next_to_complete
+            results[name] = answer
             pbar.update()
     return results
 
@@ -81,6 +81,7 @@ class AsyncApi:
             async with aiohttp_client.get(url) as response:
                 html = await response.text()
             print(f"{datetime.now()} - Done get_data {name} - {html[:15]}...")
+            return name, html
         return _get_data
 
 
@@ -93,13 +94,15 @@ def main():
     for i in range(task_num):
         cor = api.get_data(url, f"task_{i}")
         cors.append(cor)
-    api.run_until_complete(async_tasks(cors))
+    results = api.run_until_complete(async_tasks(cors))
+    print(f"finish first with {len(results)} tasks!")
     print("start second!")
     cors = []
     for i in range(task_num, task_num + task_num):
         cor = api.get_data(url, f"task_{i}")
         cors.append(cor)
-    api.run_until_complete(async_tasks(cors))
+    results = api.run_until_complete(async_tasks(cors))
+    print(f"finish second with {len(results)} tasks!")
 
 
 if __name__ == "__main__":
