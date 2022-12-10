@@ -1,6 +1,8 @@
 #!/bin/sh
 
 # 和语法相关的一些cheatsheet在这里
+# 和 SA/shell/often_used.sh 的区别:  
+# - often_used.sh 更多是从工具，完成特定工功能的代码片段
 
 
 # function f() {}  is not supported in pure `sh`
@@ -129,7 +131,7 @@ fi
 
 
 
-# # Outlines: 语法的差别
+# # Outlines: 语法
 
 test_case () {
     case $1 in
@@ -146,3 +148,17 @@ test_case 1
 test_case good #  Only match the first occurrence
 test_case mid  #
 test_case bad  # 
+
+# # Outlines: 语言结构
+
+# 没有什么局部变量，全都是全局变量
+echo "Var:" $_TMP
+test_local_var() {
+    _TMP=222
+    TMP=333
+    export TMP2=444
+}
+test_local_var
+echo "Var:" $_TMP
+echo "Var:" $TMP
+echo "Var:" $TMP2

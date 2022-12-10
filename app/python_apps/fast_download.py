@@ -12,6 +12,8 @@ from pathlib import Path
 def download(url="https://www.stat.cmu.edu/~ryantibs/convexopt/", download_url_xpath='//*[@id="bord"]/a/@href', url_reg="^lectures", out_dir="download", dry_run=False, verbose=False):
     """
     python app/python_apps/fast_download.py "https://www.bradyneal.com/causal-inference-course" "//table//a/@href"  "^/slides/"
+
+    python app/python_apps/fast_download.py "https://speech.ee.ntu.edu.tw/~hylee/ml/2022-spring.php" "//div[@id='syllabus']//a/@href"  ".*\\.pdf$" # --dry_run
     """
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -34,6 +36,8 @@ def download(url="https://www.stat.cmu.edu/~ryantibs/convexopt/", download_url_x
                 if f_url.startswith("/"):
                     up = urllib.parse.urlparse(url)
                     req_url = f"{up.scheme + '://' + up.hostname}{f_url}"
+                elif f_url.startswith("http"):
+                    req_url = f_url
                 else:
                     req_url = f"{url}{f_url}"
                 resp = requests.get(

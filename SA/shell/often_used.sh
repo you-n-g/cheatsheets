@@ -5,7 +5,7 @@
 
 
 # Cheatsheet catalog
-# - 语法篇
+# - 语法篇(TODO: merge part of them into language/shell)
 # - find篇
 
 
