@@ -4,6 +4,7 @@ from typing import List, Coroutine, Dict
 
 import asyncio
 from asyncio import events, coroutines
+import atexit
 from datetime import datetime
 from asyncio import tasks
 
@@ -45,22 +46,49 @@ def cancel_all_async_tasks(loop):
             )
 
 
+def clean_up_async_looper():
+    _loop: asyncio.AbstractEventLoop = AsyncLooper._instance.loop  # pylint: disable=W0212
+    try:
+        _loop.run_until_complete(aiohttp_client.close())
+        _loop.run_until_complete(_loop.shutdown_asyncgens())
+    finally:
+        cancel_all_async_tasks(_loop)
+        events.set_event_loop(None)
+        _loop.close()
+
+
+atexit.register(clean_up_async_looper)
+
+
+class AsyncLooper:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+    def __init__(self):
+        try:
+            self._loop = asyncio.get_event_loop()
+        except RuntimeError:
+            self._loop = asyncio.new_event_loop()
+        events.set_event_loop(self.loop)
+        self._sessions = aiohttp_client._sessions
+
+    @property
+    def loop(self):
+        return self._loop
+
+
 class AsyncApi:
 
     def __init__(self, max_size=10, recovery_time=5.0, rest_time=0.5):
-        self._loop = asyncio.new_event_loop()
+        self.looper = AsyncLooper()
+        self._loop = self.looper.loop
         events.set_event_loop(self.loop)
         self.limiter = AsyncioBucketTimeRateLimiter(max_size=max_size, recovery_time=recovery_time, rest_time=rest_time)
         self.limiter.activate()
-
-    def __del__(self):
-        try:
-            self.loop.run_until_complete(self.loop.shutdown_asyncgens())
-        finally:
-            cancel_all_async_tasks(self._loop)
-            self.limiter.deactivate()
-            events.set_event_loop(None)
-            self.loop.close()
 
     def run_until_complete(self, run_func, *, debug=None):
         if not coroutines.iscoroutine(run_func):
@@ -92,6 +120,7 @@ class AsyncApi:
             async with aiohttp_client.get(url) as response:
                 html = await response.text()
             print(f"{datetime.now()} - Done get_data {name} - {html[:15]}...")
+            return name, html
         return await _get_data()
 
 
@@ -114,6 +143,17 @@ def main():
         cors.append(cor)
     results = api.run_until_complete(async_tasks(cors))
     print(f"finish second with {len(results)} tasks!")
+
+    api = AsyncApi(max_size=5, recovery_time=5, rest_time=0.5)
+    task_num = 10
+    cors = []
+    url = "http://python.org"
+    print("start third!")
+    for i in range(task_num):
+        cor = api.get_data(url, f"task_{i}")
+        cors.append(cor)
+    results = api.run_until_complete(async_tasks(cors))
+    print(f"finish third with {len(results)} tasks!")
 
 
 if __name__ == "__main__":
