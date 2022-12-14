@@ -82,11 +82,10 @@ class AsyncLooper:
 
 
 class AsyncApi:
+    _loop = AsyncLooper().loop
 
     def __init__(self, max_size=10, recovery_time=5.0, rest_time=0.5):
-        self.looper = AsyncLooper()
-        self._loop = self.looper.loop
-        events.set_event_loop(self.loop)
+        # self._loop = self.looper.loop
         self.limiter = AsyncioBucketTimeRateLimiter(max_size=max_size, recovery_time=recovery_time, rest_time=rest_time)
         self.limiter.activate()
 
