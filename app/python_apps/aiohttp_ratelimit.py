@@ -95,6 +95,8 @@ class AsyncApi(AsyncLooper):
         self.limiter = AsyncioBucketTimeRateLimiter(max_size=max_size, recovery_time=recovery_time, rest_time=rest_time)
         self.limiter.activate()
 
+    def __del__(self):
+        self.limiter.deactivate()
 
     @property
     def get_data(self):
