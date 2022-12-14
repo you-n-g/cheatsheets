@@ -47,7 +47,7 @@ def cancel_all_async_tasks(loop):
 
 
 def clean_up_async_looper():
-    _loop: asyncio.AbstractEventLoop = AsyncLooper._instance.loop  # pylint: disable=W0212
+    _loop = asyncio.get_event_loop()
     try:
         _loop.run_until_complete(aiohttp_client.close())
         _loop.run_until_complete(_loop.shutdown_asyncgens())
@@ -63,7 +63,7 @@ atexit.register(clean_up_async_looper)
 class AsyncLooper:
     _instance = None
 
-    def __new__(cls):
+    def __new__(cls, *args, **kwargs):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
         return cls._instance
@@ -80,15 +80,6 @@ class AsyncLooper:
     def loop(self):
         return self._loop
 
-
-class AsyncApi:
-    _loop = AsyncLooper().loop
-
-    def __init__(self, max_size=10, recovery_time=5.0, rest_time=0.5):
-        # self._loop = self.looper.loop
-        self.limiter = AsyncioBucketTimeRateLimiter(max_size=max_size, recovery_time=recovery_time, rest_time=rest_time)
-        self.limiter.activate()
-
     def run_until_complete(self, run_func, *, debug=None):
         if not coroutines.iscoroutine(run_func):
             raise ValueError("a coroutine was expected, got {!r}".format(run_func))
@@ -96,9 +87,14 @@ class AsyncApi:
             self.loop.set_debug(debug)
         return self.loop.run_until_complete(run_func)
 
-    @property
-    def loop(self):
-        return self._loop
+
+class AsyncApi(AsyncLooper):
+    def __init__(self, max_size=10, recovery_time=5.0, rest_time=0.5):
+        # self._loop = self.looper.loop
+        super().__init__()
+        self.limiter = AsyncioBucketTimeRateLimiter(max_size=max_size, recovery_time=recovery_time, rest_time=rest_time)
+        self.limiter.activate()
+
 
     @property
     def get_data(self):
