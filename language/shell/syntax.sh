@@ -103,6 +103,7 @@ fi
 #     echo True
 # fi
 
+# 如果有换行，则可以不用分号；
 if test $TEST_STR = foo
 then
     echo "test works for ="
@@ -162,3 +163,17 @@ test_local_var
 echo "Var:" $_TMP
 echo "Var:" $TMP
 echo "Var:" $TMP2
+
+
+# ## Outlines: string
+
+# Shell-Parameter-Expansion.html
+# https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
+
+touch _tmp_test_file
+rm _tmp_test_file"${partial_name:?This message will appear instead of 'zsh: b: parameter not set'}"
+ls _tmp_test_file  # the will will not be removed
+
+partial_name=e
+rm _tmp_test_fil"${partial_name:?This message will appear instead of 'zsh: b: parameter not set'}"
+ls _tmp_test_file  # this file is removed successfully

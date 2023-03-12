@@ -8,10 +8,13 @@
 
 
 # 注意事项
-# - 不知道为什么 reboot调用tmux 会把shell设置为sh， 非常奇怪...; 所以开机需要 设置tmux的option
-#     - 可以试试： 
-#         - [启动时设置一下shell 或者 改一改 ~/.tmux.conf 来设置tmux](https://unix.stackexchange.com/a/78520)
-# - 这些命令也需要设置成能支持 zsh的
+# - 默认的shell是 `.sh`: https://unix.stackexchange.com/a/52332
+#   - So you should not use `&>> log`. Use  `>> log 2>&1` instead.
+#       - 如果前面的命令是由 && 连接起来，那么中间命令出错会导致走不到后面的环节，用这个会比较好 `(CMD_A && CMD_B)>> log 2>&1`
+#   - 不知道为什么 reboot调用tmux 会把shell设置为sh， 非常奇怪...; 所以开机需要 设置tmux的option
+#       - 可以试试：
+#           - [启动时设置一下shell 或者 改一改 ~/.tmux.conf 来设置tmux](https://unix.stackexchange.com/a/78520)
+# - 这些命令也需要设置成能支持zsh的
 # - 有时候直接调用anaconda 环境中的pyton路径不够， 还是需要在脚本中激活一下
 #     - . "/home/xiaoyang/miniconda3/etc/profile.d/conda.sh"
 #     - conda activate online_V07_gpu 

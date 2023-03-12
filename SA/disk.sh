@@ -98,7 +98,7 @@ agedu
 
 # https://linoxide.com/linux-how-to/nfs-device-busy/
 # 强行umount 再mount
-# - 刚刚开机的就出现disk is buzy的问题解决了
+# - 刚刚开机的就出现disk is buzy的问题解决了 (这个常常表现为D进程)
 # - 但是之前一直buzy的
 # sudo umount -f -l /nfs_data1 && sudo mount -a
 
