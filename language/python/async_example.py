@@ -75,12 +75,14 @@ import time
 
 
 async def producer():
+    print("In producer")
     for i in range(10):
         await asyncio.sleep(1.)
         print("producer:", i)
 
 
 async def consumer():
+    print("In consumer")
     for i in range(10):
         await asyncio.sleep(2.)
         print("consumer:", i)
@@ -90,12 +92,25 @@ async def main():
     task1 = asyncio.create_task(producer())
 
     task2 = asyncio.create_task(consumer())
+    time.sleep(3)
+    print("The tasks will not start if we run blocking sleep in the main thread")
+    await asyncio.sleep(3)
+    print("The tasks will start after the first calling of await")
 
     print(f"started at {time.strftime('%X')}")
 
     # Wait until both tasks are completed (should take
     # around 2 seconds.)
     await task1
+    print("BEGIN: any blocking io call will result in blocking of all")
+    time.sleep(3)
+    print("END: any blocking io call will result in blocking of all")
+
+    print("line between await. You will see that the task2 has already started before we actively call `await task2`")
+
+    print("BEGIN: using asyncio is the right choice")
+    await asyncio.sleep(3)
+    print("END: using asyncio is the right choice")
     await task2
 
     print(f"finished at {time.strftime('%X')}")

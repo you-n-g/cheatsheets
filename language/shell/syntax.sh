@@ -1,6 +1,8 @@
 #!/bin/sh
 
 # 和语法相关的一些cheatsheet在这里
+# 和 SA/shell/often_used.sh 的区别:  
+# - often_used.sh 更多是从工具，完成特定工功能的代码片段
 
 
 # function f() {}  is not supported in pure `sh`
@@ -59,6 +61,14 @@ echo $a
 echo "$a"
 
 
+g() {
+    python -c "print(__import__('os').environ.get('good'))"
+}
+
+g
+good="set it when calling" g
+
+
 # # Outlines: 一些符号的区别
 
 # 符号的解释
@@ -93,6 +103,7 @@ fi
 #     echo True
 # fi
 
+# 如果有换行，则可以不用分号；
 if test $TEST_STR = foo
 then
     echo "test works for ="
@@ -121,7 +132,7 @@ fi
 
 
 
-# # Outlines: 语法的差别
+# # Outlines: 语法
 
 test_case () {
     case $1 in
@@ -138,3 +149,31 @@ test_case 1
 test_case good #  Only match the first occurrence
 test_case mid  #
 test_case bad  # 
+
+# # Outlines: 语言结构
+
+# 没有什么局部变量，全都是全局变量
+echo "Var:" $_TMP
+test_local_var() {
+    _TMP=222
+    TMP=333
+    export TMP2=444
+}
+test_local_var
+echo "Var:" $_TMP
+echo "Var:" $TMP
+echo "Var:" $TMP2
+
+
+# ## Outlines: string
+
+# Shell-Parameter-Expansion.html
+# https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
+
+touch _tmp_test_file
+rm _tmp_test_file"${partial_name:?This message will appear instead of 'zsh: b: parameter not set'}"
+ls _tmp_test_file  # the will will not be removed
+
+partial_name=e
+rm _tmp_test_fil"${partial_name:?This message will appear instead of 'zsh: b: parameter not set'}"
+ls _tmp_test_file  # this file is removed successfully

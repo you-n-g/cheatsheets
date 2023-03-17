@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 #-*- coding:utf8 -*-
 
+# TODO: xpath tutorial
+
 # 在shell下玩scrapy
 scrapy shell http://XXX.XXX
 scrapy crawl --output XXX_FILE --nolog   XXXspider

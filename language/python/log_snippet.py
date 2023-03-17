@@ -22,19 +22,19 @@ logger.opt(depth=2).log(level, f"Time {name}: {time.time() - start} s")
 #       - logging.Logger.isEnabledFor 把关 判断
 #       - 只管信息会不会进入下面层 (handle函数)
 #       - 先经过filter把关(注意filter)， 然后就进入 logging.Logger.callHandlers 进入处理层
-#   - 进入处理层后和上层就没有关系了,  核心代码在logging.Logger.callHandlers
+#   - 进入处理层后(即handle)和上层就没有关系了,  核心代码在logging.Logger.callHandlers
 #       - 一边处理一边传播
 #           - 注意这里处理的时候就直接调用handler(s)的handle了(而不是调用Logger.handle)
-#           - 传播的过程完全由 propagate 控制(不收level, filter的影响)
+#           - 传播的过程完全由 propagate 控制(不受Logger和Handler的level, filter的影响)
 # 其他零碎的组件:
 # - formatters: log的格式, 用于 Handler 中
 
 # 一些注意的点
 # - NOTSET 会从父logger中继承 logging level(底层不设置level时，会从顶层继承level)
-# - Logger 和 Handler都是有自己的filter类:  别搞混了
+# - Logger 和 Handler都是有自己的filter类， 也有自己的logging level(比如info级别的logger可以包含 warning级别的logger),  别搞混了
+#   - 入口层的filter，level不会影响到 处理层 !!!
 # - 默认root logger的 level 一般是 warning, 即只显示 warning error critical
 #   默认是输出到 console 中
-# - 入口层的filter，level不会影响到 处理层 !!!
 
 # 当前logger的状态
 # https://pypi.org/project/logging_tree/
