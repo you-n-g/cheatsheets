@@ -391,6 +391,8 @@ plot_kws={
 # **kwargs 可以传入各种参数:
 # 常用: s(控制marker的size)
 
+# 在figure 上还支持再套用一层figure，  可以在上层接口直接传入plot_kws 让下层每个figure 都接收这个参数， 例如 `sns.pairplot(df, plot_kws=dict(s=1, alpha=0.2))`
+
 
 
 # 坑
@@ -578,7 +580,7 @@ for i, (method, gdf) in enumerate(grb, 1):
 # - 目前还没找到需要控制那么精细的
 
 
-# 画完之后可以给该图组集中加一个title
+# 对于一组图，画完之后可以给该图组集中加一个title
 plt.suptitle(name)
 
 

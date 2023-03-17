@@ -124,3 +124,6 @@ az vm open-port -g Fin-Cluster -n QlibServer --port 3389-3389 --priority 100
 az network nsg rule list -g Fin-Cluster02  --nsg-name "security_port"
 
 az network nsg rule create -g Fin-Cluster02  --nsg-name "security_port"   --destination-port-ranges "5444"  -n "weiturui" --source-address-prefixes  139.219.14.69 --priority "1001"
+
+az network nsg rule create -g Fin-Cluster02  --nsg-name "security_port"   --destination-port-ranges  500 -n "ipsec" --source-address-prefixes '*' --priority "1002"
+az network nsg rule create -g Fin-Cluster02  --nsg-name "security_port"   --destination-port-ranges 4500 -n "ipsec2" --source-address-prefixes '*' --priority "1003"
