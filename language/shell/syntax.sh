@@ -113,10 +113,11 @@ fi
 if [ "abc" = *"b"* ] ; then  #  单括号很自然就没有用啦; sh 不支持通配符
     echo "String compare works single"
 fi
+# 会得到 `no matches found: *b*` 这种错误
 # - 如果想上述case也有用，那么请参照 https://stackoverflow.com/a/19897118 (一个特别绕的例子)
 
 
-if [[ "abc" = *"b"* ]] ; then  #  双括号很自然就没有用啦
+if [[ "abc" = *"b"* ]] ; then  #  双括号在bash中有用，但是在sh中就没有用
     echo "String compare works double"
 fi
 
@@ -131,6 +132,14 @@ if [[ $DEBUG -eq 0 ]] ; then  # 而且对单括号的兼容性也不错
 fi
 
 
+if [[ $DEBUG < 10 ]] && [ $DEBUG -eq 0 ]; then   # it can be used mixed and concatenated
+    echo "Two type of implementation can be used together"
+fi
+
+unset DEBUG   #  double square gives 0 default value... weird...   `$DEBUG -eq 1` is false
+if [[ $DEBUG < 10 ]] && [[ $DEBUG -eq 0 ]]; then
+    echo "Weird default 0 value"
+fi
 
 # # Outlines: 语法
 
@@ -177,3 +186,9 @@ ls _tmp_test_file  # the will will not be removed
 partial_name=e
 rm _tmp_test_fil"${partial_name:?This message will appear instead of 'zsh: b: parameter not set'}"
 ls _tmp_test_file  # this file is removed successfully
+
+
+foo="good"
+echo "${foo:3:4}"  # support slicing
+echo "${foo:-2:-1}"   #  But the negative values are not supported
+
