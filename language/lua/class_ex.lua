@@ -56,17 +56,22 @@ end
 function A:print()
     print(self.a)
     print(self.b)
+    return self.a .. self.b
 end
 
 local a = A.new(10)
 print(a.a)
 print(a.b)
-a:print()   -- NOTE: 这里的调用方式，和python的不一样，Python是 a.print();  lua是 a:print().  用:才相当于Python的self传到第一个参数
+print(a.print)
+print(a:print())   -- NOTE: 这里的调用方式，和python的不一样，Python是 a.print();  lua是 a:print().  用:才相当于Python的self传到第一个参数
 
 local B = class("B", A)
 
 local b = B.new(20)
 print(b.a)
 print(b.b)
+print(b.print)
+print(b.print(b))
+print(b:print())
 
 
