@@ -29,3 +29,5 @@ class BaseRun:
 
 if __name__ == "__main__":
     fire.Fire(BaseRun)
+    # NOTE: if you want to create subcommand, following commands will be usefule
+    # fire.Fire({"base": BaseRun})
