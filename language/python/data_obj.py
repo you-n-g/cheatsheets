@@ -4,12 +4,12 @@ What is meaningful data?
 - Data typed
 - Info
 """
-from dataclasses import dataclass, fields
+from dataclasses import dataclass, fields, field
 from typing import NamedTuple, Optional, TypedDict
-from pprint import pprint
 
 
 # # Outlines: TypedDict
+print("TypedDict " + "-" * 30)
 
 class MyClass(TypedDict):
     a: int = 1
@@ -18,50 +18,65 @@ class MyClass(TypedDict):
 
 mc = MyClass()
 
-mc == {}
+print(mc)
+print(mc == {})
 # mc["a"]   # Raise KeyError
+# The default value will not be used
 
 
 # # Outlines: NamedTuple
+print("NamedTuple " + "-" * 30)
+
 class Employee(NamedTuple):
     name: str
     id: int = 3
     extra_info = None
 
-e = Employee(name=3)
+e = Employee(name="name")
 
-e.id  # provides default value
+print(e.id)  # provides default value
 # e.__dict__  # NamedTuple can't have ___dict__ (but dataclass can have)
 
 try:
     e = Employee()
 except TypeError as exc:
-    print("Missing default value")
+    print("Missing required parameters")
     print(exc)
 
 e2 = e._replace(name="new_name")
+try:
+    e.name = "new_name2"
+except AttributeError as exc:
+    print("Can not change value of a NamedTuple")
+    print(exc)
 
-print(f"e1: {e2}")
-print(f"{e} will not changed with e2")
+print(f"{e=} will not changed with {e2=}")
 
 
 # # Outlines: dataclass
-
+print("dataclass " + "-" * 30)
 @dataclass
 class Emp:
     name: str
-    id: int = 3
+    id: Optional[int] = 3
+
+try:
+    e = Emp()
+except TypeError as exc:
+    print("Missing required parameters")
+    print(exc)
 
 e = Emp('shit')
 e.id = 4
+print(f"{e=}, which shows that the default value can be changed.")
 
 e2 = Emp('good')
-e2.__dict__
+print(f"{e2.__dict__=}")
 
 
 e3 = Emp("good", id=None)
 
-e3
+print(f"{e3=}, Actively pass in None will override the values, even it is optional")
 
 
 class EmpChildWrong(Emp):
@@ -69,14 +84,18 @@ class EmpChildWrong(Emp):
 
 
 e4 = EmpChildWrong("good")  # child will not be a force name
+print(f"{e4=}, the new attribute in the subclass will disappear...")
 
 @dataclass
 class EmpChildRight(Emp):
     child: str = "happy"
+    li: list = field(default_factory=list)
 
 ec2 = EmpChildRight("not")
+ec2.li.append("list item")
 
-ec2
+print(f"{ec2=}, the new attribute will be a right class")
+print(f"{EmpChildRight('name', None, 'child')=}, the attributes will be ordered by the inheritance order. And the default init value is not shared by instance")
 
 dir(EmpChildRight)
 EmpChildRight.__dict__
@@ -90,6 +109,7 @@ fields(EmpChildRight)[0].type
 # advantage
 # - auto type conversion
 # - auto env reading
+print("Pydantic " + "-" * 30)
 
 from pathlib import Path
 DIRNAME = Path(__file__).absolute().resolve().parent
