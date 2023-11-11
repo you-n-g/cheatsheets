@@ -74,6 +74,17 @@ e2 = Emp('good')
 print(f"{e2.__dict__=}")
 
 
+@dataclass
+class EmpWrong:
+    name: str
+    id: Optional[int]
+
+try:
+    e21 = EmpWrong('shit')
+except TypeError:
+    print("Optional annotation will not really make it optional")
+
+
 e3 = Emp("good", id=None)
 
 print(f"{e3=}, Actively pass in None will override the values, even it is optional")
