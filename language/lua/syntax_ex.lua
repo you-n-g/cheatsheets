@@ -1,3 +1,7 @@
+-- Motivation of the file
+-- We only include basic syntax blocks in this file.
+-- Knowledge about implementing more advanced mechanism(e.g. class), we should implement in other files.
+
 -- # Syntax Suger
 --
 -- ## table assignment
@@ -27,3 +31,30 @@ local str2 = [[%1what is
 the fuck \t]]
 print(str2)
 
+
+-- `...`  usage
+local function f(...)
+  for _, v in ipairs({...}) do
+    print(v)
+  end
+  print(select("#", ...))  -- the number of elements
+  print(select(2, ...))  -- select the second element of
+end
+
+f("good", "bad")
+
+local x = {"good2", "bad2"}
+f(unpack(x))  -- we can similating passing each elemment to f with `unpack`
+
+-- # most basic syntaxes
+if false or nil then
+  print("true")
+else
+  print("false")  -- only false or nil will go false false
+end
+
+if "" and 1 and 0 and 0.0 and true then
+  print("true") -- even "" and 0 goes ture
+else
+  print("false")
+end
