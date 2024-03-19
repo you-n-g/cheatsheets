@@ -91,6 +91,12 @@ print(a.b)
 print(a.print)
 print(a:print()) -- NOTE: 这里的调用方式，和python的不一样，Python是 a.print();  lua是 a:print().  用:才相当于Python的self传到第一个参数
 
+
+function A:test_self()
+  print(self)
+end
+
+
 local B = class("B", A)
 B.b = "B[b]: a class attribute"
 
@@ -103,3 +109,26 @@ print(b.print)
 print(b.print(b))
 -- auto bind the method
 print(b:print())
+
+
+-- NOTE: Please note the right way to call the super class method
+function B:test_self()
+  -- print(self.super:test_self()) -- NOTE: this will result in changing `self` to the super class
+  -- print(self.super.test_self(self))  -- this is also not the right way to call super
+  -- Because when self come from a descendant class deeper than level 3, the `super` will be the `super` class in that level
+  print(B.super.test_self(self))  -- this is the right way call super!!!
+  print(self)
+end
+
+b = B(30)
+b.test_self(b)
+
+function B:ctor(a, b, c)
+  self.super:ctor(a, b) -- a wrong demo to call super class ctor
+  self.c = c
+end
+print(A)
+b = B(10, 20, 30)
+-- NOTE:  !!! this will result in a extream weird result. it apply super.ctor to super class instead of current instance.
+print(A)
+
