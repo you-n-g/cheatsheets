@@ -25,6 +25,11 @@ docker start -ai XXX_CONTAINER  # 这个命令会让docker重新按原来 run �
 # 查看log
 docker logs --tail=20 -f XXX_CONTAINER # 查看container的log
 
+# # Outlines: 设置篇
+sudo docker run -d --restart=always --name <image> <name>  # 创建docker时，让它失败时自动重启
+sudo docker update --restart=always jovial_mclaren  # 更新docker时，让它失败时自动重启
+
+
 
 
 # start起来之后 拷贝文件
@@ -55,7 +60,7 @@ docker  run -it --net=host  ubuntu  /bin/bash
 # registry 篇
 #
 docker tag XXX_IMAGE XXX_host:5000/XXX_IMAGE # 看来是用tag来描述repo的位置的
-docker push XXX_host:5000/XXX_IMAGE
+docker push XXX_host:5000/XXX_ItAGE
 # push可能需要在"/etc/default/docker"加上  DOCKER_OPTS="--insecure-registry XXX_host:5000"
 docker pull XXX_host:5000/XXX_IMAGE
 

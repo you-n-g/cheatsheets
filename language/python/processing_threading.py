@@ -1,6 +1,36 @@
 #!/usr/bin/env python
 #-*- coding:utf8 -*-
 
+# seed
+import random
+random.seed(41)
+print(random.random())
+
+from multiprocessing import Pool
+
+def worker():
+    return random.random()
+
+if __name__ == "__main__":
+    pool = Pool(5)
+    res = []
+    print([worker() for _ in range(5)])
+    for i in range(5):
+        res.append(pool.apply_async(worker, [], {}))
+    # TODO: the seed will be different in differen child process; the random.seed does not work well
+    # I want to make sure the generated rundom number is the same each run.
+    # I don't want to add any extra parameter for worker
+    print([r.get() for r in res])
+    pool.close()
+    pool.join()
+
+
+
+# I'm a splitter for the ready part of remains
+import os
+if not os.environ.get("RUN_ALL", False):
+    exit(0)
+
 # BEGIN joblib - Embarrassingly parallel for loops
 # 优势
 # - 用cloudpickle 解决了很多pickle不能做的事情
@@ -107,12 +137,12 @@ if __name__ == "__main__":
         except Exception as e:
             print(u"Type=%s, Args=%s" % (type(e), e.args))
     pool.close()
-# TODO: If I put it before r.get(). The print info above will never output the data.
-# 在并行地分配任务的代码结束后调用它，这样pool在完成所有任务后就会自动关闭了
-# Indicate that no more data will be put on this queue by the current process.
+    # TODO: If I put it before r.get(). The print info above will never output the data.
+    # 在并行地分配任务的代码结束后调用它，这样pool在完成所有任务后就会自动关闭了
+    # Indicate that no more data will be put on this queue by the current process.
 
-pool.join()
-# one must call close or terminate() before call join. 不然主进程会等子进程结束，子进程会等主进程分配任务
+    # one must call close or terminate() before call join. 不然主进程会等子进程结束，子进程会等主进程分配任务
+    pool.join()
 
 
 
@@ -132,7 +162,7 @@ p.map(f, [1,2,3])
 # # Outlines: ipyparallel
 # ipyparallel 的使用方法
 # http://nbviewer.jupyter.org/github/ipython/ipyparallel/blob/master/examples/Index.ipynb
-% ipcluster start -n 40   # 执行程序的目录和 这个目录最好一样，否则可能找不到包 --cluster-id=<cluster_str>
+# % ipcluster start -n 40   # 执行程序的目录和 这个目录最好一样，否则可能找不到包 --cluster-id=<cluster_str>
 
 import ipyparallel as ipp
 rc = ipp.Client()  # ipp.Client(cluster_id='us_stock')

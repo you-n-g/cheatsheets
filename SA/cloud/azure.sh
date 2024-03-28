@@ -62,6 +62,19 @@ az vm create \
   --admin-username xiaoyang \
   --ssh-key-value ~/.ssh/id_rsa.pub
 
+# generate key pair in current directory
+ssh-keygen -t rsa -b 2048 -f ./id_rsa -q -N ""
+az vm image list --output table
+az vm create \
+  --resource-group XYZ-V100 \
+  --name XYZ-V100-1-script \
+  --image Ubuntu2204 \
+  --size Standard_NC24s_v3 \
+  --admin-username adminxy \
+  --ssh-key-value ./id_rsa.pub
+az vm list-ip-addresses --output table
+ssh -i ./id_rsa adminamc@<public ip>
+
 
 
 # start vm
