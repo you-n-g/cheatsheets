@@ -60,7 +60,7 @@ begin end 按 unit 计算 ????
 
 # 查看磁盘类型： ssd or HDD
 # https://unix.stackexchange.com/a/65602
-lsblk -d -o name,rota   # 列出所有disk的 name和rota属性
+lsblk -d -o name,rota   # 列出所有disk的 name和rota属性;   should get 1 for hard disks and 0 for a SSD.
 cat /sys/block/sda/queue/rotational   # 列出 sda 的rotational属性
 
 # END 查看信息
