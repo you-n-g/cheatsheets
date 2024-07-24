@@ -72,8 +72,9 @@ def foo(self, x):
 
 
 class MyMeta(type):
-    meta_attr = "meta attribute will become the attribute of class"
-    # But it will not present in __init__, __new__, __call__
+    # FIXME:  it does not work in my Python
+    # meta_attr = "meta attribute will become the attribute of class"
+    # # But it will not present in __init__, __new__, __call__
 
     def __new__(cls, clsname, bases, attrs):
         # MetaClass的new代表创建子类， Class的new代表创建实例
