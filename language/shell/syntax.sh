@@ -7,6 +7,12 @@
 
 # function f() {}  is not supported in pure `sh`
 f() {
+    # Argument expension
+    # - the rationale: when we pass parameters to other commands, we have two key concepts we should care about
+    #   - the arguments of a command is an array of strings(e.g. Pythons sys.argv). we should know how the arguments are passed into argv
+    #     - "$@" is often the choice to not change the array
+    # - when will the expansion happen, in which shell it happens?
+
     # shell函数取参数
     # http://stackoverflow.com/questions/12314451/accessing-bash-command-line-args-vs
     # for 循环时会有大量的不同
@@ -33,6 +39,23 @@ f() {
     do
         echo "[$i]"
     done
+
+    # we can found that shell treat them in a more sophisticated way. we should finally care about sys.argv instead of a single string
+    if which argv_detect.py ; then
+      echo 'argv_detect.py $@'
+      argv_detect.py $@
+      echo 'argv_detect.py $*'
+      argv_detect.py $*
+      echo 'argv_detect.py "$@"'
+      argv_detect.py "$@"
+      echo 'argv_detect.py "mydotenv.sh $@ end"'
+      argv_detect.py "mydotenv.sh $@ end"   # NOTE: mydotenv.sh and ${@:1}  will be concated... Amazing...
+      echo 'argv_detect.py "${NEW_CMD[@]}"'
+      NEW_CMD=("mydotenv.sh" "$@")
+      argv_detect.py "${NEW_CMD[@]}"
+      echo 'argv_detect.py "$*"'
+      argv_detect.py "$*"
+    fi
 
     echo '还可以把一些没关系的参数摘出去'
     echo 把第一个参数提出来 "[$1]"

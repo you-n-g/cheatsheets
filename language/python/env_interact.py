@@ -13,6 +13,12 @@ cat << EOF > test_subdir/load.py
 from dotenv import load_dotenv
 load_dotenv()
 EOF
+
+# for testing `test_launch_json`
+# run dG and add arguments
+cat << EOF > ./.env
+TEST_VAR=123
+EOF
 """
 
 # Execute the shell command
@@ -56,6 +62,10 @@ class Exp:
         # 2) use dotenv
         #   dotenv run -- python app.py
         print(os.environ["TEST_VAR"])
+
+    def test_launch_json(self):
+        print(os.environ["TEST_VAR"])
+        print("end")
         
 if __name__ == "__main__":
     fire.Fire(Exp)
