@@ -91,14 +91,16 @@ done
 wait
 echo "all done"
 
-# 这个工具似乎更好用，还可以控制线程池，相当于每一行一个命令:  apt-get install parallel
+# 这个工具似乎更好用，还可以控制线程池，相当于每一行一个命令:  sudo apt-get install parallel
+# - moreutils 里面也有一个parallel， 但是非常老，不建议使用
+
 # 写法1
 seq 1000 | parallel -j 8 --workdir $PWD ./myrun {} # https://stackoverflow.com/questions/5547787/running-shell-script-in-parallel
 
 # 写法2
 for year in `seq 10`
 do
-    echo "COMMAND $year"
+    echo "echo COMMAND $year"
 done | parallel -j 8 --workdir $PWD
 
 
