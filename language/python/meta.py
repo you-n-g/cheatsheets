@@ -72,8 +72,7 @@ def foo(self, x):
 
 
 class MyMeta(type):
-    # FIXME:  it does not work in my Python
-    # meta_attr = "meta attribute will become the attribute of class"
+    meta_attr = "meta attribute will become the attribute of class"  # check it on line 109
     # # But it will not present in __init__, __new__, __call__
 
     def __new__(cls, clsname, bases, attrs):
@@ -107,6 +106,7 @@ class E(metaclass=MyMeta):
 
 print(E)
 print(E.meta_attr)
+# print(E().meta_attr)  # NOTE: but it does not for the instances
 
 print("Start defining F")
 

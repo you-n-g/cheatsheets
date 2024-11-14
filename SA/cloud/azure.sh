@@ -22,6 +22,11 @@ az vm disk list
 
 az vm run-command invoke --resource-group fintech --name Server --scripts "sudo ufw disable" --command-id RunShellScript
 
+# TODO: show active assignments in Priviledged Identity Management(PIM)
+# az role assignment list --assignee ac7af33c-2c68-41bc-b9ac-8bea1deaa178 --output table
+
+# TODO: How to set the timeout of az login?
+
 
 # 制作虚拟机镜像
 
