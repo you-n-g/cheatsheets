@@ -116,4 +116,10 @@ async def main():
     print(f"finished at {time.strftime('%X')}")
 
 
+    # TODO: when do we need the call_soon to make it work.
+    # loop = asyncio.get_running_loop()
+    # import ipdb; ipdb.set_trace() in `debug_hook`
+    # loop.call_soon(debug_hook)
+
+
 asyncio.run(main())
