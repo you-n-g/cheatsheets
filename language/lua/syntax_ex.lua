@@ -12,13 +12,12 @@
 -- }
 
 local t = {
-	["a.b"] = 3,
+  ["a.b"] = 3,
 }
 print(t)
 
-
 -- ## strings
-local str0 = "%1what is the fuck \t"  -- this can't be linebreaks
+local str0 = "%1what is the fuck \t" -- this can't be linebreaks
 print(str0)
 
 -- [=[ have higher level. So string like [[]] can be embeded.
@@ -31,42 +30,43 @@ local str2 = [[%1what is
 the fuck \t]]
 print(str2)
 
-
 -- `...`  usage
 local function f(...)
-  for _, v in ipairs({...}) do
+  for _, v in ipairs({ ... }) do
     print(v)
   end
-  print(select("#", ...))  -- the number of elements
-  print(select(2, ...))  -- select the second element of
+  print(select("#", ...)) -- the number of elements
+  print(select(2, ...)) -- select the second element of
 end
 
 f("good", "bad")
 
-local x = {"good2", "bad2"}
-f(unpack(x))  -- we can similating passing each elemment to f with `unpack`
+local x = { "good2", "bad2" }
+f(unpack(x)) -- we can similating passing each elemment to f with `unpack`
 
 local function g(x)
-	print(x)
+  print(x)
 end
 g(1, 2, 3, 4) -- you can always pass more parameters in lua. It only handle the first one. This helps understanding of following cases.
 
 local x = { "good2", "bad2" }
-P({unpack(x, 3, #x)}) -- it will correctly return a nil
-P({unpack(x, 1, -1)}) -- it will return nothing. -1 is not recognized
-P(type(table.unpack(x, 1, #x))) -- you will get string here
-P(type(table.unpack(x, 2, #x))) -- you will get string here
-P(type({ table.unpack(x, 1, #x) })) -- it is table
-P(type({ table.unpack(x, 2, #x) })) -- it is table
+print({ unpack(x, 3, #x) }) -- it will correctly return a nil
+print({ unpack(x, 1, -1) }) -- it will return nothing. -1 is not recognized
+print(type(unpack(x, 1, #x))) -- you will get string here
+print(type(unpack(x, 2, #x))) -- you will get string here
+print(type({ unpack(x, 1, #x) })) -- it is table
+print(type({ unpack(x, 2, #x) })) -- it is table
 
-P(type(table.unpack(x, 3, #x))) -- you will get string here
+-- print(type(unpack(x, 3, #x))) -- you will get string here
+-- ERROR: <-- bad argument #1 to 'type' (value expected)
 
+-- Neovim lua does not have table.unpack method
 
 -- # most basic syntaxes
 if false or nil then
   print("true")
 else
-  print("false")  -- only false or nil will go false false
+  print("false") -- only false or nil will go false false
 end
 
 if "" and 1 and 0 and 0.0 and true then
@@ -75,11 +75,10 @@ else
   print("false")
 end
 
-
-local x = {a=3}
-require"snacks".debug(x)
-print(x['a'])  -- equals to contains
-x.a = nil  -- this will remove the key instead of setting it into nil.
-require"snacks".debug(x)
-print(x['a'])  -- equals to contains
+local x = { a = 3 }
+print(x)
+print(x["a"]) -- equals to contains
+x.a = nil -- this will remove the key instead of setting it into nil.
+print(x)
+print(x["a"]) -- equals to contains
 

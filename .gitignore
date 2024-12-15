@@ -2,3 +2,5 @@
 *.pyc
 
 tags
+.aider*
+.env

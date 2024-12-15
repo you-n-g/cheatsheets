@@ -11,6 +11,8 @@ df = pd.DataFrame(np.arange(16).reshape(4, 4), index=list('abcd'), columns=list(
 assert df.loc[:, "e":"f"].values.base is df.values.base   # pandas 的 slice 逻辑和 numpy 一样
 assert df.loc[:, ["e", "f"]].values.base is not df.values.base   # pandas 的 slice 逻辑和 numpy 一样
 
+# df.loc[:, ["e", "f", "x"]] # it will raise  KeyError: "['x'] not in index"
+
 assert df.values.base is df.to_numpy().base
 
 df['x'] = 0.3  #  但是如果变量类型不统一 ， 就不一样了...

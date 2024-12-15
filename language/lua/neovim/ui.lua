@@ -2,7 +2,7 @@ local Input = require("nui.input")
 local event = require("nui.utils.autocmd").event
 
 input = Input({
-  position = "50%",
+  position = "10%",
   size = {
     width = 20,
   },
@@ -15,6 +15,7 @@ input = Input({
   },
   win_options = {
     winhighlight = "Normal:Normal,FloatBorder:Normal",
+    winblend = 70, -- Adjust this value for desired transparency
   },
 }, {
   prompt = "> ",
@@ -26,6 +27,7 @@ input = Input({
     print("Input Submitted: " .. value)
   end,
 })
+
 
 -- mount/open the component
 input:mount()
@@ -42,3 +44,5 @@ input:show()
 -- input:on(event.BufLeave, function()
 --   input:unmount()
 -- end)
+
+
