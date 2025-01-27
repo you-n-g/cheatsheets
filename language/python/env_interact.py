@@ -23,11 +23,14 @@ EOF
 
 # Execute the shell command
 from pathlib import Path
+
 DIRNAME = Path(__file__).absolute().resolve().parent
 
-
 import fire
+
+
 class Exp:
+
     def run(self):
         subprocess.run(shell_command, shell=True, check=True, cwd=DIRNAME)
 
@@ -67,6 +70,19 @@ class Exp:
     def test_launch_json(self):
         print(os.environ["TEST_VAR"])
         print("end")
-        
+
+    def test_env_raw(self):
+        """
+
+        .. code-block:: python
+
+            python language/python/env_interact.py run
+            dotenv run -- python language/python/env_interact.py test_env_raw
+            TEST_VAR=321 dotenv run --no-override -- python language/python/env_interact.py test_env_raw
+
+        """
+        print(os.environ["TEST_VAR"])
+
+
 if __name__ == "__main__":
     fire.Fire(Exp)

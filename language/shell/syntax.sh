@@ -61,6 +61,7 @@ f() {
     echo 把第一个参数提出来 "[$1]"
     shift # 这个可以再跳过一个参数
     echo "$@"  #  第一个参数shift后就少了一个
+    # NOTE: "${@:2}" works in bash but not in sh.
     for i in "${@:2}"  # 剩下的参数从第2个(包含&index=2, index=0为命令， $1开始才是参数)开始
     do
         echo "[$i]"
