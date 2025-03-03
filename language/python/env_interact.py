@@ -19,6 +19,11 @@ EOF
 cat << EOF > ./.env
 TEST_VAR=123
 EOF
+
+# For testing 2 files.
+cat << EOF > ./.new.env
+TEST_VAR_2=123
+EOF
 """
 
 # Execute the shell command
@@ -72,8 +77,8 @@ class Exp:
         print("end")
 
     def test_env_raw(self):
-        """
 
+        """
         .. code-block:: python
 
             python language/python/env_interact.py run
@@ -82,6 +87,20 @@ class Exp:
 
         """
         print(os.environ["TEST_VAR"])
+
+    def test_2_env_file(self):
+        """
+
+        .. code-block:: python
+
+            python language/python/env_interact.py run
+            dotenv -f language/python/.env run -- python language/python/env_interact.py test_2_env_file
+            dotenv -f language/python/.env -f language/python/.new.env run -- python language/python/env_interact.py test_2_env_file
+
+        conclusion: dotenv can't support multiple files.
+        """
+        print(os.environ.get("TEST_VAR"))
+        print(os.environ.get("TEST_VAR_2"))
 
 
 if __name__ == "__main__":
