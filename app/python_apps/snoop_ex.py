@@ -8,7 +8,7 @@ import snoop
 def snoop_final(func):
     def wrapper(*args, **kwargs):
         def local_trace(frame, event, arg):
-            if event == "return" and frame.f_code == func.__code__:
+            if event in ("return", "exception") and frame.f_code == func.__code__:
                 snoop.pp(frame.f_locals)
             return local_trace
         sys.settrace(local_trace)
@@ -24,10 +24,12 @@ def g():
         pass
 
 @snoop_final
-def f():
+def f(raise_exp=False):
     x = 1
     a = 2
     x = 2
+    if raise_exp:
+        raise
     x = 3
     c = 1
     a = 1
@@ -37,3 +39,5 @@ def f():
 
 
 f()
+
+f(raise_exp=True)
