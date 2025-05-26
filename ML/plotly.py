@@ -23,9 +23,6 @@ py.iplot_mpl(plt.gcf())
 
 
 
-
-
-
 # plot stacked
 traces = []
 cum = None

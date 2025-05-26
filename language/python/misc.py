@@ -52,3 +52,20 @@ outer_val += 100
 print(f"arguments' default value is fixed during definition: {r()=}")
 outer_val2 += 100
 print(f"Function's values depend on closure: {r()=}")
+
+
+
+# Nested exception
+def f0():
+    a = 0 / 0  # During handling  ZeroDivisionError
+
+def f1():
+    level1
+
+try:
+    f0()
+except Exception as e:
+    try:
+        f1()  # another exception NameError occurs
+    except Exception as e:
+        level2
