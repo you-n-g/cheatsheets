@@ -9,6 +9,7 @@ def snoop_final(func):
     def wrapper(*args, **kwargs):
         def local_trace(frame, event, arg):
             if event in ("return", "exception") and frame.f_code == func.__code__:
+                snoop.pp(event, frame,  frame.f_code, func.__code__)
                 snoop.pp(frame.f_locals)
             return local_trace
         sys.settrace(local_trace)
@@ -38,6 +39,16 @@ def f(raise_exp=False):
     g()
 
 
+
 f()
 
+print("Exception will also trigger return event", "=" * 30)
 f(raise_exp=True)
+
+
+import reprlib
+
+
+reprlib.aRepr.maxstring = 20
+reprlib.repr(["i" * 20 for i in range(100)])
+
