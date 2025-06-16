@@ -1,5 +1,7 @@
 # # Outlines: classmethod 是会绑定到子类的(这个和staticmethod非常不同)
 
+from rich.console import Console
+console = Console()
 
 class A:
     @classmethod
@@ -33,11 +35,28 @@ print(Exception.__base__)  # <class 'BaseException'>
 print(ValueError.__base__)  # <class 'Exception'>
 
 
+console.rule("New Exception in `except` block will not stop final block")
+var = "initial"
+try:
+    try:
+        raise ValueError("test")
+    except Exception:
+        print("though new exception is raised, final block is not stopped")
+        var = "Ever been into except block"
+        raise KeyError("test")
+    finally:
+        print(var)
+        print("finally is still be triggered")
+except Exception as e:
+    print(e)
+
+
 
 
 # %% [markdown]
 # # Outlines: functions and closure
 
+console.rule()
 
 outer_val = 100
 outer_val2 = 100
