@@ -17,6 +17,73 @@ print(B.f)  # <bound method A.f of <class '__main__.B'>>
 B.f()       # <class '__main__.B'> () {}
 
 
+
+# # Outlines: Operations priority
+console.rule("Operations priority")
+if a := None is None:
+    print(a)
+
+if (a := None) is None:
+    print(a)
+
+print(":= has very low priority, so 'a := None is None' is parsed as 'a := (None is None)'")
+print("Thus, 'a' is assigned to True, as (None is None) is True")
+print("If you want 'a' to be None then compare with None: (a := None) is None")
+
+
+
+# %% [markdown]
+# # Outlines: functions and closure
+
+console.rule()
+
+outer_val = 100
+outer_val2 = 100
+
+
+from functools import partial
+
+r = partial(lambda x=outer_val: x + outer_val2)
+
+print(f"Original value: {r()=}")
+outer_val += 100
+print(f"arguments' default value is fixed during definition: {r()=}")
+outer_val2 += 100
+print(f"Function's values depend on closure: {r()=}")
+
+
+Console().rule("lru_cache and mechanism for cache")
+
+import functools
+
+RAISE = True
+
+@functools.lru_cache(maxsize=1)  # comment out this line to see the exception is not cached
+def f():
+    global RAISE
+    print("Real Execution")
+    if RAISE:
+        RAISE = not RAISE
+        raise ValueError("fail!")
+
+try:
+    f()
+except Exception as e:
+    print(e)
+    print("Exception raised for first the time")
+    pass
+
+# This will TRY AGAIN, and raise again.
+try:
+    f()
+    print("Exception is not cached")
+except Exception as e:
+    print(e)
+    print("Raised again!")
+
+f()
+print("After success execution, the results are cached and no real execution")
+
 # %% [markdown]
 # # Outlines: exceptions
 
@@ -52,29 +119,9 @@ except Exception as e:
 
 
 
+# ## Outlines: Nested exception
 
-# %% [markdown]
-# # Outlines: functions and closure
-
-console.rule()
-
-outer_val = 100
-outer_val2 = 100
-
-
-from functools import partial
-
-r = partial(lambda x=outer_val: x + outer_val2)
-
-print(f"Original value: {r()=}")
-outer_val += 100
-print(f"arguments' default value is fixed during definition: {r()=}")
-outer_val2 += 100
-print(f"Function's values depend on closure: {r()=}")
-
-
-
-# Nested exception
+Console().rule("Nested exception Formatting")
 def f0():
     a = 0 / 0  # During handling  ZeroDivisionError
 

@@ -87,6 +87,14 @@ async def consumer():
         await asyncio.sleep(2.)
         print("consumer:", i)
 
+def try_call():
+    async def foo():
+        print("foo")
+        await asyncio.sleep(1)
+        return 3
+    # Run foo() using asyncio and return its result directly
+    return asyncio.get_event_loop().run_until_complete(foo())
+
 
 async def main():
     task1 = asyncio.create_task(producer())
@@ -94,10 +102,13 @@ async def main():
     task2 = asyncio.create_task(consumer())
     time.sleep(3)
     print("The tasks will not start if we run blocking sleep in the main thread")
+
     await asyncio.sleep(3)
     print("The tasks will start after the first calling of await")
 
     print(f"started at {time.strftime('%X')}")
+
+    try_call()
 
     # Wait until both tasks are completed (should take
     # around 2 seconds.)
