@@ -76,6 +76,7 @@ import time
 
 async def producer():
     print("In producer")
+    raise Exception("test")
     for i in range(10):
         await asyncio.sleep(1.)
         print("producer:", i)
@@ -98,6 +99,7 @@ async def main():
     print("The tasks will start after the first calling of await")
 
     print(f"started at {time.strftime('%X')}")
+    x = await asyncio.gather(task1, task2)
 
     # Wait until both tasks are completed (should take
     # around 2 seconds.)
