@@ -63,7 +63,9 @@ tmux list-panes -a -F "#{pane_pid} #{session_name}:#{window_index}:#{pane_index}
 # 1. 发送特殊控制键有一点问题, 可以通过下面的方式解决
 # https://github.com/tmux-python/libtmux/issues/88
 # https://github.com/tmux-python/libtmux/issues/13
-#  server.find_where({ "session_name": "server-tmux" }).session.find_where({'window_name': 'jiji'}).select_pane(0).send_keys('C-c', enter=False, suppress_history=False)
+#  server.find_where({ "session_name": "server-tmux" }).find_where({'window_name': 'jiji'}).select_pane(0).send_keys('C-c', enter=False, suppress_history=False)
+#  Newer version:
+#  - server.sessions.get(session_name=SESSION_NAME).windows.get(window_name=WINDOW_NAME).panes[0].send_keys('C-c', enter=False, suppress_history=False)
 
 
 # 管理服务器
