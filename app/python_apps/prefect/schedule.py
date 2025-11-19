@@ -10,6 +10,5 @@ if __name__ == "__main__":
         name="job-every-10min",
         interval=timedelta(minutes=10),
     )
-    # you can access the run by `prefect server start` via UI 
+    # you can access the run by `prefect server start  --host ep14.213428.xyz` via UI 
     # or `prefect deployment run 'my-job/job-every-10min'` via CLI
-
