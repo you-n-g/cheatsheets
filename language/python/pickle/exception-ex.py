@@ -1,6 +1,7 @@
 import pickle
 from rich.console import Console
 
+
 class MyBadRequestError(Exception):
     def __init__(self, message, model, llm_provider):
         super().__init__(message)

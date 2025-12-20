@@ -9,7 +9,7 @@ import asyncio
 
 
 # # Outlines: 展示一些类型
-async def main(sleep=True):
+async def async_func(sleep=True):
 
     if sleep:
         await asyncio.sleep(1)
@@ -26,12 +26,12 @@ def gen():
         yield i
 
 
-res = asyncio.run(main(False))
+cr = async_func(False)
+res = asyncio.run(cr)
 
 print(res)
 
 # 分清几种类型
-cr = main(False)
 print(type(cr))  # coroutine
 
 ag = async_gen()
@@ -44,7 +44,7 @@ print(type(g))  # generator
 # some are ``
 print(type(gen))
 print(type(async_gen))
-print(type(main))
+print(type(async_func))
 
 
 # # Outlines: 展示一些语法约束
@@ -76,7 +76,6 @@ import time
 
 async def producer():
     print("In producer")
-    raise Exception("test")
     for i in range(10):
         await asyncio.sleep(1.)
         print("producer:", i)
@@ -89,7 +88,7 @@ async def consumer():
         print("consumer:", i)
 
 
-async def main():
+async def async_func():
     task1 = asyncio.create_task(producer())
 
     task2 = asyncio.create_task(consumer())
@@ -123,5 +122,4 @@ async def main():
     # import ipdb; ipdb.set_trace() in `debug_hook`
     # loop.call_soon(debug_hook)
 
-
-asyncio.run(main())
+asyncio.run(async_func())

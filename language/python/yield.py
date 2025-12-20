@@ -1,5 +1,6 @@
 # # Outlines: yield from
 
+from rich.console import Console
 
 def test_yield():
     yield range(10)
@@ -42,7 +43,8 @@ if __name__ == "__main__":
     # TypeError: can't send non-None value to a just-started generator
     # print("send ret:", gen.send("Hello"))
     print("next ret:", next(gen))
-    print("send ret:", gen.send("Hello"))
+    print("send ret:", gen.send("Hello")) # send will kick off the generator until next yield
+    print("after send")
     # - send的返回值和next一致
     print("next ret:", next(gen))
 
@@ -72,6 +74,13 @@ if __name__ == "__main__":
         # The return value is stored in the exception
         return_value = e.value
         print("Returned value:", return_value)
+
+    Console().rule("[bold red]Inner loop raise StopIteration; but not catched by outer loop[/bold red]")
+    for i in range(10):
+        print("Outer loop:", i)
+        x = iter(range(3))
+        while True:
+            next(x)
 
     # TODO::
     # How can I set the state  of the generator (e.g. continue to run from a specific line, locals() ...)
