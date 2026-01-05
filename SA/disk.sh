@@ -77,7 +77,7 @@ ncdu
 # 可以快速统计磁盘文件的大小, 还可以把结果存下来
 
 agedu
-# man agedu 可以看看怎么,  -s -w 这两个参数可以用
+# man agedu 可以看看怎么,  -s -w 这两个参数可以用 (scan, web)
 # agedu -s /  --cross-fs # scan, 如果不加--cross-fs 不会跨文件系统扫描(间接地限制不会垮硬盘扫描)
 # agedu --auth none -f agedu.dat -w --address 0.0.0.0:5432
 # - 如果不加 `--auth none` 这边我发现address设置成 0.0.0.0 就会 403 Forbidden, 改成127.0.0.1 然后再端口转发就没问题了

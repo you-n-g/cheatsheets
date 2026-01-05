@@ -213,6 +213,11 @@ p.strip_dirs().sort_stats("cumtime").print_stats(100)
 #   - 配合 goto define 体验会很好
 # - 显示路径更全，不容易看晕;
 # - 生成的图显示性能更高
+# - FAQ:
+#   - make sure the default /proc/sys/kernel/yama/ptrace_scope is not 3; otherwise you can't debug container. `cat /proc/sys/kernel/yama/ptrace_scope` expect to get `0`
+#       - `0` → No extra restrictions; any process you own can be ptraced.
+#       - I have ever succeeded with `1` in host machine.
+#   - You have to run the container with `--cap-add=SYS_PTRACE` to be able to debug it.
 # 2. 总体思路
 # - 先用 py-spy 看调用层级，找到耗时的调用
 # - 当某个函数调内某一层调用同一个函数多次， 不知道是那次调用耗时比较多时，需要用line_profile区分
